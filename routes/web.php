@@ -29,12 +29,9 @@ use Illuminate\Support\Facades\Route;
 
 // Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route::get('/student/home', [StudentController::class, 'home'])->name('student-home');
-
-Route::get('/admin/home', [AAController::class, 'home'])->name('aa-home');
-// Route::get('home', function () { return view('admin/home'); })->name('admin.home');
-Route::get('/admin/acount-customer', function () { return view('admin/acount-customer/index'); })->name('aa-acount');
-
+Route::get('/admin/home', function () { return view('admin/index'); })->name('admin-home');
+Route::get('/admin/acount-customer', function () { return view('admin/acount-customer/index'); })->name('admin-acount-customer');
 Route::get('/customer/home', function () { return view('customer/index'); })->name('customer-home');
+Route::get('/admin/color', function () { return view('admin/color/index'); })->name('admin-color');

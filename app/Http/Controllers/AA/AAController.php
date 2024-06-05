@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class AAController extends Controller
 {
-    function home(){
-        return view('academic_affairs.home');
-    }
+    // function home(){
+    //     return view('academic_affairs.home');
+    // }
 }
 {
     function acount(){

@@ -3,8 +3,8 @@
     <div class="sidenav-header" style="display: flex; justify-content: center; align-items: center; position: relative;">
         <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
             aria-hidden="true" id="iconSidenav"></i>
-        <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }}" href="{{ route('home') }}"
-            style="display: flex; align-items: center;">
+        <a class="nav-link {{ Route::currentRouteName() == 'admin-home' ? 'active' : '' }}"
+            href="{{ route('admin-home') }}" style="display: flex; align-items: center;">
             {{-- <img src="./img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo"> --}}
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-6 h-6">
@@ -22,7 +22,7 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Quản lý nhân sự</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('aa-acount') }}">
+                <a class="nav-link" href="{{ route('admin-acount-customer') }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
@@ -36,7 +36,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('aa-acount') }}">
+                <a class="nav-link" href="{{ route('admin-acount-customer') }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
@@ -49,7 +49,15 @@
                     <span class="nav-link-text ms-1">Quản lý nhân viên</span>
                 </a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin-color') }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Quản lý màu sắc</span>
+                </a>
+            </li>
         </ul>
     </div>
 </aside>
