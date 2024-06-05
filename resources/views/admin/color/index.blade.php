@@ -6,10 +6,10 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Tài khoản khách hàng</h6>
+                        <h6>Màu sắc</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#addAuthorModal">
-                            Thêm
+                            Add
                         </button>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -24,11 +24,8 @@
                                             Tên</th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Email</th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Trạng thái</th>
-                                        <th class="text-secondary opacity-7"></th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -41,17 +38,11 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">Long</p>
+                                            <p class="text-xs font-weight-bold mb-0">Đỏ</p>
                                         </td>
                                         <td class="align-middle text-center text-sm">
-                                            <p class="text-xs font-weight-bold mb-0">Long@gmail.com</p>
-                                        </td>
-                                        <td class="align-middle text-center">
                                             <span class="badge badge-sm bg-gradient-success">Sử dụng</span>
-
                                         </td>
-                                        <td class="align-middle text-center"><span
-                                                class="text-secondary text-xs font-weight-bold">23/04/18</span></td>
                                         <td class="align-middle">
                                             <a href="javascript:;" class="text-secondary font-weight-bold text-xs me-2"
                                                 data-toggle="tooltip" data-original-title="Edit user">
@@ -77,7 +68,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addAuthorModalLabel">Thêm mới tài khoản</h5>
+                    <h5 class="modal-title" id="addAuthorModalLabel">Add New Author</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -85,15 +76,11 @@
                         @csrf
                         <div class="mb-3">
                             <label for="authorName" class="form-label">STT</label>
-                            <input type="text" class="form-control" id="authorId" name="name" required>
+                            <input type="text" class="form-control" id="authorName" name="name" required>
                         </div>
                         <div class="mb-3">
                             <label for="authorEmail" class="form-label">Tên</label>
-                            <input type="email" class="form-control" id="authorName" name="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="authorFunction" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="authorEmail" name="function" required>
+                            <input type="email" class="form-control" id="authorEmail" name="email" required>
                         </div>
                         <div class="mb-3">
                             <label for="authorStatus" class="form-label">Status</label>
@@ -102,10 +89,9 @@
                                 <option value="offline">Không sử dụng</option>
                             </select>
                         </div>
-
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
                         </div>
                     </form>
                 </div>
