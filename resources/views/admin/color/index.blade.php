@@ -48,11 +48,11 @@
                                             <form action="{{ route('colors.destroy', $color->id) }}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
-                                                <input class="btn btn-danger btn-sm" type="submit" value="Delete" />
+                                                <button class="btn btn-danger btn-sm mb-2" type="submit">Delete</button>
                                             </form>
-                                            <button class="text-secondary font-weight-bold text-xs me-2"
-                                                data-bs-toggle="modal" data-bs-target="#editColorModal" data-id="1"
-                                                data-name="Đỏ" data-status="Sử dụng">
+                                            <button class="btn btn-warning btn-sm"
+                                                data-bs-toggle="modal" data-bs-target="#editColorModal" data-id="{{ $color->id }}"
+                                                data-name="{{ $color->name }}">
                                                 Edit
                                             </button>
 
@@ -113,21 +113,21 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="POST">
-                        @csrf
+                    <form action="{{ route('colors.update', $color->id) }}" method="POST" autocomplete="off">
                         @method('PUT')
-                        <input type="hidden" id="editColorId" name="id">
+                        @csrf
+                        <input type="hidden" id="editColorId" name="id" value="{{ $color->id }}">
                         <div class="mb-3">
-                            <label for="editColorName" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="editColorName" name="name" required>
+                            <label for="name" class="form-label">Tên</label>
+                            <input type="text" class="form-control" id="editColorName" name="name" value="{{ $color->name }}" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="editColorStatus" class="form-label">Trạng thái</label>
-                            <select class="form-control" id="editColorStatus" name="status" required>
-                                <option value="Sử dụng">Sử dụng</option>
-                                <option value="Không sử dụng">Không sử dụng</option>
-                            </select>
-                        </div>
+{{--                        <div class="mb-3">--}}
+{{--                            <label for="editColorStatus" class="form-label">Trạng thái</label>--}}
+{{--                            <select class="form-control" id="editColorStatus" name="status" required>--}}
+{{--                                <option value="Sử dụng">Sử dụng</option>--}}
+{{--                                <option value="Không sử dụng">Không sử dụng</option>--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                             <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
@@ -144,17 +144,17 @@
             var button = event.relatedTarget
             var id = button.getAttribute('data-id')
             var name = button.getAttribute('data-name')
-            var status = button.getAttribute('data-status')
+            // var status = button.getAttribute('data-status')
 
             var modalTitle = editColorModal.querySelector('.modal-title')
             var modalBodyInputId = editColorModal.querySelector('#editColorId')
             var modalBodyInputName = editColorModal.querySelector('#editColorName')
-            var modalBodySelectStatus = editColorModal.querySelector('#editColorStatus')
+            // var modalBodySelectStatus = editColorModal.querySelector('#editColorStatus')
 
             modalTitle.textContent = 'Chỉnh sửa màu: ' + name
             modalBodyInputId.value = id
             modalBodyInputName.value = name
-            modalBodySelectStatus.value = status
+            // modalBodySelectStatus.value = status
         })
     </script>
 @endsection
