@@ -29,32 +29,36 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($colors as $color)
                                     <tr>
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">1</h6>
+                                                    <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">Đỏ</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $color->name }}</p>
                                         </td>
                                         <td class="align-middle text-center text-sm">
                                             <span class="badge badge-sm bg-gradient-success">Sử dụng</span>
                                         </td>
                                         <td class="align-middle">
+                                            <form action="{{ route('colors.destroy', $color->id) }}" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <input class="btn btn-danger btn-sm" type="submit" value="Delete" />
+                                            </form>
                                             <button class="text-secondary font-weight-bold text-xs me-2"
                                                 data-bs-toggle="modal" data-bs-target="#editColorModal" data-id="1"
                                                 data-name="Đỏ" data-status="Sử dụng">
                                                 Edit
                                             </button>
-                                            <button class="text-secondary font-weight-bold text-xs" data-toggle="tooltip"
-                                                data-original-title="Delete user">
-                                                Delete
-                                            </button>
+
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -73,23 +77,23 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="POST">
+                    <form action="{{ route('colors.store') }}" method="POST" autocomplete="off">
                         @csrf
+{{--                        <div class="mb-3">--}}
+{{--                            <label for="colorName" class="form-label">STT</label>--}}
+{{--                            <input type="text" class="form-control" id="colorName" name="name" required>--}}
+{{--                        </div>--}}
                         <div class="mb-3">
-                            <label for="colorName" class="form-label">STT</label>
-                            <input type="text" class="form-control" id="colorName" name="name" required>
+                            <label for="name" class="form-label">Tên</label>
+                            <input type="text" class="form-control" name="name" placeholder="Nhập tên màu" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="colorName" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="colorName" name="name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="colorStatus" class="form-label">Trạng thái</label>
-                            <select class="form-control" id="colorStatus" name="status" required>
-                                <option value="Sử dụng">Sử dụng</option>
-                                <option value="Không sử dụng">Không sử dụng</option>
-                            </select>
-                        </div>
+{{--                        <div class="mb-3">--}}
+{{--                            <label for="colorStatus" class="form-label">Trạng thái</label>--}}
+{{--                            <select class="form-control" id="colorStatus" name="status" required>--}}
+{{--                                <option value="Sử dụng">Sử dụng</option>--}}
+{{--                                <option value="Không sử dụng">Không sử dụng</option>--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                             <button type="submit" class="btn btn-primary">Lưu</button>

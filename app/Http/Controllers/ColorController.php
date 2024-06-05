@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Color\ColorCollection;
+use App\Models\Color;
 use Illuminate\Http\Request;
 
 class ColorController extends Controller
@@ -11,7 +13,8 @@ class ColorController extends Controller
      */
     public function index()
     {
-        //
+        $colors = Color::all();
+        return view ('admin.color.index')->with(compact('colors'));
     }
 
     /**
@@ -27,7 +30,13 @@ class ColorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        Color::create($request->all());
+
+        return redirect()->back()->with('success', 'Màu sắc đã được thêm thành công!');
     }
 
     /**
@@ -57,8 +66,11 @@ class ColorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($color)
     {
-        //
+        $color = Color::find($color);
+        $color->delete();
+
+        return redirect()->back()->with('success', 'Màu sắc đã được xóa thành công!');
     }
 }
