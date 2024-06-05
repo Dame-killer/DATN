@@ -15,4 +15,6 @@ class Size extends Model
      * @var array<int, string>
      */
     protected $fillable = ['size_name', 'size_number'];
+
+    protected $table = 'sizes';
 }

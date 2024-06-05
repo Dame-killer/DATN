@@ -16,6 +16,8 @@ class ProductDetail extends Model
      */
     protected $fillable = ['price', 'quantity', 'introduce', 'product_id', 'size_id', 'color_id'];
 
+    protected $table = 'product_details';
+
     /**
      * Get the product that owns the product detail.
      */

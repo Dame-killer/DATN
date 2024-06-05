@@ -16,6 +16,8 @@ class Product extends Model
      */
     protected $fillable = ['code', 'name', 'image', 'category_id', 'brand_id'];
 
+    protected $table = 'products';
+
     /**
      * Get the category that owns the product.
      */

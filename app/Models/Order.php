@@ -16,6 +16,8 @@ class Order extends Model
      */
     protected $fillable = ['receiver', 'address', 'order_date', 'status', 'user_id', 'payment_method_id'];
 
+    protected $table = 'orders';
+
     /**
      * Get the user that placed the order.
      */

@@ -16,6 +16,8 @@ class Category extends Model
      */
     protected $fillable = ['name', 'parent_id'];
 
+    protected $table = 'categories';
+
     /**
      * Get the parent category of the current category.
      */

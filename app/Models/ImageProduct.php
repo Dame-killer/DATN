@@ -16,6 +16,8 @@ class ImageProduct extends Model
      */
     protected $fillable = ['url', 'product_detail_id'];
 
+    protected $table = 'image_products';
+
     /**
      * Get the product detail that owns the image.
      */

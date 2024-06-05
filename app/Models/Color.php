@@ -15,4 +15,6 @@ class Color extends Model
      * @var array<int, string>
      */
     protected $fillable = ['name'];
+
+    protected $table = 'colors';
 }
