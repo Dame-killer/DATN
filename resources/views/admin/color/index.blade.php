@@ -45,7 +45,7 @@
                                         </td>
                                         <td class="align-middle">
                                             <a href="javascript:;" class="text-secondary font-weight-bold text-xs me-2"
-                                                data-toggle="tooltip" data-original-title="Edit user">
+                                                data-toggle="tooltip" data-original-title="Edit user" id="editColorModal">
                                                 Edit
                                             </a>
                                             <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
