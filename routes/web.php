@@ -10,6 +10,7 @@ use App\Http\Controllers\AA\SubjectBTECController;
 use App\Http\Controllers\AA\ClassSubjectController;
 use App\Http\Controllers\AA\CSSController;
 use App\Http\Controllers\Student\StudentController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 //     return redirect()->route('login');
 // });
 
-// Auth::routes();
+Auth::routes();
 
 // Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

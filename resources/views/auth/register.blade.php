@@ -57,6 +57,19 @@
                                autocomplete="new-password">
                     </div>
 
+                    <div class="input-group mb-3"><span class="input-group-text">
+                    <svg class="icon">
+                      <use xlink:href="{{ asset('icons/coreui.svg#cil-user') }}"></use>
+                    </svg></span>
+                        <input class="form-control" type="text" name="phone" placeholder="{{ __('Phone') }}" required
+                               autocomplete="phone" autofocus>
+                        @error('phone')
+                        <span class="invalid-feedback">
+                            {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+
                     <button class="btn btn-block btn-success" type="submit">{{ __('Register') }}</button>
 
                 </form>
