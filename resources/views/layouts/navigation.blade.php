@@ -58,6 +58,51 @@
                     <span class="nav-link-text ms-1">Quản lý màu sắc</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin-brand') }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Quản lý thương hiệu</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin-pay') }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Quản lý phương thức thanh toán</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin-size') }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Quản lý kích cỡ</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin-color') }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Quản lý sản phẩm</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('admin-color') }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Quản lý đơn hàng</span>
+                </a>
+            </li>
         </ul>
     </div>
 </aside>

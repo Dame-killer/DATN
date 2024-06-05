@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\PaymentMethod;
 
 class PaymentMethodController extends Controller
 {
@@ -11,7 +12,8 @@ class PaymentMethodController extends Controller
      */
     public function index()
     {
-        //
+        $pays = PaymentMethod::all();
+        return view ('admin.pay.index')->with(compact('pays'));
     }
 
     /**
