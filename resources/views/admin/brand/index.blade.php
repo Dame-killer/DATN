@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Màu sắc</h6>
+                        <h6>Thương hiệu</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#addColorModal">
                             Add
@@ -29,7 +29,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($colors as $color)
+                                    @foreach ($brands as $brand)
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
@@ -39,13 +39,13 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $color->name }}</p>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $brand->name }}</p>
                                             </td>
                                             <td class="align-middle text-center text-sm">
                                                 <span class="badge badge-sm bg-gradient-success">Sử dụng</span>
                                             </td>
                                             <td class="align-middle">
-                                                <form action="{{ route('colors.destroy', $color->id) }}" method="POST">
+                                                <form action="{{ route('brands.destroy', $brand->id) }}" method="POST">
                                                     @method('DELETE')
                                                     @csrf
                                                     <input class="btn btn-danger btn-sm" type="submit" value="Delete" />
@@ -53,7 +53,7 @@
                                                 <button class="text-secondary font-weight-bold text-xs me-2"
                                                     data-bs-toggle="modal" data-bs-target="#editColorModal" data-id="1"
                                                     data-name="Đỏ" data-status="Sử dụng">
-                                                    Edit
+                                                    Cập nhật
                                                 </button>
 
                                             </td>
@@ -73,7 +73,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addColorModalLabel">Thêm màu mới</h5>
+                    <h5 class="modal-title" id="addColorModalLabel">Thêm thương hiệu</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -109,7 +109,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editColorModalLabel">Chỉnh sửa màu</h5>
+                    <h5 class="modal-title" id="editColorModalLabel">Chỉnh thương hiệu</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

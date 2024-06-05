@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Màu sắc</h6>
+                        <h6>Kích cỡ</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#addColorModal">
                             Add
@@ -53,7 +53,7 @@
                                                 <button class="text-secondary font-weight-bold text-xs me-2"
                                                     data-bs-toggle="modal" data-bs-target="#editColorModal" data-id="1"
                                                     data-name="Đỏ" data-status="Sử dụng">
-                                                    Edit
+                                                    Cập nhật
                                                 </button>
 
                                             </td>
