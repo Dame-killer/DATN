@@ -12,7 +12,7 @@ use App\Http\Controllers\AA\CSSController;
 use App\Http\Controllers\Student\StudentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Hash;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,7 +31,10 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 // Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+//Thêm route tạm thời để mã hóa mật khẩu
+Route::get('/encrypt-password/{password}', function ($password) {
+    return Hash::make($password);
+});
 Route::get('/admin/home', function () { return view('admin/index'); })->name('admin-home');
 Route::get('/admin/acount-customer', function () { return view('admin/acount-customer/index'); })->name('admin-acount-customer');
 Route::get('/customer/home', function () { return view('customer/index'); })->name('customer-home');
