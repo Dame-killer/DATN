@@ -102,7 +102,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('colors.update', $color->id) }}" method="POST" autocomplete="off">
+                    <form action="{{ route('colors.update', $color->id) }}" method="POST" autocomplete="off" id="editColorForm">
                         @method('PUT')
                         @csrf
                         <input type="hidden" id="editColorId" name="id" value="{{ $color->id }}">
@@ -126,6 +126,7 @@
             var button = event.relatedTarget
             var id = button.getAttribute('data-id')
             var name = button.getAttribute('data-name')
+            var form = document.getElementById('editColorForm');
 
             var modalTitle = editColorModal.querySelector('.modal-title')
             var modalBodyInputId = editColorModal.querySelector('#editColorId')
@@ -134,6 +135,7 @@
             modalTitle.textContent = 'Chỉnh sửa màu: ' + name
             modalBodyInputId.value = id
             modalBodyInputName.value = name
+            form.action = "{{ route('colors.update', '') }}/" + id;
         })
     </script>
 @endsection

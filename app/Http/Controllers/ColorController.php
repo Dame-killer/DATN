@@ -61,8 +61,8 @@ class ColorController extends Controller
     public function update(Request $request, $color)
     {
         $data = $request->all();
-        $color = Color::find($color);
-        $color->update($data);
+        $colors = Color::find($color);
+        $colors->update($data);
 
         return redirect()->back()->with('success', 'Màu sắc đã được cập nhật thành công!');
     }
