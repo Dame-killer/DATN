@@ -32,11 +32,12 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-          'name' => 'required'
+            'name' => 'required'
         ]);
 
-        $brand = Brand::create($request->all());
-        return new BrandResource($brand);
+        Brand::create($request->all());
+
+        return redirect()->back()->with('success', 'Thương hiệu đã được thêm thành công!');
     }
 
     /**
@@ -58,18 +59,23 @@ class BrandController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Brand $brand)
+    public function update(Request $request, $brand)
     {
-        $brand->update($request->all());
+        $data = $request->all();
+        $brands = Brand::find($brand);
+        $brands->update($data);
 
-        return new BrandResource($brand);
+        return redirect()->back()->with('success', 'Thương hiệu đã được cập nhật thành công!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Brand $brand)
+    public function destroy($brand)
     {
-        $brand->delete();
+        $brands = Brand::find($brand);
+        $brands->delete();
+
+        return redirect()->back()->with('success', 'Thương hiệu đã được xóa thành công!');
     }
 }

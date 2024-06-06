@@ -14,6 +14,9 @@ class PaymentMethod extends Model
      *
      * @var array<int, string>
      */
+
+    public $timestamps = false;
+
     protected $fillable = ['name'];
 
     protected $table = 'payment_methods';

@@ -7,9 +7,8 @@
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Thương hiệu</h6>
-                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#addColorModal">
-                            Add
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addBrandModal">
+                            Thêm
                         </button>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -18,13 +17,14 @@
                                 <thead>
                                     <tr>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            STT</th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tên</th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Trạng thái</th>
+                                            STT
+                                        </th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Tên thương hiệu
+                                        </th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Trạng thái
+                                        </th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
                                 </thead>
@@ -45,17 +45,16 @@
                                                 <span class="badge badge-sm bg-gradient-success">Sử dụng</span>
                                             </td>
                                             <td class="align-middle">
+                                                <button class="btn btn-warning btn-sm mb-2"
+                                                        data-bs-toggle="modal" data-bs-target="#editBrandModal"
+                                                        data-id="{{ $brand->id }}" data-name="{{ $brand->name }}">
+                                                    Cập nhật
+                                                </button>
                                                 <form action="{{ route('brands.destroy', $brand->id) }}" method="POST">
                                                     @method('DELETE')
                                                     @csrf
-                                                    <input class="btn btn-danger btn-sm" type="submit" value="Delete" />
+                                                    <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
                                                 </form>
-                                                <button class="text-secondary font-weight-bold text-xs me-2"
-                                                    data-bs-toggle="modal" data-bs-target="#editColorModal" data-id="1"
-                                                    data-name="Đỏ" data-status="Sử dụng">
-                                                    Cập nhật
-                                                </button>
-
                                             </td>
                                         </tr>
                                     @endforeach
@@ -68,32 +67,21 @@
         </div>
     </div>
 
-    <!-- Add Color Modal -->
-    <div class="modal fade" id="addColorModal" tabindex="-1" aria-labelledby="addColorModalLabel" aria-hidden="true">
+    <!-- Add Brand Modal -->
+    <div class="modal fade" id="addBrandModal" tabindex="-1" aria-labelledby="addBrandModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addColorModalLabel">Thêm thương hiệu</h5>
+                    <h5 class="modal-title" id="addBrandModalLabel">Thêm thương hiệu</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('colors.store') }}" method="POST" autocomplete="off">
+                    <form action="{{ route('brands.store') }}" method="POST" autocomplete="off">
                         @csrf
-                        {{--                        <div class="mb-3"> --}}
-                        {{--                            <label for="colorName" class="form-label">STT</label> --}}
-                        {{--                            <input type="text" class="form-control" id="colorName" name="name" required> --}}
-                        {{--                        </div> --}}
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên</label>
-                            <input type="text" class="form-control" name="name" placeholder="Nhập tên màu" required>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên thương hiệu" required>
                         </div>
-                        {{--                        <div class="mb-3"> --}}
-                        {{--                            <label for="colorStatus" class="form-label">Trạng thái</label> --}}
-                        {{--                            <select class="form-control" id="colorStatus" name="status" required> --}}
-                        {{--                                <option value="Sử dụng">Sử dụng</option> --}}
-                        {{--                                <option value="Không sử dụng">Không sử dụng</option> --}}
-                        {{--                            </select> --}}
-                        {{--                        </div> --}}
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                             <button type="submit" class="btn btn-primary">Lưu</button>
@@ -105,21 +93,21 @@
     </div>
 
     <!-- Edit Color Modal -->
-    <div class="modal fade" id="editColorModal" tabindex="-1" aria-labelledby="editColorModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editBrandModal" tabindex="-1" aria-labelledby="editBrandModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editColorModalLabel">Chỉnh thương hiệu</h5>
+                    <h5 class="modal-title" id="editBrandModalLabel">Cập nhật thương hiệu</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="POST">
+                    <form action="{{ route('brands.update', '') }}" method="POST" autocomplete="off" id="editBrandForm">
                         @csrf
                         @method('PUT')
-                        <input type="hidden" id="editColorId" name="id">
+                        <input type="hidden" id="editBrandId" name="id">
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên</label>
-                            <input type="text" class="form-control" name="name" required>
+                            <input type="text" class="form-control" id="editBrandName" name="name" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -132,22 +120,21 @@
     </div>
 
     <script>
-        var editColorModal = document.getElementById('editColorModal')
-        editColorModal.addEventListener('show.bs.modal', function(event) {
+        var editBrandModal = document.getElementById('editBrandModal')
+        editBrandModal.addEventListener('show.bs.modal', function(event) {
             var button = event.relatedTarget
             var id = button.getAttribute('data-id')
             var name = button.getAttribute('data-name')
-            var status = button.getAttribute('data-status')
+            var form = document.getElementById('editBrandForm');
 
-            var modalTitle = editColorModal.querySelector('.modal-title')
-            var modalBodyInputId = editColorModal.querySelector('#editColorId')
-            var modalBodyInputName = editColorModal.querySelector('#editColorName')
-            var modalBodySelectStatus = editColorModal.querySelector('#editColorStatus')
+            var modalTitle = editBrandModal.querySelector('.modal-title')
+            var modalBodyInputId = editBrandModal.querySelector('#editBrandId')
+            var modalBodyInputName = editBrandModal.querySelector('#editBrandName')
 
-            modalTitle.textContent = 'Chỉnh sửa màu: ' + name
+            modalTitle.textContent = 'Cập nhật thương hiệu: ' + name
             modalBodyInputId.value = id
             modalBodyInputName.value = name
-            modalBodySelectStatus.value = status
+            form.action = "{{ route('brands.update', '') }}/" + id;
         })
     </script>
 @endsection

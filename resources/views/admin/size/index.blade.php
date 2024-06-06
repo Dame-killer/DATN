@@ -7,9 +7,8 @@
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Kích cỡ</h6>
-                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#addColorModal">
-                            Add
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addSizeModal">
+                            Thêm
                         </button>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -19,17 +18,17 @@
                                     <tr>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             STT</th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tên</th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Trạng thái</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Kích cỡ
+                                        </th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Trạng thái
+                                        </th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($colors as $color)
+                                    @foreach ($sizes as $size)
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
@@ -39,23 +38,22 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $color->name }}</p>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $size->size_name }}-{{ $size->size_number }}</p>
                                             </td>
                                             <td class="align-middle text-center text-sm">
                                                 <span class="badge badge-sm bg-gradient-success">Sử dụng</span>
                                             </td>
                                             <td class="align-middle">
-                                                <form action="{{ route('colors.destroy', $color->id) }}" method="POST">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <input class="btn btn-danger btn-sm" type="submit" value="Delete" />
-                                                </form>
-                                                <button class="text-secondary font-weight-bold text-xs me-2"
-                                                    data-bs-toggle="modal" data-bs-target="#editColorModal" data-id="1"
-                                                    data-name="Đỏ" data-status="Sử dụng">
+                                                <button class="btn btn-warning btn-sm mb-2"
+                                                        data-bs-toggle="modal" data-bs-target="#editSizeModal" data-id="{{ $size->id }}"
+                                                        data-name="{{ $size->size_name }}" data-number="{{ $size->size_number }}">
                                                     Cập nhật
                                                 </button>
-
+                                                <form action="{{ route('sizes.destroy', $size->id) }}" method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -68,32 +66,25 @@
         </div>
     </div>
 
-    <!-- Add Color Modal -->
-    <div class="modal fade" id="addColorModal" tabindex="-1" aria-labelledby="addColorModalLabel" aria-hidden="true">
+    <!-- Add Size Modal -->
+    <div class="modal fade" id="addSizeModal" tabindex="-1" aria-labelledby="addSizeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addColorModalLabel">Thêm màu mới</h5>
+                    <h5 class="modal-title" id="addSizeModalLabel">Thêm kích cỡ</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('colors.store') }}" method="POST" autocomplete="off">
+                    <form action="{{ route('sizes.store') }}" method="POST" autocomplete="off">
                         @csrf
-                        {{--                        <div class="mb-3"> --}}
-                        {{--                            <label for="colorName" class="form-label">STT</label> --}}
-                        {{--                            <input type="text" class="form-control" id="colorName" name="name" required> --}}
-                        {{--                        </div> --}}
                         <div class="mb-3">
-                            <label for="name" class="form-label">Tên</label>
-                            <input type="text" class="form-control" name="name" placeholder="Nhập tên màu" required>
+                            <label for="size_name" class="form-label">Tên</label>
+                            <input type="text" class="form-control" id="size_name" name="size_name" placeholder="Nhập tên kích cỡ" required>
                         </div>
-                        {{--                        <div class="mb-3"> --}}
-                        {{--                            <label for="colorStatus" class="form-label">Trạng thái</label> --}}
-                        {{--                            <select class="form-control" id="colorStatus" name="status" required> --}}
-                        {{--                                <option value="Sử dụng">Sử dụng</option> --}}
-                        {{--                                <option value="Không sử dụng">Không sử dụng</option> --}}
-                        {{--                            </select> --}}
-                        {{--                        </div> --}}
+                        <div class="mb-3">
+                            <label for="size_number" class="form-label">Số</label>
+                            <input type="number" class="form-control" id="size_number" name="size_number" placeholder="Nhập số kích cỡ" required>
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                             <button type="submit" class="btn btn-primary">Lưu</button>
@@ -104,22 +95,26 @@
         </div>
     </div>
 
-    <!-- Edit Color Modal -->
-    <div class="modal fade" id="editColorModal" tabindex="-1" aria-labelledby="editColorModalLabel" aria-hidden="true">
+    <!-- Edit Size Modal -->
+    <div class="modal fade" id="editSizeModal" tabindex="-1" aria-labelledby="editSizeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editColorModalLabel">Chỉnh sửa màu</h5>
+                    <h5 class="modal-title" id="editSizeModalLabel">Cập nhật kích cỡ</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="POST">
-                        @csrf
+                    <form action="{{ route('sizes.update', '') }}" method="POST" autocomplete="off" id="editSizeForm">
                         @method('PUT')
-                        <input type="hidden" id="editColorId" name="id">
+                        @csrf
+                        <input type="hidden" id="editSizeId" name="id">
                         <div class="mb-3">
-                            <label for="name" class="form-label">Tên</label>
-                            <input type="text" class="form-control" name="name" required>
+                            <label for="size_name" class="form-label">Tên</label>
+                            <input type="text" class="form-control" id="editSizeName" name="size_name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="size_number" class="form-label">Số</label>
+                            <input type="number" class="form-control" id="editSizeNumber" name="size_number" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -132,22 +127,24 @@
     </div>
 
     <script>
-        var editColorModal = document.getElementById('editColorModal')
-        editColorModal.addEventListener('show.bs.modal', function(event) {
+        var editSizeModal = document.getElementById('editSizeModal')
+        editSizeModal.addEventListener('show.bs.modal', function(event) {
             var button = event.relatedTarget
             var id = button.getAttribute('data-id')
-            var name = button.getAttribute('data-name')
-            var status = button.getAttribute('data-status')
+            var size_name = button.getAttribute('data-name')
+            var size_number = button.getAttribute('data-number')
+            var form = document.getElementById('editSizeForm');
 
-            var modalTitle = editColorModal.querySelector('.modal-title')
-            var modalBodyInputId = editColorModal.querySelector('#editColorId')
-            var modalBodyInputName = editColorModal.querySelector('#editColorName')
-            var modalBodySelectStatus = editColorModal.querySelector('#editColorStatus')
+            var modalTitle = editSizeModal.querySelector('.modal-title')
+            var modalBodyInputId = editSizeModal.querySelector('#editSizeId')
+            var modalBodyInputName = editSizeModal.querySelector('#editSizeName')
+            var modalBodyInputNumber = editSizeModal.querySelector('#editSizeNumber')
 
-            modalTitle.textContent = 'Chỉnh sửa màu: ' + name
+            modalTitle.textContent = 'Cập nhật kích cỡ: ' + size_name + size_number
             modalBodyInputId.value = id
-            modalBodyInputName.value = name
-            modalBodySelectStatus.value = status
+            modalBodyInputName.value = size_name
+            modalBodyInputNumber.value = size_number
+            form.action = "{{ route('sizes.update', '') }}/" + id;
         })
     </script>
 @endsection

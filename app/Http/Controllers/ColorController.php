@@ -72,8 +72,8 @@ class ColorController extends Controller
      */
     public function destroy($color)
     {
-        $color = Color::find($color);
-        $color->delete();
+        $colors = Color::find($color);
+        $colors->delete();
 
         return redirect()->back()->with('success', 'Màu sắc đã được xóa thành công!');
     }

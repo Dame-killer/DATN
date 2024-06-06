@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Size;
 use Illuminate\Http\Request;
 
 class SizeController extends Controller
@@ -11,7 +12,8 @@ class SizeController extends Controller
      */
     public function index()
     {
-        //
+        $sizes = Size::all();
+        return view ('admin.size.index')->with(compact('sizes'));
     }
 
     /**
@@ -27,7 +29,14 @@ class SizeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'size_name' => 'required',
+            'size_number' => 'required',
+        ]);
+
+        Size::create($request->all());
+
+        return redirect()->back()->with('success', 'Kích cỡ đã được thêm thành công!');
     }
 
     /**
@@ -49,16 +58,23 @@ class SizeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $size)
     {
-        //
+        $data = $request->all();
+        $sizes = Size::find($size);
+        $sizes->update($data);
+
+        return redirect()->back()->with('success', 'Kích cỡ đã được cập nhật thành công!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($size)
     {
-        //
+        $sizes = Size::find($size);
+        $sizes->delete();
+
+        return redirect()->back()->with('success', 'Kích cỡ đã được xóa thành công!');
     }
 }

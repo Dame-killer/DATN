@@ -12,8 +12,8 @@ class PaymentMethodController extends Controller
      */
     public function index()
     {
-        $pays = PaymentMethod::all();
-        return view ('admin.pay.index')->with(compact('pays'));
+        $payment_methods = PaymentMethod::all();
+        return view ('admin.pay.index')->with(compact('payment_methods'));
     }
 
     /**
@@ -29,7 +29,13 @@ class PaymentMethodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        PaymentMethod::create($request->all());
+
+        return redirect()->back()->with('success', 'Phương thức thanh toán đã được thêm thành công!');
     }
 
     /**
@@ -51,16 +57,23 @@ class PaymentMethodController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $payment_method)
     {
-        //
+        $data = $request->all();
+        $payment_methods = PaymentMethod::find($payment_method);
+        $payment_methods->update($data);
+
+        return redirect()->back()->with('success', 'Phương thức thanh toán đã được cập nhật thành công!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($payment_method)
     {
-        //
+        $payment_methods = PaymentMethod::find($payment_method);
+        $payment_methods->delete();
+
+        return redirect()->back()->with('success', 'Phương thức thanh toán đã được xóa thành công!');
     }
 }
