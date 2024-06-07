@@ -17,18 +17,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return redirect()->route('login');
-// });
+ Route::get('/', function () {
+     return redirect()->route('login');
+ });
 
 Auth::routes();
 //ADMIN
-Route::get('/admin/home', function () { return view('admin/index'); })->name('admin-home');
-Route::get('/admin/acount-customer', function () { return view('admin/acount-customer/index'); })->name('admin-acount-customer');
-Route::get('/admin/color', [ColorController::class, 'index'])->name('admin-color');
-Route::get('/admin/size', [SizeController::class, 'index'])->name('admin-size');
-Route::get('/admin/brand', [BrandController::class, 'index'])->name('admin-brand');
-Route::get('/admin/pay', [PaymentMethodController::class, 'index'])->name('admin-pay');
+Route::middleware('auth')->group(function () {
+    Route::get('/admin/home', function () { return view('admin/index'); })->name('admin-home');
+    Route::get('/admin/acount-customer', function () { return view('admin/acount-customer/index'); })->name('admin-acount-customer');
+    Route::get('/admin/color', [ColorController::class, 'index'])->name('admin-color');
+    Route::get('/admin/size', [SizeController::class, 'index'])->name('admin-size');
+    Route::get('/admin/brand', [BrandController::class, 'index'])->name('admin-brand');
+    Route::get('/admin/pay', [PaymentMethodController::class, 'index'])->name('admin-pay');
+});
 
 //CUSTOMER
 Route::get('/customer/home', function () { return view('customer/index'); })->name('customer-home');

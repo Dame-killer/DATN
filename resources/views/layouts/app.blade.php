@@ -53,17 +53,27 @@
                         </div>
                     </div>
                     <ul class="navbar-nav  justify-content-end">
-                        <li class="nav-item d-flex align-items-center">
-                            <form role="form" method="post" action="{{ route('admin-home') }}" id="logout-form">
-                                @csrf
-                                <a href="{{ route('admin-home') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                    class="nav-link text-white font-weight-bold px-0">
+                        @if(Auth::check())
+                            <li class="nav-item dropdown d-flex align-items-center">
+                                <a href="javascript:" class="nav-link text-white font-weight-bold px-0" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-user me-sm-1"></i>
-                                    <span class="d-sm-inline d-none">Log out</span>
+                                    <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
                                 </a>
-                            </form>
-                        </li>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li>
+                                        <form role="form" method="post" action="{{ route('logout') }}" id="logout-form">
+                                            @csrf
+                                            <a href="{{ route('logout') }}"
+                                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                                               class="dropdown-item">
+                                                <i class="fa fa-sign-out-alt me-sm-1"></i>
+                                                <span>Đăng xuất</span>
+                                            </a>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endif
                         <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                             <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
                                 <div class="sidenav-toggler-inner">
