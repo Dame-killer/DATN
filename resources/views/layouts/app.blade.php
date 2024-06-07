@@ -53,42 +53,16 @@
                         </div>
                     </div>
                     <ul class="navbar-nav  justify-content-end">
-                        @if(Auth::check())
-                            <li class="nav-item dropdown d-flex align-items-center">
-                                <a href="javascript:" class="nav-link text-white font-weight-bold px-0" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        @if (Auth::check())
+                            <li class="nav-item dropdown d-flex align-items-center m-2">
+                                <a href="javascript:;" class="nav-link text-white font-weight-bold px-0"
+                                    id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-user me-sm-1"></i>
                                     <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                    <li>
-                                        <form role="form" method="post" action="{{ route('logout') }}" id="logout-form">
-                                            @csrf
-                                            <a href="{{ route('logout') }}"
-                                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                                               class="dropdown-item">
-                                                <i class="fa fa-sign-out-alt me-sm-1"></i>
-                                                <span>Đăng xuất</span>
-                                            </a>
-                                        </form>
-                                    </li>
-                                </ul>
                             </li>
                         @endif
-                        <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-                            <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
-                                <div class="sidenav-toggler-inner">
-                                    <i class="sidenav-toggler-line bg-white"></i>
-                                    <i class="sidenav-toggler-line bg-white"></i>
-                                    <i class="sidenav-toggler-line bg-white"></i>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item px-3 d-flex align-items-center">
-                            <a href="javascript:;" class="nav-link text-white p-0">
-                                <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown pe-2 d-flex align-items-center">
+                        <li class="nav-item dropdown pe-2 d-flex align-items-center m-2">
                             <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-bell cursor-pointer"></i>
@@ -136,8 +110,8 @@
                                     <a class="dropdown-item border-radius-md" href="javascript:;">
                                         <div class="d-flex py-1">
                                             <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
-                                                <svg width="12px" height="12px" viewBox="0 0 43 36"
-                                                    version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                                <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1"
+                                                    xmlns="http://www.w3.org/2000/svg"
                                                     xmlns:xlink="http://www.w3.org/1999/xlink">
                                                     <title>credit-card</title>
                                                     <g stroke="none" stroke-width="1" fill="none"
@@ -171,6 +145,16 @@
                                     </a>
                                 </li>
                             </ul>
+                        </li>
+                        <li class="nav-item pe-2 d-flex align-items-center">
+                            <a href="{{ route('logout') }}"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="fa fa-sign-out-alt me-sm-1 " style="color: white"></i>
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                style="display: none;">
+                                @csrf
+                            </form>
                         </li>
                     </ul>
                 </div>
