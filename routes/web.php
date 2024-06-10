@@ -4,6 +4,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\PaymentMethodController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 /*
@@ -30,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/size', [SizeController::class, 'index'])->name('admin-size');
     Route::get('/admin/brand', [BrandController::class, 'index'])->name('admin-brand');
     Route::get('/admin/pay', [PaymentMethodController::class, 'index'])->name('admin-pay');
+    Route::get('/admin/product', [ProductController::class, 'index'])->name('admin-product');
 });
 
 //CUSTOMER
