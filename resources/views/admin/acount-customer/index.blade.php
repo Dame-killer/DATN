@@ -25,9 +25,7 @@
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Email</th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Trạng thái</th>
+
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
                                 </thead>
@@ -45,10 +43,6 @@
                                         </td>
                                         <td class="align-middle text-center text-sm">
                                             <p class="text-xs font-weight-bold mb-0">Long@gmail.com</p>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="badge badge-sm bg-gradient-success">Sử dụng</span>
-
                                         </td>
                                         <td class="align-middle text-center"><span
                                                 class="text-secondary text-xs font-weight-bold">23/04/18</span></td>
@@ -92,13 +86,6 @@
                             <label for="authorFunction" class="form-label">Email</label>
                             <input type="text" class="form-control" id="authorEmail" name="function" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="authorStatus" class="form-label">Status</label>
-                            <select class="form-control" id="authorStatus" name="status" required>
-                                <option value="online">Sử dụng</option>
-                                <option value="offline">Không sử dụng</option>
-                            </select>
-                        </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -131,13 +118,6 @@
                         <div class="mb-3">
                             <label for="editColorEmail" class="form-label">Email</label>
                             <input type="text" class="form-control" id="editColorEmail" name="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editColorStatus" class="form-label">Trạng thái</label>
-                            <select class="form-control" id="editColorStatus" name="status" required>
-                                <option value="Sử dụng">Sử dụng</option>
-                                <option value="Không sử dụng">Không sử dụng</option>
-                            </select>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>

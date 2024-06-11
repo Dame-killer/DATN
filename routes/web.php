@@ -6,6 +6,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ImageProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 /*
@@ -34,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/pay', [PaymentMethodController::class, 'index'])->name('admin-pay');
     Route::get('/admin/product', [ProductController::class, 'index'])->name('admin-product');
     Route::get('/admin/category', [CategoryController::class, 'index'])->name('admin-category');
+    Route::get('/admin/image', [ImageProductController::class, 'index'])->name('admin-image');
 });
 
 //CUSTOMER

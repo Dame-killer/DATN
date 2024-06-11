@@ -7,7 +7,8 @@
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Kích cỡ</h6>
-                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addSizeModal">
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#addSizeModal">
                             Thêm
                         </button>
                     </div>
@@ -18,11 +19,9 @@
                                     <tr>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             STT</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Kích cỡ
-                                        </th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Trạng thái
                                         </th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
@@ -38,15 +37,14 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $size->size_name }}-{{ $size->size_number }}</p>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-success">Sử dụng</span>
+                                                <p class="text-xs font-weight-bold mb-0">
+                                                    {{ $size->size_name }}-{{ $size->size_number }}</p>
                                             </td>
                                             <td class="align-middle">
-                                                <button class="btn btn-warning btn-sm mb-2"
-                                                        data-bs-toggle="modal" data-bs-target="#editSizeModal" data-id="{{ $size->id }}"
-                                                        data-name="{{ $size->size_name }}" data-number="{{ $size->size_number }}">
+                                                <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
+                                                    data-bs-target="#editSizeModal" data-id="{{ $size->id }}"
+                                                    data-name="{{ $size->size_name }}"
+                                                    data-number="{{ $size->size_number }}">
                                                     Cập nhật
                                                 </button>
                                                 <form action="{{ route('sizes.destroy', $size->id) }}" method="POST">
@@ -79,11 +77,13 @@
                         @csrf
                         <div class="mb-3">
                             <label for="size_name" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="size_name" name="size_name" placeholder="Nhập tên kích cỡ" required>
+                            <input type="text" class="form-control" id="size_name" name="size_name"
+                                placeholder="Nhập tên kích cỡ" required>
                         </div>
                         <div class="mb-3">
                             <label for="size_number" class="form-label">Số</label>
-                            <input type="number" class="form-control" id="size_number" name="size_number" placeholder="Nhập số kích cỡ" required>
+                            <input type="number" class="form-control" id="size_number" name="size_number"
+                                placeholder="Nhập số kích cỡ" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>

@@ -23,7 +23,7 @@
 
 <body>
     <div class="min-height-300 bg-primary position-absolute w-100"></div>
-    <div class="sidebar" id="sidebar">
+    <div class="sidebar" id="sidebar" style="width: 450px">
         @include('layouts.navigation')
     </div>
     </div>

@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Quản lý quần áo</h6>
+                        <h6>Quản lý chi tiết quần áo</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#addProductModal">
                             Thêm
@@ -22,23 +22,23 @@
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Mã sản phẩm
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tên sản phẩm
+                                            Giá
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Ảnh
+                                            Số lượng
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Danh mục
+                                            Màu sắc
                                         </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Thương hiệu
+                                            Kích cỡ
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Mô tả
                                         </th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
@@ -56,12 +56,10 @@
                                             <td>
                                                 <p class="text-xs font-weight-bold mb-0">{{ $product->name }}</p>
                                             </td>
+                                            <td class="align-middle text-center text-sm">
+                                                <span class="badge badge-sm bg-gradient-success">Sử dụng</span>
+                                            </td>
                                             <td class="align-middle">
-                                                {{-- <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
-                                                    data-bs-target="#editProductModal" data-id="{{ $product->id }}"
-                                                    data-name="{{ $product->name }}">
-                                                    Xem chi tiết
-                                                </button> --}}
                                                 <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
                                                     data-bs-target="#editProductModal" data-id="{{ $product->id }}"
                                                     data-name="{{ $product->name }}">
@@ -89,34 +87,34 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addProductModalLabel">Thêm quần áo</h5>
+                    <h5 class="modal-title" id="addProductModalLabel">Thêm chi tiết quần áo</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('products.store') }}" method="POST" autocomplete="off">
                         @csrf
                         <div class="mb-3">
-                            <label for="name" class="form-label">Mã</label>
+                            <label for="name" class="form-label">Giá</label>
                             <input type="text" class="form-control" id="name" name="name"
                                 placeholder="Nhập tên quần áo" required>
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Nhập tên quần áo" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Ảnh</label>
+                            <label for="name" class="form-label">Số lượng</label>
                             <input type="text" class="form-control" id="image" name="name"
                                 placeholder="Nhập ảnh quần áo" required>
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Danh mục</label>
+                            <label for="name" class="form-label">Kích cỡ</label>
                             <input type="text" class="form-control" id="brand" name="name"
                                 placeholder="Nhập ảnh quần áo" required>
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Thương hiệu</label>
+                            <label for="name" class="form-label">Màu sắc</label>
+                            <input type="text" class="form-control" id="brand" name="name"
+                                placeholder="Nhập ảnh quần áo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Mô tả</label>
                             <input type="text" class="form-control" id="brand" name="name"
                                 placeholder="Nhập ảnh quần áo" required>
                         </div>
@@ -146,28 +144,33 @@
                         @csrf
                         <input type="hidden" id="editProductId" name="id">
                         <div class="mb-3">
-                            <label for="name" class="form-label">Mã</label>
-                            <input type="text" class="form-control" id="editProductName" name="name" required>
+                            <label for="name" class="form-label">Giá</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="Nhập tên quần áo" required>
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="editProductName" name="name" required>
+                            <label for="name" class="form-label">Số lượng</label>
+                            <input type="text" class="form-control" id="image" name="name"
+                                placeholder="Nhập ảnh quần áo" required>
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Ảnh</label>
-                            <input type="text" class="form-control" id="editProductName" name="image" required>
+                            <label for="name" class="form-label">Kích cỡ</label>
+                            <input type="text" class="form-control" id="brand" name="name"
+                                placeholder="Nhập ảnh quần áo" required>
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Danh mục</label>
-                            <input type="text" class="form-control" id="editProductName" name="brand" required>
+                            <label for="name" class="form-label">Màu sắc</label>
+                            <input type="text" class="form-control" id="brand" name="name"
+                                placeholder="Nhập ảnh quần áo" required>
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Thương hiệu</label>
-                            <input type="text" class="form-control" id="editProductName" name="brand" required>
+                            <label for="name" class="form-label">Mô tả</label>
+                            <input type="text" class="form-control" id="brand" name="name"
+                                placeholder="Nhập ảnh quần áo" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
                         </div>
                     </form>
                 </div>
