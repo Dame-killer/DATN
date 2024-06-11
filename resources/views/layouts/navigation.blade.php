@@ -116,19 +116,78 @@
     </div>
 </aside>
 <style>
+    .sidenav {
+        height: auto;
+        overflow: hidden;
+        /* Prevents scrollbar */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidenav-header {
+        padding: 20px;
+        flex-shrink: 0;
+        /* Prevents header from shrinking */
+    }
+
+    .sidenav .w-auto {
+        flex-grow: 1;
+        overflow-y: auto;
+        /* Allows scrolling within the collapse section */
+    }
+
     .icon-size {
-        width: 1em;
-        height: 1em;
+        width: 1.5em;
+        height: 1.5em;
         vertical-align: middle;
+        color: #343a40;
+        /* Changes the icon color */
     }
 
     .nav-link {
         display: flex;
         align-items: center;
+        padding: 10px 15px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    .icon-shape {
-        display: none;
-        /* Hide the extra icon if not needed */
+    .nav-link:hover {
+        background-color: #f8f9fa;
+        color: #495057;
+    }
+
+    .nav-link.active {
+        background-color: #e9ecef;
+        font-weight: bold;
+        color: #495057;
+    }
+
+    .nav-link-text {
+        margin-left: 10px;
+        font-size: 1em;
+    }
+
+    .sidenav-header .nav-link {
+        font-size: 1.25em;
+    }
+
+    .sidenav-header .w-6 {
+        width: 1.75em;
+        height: 1.75em;
+        color: #495057;
+    }
+
+    .navbar-nav {
+        padding-left: 10px;
+    }
+
+    .navbar-nav li {
+        margin-bottom: 10px;
+    }
+
+    .navbar-nav h6 {
+        font-size: 0.85em;
+        color: #6c757d;
     }
 </style>
