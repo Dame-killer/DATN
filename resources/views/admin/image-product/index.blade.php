@@ -40,9 +40,6 @@
                                             <td>
                                                 <p class="text-xs font-weight-bold mb-0">{{ $imageProduct->image }}</p>
                                             </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-success">Sử dụng</span>
-                                            </td>
                                             <td class="align-middle">
                                                 <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
                                                     data-bs-target="#editProductModal" data-id="{{ $product->id }}">
