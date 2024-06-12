@@ -29,7 +29,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'code' => 'required',
+            'name' => 'required',
+            'image' => 'required',
+            'category_id' => 'required|exists:categories,id',
+            'brand_id' => 'required|exists:brands,id',
+        ]);
+
+        Product::create($request->all());
+
+        return redirect()->back()->with('success', 'Sản phẩm đã được thêm thành công!');
     }
 
     /**
@@ -53,14 +63,28 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'code' => 'required',
+            'name' => 'required',
+            'image' => 'required',
+            'category_id' => 'required|exists:categories,id',
+            'brand_id' => 'required|exists:brands,id',
+        ]);
+
+        $product = Product::findOrFail($id);
+        $product->update($request->all());
+
+        return redirect()->back()->with('success', 'Sản phẩm đã được cập nhật thành công!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($product)
     {
-        //
+        $products = Product::findOrFail($product);
+        $products->delete();
+
+        return redirect()->back()->with('success', 'Sản phẩm đã được xóa thành công!');
     }
 }
