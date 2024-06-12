@@ -7,7 +7,8 @@
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Màu sắc</h6>
-                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addColorModal">
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#addColorModal">
                             Thêm
                         </button>
                     </div>
@@ -19,20 +20,19 @@
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             STT
                                         </th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Tên màu sắc
                                         </th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Màu sắc
-                                        </th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Trạng thái
                                         </th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($colors as $color)
+                                    @foreach ($colors as $color)
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
@@ -45,15 +45,14 @@
                                                 <p class="text-xs font-weight-bold mb-0">{{ $color->name }}</p>
                                             </td>
                                             <td>
-                                                <div style="width: 20px; height: 20px; background-color: {{ $color->code }};"></div>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-success">Sử dụng</span>
+                                                <div
+                                                    style="width: 20px; height: 20px; background-color: {{ $color->code }};">
+                                                </div>
                                             </td>
                                             <td class="align-middle">
                                                 <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
-                                                        data-bs-target="#editColorModal" data-id="{{ $color->id }}"
-                                                        data-name="{{ $color->name }}" data-code="{{ $color->code }}">
+                                                    data-bs-target="#editColorModal" data-id="{{ $color->id }}"
+                                                    data-name="{{ $color->name }}" data-code="{{ $color->code }}">
                                                     Cập nhật
                                                 </button>
                                                 <form action="{{ route('colors.destroy', $color->id) }}" method="POST">
@@ -86,7 +85,8 @@
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên màu" required>
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="Nhập tên màu" required>
                         </div>
                         <div class="mb-3">
                             <label for="code" class="form-label">Mã màu</label>
