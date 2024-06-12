@@ -14,6 +14,9 @@ class Product extends Model
      *
      * @var array<int, string>
      */
+
+    public $timestamps = false;
+
     protected $fillable = ['code', 'name', 'image', 'category_id', 'brand_id'];
 
     protected $table = 'products';
