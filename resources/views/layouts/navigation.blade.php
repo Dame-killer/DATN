@@ -4,7 +4,7 @@
     <div class="sidenav-header" style="display: flex; justify-content: center; align-items: center; position: relative;">
         <a class="nav-link {{ Route::currentRouteName() == 'admin-home' ? 'active' : '' }}"
             href="{{ route('admin-home') }}">
-            {{-- <img src="./img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo"> --}}
+            <img src="{{ asset('assets/image/logo') }}" class="navbar-brand-img h-100" alt="main_logo">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round"

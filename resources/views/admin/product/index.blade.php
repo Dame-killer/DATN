@@ -60,7 +60,9 @@
                                                 <p class="text-xs font-weight-bold mb-0">{{ $product->name }}</p>
                                             </td>
                                             <td>
-                                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="img-fluid" style="width: 50px; height: 50px;">
+                                                <img src="{{ asset('public/assets/images' . $product->image) }}"
+                                                    alt="{{ $product->name }}" class="img-fluid"
+                                                    style="width: 50px; height: 50px;">
                                             </td>
                                             <td>
                                                 <p class="text-xs font-weight-bold mb-0">{{ $product->category->name }}</p>
@@ -110,23 +112,23 @@
                         <div class="mb-3">
                             <label for="code" class="form-label">Mã</label>
                             <input type="text" class="form-control" id="code" name="code"
-                                   placeholder="Nhập mã sản phẩm" required>
+                                placeholder="Nhập mã sản phẩm" required>
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nhập tên sản phẩm" required>
+                                placeholder="Nhập tên sản phẩm" required>
                         </div>
                         <div class="mb-3">
                             <label for="image" class="form-label">Ảnh</label>
                             <input type="file" class="form-control" id="image" name="image"
-                                   placeholder="Nhập URL ảnh sản phẩm" required>
+                                placeholder="Nhập URL ảnh sản phẩm" required>
                         </div>
                         <div class="mb-3">
                             <label for="category_id" class="form-label">Danh mục</label>
                             <select class="form-control" id="category_id" name="category_id" required>
                                 <option value="">Chọn danh mục</option>
-                                @foreach($categories as $category)
+                                @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
@@ -135,7 +137,7 @@
                             <label for="brand_id" class="form-label">Thương hiệu</label>
                             <select class="form-control" id="brand_id" name="brand_id" required>
                                 <option value="">Chọn thương hiệu</option>
-                                @foreach($brands as $brand)
+                                @foreach ($brands as $brand)
                                     <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                 @endforeach
                             </select>
@@ -181,7 +183,7 @@
                             <label for="editCategory_id" class="form-label">Danh mục</label>
                             <select class="form-control" id="editCategory_id" name="category_id" required>
                                 <option value="">Chọn danh mục</option>
-                                @foreach($categories as $category)
+                                @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
@@ -190,7 +192,7 @@
                             <label for="editBrand_id" class="form-label">Thương hiệu</label>
                             <select class="form-control" id="editBrand_id" name="brand_id" required>
                                 <option value="">Chọn thương hiệu</option>
-                                @foreach($brands as $brand)
+                                @foreach ($brands as $brand)
                                     <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                 @endforeach
                             </select>
