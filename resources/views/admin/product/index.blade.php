@@ -119,7 +119,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="image" class="form-label">Ảnh</label>
-                            <input type="text" class="form-control" id="image" name="image"
+                            <input type="file" class="form-control" id="image" name="image"
                                    placeholder="Nhập URL ảnh sản phẩm" required>
                         </div>
                         <div class="mb-3">
@@ -175,7 +175,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="editImage" class="form-label">Ảnh</label>
-                            <input type="text" class="form-control" id="editImage" name="image" required>
+                            <input type="file" class="form-control" id="editImage" name="image" required>
                         </div>
                         <div class="mb-3">
                             <label for="editCategory_id" class="form-label">Danh mục</label>
