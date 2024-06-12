@@ -12,6 +12,7 @@ class OrderDetailController extends Controller
     public function index()
     {
         $orderDetails = OrderDetail::all();
+
         return view ('admin.order-detail.index')->with(compact('orderDetails'));
     }
 

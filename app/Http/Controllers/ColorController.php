@@ -14,6 +14,7 @@ class ColorController extends Controller
     public function index()
     {
         $colors = Color::all();
+
         return view ('admin.color.index')->with(compact('colors'));
     }
 

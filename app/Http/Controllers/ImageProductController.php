@@ -12,6 +12,7 @@ class ImageProductController extends Controller
     public function index()
     {
         $imageProducts = ImageProduct::all();
+
         return view ('admin.image-product.index')->with(compact('imageProducts'));
     }
 

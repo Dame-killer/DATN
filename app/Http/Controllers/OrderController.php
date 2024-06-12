@@ -12,6 +12,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::all();
+
         return view ('admin.order.index')->with(compact('orders'));
     }
 

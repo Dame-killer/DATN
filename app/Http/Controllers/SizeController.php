@@ -13,6 +13,7 @@ class SizeController extends Controller
     public function index()
     {
         $sizes = Size::all();
+
         return view ('admin.size.index')->with(compact('sizes'));
     }
 
