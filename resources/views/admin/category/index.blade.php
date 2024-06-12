@@ -28,33 +28,72 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($categories as $category)
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
-                                                    </div>
+                                @foreach ($categories as $category)
+                                    <tr data-bs-toggle="collapse" data-bs-target="#children-{{ $category->id }}" aria-expanded="false" aria-controls="children-{{ $category->id }}">
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $category->name }}</p>
-                                            </td>
-                                            <td class="align-middle">
-                                                <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $category->name }}</p>
+                                        </td>
+                                        <td class="align-middle">
+                                            <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
                                                     data-bs-target="#editCategoryModal" data-id="{{ $category->id }}"
                                                     data-name="{{ $category->name }}">
-                                                    Cập nhật
-                                                </button>
-                                                <form action="{{ route('categories.destroy', $category->id) }}"
-                                                    method="POST">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                                Cập nhật
+                                            </button>
+                                            <form action="{{ route('categories.destroy', $category->id) }}"
+                                                  method="POST" style="display: inline-block;">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
+                                            </form>
+                                            <button class="btn btn-success btn-sm mb-2" data-bs-toggle="modal"
+                                                    data-bs-target="#addCategoryModal" data-parent-id="{{ $category->id }}">
+                                                Thêm danh mục con
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="collapse" id="children-{{ $category->id }}">
+                                        <td colspan="3">
+                                            <table class="table align-items-center mb-0">
+                                                <tbody>
+                                                @foreach ($category->children as $child)
+                                                    <tr>
+                                                        <td>
+                                                            <div class="d-flex px-2 py-1">
+                                                                <div class="d-flex flex-column justify-content-center">
+                                                                    <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <p class="text-xs font-weight-bold mb-0">{{ $child->name }}</p>
+                                                        </td>
+                                                        <td class="align-middle">
+                                                            <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
+                                                                    data-bs-target="#editCategoryModal" data-id="{{ $child->id }}"
+                                                                    data-name="{{ $child->name }}">
+                                                                Cập nhật
+                                                            </button>
+                                                            <form action="{{ route('categories.destroy', $child->id) }}"
+                                                                  method="POST" style="display: inline-block;">
+                                                                @method('DELETE')
+                                                                @csrf
+                                                                <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -73,12 +112,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('categories.store') }}" method="POST" autocomplete="off">
+                    <form action="{{ route('categories.store') }}" method="POST" autocomplete="off" id="addCategoryForm">
                         @csrf
+                        <input type="hidden" id="parentCategoryId" name="parent_id">
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Nhập tên danh mục" required>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên danh mục" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -106,7 +145,7 @@
                         @method('PUT')
                         <input type="hidden" id="editCategoryId" name="id">
                         <div class="mb-3">
-                            <label for="name" class="form-label">Tên</label>
+                            <label for="editCategoryName" class="form-label">Tên</label>
                             <input type="text" class="form-control" id="editCategoryName" name="name" required>
                         </div>
                         <div class="modal-footer">
@@ -125,7 +164,7 @@
             var button = event.relatedTarget
             var id = button.getAttribute('data-id')
             var name = button.getAttribute('data-name')
-            var form = document.getElementById('editCategoryForm');
+            var form = document.getElementById('editCategoryForm')
 
             var modalTitle = editCategoryModal.querySelector('.modal-title')
             var modalBodyInputId = editCategoryModal.querySelector('#editCategoryId')
@@ -134,7 +173,20 @@
             modalTitle.textContent = 'Cập nhật danh mục: ' + name
             modalBodyInputId.value = id
             modalBodyInputName.value = name
-            form.action = "{{ route('categories.update', '') }}/" + id;
+            form.action = "{{ route('categories.update', '') }}/" + id
+        })
+
+        var addCategoryModal = document.getElementById('addCategoryModal')
+        addCategoryModal.addEventListener('show.bs.modal', function(event) {
+            var button = event.relatedTarget
+            var parentId = button ? button.getAttribute('data-parent-id') : null
+            var form = document.getElementById('addCategoryForm')
+            var modalTitle = addCategoryModal.querySelector('.modal-title')
+            var modalBodyInputParentId = addCategoryModal.querySelector('#parentCategoryId')
+
+            modalTitle.textContent = parentId ? 'Thêm danh mục con' : 'Thêm danh mục'
+            modalBodyInputParentId.value = parentId || ''
+            form.action = "{{ route('categories.store') }}"
         })
     </script>
 @endsection

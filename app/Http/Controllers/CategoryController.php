@@ -11,7 +11,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::with('children')->whereNull('parent_id')->get();
         return view ('admin.category.index')->with(compact('categories'));
     }
 
@@ -33,7 +33,12 @@ class CategoryController extends Controller
             'parent_id' => 'nullable|exists:categories,id',
         ]);
 
-        Category::create($request->all());
+        if ($request->parent_id) {
+            $parent = Category::findOrFail($request->parent_id);
+            $parent->children()->create($request->all());
+        } else {
+            Category::create($request->all());
+        }
 
         return redirect()->back()->with('success', 'Danh mục đã được thêm thành công!');
     }
@@ -59,9 +64,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $category)
     {
-        $data = $request->all();
-        $categories = Category::find($category);
-        $categories->update($data);
+        $request->validate([
+            'name' => 'required',
+            'parent_id' => 'nullable|exists:categories,id',
+        ]);
+
+        $categories = Category::findOrFail($category);
+        $categories->update($request->all());
 
         return redirect()->back()->with('success', 'Danh mục đã được cập nhật thành công!');
     }
@@ -71,7 +80,8 @@ class CategoryController extends Controller
      */
     public function destroy($category)
     {
-        $categories = Category::find($category);
+        $categories = Category::findOrFail($category);
+        $category->children()->delete();
         $categories->delete();
 
         return redirect()->back()->with('success', 'Danh mục đã được xóa thành công!');

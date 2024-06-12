@@ -116,7 +116,7 @@
                         @csrf
                         <input type="hidden" id="editColorId" name="id">
                         <div class="mb-3">
-                            <label for="name" class="form-label">Tên</label>
+                            <label for="editColorName" class="form-label">Tên</label>
                             <input type="text" class="form-control" id="editColorName" name="name" required>
                         </div>
                         <div class="mb-3">
