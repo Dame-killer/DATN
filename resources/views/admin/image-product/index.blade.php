@@ -6,9 +6,9 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Kích cỡ</h6>
+                        <h6>Quản lý hình ảnh quần áo</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#addSizeModal">
+                            data-bs-target="#addProductModal">
                             Thêm
                         </button>
                     </div>
@@ -18,16 +18,17 @@
                                 <thead>
                                     <tr>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            STT</th>
+                                            STT
+                                        </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Kích cỡ
+                                            Hình ảnh
                                         </th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($sizes as $size)
+                                    @foreach ($imageProducts as $imageProduct)
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
@@ -37,17 +38,17 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">
-                                                    {{ $size->size_name }}-{{ $size->size_number }}</p>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $imageProduct->image }}</p>
+                                            </td>
+                                            <td class="align-middle text-center text-sm">
+                                                <span class="badge badge-sm bg-gradient-success">Sử dụng</span>
                                             </td>
                                             <td class="align-middle">
                                                 <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
-                                                    data-bs-target="#editSizeModal" data-id="{{ $size->id }}"
-                                                    data-name="{{ $size->size_name }}"
-                                                    data-number="{{ $size->size_number }}">
+                                                    data-bs-target="#editProductModal" data-id="{{ $product->id }}">
                                                     Cập nhật
                                                 </button>
-                                                <form action="{{ route('sizes.destroy', $size->id) }}" method="POST">
+                                                <form action="{{ route('products.destroy', $product->id) }}" method="POST">
                                                     @method('DELETE')
                                                     @csrf
                                                     <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
@@ -64,26 +65,21 @@
         </div>
     </div>
 
-    <!-- Add Size Modal -->
-    <div class="modal fade" id="addSizeModal" tabindex="-1" aria-labelledby="addSizeModalLabel" aria-hidden="true">
+    <!-- Add Payment Method Modal -->
+    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addSizeModalLabel">Thêm kích cỡ</h5>
+                    <h5 class="modal-title" id="addProductModalLabel">Thêm ảnh quần áo</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('sizes.store') }}" method="POST" autocomplete="off">
+                    <form action="{{ route('products.store') }}" method="POST" autocomplete="off">
                         @csrf
                         <div class="mb-3">
-                            <label for="size_name" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="size_name" name="size_name"
-                                placeholder="Nhập tên kích cỡ" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="size_number" class="form-label">Số</label>
-                            <input type="number" class="form-control" id="size_number" name="size_number"
-                                placeholder="Nhập số kích cỡ" required>
+                            <label for="name" class="form-label">Ảnh</label>
+                            <input type="text" class="form-control" id="image" name="name"
+                                placeholder="Nhập ảnh quần áo" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -95,26 +91,24 @@
         </div>
     </div>
 
-    <!-- Edit Size Modal -->
-    <div class="modal fade" id="editSizeModal" tabindex="-1" aria-labelledby="editSizeModalLabel" aria-hidden="true">
+    <!-- Edit Payment Method Modal -->
+    <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editSizeModalLabel">Cập nhật kích cỡ</h5>
+                    <h5 class="modal-title" id="editProductModalLabel">Cập nhật ảnh quần áo</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('sizes.update', '') }}" method="POST" autocomplete="off" id="editSizeForm">
+                    <form action="{{ route('products.update', '') }}" method="POST" autocomplete="off"
+                        id="editProductForm">
                         @method('PUT')
                         @csrf
-                        <input type="hidden" id="editSizeId" name="id">
+                        <input type="hidden" id="editProductId" name="id">
                         <div class="mb-3">
-                            <label for="size_name" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="editSizeName" name="size_name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="size_number" class="form-label">Số</label>
-                            <input type="number" class="form-control" id="editSizeNumber" name="size_number" required>
+                            <label for="name" class="form-label">Ảnh</label>
+                            <input type="text" class="form-control" id="image" name="name"
+                                placeholder="Nhập ảnh quần áo" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -127,24 +121,21 @@
     </div>
 
     <script>
-        var editSizeModal = document.getElementById('editSizeModal')
-        editSizeModal.addEventListener('show.bs.modal', function(event) {
+        var editProductModal = document.getElementById('editProductModal')
+        editProductModal.addEventListener('show.bs.modal', function(event) {
             var button = event.relatedTarget
             var id = button.getAttribute('data-id')
-            var size_name = button.getAttribute('data-name')
-            var size_number = button.getAttribute('data-number')
-            var form = document.getElementById('editSizeForm');
+            var name = button.getAttribute('data-name')
+            var form = document.getElementById('editProductForm');
 
-            var modalTitle = editSizeModal.querySelector('.modal-title')
-            var modalBodyInputId = editSizeModal.querySelector('#editSizeId')
-            var modalBodyInputName = editSizeModal.querySelector('#editSizeName')
-            var modalBodyInputNumber = editSizeModal.querySelector('#editSizeNumber')
+            var modalTitle = editProductModal.querySelector('.modal-title')
+            var modalBodyInputId = editProductModal.querySelector('#editProductId')
+            var modalBodyInputName = editProductModal.querySelector('#editProductName')
 
-            modalTitle.textContent = 'Cập nhật kích cỡ: ' + size_name + size_number
+            modalTitle.textContent = 'Cập nhậtquần áo: ' + name
             modalBodyInputId.value = id
-            modalBodyInputName.value = size_name
-            modalBodyInputNumber.value = size_number
-            form.action = "{{ route('sizes.update', '') }}/" + id;
+            modalBodyInputName.value = name
+            form.action = "{{ route('products.update', '') }}/" + id;
         })
     </script>
 @endsection

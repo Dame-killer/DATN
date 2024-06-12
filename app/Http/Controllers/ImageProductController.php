@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\ImageProduct;
 use Illuminate\Http\Request;
 
 class ImageProductController extends Controller
@@ -11,7 +11,8 @@ class ImageProductController extends Controller
      */
     public function index()
     {
-        //
+        $imageProducts = ImageProduct::all();
+        return view ('admin.image-product.index')->with(compact('imageProducts'));
     }
 
     /**

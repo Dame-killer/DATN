@@ -7,7 +7,8 @@
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Phương thức thanh toán</h6>
-                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addPaymentMethodModal">
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#addPaymentMethodModal">
                             Thêm
                         </button>
                     </div>
@@ -19,11 +20,9 @@
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             STT
                                         </th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Tên phương thức thanh toán
-                                        </th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Trạng thái
                                         </th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
@@ -41,16 +40,15 @@
                                             <td>
                                                 <p class="text-xs font-weight-bold mb-0">{{ $payment_method->name }}</p>
                                             </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-success">Sử dụng</span>
-                                            </td>
                                             <td class="align-middle">
                                                 <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
-                                                        data-bs-target="#editPaymentMethodModal" data-id="{{ $payment_method->id }}"
-                                                        data-name="{{ $payment_method->name }}">
+                                                    data-bs-target="#editPaymentMethodModal"
+                                                    data-id="{{ $payment_method->id }}"
+                                                    data-name="{{ $payment_method->name }}">
                                                     Cập nhật
                                                 </button>
-                                                <form action="{{ route('payment_methods.destroy', $payment_method->id) }}" method="POST">
+                                                <form action="{{ route('payment_methods.destroy', $payment_method->id) }}"
+                                                    method="POST">
                                                     @method('DELETE')
                                                     @csrf
                                                     <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
@@ -68,7 +66,8 @@
     </div>
 
     <!-- Add Payment Method Modal -->
-    <div class="modal fade" id="addPaymentMethodModal" tabindex="-1" aria-labelledby="addPaymentMethodModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addPaymentMethodModal" tabindex="-1" aria-labelledby="addPaymentMethodModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -80,7 +79,8 @@
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên phương thức thanh toán" required>
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="Nhập tên phương thức thanh toán" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -93,7 +93,8 @@
     </div>
 
     <!-- Edit Payment Method Modal -->
-    <div class="modal fade" id="editPaymentMethodModal" tabindex="-1" aria-labelledby="editPaymentMethodModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editPaymentMethodModal" tabindex="-1" aria-labelledby="editPaymentMethodModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -101,7 +102,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('payment_methods.update', '') }}" method="POST" autocomplete="off" id="editPaymentMethodForm">
+                    <form action="{{ route('payment_methods.update', '') }}" method="POST" autocomplete="off"
+                        id="editPaymentMethodForm">
                         @method('PUT')
                         @csrf
                         <input type="hidden" id="editPaymentMethodId" name="id">

@@ -7,7 +7,8 @@
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Thương hiệu</h6>
-                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addBrandModal">
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#addBrandModal">
                             Thêm
                         </button>
                     </div>
@@ -19,11 +20,9 @@
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             STT
                                         </th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Tên thương hiệu
-                                        </th>
-                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Trạng thái
                                         </th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
@@ -41,13 +40,10 @@
                                             <td>
                                                 <p class="text-xs font-weight-bold mb-0">{{ $brand->name }}</p>
                                             </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-success">Sử dụng</span>
-                                            </td>
                                             <td class="align-middle">
-                                                <button class="btn btn-warning btn-sm mb-2"
-                                                        data-bs-toggle="modal" data-bs-target="#editBrandModal"
-                                                        data-id="{{ $brand->id }}" data-name="{{ $brand->name }}">
+                                                <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
+                                                    data-bs-target="#editBrandModal" data-id="{{ $brand->id }}"
+                                                    data-name="{{ $brand->name }}">
                                                     Cập nhật
                                                 </button>
                                                 <form action="{{ route('brands.destroy', $brand->id) }}" method="POST">
@@ -80,7 +76,8 @@
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên thương hiệu" required>
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="Nhập tên thương hiệu" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>

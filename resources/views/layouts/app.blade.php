@@ -23,9 +23,8 @@
 
 <body>
     <div class="min-height-300 bg-primary position-absolute w-100"></div>
-    <div class="sidebar" id="sidebar">
+    <div class="sidebar" id="sidebar" style="width: 450px">
         @include('layouts.navigation')
-    </div>
     </div>
     <div class="wrapper d-flex flex-column">
         <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl
