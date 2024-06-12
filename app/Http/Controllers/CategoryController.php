@@ -11,8 +11,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = Category::all();
-        return view ('admin.category.index')->with(compact('category'));
+        $categories = Category::all();
+        return view ('admin.category.index')->with(compact('categories'));
     }
 
     /**
@@ -28,7 +28,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'parent_id' => 'nullable|exists:categories,id',
+        ]);
+
+        Category::create($request->all());
+
+        return redirect()->back()->with('success', 'Danh mục đã được thêm thành công!');
     }
 
     /**
@@ -50,16 +57,23 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $category)
     {
-        //
+        $data = $request->all();
+        $categories = Category::find($category);
+        $categories->update($data);
+
+        return redirect()->back()->with('success', 'Danh mục đã được cập nhật thành công!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($category)
     {
-        //
+        $categories = Category::find($category);
+        $categories->delete();
+
+        return redirect()->back()->with('success', 'Danh mục đã được xóa thành công!');
     }
 }

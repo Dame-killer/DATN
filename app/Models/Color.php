@@ -17,7 +17,7 @@ class Color extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'code'];
 
     protected $table = 'colors';
 }

@@ -22,6 +22,9 @@
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Tên màu sắc
                                         </th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Màu sắc
+                                        </th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Trạng thái
                                         </th>
@@ -41,13 +44,16 @@
                                             <td>
                                                 <p class="text-xs font-weight-bold mb-0">{{ $color->name }}</p>
                                             </td>
+                                            <td>
+                                                <div style="width: 20px; height: 20px; background-color: {{ $color->code }};"></div>
+                                            </td>
                                             <td class="align-middle text-center text-sm">
                                                 <span class="badge badge-sm bg-gradient-success">Sử dụng</span>
                                             </td>
                                             <td class="align-middle">
                                                 <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
                                                         data-bs-target="#editColorModal" data-id="{{ $color->id }}"
-                                                        data-name="{{ $color->name }}">
+                                                        data-name="{{ $color->name }}" data-code="{{ $color->code }}">
                                                     Cập nhật
                                                 </button>
                                                 <form action="{{ route('colors.destroy', $color->id) }}" method="POST">
@@ -82,6 +88,10 @@
                             <label for="name" class="form-label">Tên</label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên màu" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="code" class="form-label">Mã màu</label>
+                            <input type="color" class="form-control" id="code" name="code" required>
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                             <button type="submit" class="btn btn-primary">Lưu</button>
@@ -109,6 +119,10 @@
                             <label for="name" class="form-label">Tên</label>
                             <input type="text" class="form-control" id="editColorName" name="name" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="editColorCode" class="form-label">Mã màu</label>
+                            <input type="color" class="form-control" id="editColorCode" name="code" required>
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                             <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
@@ -125,15 +139,18 @@
             var button = event.relatedTarget
             var id = button.getAttribute('data-id')
             var name = button.getAttribute('data-name')
+            var code = button.getAttribute('data-code')
             var form = document.getElementById('editColorForm');
 
             var modalTitle = editColorModal.querySelector('.modal-title')
             var modalBodyInputId = editColorModal.querySelector('#editColorId')
             var modalBodyInputName = editColorModal.querySelector('#editColorName')
+            var modalBodyInputCode = editColorModal.querySelector('#editColorCode')
 
             modalTitle.textContent = 'Cập nhật màu sắc: ' + name
             modalBodyInputId.value = id
             modalBodyInputName.value = name
+            modalBodyInputCode.value = code
             form.action = "{{ route('colors.update', '') }}/" + id;
         })
     </script>

@@ -32,7 +32,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($categorys as $category)
+                                    @foreach ($categories as $category)
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
@@ -53,7 +53,7 @@
                                                     data-name="{{ $category->name }}">
                                                     Cập nhật
                                                 </button>
-                                                <form action="{{ route('categorys.destroy', $category->id) }}"
+                                                <form action="{{ route('categories.destroy', $category->id) }}"
                                                     method="POST">
                                                     @method('DELETE')
                                                     @csrf
@@ -80,7 +80,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('categorys.store') }}" method="POST" autocomplete="off">
+                    <form action="{{ route('categories.store') }}" method="POST" autocomplete="off">
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên</label>
@@ -97,7 +97,7 @@
         </div>
     </div>
 
-    <!-- Edit Color Modal -->
+    <!-- Edit Category Modal -->
     <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -107,7 +107,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('Categorys.update', '') }}" method="POST" autocomplete="off"
+                    <form action="{{ route('categories.update', '') }}" method="POST" autocomplete="off"
                         id="editCategoryForm">
                         @csrf
                         @method('PUT')
@@ -141,7 +141,7 @@
             modalTitle.textContent = 'Cập nhật danh mục: ' + name
             modalBodyInputId.value = id
             modalBodyInputName.value = name
-            form.action = "{{ route('Categorys.update', '') }}/" + id;
+            form.action = "{{ route('categories.update', '') }}/" + id;
         })
     </script>
 @endsection
