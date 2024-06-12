@@ -2,10 +2,8 @@
     class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 custom-sidenav"
     id="sidenav-main">
     <div class="sidenav-header" style="display: flex; justify-content: center; align-items: center; position: relative;">
-        <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
-            aria-hidden="true" id="iconSidenav"></i>
         <a class="nav-link {{ Route::currentRouteName() == 'admin-home' ? 'active' : '' }}"
-            href="{{ route('admin-home') }}" style="display: flex; align-items: center;">
+            href="{{ route('admin-home') }}">
             {{-- <img src="./img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo"> --}}
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-6 h-6">
@@ -24,6 +22,8 @@
                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
                 </div>
+                <img
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAgElEQVR4nO2WsQ3AMAzD9P/T7AdFOwixAxLIlEkIrTiRPTD0/Oa6IFPAIPFFKqBaUa09anHgr8AgcUYqYP1GtSqgWlGtCqhWVKsCqpXv2+/b3artd22QE2CQ+CIVcNhja1XA1oqtVQFbK7ZWBWyt2FoVUK2o1ky1GHZ+c00QyQEeotHsIubs6JEAAAAASUVORK5CYII=">
                 <span class="nav-link-text ms-1">Quản lý đơn hàng</span>
             </a>
         </li>
@@ -33,6 +33,7 @@
                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
                 </div>
+                <img width="50" height="50" src="https://img.icons8.com/ios/50/clothes.png" alt="clothes" />
                 <span class="nav-link-text ms-1">Quản lý sản phẩm</span>
             </a>
         </li>
@@ -73,11 +74,16 @@
                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
                 </div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                </svg>
                 <span class="nav-link-text ms-1">Quản lý</span>
             </a>
             <ul class="dropdown-menu">
                 <li>
-                    <a class="nav-link" href="{{ route('colors.index') }}">
+                    <a class="nav-link" href="{{ route('admin-color') }}">
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
