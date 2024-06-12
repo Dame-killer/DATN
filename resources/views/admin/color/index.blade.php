@@ -140,7 +140,7 @@
             var id = button.getAttribute('data-id')
             var name = button.getAttribute('data-name')
             var code = button.getAttribute('data-code')
-            var form = document.getElementById('editColorForm');
+            var form = document.getElementById('editColorForm')
 
             var modalTitle = editColorModal.querySelector('.modal-title')
             var modalBodyInputId = editColorModal.querySelector('#editColorId')
@@ -151,7 +151,7 @@
             modalBodyInputId.value = id
             modalBodyInputName.value = name
             modalBodyInputCode.value = code
-            form.action = "{{ route('colors.update', '') }}/" + id;
+            form.action = "{{ route('colors.update', '') }}/" + id
         })
     </script>
 @endsection

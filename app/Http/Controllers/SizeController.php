@@ -60,9 +60,13 @@ class SizeController extends Controller
      */
     public function update(Request $request, $size)
     {
-        $data = $request->all();
-        $sizes = Size::find($size);
-        $sizes->update($data);
+        $request->validate([
+            'size_name' => 'required',
+            'size_number' => 'required',
+        ]);
+
+        $sizes = Size::findOrFail($size);
+        $sizes->update($request->all());
 
         return redirect()->back()->with('success', 'Kích cỡ đã được cập nhật thành công!');
     }
@@ -72,7 +76,7 @@ class SizeController extends Controller
      */
     public function destroy($size)
     {
-        $sizes = Size::find($size);
+        $sizes = Size::findOrFail($size);
         $sizes->delete();
 
         return redirect()->back()->with('success', 'Kích cỡ đã được xóa thành công!');

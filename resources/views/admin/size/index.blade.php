@@ -109,11 +109,11 @@
                         @csrf
                         <input type="hidden" id="editSizeId" name="id">
                         <div class="mb-3">
-                            <label for="size_name" class="form-label">Tên</label>
+                            <label for="editSizeName" class="form-label">Tên</label>
                             <input type="text" class="form-control" id="editSizeName" name="size_name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="size_number" class="form-label">Số</label>
+                            <label for="editSizeNumber" class="form-label">Số</label>
                             <input type="number" class="form-control" id="editSizeNumber" name="size_number" required>
                         </div>
                         <div class="modal-footer">
@@ -133,7 +133,7 @@
             var id = button.getAttribute('data-id')
             var size_name = button.getAttribute('data-name')
             var size_number = button.getAttribute('data-number')
-            var form = document.getElementById('editSizeForm');
+            var form = document.getElementById('editSizeForm')
 
             var modalTitle = editSizeModal.querySelector('.modal-title')
             var modalBodyInputId = editSizeModal.querySelector('#editSizeId')
@@ -144,7 +144,7 @@
             modalBodyInputId.value = id
             modalBodyInputName.value = size_name
             modalBodyInputNumber.value = size_number
-            form.action = "{{ route('sizes.update', '') }}/" + id;
+            form.action = "{{ route('sizes.update', '') }}/" + id
         })
     </script>
 @endsection

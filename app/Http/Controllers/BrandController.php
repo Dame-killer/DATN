@@ -61,9 +61,12 @@ class BrandController extends Controller
      */
     public function update(Request $request, $brand)
     {
-        $data = $request->all();
-        $brands = Brand::find($brand);
-        $brands->update($data);
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $brands = Brand::findOrFail($brand);
+        $brands->update($request->all());
 
         return redirect()->back()->with('success', 'Thương hiệu đã được cập nhật thành công!');
     }
@@ -73,7 +76,7 @@ class BrandController extends Controller
      */
     public function destroy($brand)
     {
-        $brands = Brand::find($brand);
+        $brands = Brand::findOrFail($brand);
         $brands->delete();
 
         return redirect()->back()->with('success', 'Thương hiệu đã được xóa thành công!');

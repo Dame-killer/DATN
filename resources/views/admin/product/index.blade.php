@@ -181,7 +181,7 @@
             var button = event.relatedTarget
             var id = button.getAttribute('data-id')
             var name = button.getAttribute('data-name')
-            var form = document.getElementById('editProductForm');
+            var form = document.getElementById('editProductForm')
 
             var modalTitle = editProductModal.querySelector('.modal-title')
             var modalBodyInputId = editProductModal.querySelector('#editProductId')
@@ -190,7 +190,7 @@
             modalTitle.textContent = 'Cập nhậtquần áo: ' + name
             modalBodyInputId.value = id
             modalBodyInputName.value = name
-            form.action = "{{ route('products.update', '') }}/" + id;
+            form.action = "{{ route('products.update', '') }}/" + id
         })
     </script>
 @endsection

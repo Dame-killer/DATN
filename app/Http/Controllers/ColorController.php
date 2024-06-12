@@ -61,9 +61,13 @@ class ColorController extends Controller
      */
     public function update(Request $request, $color)
     {
-        $data = $request->all();
-        $colors = Color::find($color);
-        $colors->update($data);
+        $request->validate([
+            'name' => 'required',
+            'code' => 'required'
+        ]);
+
+        $colors = Color::findOrFail($color);
+        $colors->update($request->all());
 
         return redirect()->back()->with('success', 'Màu sắc đã được cập nhật thành công!');
     }
@@ -73,7 +77,7 @@ class ColorController extends Controller
      */
     public function destroy($color)
     {
-        $colors = Color::find($color);
+        $colors = Color::findOrFail($color);
         $colors->delete();
 
         return redirect()->back()->with('success', 'Màu sắc đã được xóa thành công!');

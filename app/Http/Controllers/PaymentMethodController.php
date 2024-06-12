@@ -59,9 +59,12 @@ class PaymentMethodController extends Controller
      */
     public function update(Request $request, $payment_method)
     {
-        $data = $request->all();
-        $payment_methods = PaymentMethod::find($payment_method);
-        $payment_methods->update($data);
+        $request->validate([
+            'name' => 'required'
+        ]);
+
+        $payment_methods = PaymentMethod::findOrFail($payment_method);
+        $payment_methods->update($request->all());
 
         return redirect()->back()->with('success', 'Phương thức thanh toán đã được cập nhật thành công!');
     }
@@ -71,7 +74,7 @@ class PaymentMethodController extends Controller
      */
     public function destroy($payment_method)
     {
-        $payment_methods = PaymentMethod::find($payment_method);
+        $payment_methods = PaymentMethod::findOrFail($payment_method);
         $payment_methods->delete();
 
         return redirect()->back()->with('success', 'Phương thức thanh toán đã được xóa thành công!');

@@ -108,7 +108,7 @@
                         @csrf
                         <input type="hidden" id="editPaymentMethodId" name="id">
                         <div class="mb-3">
-                            <label for="name" class="form-label">Tên</label>
+                            <label for="editPaymentMethodName" class="form-label">Tên</label>
                             <input type="text" class="form-control" id="editPaymentMethodName" name="name" required>
                         </div>
                         <div class="modal-footer">
@@ -127,7 +127,7 @@
             var button = event.relatedTarget
             var id = button.getAttribute('data-id')
             var name = button.getAttribute('data-name')
-            var form = document.getElementById('editPaymentMethodForm');
+            var form = document.getElementById('editPaymentMethodForm')
 
             var modalTitle = editPaymentMethodModal.querySelector('.modal-title')
             var modalBodyInputId = editPaymentMethodModal.querySelector('#editPaymentMethodId')
@@ -136,7 +136,7 @@
             modalTitle.textContent = 'Cập nhật phương thức thanh toán: ' + name
             modalBodyInputId.value = id
             modalBodyInputName.value = name
-            form.action = "{{ route('payment_methods.update', '') }}/" + id;
+            form.action = "{{ route('payment_methods.update', '') }}/" + id
         })
     </script>
 @endsection

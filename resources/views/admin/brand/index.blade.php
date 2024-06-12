@@ -103,7 +103,7 @@
                         @method('PUT')
                         <input type="hidden" id="editBrandId" name="id">
                         <div class="mb-3">
-                            <label for="name" class="form-label">Tên</label>
+                            <label for="editBrandName" class="form-label">Tên</label>
                             <input type="text" class="form-control" id="editBrandName" name="name" required>
                         </div>
                         <div class="modal-footer">
@@ -122,7 +122,7 @@
             var button = event.relatedTarget
             var id = button.getAttribute('data-id')
             var name = button.getAttribute('data-name')
-            var form = document.getElementById('editBrandForm');
+            var form = document.getElementById('editBrandForm')
 
             var modalTitle = editBrandModal.querySelector('.modal-title')
             var modalBodyInputId = editBrandModal.querySelector('#editBrandId')
@@ -131,7 +131,7 @@
             modalTitle.textContent = 'Cập nhật thương hiệu: ' + name
             modalBodyInputId.value = id
             modalBodyInputName.value = name
-            form.action = "{{ route('brands.update', '') }}/" + id;
+            form.action = "{{ route('brands.update', '') }}/" + id
         })
     </script>
 @endsection
