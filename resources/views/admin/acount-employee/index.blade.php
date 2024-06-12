@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Tài khoản khách hàng</h6>
+                        <h6>Quản lý nhân viên</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#addAuthorModal">
                             Thêm
@@ -18,14 +18,24 @@
                                 <thead>
                                     <tr>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            STT</th>
+                                            STT
+                                        </th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tên</th>
+                                            Tên
+                                        </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Email</th>
-
+                                            Email
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Số điện thoại
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Quyền
+                                        </th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
                                 </thead>
@@ -50,7 +60,12 @@
                                             <button href="javascript:;" class="text-secondary font-weight-bold text-xs me-2"
                                                 data-bs-toggle="modal" data-bs-target="#editCustomerModal" data-id="1"
                                                 data-name="Long" data-status="Sử dụng" data-email="Long@gmail.com">
-                                                Cập nhật
+                                                Edit
+                                            </button>
+                                            <button href="javascript:;" class="text-secondary font-weight-bold text-xs me-2"
+                                                data-bs-toggle="modal" data-bs-target="#editCustomerModal" data-id="1"
+                                                data-name="Long" data-status="Sử dụng" data-email="Long@gmail.com">
+                                                Xóa
                                             </button>
                                         </td>
                                     </tr>
@@ -68,16 +83,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addAuthorModalLabel">Thêm mới tài khoản</h5>
+                    <h5 class="modal-title" id="addAuthorModalLabel">Thêm mới nhân viên</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="" method="POST">
                         @csrf
-                        <div class="mb-3">
-                            <label for="authorName" class="form-label">STT</label>
-                            <input type="text" class="form-control" id="authorId" name="name" required>
-                        </div>
                         <div class="mb-3">
                             <label for="authorEmail" class="form-label">Tên</label>
                             <input type="email" class="form-control" id="authorName" name="email" required>
@@ -86,7 +97,14 @@
                             <label for="authorFunction" class="form-label">Email</label>
                             <input type="text" class="form-control" id="authorEmail" name="function" required>
                         </div>
-
+                        <div class="mb-3">
+                            <label for="authorFunction" class="form-label">Phone</label>
+                            <input type="text" class="form-control" id="authorEmail" name="function" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="authorFunction" class="form-label">Quyền</label>
+                            <input type="text" class="form-control" id="authorEmail" name="function" required>
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                             <button type="submit" class="btn btn-primary">Lưu</button>
@@ -112,12 +130,20 @@
                         @method('PUT')
                         <input type="hidden" id="editColorId" name="id">
                         <div class="mb-3">
-                            <label for="editColorName" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="editColorName" name="name" required>
+                            <label for="authorEmail" class="form-label">Tên</label>
+                            <input type="email" class="form-control" id="authorName" name="email" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editColorEmail" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="editColorEmail" name="email" required>
+                            <label for="authorFunction" class="form-label">Email</label>
+                            <input type="text" class="form-control" id="authorEmail" name="function" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="authorFunction" class="form-label">Phone</label>
+                            <input type="text" class="form-control" id="authorEmail" name="function" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="authorFunction" class="form-label">Quyền</label>
+                            <input type="text" class="form-control" id="authorEmail" name="function" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
