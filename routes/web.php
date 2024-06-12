@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ImageProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderDetailController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 /*
@@ -40,6 +41,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/category', [CategoryController::class, 'index'])->name('admin-category');
     Route::get('/admin/image', [ImageProductController::class, 'index'])->name('admin-image');
     Route::get('/admin/order', [OrderController::class, 'index'])->name('admin-order');
+    //order-detail xửa lại
+    Route::get('/admin/order/detail', [OrderDetailController::class, 'index'])->name('admin-order-detail');
 });
 
 //CUSTOMER
