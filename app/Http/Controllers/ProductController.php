@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -42,7 +43,14 @@ class ProductController extends Controller
             'brand_id' => 'required|exists:brands,id',
         ]);
 
-        Product::create($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images', 'public');
+            $data['image'] = $imagePath;
+        }
+
+        Product::create($data);
 
         return redirect()->back()->with('success', 'Sản phẩm đã được thêm thành công!');
     }
@@ -77,9 +85,19 @@ class ProductController extends Controller
         ]);
 
         $product = Product::findOrFail($id);
-        $product->update($request->all());
+        $data = $request->all();
 
-        return redirect()->back()->with('success', 'Sản phẩm đã được cập nhật thành công!');
+        if ($request->hasFile('image')) {
+            // Delete the old image if exists
+            if ($product->image && Storage::disk('public')->exists($product->image)) {
+                Storage::disk('public')->delete($product->image);
+            }
+
+            $imagePath = $request->file('image')->store('images', 'public');
+            $data['image'] = $imagePath;
+        }
+
+        $product->update($data);
     }
 
     /**
@@ -87,8 +105,12 @@ class ProductController extends Controller
      */
     public function destroy($product)
     {
-        $products = Product::findOrFail($product);
-        $products->delete();
+        $product = Product::findOrFail($product);
+        // Delete the image if exists
+        if ($product->image && Storage::disk('public')->exists($product->image)) {
+            Storage::disk('public')->delete($product->image);
+        }
+        $product->delete();
 
         return redirect()->back()->with('success', 'Sản phẩm đã được xóa thành công!');
     }

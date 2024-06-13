@@ -8,7 +8,7 @@
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Quản lý quần áo</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#addProductModal">
+                                data-bs-target="#addProductModal">
                             Thêm
                         </button>
                     </div>
@@ -16,79 +16,82 @@
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
                                 <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            STT
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Mã sản phẩm
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tên sản phẩm
-                                        </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Ảnh
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Danh mục
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Thương hiệu
-                                        </th>
-                                        <th class="text-secondary opacity-7"></th>
-                                    </tr>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        STT
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Mã sản phẩm
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Tên sản phẩm
+                                    </th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Ảnh
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Danh mục
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Thương hiệu
+                                    </th>
+                                    <th class="text-secondary opacity-7"></th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($products as $product)
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
-                                                    </div>
+                                @foreach ($products as $product)
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $product->code }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $product->name }}</p>
-                                            </td>
-                                            <td>
-                                                <img src="{{ asset('public/assets/images' . $product->image) }}"
-                                                    alt="{{ $product->name }}" class="img-fluid"
-                                                    style="width: 50px; height: 50px;">
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $product->category->name }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $product->brand->name }}</p>
-                                            </td>
-                                            <td class="align-middle">
-                                                {{-- <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $product->code }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $product->name }}</p>
+                                        </td>
+                                        <td>
+                                            <img src="{{ asset('storage/' . $product->image) }}"
+                                                 alt="{{ $product->name }}" class="img-fluid"
+                                                 style="width: 50px; height: 50px;">
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $product->category->name }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $product->brand->name }}</p>
+                                        </td>
+                                        <td class="align-middle">
+                                            {{-- <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
+                                                data-bs-target="#editProductModal" data-id="{{ $product->id }}"
+                                                data-name="{{ $product->name }}">
+                                                Xem chi tiết
+                                            </button> --}}
+                                            <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
                                                     data-bs-target="#editProductModal" data-id="{{ $product->id }}"
-                                                    data-name="{{ $product->name }}">
-                                                    Xem chi tiết
-                                                </button> --}}
-                                                <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
-                                                    data-bs-target="#editProductModal" data-id="{{ $product->id }}"
-                                                    data-name="{{ $product->name }}">
-                                                    Cập nhật
-                                                </button>
-                                                <form action="{{ route('products.destroy', $product->id) }}" method="POST">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                                    data-name="{{ $product->name }}" data-code="{{ $product->code }}"
+                                                    data-image="{{ asset('storage/' . $product->image) }}"
+                                                    data-category="{{ $product->category->id }}"
+                                                    data-brand="{{ $product->brand->id }}">
+                                                Cập nhật
+                                            </button>
+                                            <form action="{{ route('products.destroy', $product->id) }}" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -99,7 +102,8 @@
     </div>
 
     <!-- Add Product Modal -->
-    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -107,22 +111,23 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('products.store') }}" method="POST" autocomplete="off">
+                    <form action="{{ route('products.store') }}" method="POST" autocomplete="off"
+                          enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="code" class="form-label">Mã</label>
                             <input type="text" class="form-control" id="code" name="code"
-                                placeholder="Nhập mã sản phẩm" required>
+                                   placeholder="Nhập mã sản phẩm" required>
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Nhập tên sản phẩm" required>
+                                   placeholder="Nhập tên sản phẩm" required>
                         </div>
                         <div class="mb-3">
                             <label for="image" class="form-label">Ảnh</label>
-                            <input type="file" class="form-control" id="image" name="image"
-                                placeholder="Nhập URL ảnh sản phẩm" required>
+                            <img id="previewImage" src="#" alt="Preview Image" class="img-fluid mb-2" style="width: 50px; height: 50px; display: none;">
+                            <input type="file" class="form-control" id="image" name="image" required>
                         </div>
                         <div class="mb-3">
                             <label for="category_id" class="form-label">Danh mục</label>
@@ -154,7 +159,7 @@
 
     <!-- Edit Product Modal -->
     <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel"
-        aria-hidden="true">
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -163,25 +168,26 @@
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('products.update', '') }}" method="POST" autocomplete="off"
-                        id="editProductForm">
+                          id="editProductForm" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
                         <input type="hidden" id="editProductId" name="id">
                         <div class="mb-3">
-                            <label for="editCode" class="form-label">Mã</label>
-                            <input type="text" class="form-control" id="editCode" name="code" required>
+                            <label for="editProductCode" class="form-label">Mã</label>
+                            <input type="text" class="form-control" id="editProductCode" name="code" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editName" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="editName" name="name" required>
+                            <label for="editProductName" class="form-label">Tên</label>
+                            <input type="text" class="form-control" id="editProductName" name="name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editImage" class="form-label">Ảnh</label>
-                            <input type="file" class="form-control" id="editImage" name="image" required>
+                            <label for="editProductImage" class="form-label">Ảnh</label>
+                            <img id="currentProductImage" src="" alt="Current Product Image" class="img-fluid mb-2" style="width: 50px; height: 50px;">
+                            <input type="file" class="form-control" id="editProductImage" name="image">
                         </div>
                         <div class="mb-3">
-                            <label for="editCategory_id" class="form-label">Danh mục</label>
-                            <select class="form-control" id="editCategory_id" name="category_id" required>
+                            <label for="editProductCategory" class="form-label">Danh mục</label>
+                            <select class="form-control" id="editProductCategory" name="category_id" required>
                                 <option value="">Chọn danh mục</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -189,8 +195,8 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="editBrand_id" class="form-label">Thương hiệu</label>
-                            <select class="form-control" id="editBrand_id" name="brand_id" required>
+                            <label for="editProductBrand" class="form-label">Thương hiệu</label>
+                            <select class="form-control" id="editProductBrand" name="brand_id" required>
                                 <option value="">Chọn thương hiệu</option>
                                 @foreach ($brands as $brand)
                                     <option value="{{ $brand->id }}">{{ $brand->name }}</option>
@@ -209,20 +215,48 @@
 
     <script>
         var editProductModal = document.getElementById('editProductModal')
-        editProductModal.addEventListener('show.bs.modal', function(event) {
+        editProductModal.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget
             var id = button.getAttribute('data-id')
             var name = button.getAttribute('data-name')
+            var code = button.getAttribute('data-code')
+            var image = button.getAttribute('data-image')
+            var category = button.getAttribute('data-category')
+            var brand = button.getAttribute('data-brand')
             var form = document.getElementById('editProductForm')
 
             var modalTitle = editProductModal.querySelector('.modal-title')
             var modalBodyInputId = editProductModal.querySelector('#editProductId')
             var modalBodyInputName = editProductModal.querySelector('#editProductName')
+            var modalBodyInputCode = editProductModal.querySelector('#editProductCode')
+            var modalBodyInputImage = editProductModal.querySelector('#editProductImage')
+            var modalBodyInputCurrentImage = editProductModal.querySelector('#currentProductImage')
+            var modalBodyInputCategory = editProductModal.querySelector('#editProductCategory')
+            var modalBodyInputBrand = editProductModal.querySelector('#editProductBrand')
 
             modalTitle.textContent = 'Cập nhật quần áo: ' + name
             modalBodyInputId.value = id
             modalBodyInputName.value = name
+            modalBodyInputCode.value = code
+            modalBodyInputCurrentImage.src = image
+            modalBodyInputCategory.value = category
+            modalBodyInputBrand.value = brand
             form.action = "{{ route('products.update', '') }}/" + id
+        })
+
+        document.getElementById("image").addEventListener("change", function(event) {
+            var previewImage = document.getElementById('previewImage');
+            var file = event.target.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
         })
     </script>
 @endsection
