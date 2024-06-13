@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\ProductDetail;
 use Illuminate\Http\Request;
 
 class ProductDetailController extends Controller
@@ -33,9 +35,12 @@ class ProductDetailController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $products = Product::findOrFail($id);
+        $product_details = ProductDetail::with('product', 'sizes', 'colors')->where('product_id', $id)->first();
+
+        return view('admin.product-detail.index', compact('products', 'product_details'));
     }
 
     /**
@@ -57,8 +62,11 @@ class ProductDetailController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($product_detail)
     {
-        //
+        $product_details = ProductDetail::findOrFail($product_detail);
+        $product_details->delete();
+
+        return redirect()->back()->with('success', 'Sản phẩm đã được xóa thành công!');
     }
 }

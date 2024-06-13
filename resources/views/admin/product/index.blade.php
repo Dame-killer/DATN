@@ -71,11 +71,9 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $product->brand->name }}</p>
                                         </td>
                                         <td class="align-middle">
-                                            {{-- <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
-                                                data-bs-target="#editProductModal" data-id="{{ $product->id }}"
-                                                data-name="{{ $product->name }}">
+                                            <a href="{{ route('admin-product_detail', $product->id) }}" class="btn btn-info btn-sm mb-2">
                                                 Xem chi tiết
-                                            </button> --}}
+                                            </a>
                                             <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
                                                     data-bs-target="#editProductModal" data-id="{{ $product->id }}"
                                                     data-name="{{ $product->name }}" data-code="{{ $product->code }}"
@@ -126,7 +124,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="image" class="form-label">Ảnh</label>
-                            <img id="previewImage" src="#" alt="Preview Image" class="img-fluid mb-2" style="width: 50px; height: 50px; display: none;">
+                            <img id="previewImage" src="#" alt="Preview Image" class="img-fluid mb-2"
+                                 style="width: 50px; height: 50px; display: none;">
                             <input type="file" class="form-control" id="image" name="image" required>
                         </div>
                         <div class="mb-3">
@@ -182,7 +181,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="editProductImage" class="form-label">Ảnh</label>
-                            <img id="currentProductImage" src="" alt="Current Product Image" class="img-fluid mb-2" style="width: 50px; height: 50px;">
+                            <img id="currentProductImage" src="" alt="Current Product Image" class="img-fluid mb-2"
+                                 style="width: 50px; height: 50px;">
                             <input type="file" class="form-control" id="editProductImage" name="image">
                         </div>
                         <div class="mb-3">
@@ -244,12 +244,12 @@
             form.action = "{{ route('products.update', '') }}/" + id
         })
 
-        document.getElementById("image").addEventListener("change", function(event) {
+        document.getElementById("image").addEventListener("change", function (event) {
             var previewImage = document.getElementById('previewImage');
             var file = event.target.files[0];
             var reader = new FileReader();
 
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 previewImage.src = e.target.result;
                 previewImage.style.display = 'block';
             };

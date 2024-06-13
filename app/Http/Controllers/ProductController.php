@@ -74,30 +74,31 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $product)
     {
         $request->validate([
             'code' => 'required',
             'name' => 'required',
-            'image' => 'required',
+            'image' => 'sometimes|file|image',
             'category_id' => 'required|exists:categories,id',
             'brand_id' => 'required|exists:brands,id',
         ]);
 
-        $product = Product::findOrFail($id);
-        $data = $request->all();
+        $products = Product::findOrFail($product);
+        $data = $request->only(['code', 'name', 'category_id', 'brand_id']);
 
         if ($request->hasFile('image')) {
-            // Delete the old image if exists
-            if ($product->image && Storage::disk('public')->exists($product->image)) {
-                Storage::disk('public')->delete($product->image);
+            if ($products->image && Storage::disk('public')->exists($products->image)) {
+                Storage::disk('public')->delete($products->image);
             }
 
             $imagePath = $request->file('image')->store('images', 'public');
             $data['image'] = $imagePath;
         }
 
-        $product->update($data);
+        $products->update($data);
+
+        return redirect()->back()->with('success', 'Sản phẩm đã được cập nhật thành công!');
     }
 
     /**
@@ -105,12 +106,11 @@ class ProductController extends Controller
      */
     public function destroy($product)
     {
-        $product = Product::findOrFail($product);
-        // Delete the image if exists
-        if ($product->image && Storage::disk('public')->exists($product->image)) {
-            Storage::disk('public')->delete($product->image);
+        $products = Product::findOrFail($product);
+        if ($products->image && Storage::disk('public')->exists($products->image)) {
+            Storage::disk('public')->delete($products->image);
         }
-        $product->delete();
+        $products->delete();
 
         return redirect()->back()->with('success', 'Sản phẩm đã được xóa thành công!');
     }

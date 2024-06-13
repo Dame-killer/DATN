@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\ProductDetailController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\PaymentMethodController;
@@ -38,6 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/brand', [BrandController::class, 'index'])->name('admin-brand');
     Route::get('/admin/pay', [PaymentMethodController::class, 'index'])->name('admin-pay');
     Route::get('/admin/product', [ProductController::class, 'index'])->name('admin-product');
+    Route::get('/admin/product/{product_detail}', [ProductDetailController::class, 'show'])->name('admin-product_detail');
     Route::get('/admin/category', [CategoryController::class, 'index'])->name('admin-category');
     Route::get('/admin/image', [ImageProductController::class, 'index'])->name('admin-image');
     Route::get('/admin/order', [OrderController::class, 'index'])->name('admin-order');

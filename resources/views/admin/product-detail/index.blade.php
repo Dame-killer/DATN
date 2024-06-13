@@ -6,9 +6,9 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Quản lý chi tiết quần áo</h6>
+                        <h6>Chi tiết sản phẩm: {{ $products->code }}-{{ $products->name }}</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#addProductModal">
+                                data-bs-target="#addProductDetailModal">
                             Thêm
                         </button>
                     </div>
@@ -16,35 +16,36 @@
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
                                 <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            STT
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Giá
-                                        </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Số lượng
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Màu sắc
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Kích cỡ
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Mô tả
-                                        </th>
-                                        <th class="text-secondary opacity-7"></th>
-                                    </tr>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        STT
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Kích cỡ
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Màu sắc
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Giá
+                                    </th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Số lượng
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Mô tả
+                                    </th>
+                                    <th class="text-secondary opacity-7"></th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($products as $product)
+                                @if($product_details)
+                                    @foreach ($product_details as $product_detail)
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
@@ -54,18 +55,34 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $product->name }}</p>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $product_detail->size->size_name }}
+                                                    -{{ $product_detail->size->size_number }}</p>
                                             </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-success">Sử dụng</span>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $product_detail->color->name }}</p>
+                                                <div
+                                                    style="width: 20px; height: 20px; background-color: {{ $product_detail->color->code }};">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $product_detail->price }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $product_detail->quantity }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $product_detail->introduce }}</p>
                                             </td>
                                             <td class="align-middle">
                                                 <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
-                                                    data-bs-target="#editProductModal" data-id="{{ $product->id }}"
-                                                    data-name="{{ $product->name }}">
+                                                        data-bs-target="#editProductDetailModal"
+                                                        data-id="{{ $product_detail->id }}"
+                                                        data-name="{{ $product_detail->name }}">
                                                     Cập nhật
                                                 </button>
-                                                <form action="{{ route('products.destroy', $product->id) }}" method="POST">
+                                                <form
+                                                    action="{{ route('product_details.destroy', $product_detail->id) }}"
+                                                    method="POST">
                                                     @method('DELETE')
                                                     @csrf
                                                     <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
@@ -73,17 +90,26 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="5" class="text-center">Chưa có sản phẩm chi tiết nào</td>
+                                    </tr>
+                                @endif
                                 </tbody>
                             </table>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    </div>
+
     <!-- Add Payment Method Modal -->
-    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -96,27 +122,27 @@
                         <div class="mb-3">
                             <label for="name" class="form-label">Giá</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Nhập tên quần áo" required>
+                                   placeholder="Nhập tên quần áo" required>
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Số lượng</label>
                             <input type="text" class="form-control" id="image" name="name"
-                                placeholder="Nhập ảnh quần áo" required>
+                                   placeholder="Nhập ảnh quần áo" required>
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Kích cỡ</label>
                             <input type="text" class="form-control" id="brand" name="name"
-                                placeholder="Nhập ảnh quần áo" required>
+                                   placeholder="Nhập ảnh quần áo" required>
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Màu sắc</label>
                             <input type="text" class="form-control" id="brand" name="name"
-                                placeholder="Nhập ảnh quần áo" required>
+                                   placeholder="Nhập ảnh quần áo" required>
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Mô tả</label>
                             <input type="text" class="form-control" id="brand" name="name"
-                                placeholder="Nhập ảnh quần áo" required>
+                                   placeholder="Nhập ảnh quần áo" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -130,7 +156,7 @@
 
     <!-- Edit Payment Method Modal -->
     <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel"
-        aria-hidden="true">
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -139,34 +165,34 @@
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('products.update', '') }}" method="POST" autocomplete="off"
-                        id="editProductForm">
+                          id="editProductForm">
                         @method('PUT')
                         @csrf
                         <input type="hidden" id="editProductId" name="id">
                         <div class="mb-3">
                             <label for="name" class="form-label">Giá</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Nhập tên quần áo" required>
+                                   placeholder="Nhập tên quần áo" required>
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Số lượng</label>
                             <input type="text" class="form-control" id="image" name="name"
-                                placeholder="Nhập ảnh quần áo" required>
+                                   placeholder="Nhập ảnh quần áo" required>
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Kích cỡ</label>
                             <input type="text" class="form-control" id="brand" name="name"
-                                placeholder="Nhập ảnh quần áo" required>
+                                   placeholder="Nhập ảnh quần áo" required>
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Màu sắc</label>
                             <input type="text" class="form-control" id="brand" name="name"
-                                placeholder="Nhập ảnh quần áo" required>
+                                   placeholder="Nhập ảnh quần áo" required>
                         </div>
                         <div class="mb-3">
                             <label for="name" class="form-label">Mô tả</label>
                             <input type="text" class="form-control" id="brand" name="name"
-                                placeholder="Nhập ảnh quần áo" required>
+                                   placeholder="Nhập ảnh quần áo" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -180,7 +206,7 @@
 
     <script>
         var editProductModal = document.getElementById('editProductModal')
-        editProductModal.addEventListener('show.bs.modal', function(event) {
+        editProductModal.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget
             var id = button.getAttribute('data-id')
             var name = button.getAttribute('data-name')
