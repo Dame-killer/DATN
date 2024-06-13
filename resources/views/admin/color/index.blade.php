@@ -8,7 +8,7 @@
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Màu sắc</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#addColorModal">
+                                data-bs-target="#addColorModal">
                             Thêm
                         </button>
                     </div>
@@ -16,53 +16,53 @@
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
                                 <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            STT
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tên màu sắc
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Màu sắc
-                                        </th>
-                                        <th class="text-secondary opacity-7"></th>
-                                    </tr>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        STT
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Tên màu sắc
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Màu sắc
+                                    </th>
+                                    <th class="text-secondary opacity-7"></th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($colors as $color)
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
-                                                    </div>
+                                @foreach ($colors as $color)
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $color->name }}</p>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    style="width: 20px; height: 20px; background-color: {{ $color->code }};">
-                                                </div>
-                                            </td>
-                                            <td class="align-middle">
-                                                <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $color->name }}</p>
+                                        </td>
+                                        <td>
+                                            <div
+                                                style="width: 20px; height: 20px; background-color: {{ $color->code }};">
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
                                                     data-bs-target="#editColorModal" data-id="{{ $color->id }}"
                                                     data-name="{{ $color->name }}" data-code="{{ $color->code }}">
-                                                    Cập nhật
-                                                </button>
-                                                <form action="{{ route('colors.destroy', $color->id) }}" method="POST">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                                Cập nhật
+                                            </button>
+                                            <form action="{{ route('colors.destroy', $color->id) }}" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -86,7 +86,7 @@
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Nhập tên màu" required>
+                                   placeholder="Nhập tên màu" required>
                         </div>
                         <div class="mb-3">
                             <label for="code" class="form-label">Mã màu</label>
@@ -135,7 +135,7 @@
 
     <script>
         var editColorModal = document.getElementById('editColorModal')
-        editColorModal.addEventListener('show.bs.modal', function(event) {
+        editColorModal.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget
             var id = button.getAttribute('data-id')
             var name = button.getAttribute('data-name')

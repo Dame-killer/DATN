@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Color;
 use App\Models\Product;
 use App\Models\ProductDetail;
+use App\Models\Size;
 use Illuminate\Http\Request;
 
 class ProductDetailController extends Controller
@@ -29,7 +31,18 @@ class ProductDetailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'size_id' => 'required|exists:sizes,id',
+            'color_id' => 'required|exists:colors,id',
+            'price' => 'required|numeric',
+            'quantity' => 'required|integer',
+            'introduce' => 'nullable|string',
+        ]);
+
+        ProductDetail::create($request->all());
+
+        return redirect()->route('product_details.index')->with('success', 'Sản phẩm chi tiết đã được thêm thành công!');
     }
 
     /**
@@ -38,9 +51,11 @@ class ProductDetailController extends Controller
     public function show($id)
     {
         $products = Product::findOrFail($id);
+        $sizes = Size::all();
+        $colors = Color::all();
         $product_details = ProductDetail::with('product', 'sizes', 'colors')->where('product_id', $id)->first();
 
-        return view('admin.product-detail.index', compact('products', 'product_details'));
+        return view('admin.product-detail.index', compact('products', 'sizes', 'colors', 'product_details'));
     }
 
     /**
@@ -54,9 +69,20 @@ class ProductDetailController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $product_detail)
     {
-        //
+        $request->validate([
+            'size_id' => 'required|exists:sizes,id',
+            'color_id' => 'required|exists:colors,id',
+            'price' => 'required|numeric',
+            'quantity' => 'required|integer',
+            'introduce' => 'nullable|string',
+        ]);
+
+        $product_details = ProductDetail::findOrFail($product_detail);
+        $product_details->update($request->all());
+
+        return redirect()->route('product_details.index')->with('success', 'Sản phẩm chi tiết đã được cập nhật thành công!');
     }
 
     /**

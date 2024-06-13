@@ -71,7 +71,8 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $product->brand->name }}</p>
                                         </td>
                                         <td class="align-middle">
-                                            <a href="{{ route('admin-product_detail', $product->id) }}" class="btn btn-info btn-sm mb-2">
+                                            <a href="{{ route('admin-product_detail', $product->id) }}"
+                                               class="btn btn-info btn-sm mb-2">
                                                 Xem chi tiết
                                             </a>
                                             <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
@@ -245,17 +246,17 @@
         })
 
         document.getElementById("image").addEventListener("change", function (event) {
-            var previewImage = document.getElementById('previewImage');
-            var file = event.target.files[0];
-            var reader = new FileReader();
+            var previewImage = document.getElementById('previewImage')
+            var file = event.target.files[0]
+            var reader = new FileReader()
 
             reader.onload = function (e) {
-                previewImage.src = e.target.result;
-                previewImage.style.display = 'block';
+                previewImage.src = e.target.result
+                previewImage.style.display = 'block'
             };
 
             if (file) {
-                reader.readAsDataURL(file);
+                reader.readAsDataURL(file)
             }
         })
     </script>

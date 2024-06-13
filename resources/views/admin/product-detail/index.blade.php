@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Chi tiết sản phẩm: {{ $products->code }}-{{ $products->name }}</h6>
+                        <h6>Chi tiết sản phẩm: {{ $products->code }} - {{ $products->name }}</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#addProductDetailModal">
                             Thêm
@@ -77,7 +77,11 @@
                                                 <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
                                                         data-bs-target="#editProductDetailModal"
                                                         data-id="{{ $product_detail->id }}"
-                                                        data-name="{{ $product_detail->name }}">
+                                                        data-size-id="{{ $product_detail->size->size_id }}"
+                                                        data-color-id="{{ $product_detail->color->color_id }}"
+                                                        data-price="{{ $product_detail->price }}"
+                                                        data-quantity="{{ $product_detail->quantity }}"
+                                                        data-introduce="{{ $product_detail->introduce }}">
                                                     Cập nhật
                                                 </button>
                                                 <form
@@ -105,44 +109,51 @@
         </div>
     </div>
 
-    </div>
-
-    <!-- Add Payment Method Modal -->
-    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel"
+    <!-- Add Product Detail Modal -->
+    <div class="modal fade" id="addProductDetailModal" tabindex="-1" aria-labelledby="addProductDetailModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addProductModalLabel">Thêm chi tiết quần áo</h5>
+                    <h5 class="modal-title" id="addProductDetailModalLabel">Thêm sản phẩm chi tiết</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('products.store') }}" method="POST" autocomplete="off">
+                    <form action="{{ route('product_details.store') }}" method="POST" autocomplete="off">
                         @csrf
                         <div class="mb-3">
-                            <label for="name" class="form-label">Giá</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nhập tên quần áo" required>
+                            <label for="size_id" class="form-label">Kích cỡ</label>
+                            <select class="form-control" id="size_id" name="size_id" required>
+                                <option value="">Chọn kích cỡ</option>
+                                @foreach ($sizes as $size)
+                                    <option value="{{ $size->id }}">{{ $size->size_name }}
+                                        - {{ $size->size_number }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Số lượng</label>
-                            <input type="text" class="form-control" id="image" name="name"
-                                   placeholder="Nhập ảnh quần áo" required>
+                            <label for="color_id" class="form-label">Màu sắc</label>
+                            <select class="form-control" id="color_id" name="color_id" required>
+                                <option value="">Chọn màu sắc</option>
+                                @foreach ($colors as $color)
+                                    <option value="{{ $color->id }}">{{ $color->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Kích cỡ</label>
-                            <input type="text" class="form-control" id="brand" name="name"
-                                   placeholder="Nhập ảnh quần áo" required>
+                            <label for="price" class="form-label">Giá</label>
+                            <input type="text" class="form-control" id="price" name="price" placeholder="Nhập giá"
+                                   required>
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Màu sắc</label>
-                            <input type="text" class="form-control" id="brand" name="name"
-                                   placeholder="Nhập ảnh quần áo" required>
+                            <label for="quantity" class="form-label">Số lượng</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity"
+                                   placeholder="Nhập số lượng" required>
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Mô tả</label>
-                            <input type="text" class="form-control" id="brand" name="name"
-                                   placeholder="Nhập ảnh quần áo" required>
+                            <label for="introduce" class="form-label">Mô tả</label>
+                            <input type="text" class="form-control" id="introduce" name="introduce"
+                                   placeholder="Nhập mô tả" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -154,45 +165,54 @@
         </div>
     </div>
 
-    <!-- Edit Payment Method Modal -->
-    <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel"
+    <!-- Edit Product Detail Modal -->
+    <div class="modal fade" id="editProductDetailModal" tabindex="-1" aria-labelledby="editProductDetailModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editProductModalLabel">Cập nhật quần áo</h5>
+                    <h5 class="modal-title" id="editProductDetailModalLabel">Cập nhật sản phẩm chi tiết</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('products.update', '') }}" method="POST" autocomplete="off"
-                          id="editProductForm">
+                    <form action="{{ route('product_details.update', '') }}" method="POST" autocomplete="off"
+                          id="editProductDetailForm">
                         @method('PUT')
                         @csrf
-                        <input type="hidden" id="editProductId" name="id">
+                        <input type="hidden" id="editProductDetailId" name="id">
                         <div class="mb-3">
-                            <label for="name" class="form-label">Giá</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nhập tên quần áo" required>
+                            <label for="editSizeId" class="form-label">Kích cỡ</label>
+                            <select class="form-control" id="editSizeId" name="size_id" required>
+                                <option value="">Chọn kích cỡ</option>
+                                @foreach ($sizes as $size)
+                                    <option value="{{ $size->id }}">{{ $size->size_name }}
+                                        - {{ $size->size_number }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Số lượng</label>
-                            <input type="text" class="form-control" id="image" name="name"
-                                   placeholder="Nhập ảnh quần áo" required>
+                            <label for="editColorId" class="form-label">Màu sắc</label>
+                            <select class="form-control" id="editColorId" name="color_id" required>
+                                <option value="">Chọn màu sắc</option>
+                                @foreach ($colors as $color)
+                                    <option value="{{ $color->id }}">{{ $color->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Kích cỡ</label>
-                            <input type="text" class="form-control" id="brand" name="name"
-                                   placeholder="Nhập ảnh quần áo" required>
+                            <label for="editPrice" class="form-label">Giá</label>
+                            <input type="text" class="form-control" id="editPrice" name="price" placeholder="Nhập giá"
+                                   required>
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Màu sắc</label>
-                            <input type="text" class="form-control" id="brand" name="name"
-                                   placeholder="Nhập ảnh quần áo" required>
+                            <label for="editQuantity" class="form-label">Số lượng</label>
+                            <input type="text" class="form-control" id="editQuantity" name="quantity"
+                                   placeholder="Nhập số lượng" required>
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Mô tả</label>
-                            <input type="text" class="form-control" id="brand" name="name"
-                                   placeholder="Nhập ảnh quần áo" required>
+                            <label for="editIntroduce" class="form-label">Mô tả</label>
+                            <input type="text" class="form-control" id="editIntroduce" name="introduce"
+                                   placeholder="Nhập mô tả" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -205,21 +225,33 @@
     </div>
 
     <script>
-        var editProductModal = document.getElementById('editProductModal')
-        editProductModal.addEventListener('show.bs.modal', function (event) {
+        var editProductDetailModal = document.getElementById('editProductDetailModal')
+        editProductDetailModal.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget
             var id = button.getAttribute('data-id')
-            var name = button.getAttribute('data-name')
-            var form = document.getElementById('editProductForm');
+            var size_id = button.getAttribute('data-size-id')
+            var color_id = button.getAttribute('data-color-id')
+            var price = button.getAttribute('data-price')
+            var quantity = button.getAttribute('data-quantity')
+            var introduce = button.getAttribute('data-introduce')
+            var form = document.getElementById('editProductDetailForm')
 
-            var modalTitle = editProductModal.querySelector('.modal-title')
-            var modalBodyInputId = editProductModal.querySelector('#editProductId')
-            var modalBodyInputName = editProductModal.querySelector('#editProductName')
+            var modalTitle = editProductDetailModal.querySelector('.modal-title')
+            var modalBodyInputId = editProductDetailModal.querySelector('#editProductDetailId')
+            var modalBodyInputSizeId = editProductDetailModal.querySelector('#editSizeId')
+            var modalBodyInputColorId = editProductDetailModal.querySelector('#editColorId')
+            var modalBodyInputPrice = editProductDetailModal.querySelector('#editPrice')
+            var modalBodyInputQuantity = editProductDetailModal.querySelector('#editQuantity')
+            var modalBodyInputIntroduce = editProductDetailModal.querySelector('#editIntroduce')
 
-            modalTitle.textContent = 'Cập nhậtquần áo: ' + name
+            modalTitle.textContent = 'Cập nhật sản phẩm chi tiết'
             modalBodyInputId.value = id
-            modalBodyInputName.value = name
-            form.action = "{{ route('products.update', '') }}/" + id;
+            modalBodyInputSizeId.value = size_id
+            modalBodyInputColorId.value = color_id
+            modalBodyInputPrice.value = price
+            modalBodyInputQuantity.value = quantity
+            modalBodyInputIntroduce.value = introduce
+            form.action = "{{ route('product_details.update', '') }}/" + id
         })
     </script>
 @endsection
