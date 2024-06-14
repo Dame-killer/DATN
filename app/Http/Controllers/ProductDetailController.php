@@ -42,7 +42,7 @@ class ProductDetailController extends Controller
 
         ProductDetail::create($request->all());
 
-        return redirect()->route('product_details.index')->with('success', 'Sản phẩm chi tiết đã được thêm thành công!');
+        return redirect()->back()->with('success', 'Sản phẩm chi tiết đã được thêm thành công!');
     }
 
     /**
@@ -53,7 +53,7 @@ class ProductDetailController extends Controller
         $products = Product::findOrFail($id);
         $sizes = Size::all();
         $colors = Color::all();
-        $product_details = ProductDetail::with('product', 'sizes', 'colors')->where('product_id', $id)->first();
+        $product_details = ProductDetail::with('product', 'size', 'color')->where('product_id', $id)->get();
 
         return view('admin.product-detail.index', compact('products', 'sizes', 'colors', 'product_details'));
     }
@@ -82,7 +82,7 @@ class ProductDetailController extends Controller
         $product_details = ProductDetail::findOrFail($product_detail);
         $product_details->update($request->all());
 
-        return redirect()->route('product_details.index')->with('success', 'Sản phẩm chi tiết đã được cập nhật thành công!');
+        return redirect()->back()->with('success', 'Sản phẩm chi tiết đã được cập nhật thành công!');
     }
 
     /**

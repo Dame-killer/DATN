@@ -8,7 +8,7 @@
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Chi tiết sản phẩm: {{ $products->code }} - {{ $products->name }}</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#addProductDetailModal">
+                                data-bs-target="#addProductDetailModal" data-product-id="{{ $products->id }}">
                             Thêm
                         </button>
                     </div>
@@ -77,8 +77,8 @@
                                                 <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
                                                         data-bs-target="#editProductDetailModal"
                                                         data-id="{{ $product_detail->id }}"
-                                                        data-size-id="{{ $product_detail->size->size_id }}"
-                                                        data-color-id="{{ $product_detail->color->color_id }}"
+                                                        data-size-id="{{ $product_detail->size->id }}"
+                                                        data-color-id="{{ $product_detail->color->id }}"
                                                         data-price="{{ $product_detail->price }}"
                                                         data-quantity="{{ $product_detail->quantity }}"
                                                         data-introduce="{{ $product_detail->introduce }}">
@@ -121,6 +121,7 @@
                 <div class="modal-body">
                     <form action="{{ route('product_details.store') }}" method="POST" autocomplete="off">
                         @csrf
+                        <input type="hidden" id="product_id" name="product_id">
                         <div class="mb-3">
                             <label for="size_id" class="form-label">Kích cỡ</label>
                             <select class="form-control" id="size_id" name="size_id" required>
@@ -179,6 +180,7 @@
                           id="editProductDetailForm">
                         @method('PUT')
                         @csrf
+                        <input type="hidden" name="product_id" value="{{ $products->id }}">
                         <input type="hidden" id="editProductDetailId" name="id">
                         <div class="mb-3">
                             <label for="editSizeId" class="form-label">Kích cỡ</label>
@@ -225,6 +227,14 @@
     </div>
 
     <script>
+        var addProductDetailModal = document.getElementById('addProductDetailModal')
+        addProductDetailModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget
+            var productId = button.getAttribute('data-product-id')
+            var inputProductId = document.getElementById('product_id')
+            inputProductId.value = productId
+        })
+
         var editProductDetailModal = document.getElementById('editProductDetailModal')
         editProductDetailModal.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget
