@@ -14,6 +14,9 @@ class ImageProduct extends Model
      *
      * @var array<int, string>
      */
+
+    public $timestamps = false;
+
     protected $fillable = ['url', 'product_detail_id'];
 
     protected $table = 'image_products';
