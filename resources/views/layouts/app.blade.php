@@ -144,12 +144,12 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown d-flex align-items-center m-2">
+                        {{-- <li class="nav-item dropdown d-flex align-items-center m-2">
                             <a href="#">
                                 <i class="fa fa-cart-plus me-sm-1" style="color: white"></i>
 
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item dropdown d-flex align-items-center m-2">
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
