@@ -12,6 +12,9 @@ class OrderDetail extends Model
     /**
      * Get the order that owns the order detail.
      */
+
+    public $timestamps = false;
+
     public function order()
     {
         return $this->belongsTo(Order::class);

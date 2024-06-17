@@ -14,6 +14,9 @@ class Order extends Model
      *
      * @var array<int, string>
      */
+
+    public $timestamps = false;
+
     protected $fillable = ['receiver', 'address', 'order_date', 'status', 'user_id', 'payment_method_id'];
 
     protected $table = 'orders';
