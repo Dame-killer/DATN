@@ -17,12 +17,11 @@
     <link href="../../css/nucleo-icons.css" rel="stylesheet" />
     <link href="../../css/nucleo-svg.css" rel="stylesheet" />
     @vite('resources/sass/app.scss')
-    @vite('resources/sass/logo.scss')
     @vite('resources/sass/argon-dashboard.scss')
 </head>
 
 <body>
-    <div class="min-height-300 bg-primary position-absolute w-100"></div>
+    <div class="min-height-300 position-absolute w-100" style="background-color: #0000FF"></div>
     <div class="sidebar" id="sidebar" style="width: 450px">
         @include('layouts.navigation')
     </div>
@@ -44,7 +43,7 @@
                     </h6>
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-                    <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+                    <div class="ms-md-auto pe-md-4 d-flex align-items-center">
                         <div class="input-group">
                             <span class="input-group-text text-body"><i class="fas fa-search"
                                     aria-hidden="true"></i></span>
@@ -145,7 +144,13 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item pe-2 d-flex align-items-center">
+                        <li class="nav-item dropdown d-flex align-items-center m-2">
+                            <a href="#">
+                                <i class="fa fa-cart-plus me-sm-1" style="color: white"></i>
+
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown d-flex align-items-center m-2">
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="fa fa-sign-out-alt me-sm-1 " style="color: white"></i>
@@ -166,6 +171,7 @@
         </div>
         {{-- @include('layouts.footer') --}}
     </div>
+
     <!--   Core JS Files   -->
     <script src="../../js/core/bootstrap.min.js"></script>
     <script src="../../js/core/popper.min.js"></script>

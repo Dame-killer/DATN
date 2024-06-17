@@ -4,45 +4,43 @@
     <div class="sidenav-header" style="display: flex; justify-content: center; align-items: center; position: relative;">
         <a class="nav-link {{ Route::currentRouteName() == 'admin-home' ? 'active' : '' }}"
             href="{{ route('admin-home') }}">
-            <img src="{{ asset('assets/image/logo') }}" class="navbar-brand-img h-100" alt="main_logo">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6">
+                stroke="currentColor" class="custom-svg-icon">
                 <path stroke-linecap="round" stroke-linejoin="round"
                     d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
             </svg>
-            <span class="ms-1 font-weight-bold">Dashboard</span>
+            <span class="ms-1 font-weight-bold custom-nav-link-text">Dashboard</span>
         </a>
     </div>
+
 
     <hr class="horizontal dark mt-0">
     <div class="w-auto" id="sidenav-collapse-main">
         <li class="navbar-nav">
             <a class="nav-link" href="{{ route('admin-order') }}">
-                <div
-                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                </div>
                 <img
                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAgElEQVR4nO2WsQ3AMAzD9P/T7AdFOwixAxLIlEkIrTiRPTD0/Oa6IFPAIPFFKqBaUa09anHgr8AgcUYqYP1GtSqgWlGtCqhWVKsCqpXv2+/b3artd22QE2CQ+CIVcNhja1XA1oqtVQFbK7ZWBWyt2FoVUK2o1ky1GHZ+c00QyQEeotHsIubs6JEAAAAASUVORK5CYII=">
                 <span class="nav-link-text ms-1">Quản lý đơn hàng</span>
             </a>
         </li>
         <li class="navbar-nav">
+            <a class="nav-link" href="{{ route('admin-order') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                </svg>
+                <span class="nav-link-text ms-1">Quản lý giỏ hàng</span>
+            </a>
+        </li>
+        <li class="navbar-nav">
             <a class="nav-link" href="{{ route('admin-product') }}">
-                <div
-                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                </div>
                 <img width="50" height="50" src="https://img.icons8.com/ios/50/clothes.png" alt="clothes" />
                 <span class="nav-link-text ms-1">Quản lý sản phẩm</span>
             </a>
         </li>
         <li class="navbar-nav">
             <a class="nav-link" href="{{ route('admin-account-customer') }}">
-                <div
-                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                </div>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="icon-size">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -53,10 +51,6 @@
         </li>
         <li class="navbar-nav">
             <a class="nav-link" href="{{ route('admin-account-employee') }}">
-                <div
-                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                </div>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="icon-size">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -65,15 +59,8 @@
                 <span class="nav-link-text ms-1">Quản lý nhân viên</span>
             </a>
         </li>
-
-        {{-- <li class="collapse navbar-collapse"> --}}
-        {{-- <ul class="navbar-nav" > --}}
         <li class="navbar-nav" id="navbarNavDarkDropdown">
             <a class="nav-link" data-bs-toggle="dropdown" aria-expanded="false">
-                <div
-                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                </div>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -84,148 +71,145 @@
             <ul class="dropdown-menu">
                 <li>
                     <a class="nav-link" href="{{ route('admin-color') }}">
-                        <div
-                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                        </div>
                         <span class="nav-link-text ms-1">Màu sắc</span>
                     </a>
                 </li>
                 <li>
                     <a class="nav-link" href="{{ route('admin-image') }}">
-                        <div
-                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                        </div>
                         <span class="nav-link-text ms-1">Hình ảnh</span>
                     </a>
                 </li>
                 <li>
                     <a class="nav-link" href="{{ route('admin-brand') }}">
-                        <div
-                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                        </div>
                         <span class="nav-link-text ms-1">Thương hiệu</span>
                     </a>
                 </li>
                 <li>
                     <a class="nav-link" href="{{ route('admin-pay') }}">
-                        <div
-                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                        </div>
                         <span class="nav-link-text ms-1">Phương thức thanh toán</span>
                     </a>
                 </li>
                 <li>
                     <a class="nav-link" href="{{ route('admin-size') }}">
-                        <div
-                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                        </div>
                         <span class="nav-link-text ms-1">Kích cỡ</span>
                     </a>
                 </li>
                 <li>
                     <a class="nav-link" href="{{ route('admin-category') }}">
-                        <div
-                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                        </div>
                         <span class="nav-link-text ms-1">Danh mục</span>
                     </a>
                 </li>
             </ul>
         </li>
-        {{-- </ul> --}}
-        {{-- </li> --}}
-
     </div>
 </aside>
 <style>
-    .custom-sidenav {
-        border-radius: 20px;
-        /* Đặt góc bo tròn */
-        overflow: hidden;
-        /* Loại bỏ cả thanh cuộn dọc và ngang */
-        /* Đảm bảo chiều rộng và chiều cao không vượt quá kích thước viewport */
-        max-height: 100vh;
-        width: auto;
-    }
-
-    .sidenav {
-        height: auto;
-        overflow: hidden;
-        /* Prevents scrollbar */
-        display: flex;
-        /* flex-direction: column; */
-    }
-
-    .sidenav-header {
-        padding: 20px;
-        flex-shrink: 0;
-        /* Prevents header from shrinking */
-    }
-
-    .sidenav .w-auto {
-        flex-grow: 1;
-        overflow-y: auto;
-        /* Allows scrolling within the collapse section */
-    }
-
-    .icon-size {
-        width: 1.5em;
-        height: 1.5em;
-        vertical-align: middle;
-        color: #343a40;
-        /* Changes the icon color */
-    }
-
+    /* Hiệu ứng hover và active cho các mục điều hướng */
     .nav-link {
-        display: flex;
-        align-items: center;
-        padding: 10px 15px;
-        border-radius: 5px;
-        transition: background-color 0.3s ease, color 0.3s ease;
+        transition: background-color 0.1s ease;
+        /* Thêm hiệu ứng chuyển đổi */
     }
 
     .nav-link:hover {
-        background-color: #1d87f0;
-        color: #2b3d4f;
+        background-color: #36dda8;
+        /* Màu nền khi hover, bạn có thể thay đổi theo ý muốn */
     }
 
     .nav-link.active {
-        background-color: #6ba0d4;
-        font-weight: bold;
-        color: #15283b;
+        background-color: #36dda8;
+        /* Màu nền khi mục được nhấp vào */
     }
 
+    /* Giảm khoảng cách giữa các dòng trong dropdown menu */
+    #navbarNavDarkDropdown .dropdown-menu {
+        line-height: 1.2;
+        /* Điều chỉnh giá trị này để giảm hoặc tăng khoảng cách giữa các dòng */
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    #navbarNavDarkDropdown .dropdown-menu .nav-link {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin: 0;
+        /* Xóa margin nếu có */
+    }
+
+    /* Đặt kích thước cho hình ảnh và biểu tượng */
+    .nav-link img,
+    .nav-link svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* Đặt kích thước cho chữ */
     .nav-link-text {
+        font-size: 16px;
+        /* hoặc kích thước mà bạn muốn */
         margin-left: 10px;
-        font-size: 1em;
+        /* Khoảng cách giữa biểu tượng và văn bản */
     }
 
-    .sidenav-header .nav-link {
-        font-size: 1.25em;
+    /* Sử dụng Flexbox để căn chỉnh các mục điều hướng */
+    .nav-link {
+        display: flex;
+        align-items: center;
     }
 
-    .sidenav-header .w-6 {
-        width: 1.75em;
-        height: 1.75em;
-        color: #495057;
-    }
-
+    /* Đảm bảo khoảng cách giữa các mục điều hướng */
     .navbar-nav {
-        padding-left: 10px;
+        list-style: none;
+        padding: 0;
     }
 
     .navbar-nav li {
         margin-bottom: 10px;
+        /* Khoảng cách giữa các mục */
     }
 
-    .navbar-nav h6 {
-        font-size: 0.85em;
-        color: #3e5468;
+    /* Tăng kích thước cho SVG */
+    .custom-svg-icon {
+        width: 48px;
+        /* Tăng kích thước SVG */
+        height: 48px;
+    }
+
+    .custom-nav-link-text {
+        font-size: 24px;
+        /* Tăng kích thước văn bản */
+        margin-left: 15px;
+        /* Điều chỉnh khoảng cách giữa biểu tượng và văn bản */
     }
 </style>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function setActiveLink() {
+            const currentUrl = window.location.href;
+
+            navLinks.forEach(link => {
+                // So sánh href của mỗi link với URL hiện tại
+                if (link.href === currentUrl) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        // Gọi hàm khi trang tải
+        setActiveLink();
+
+        // Thêm sự kiện click cho mỗi link
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                // Xóa lớp active từ tất cả các liên kết
+                navLinks.forEach(nav => nav.classList.remove('active'));
+
+                // Thêm lớp active vào liên kết được nhấp vào
+                this.classList.add('active');
+            });
+        });
+    });
+</script>

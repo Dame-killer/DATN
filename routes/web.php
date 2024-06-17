@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 //ADMIN
 Route::middleware('auth')->group(function () {
-    Route::get('/admin/home', function () { return view('admin/index'); })->name('admin-home');
+    Route::get('/admin/home', function () { return view('admin/home'); })->name('admin-home');
     Route::get('/admin/account-customer', function () { return view('admin/acount-customer/index'); })->name('admin-account-customer');
     Route::get('/admin/account-employee', function () { return view('admin/acount-employee/index'); })->name('admin-account-employee');
     // Route::get('/admin/employee', [ColorController::class, 'index'])->name('admin-employee');
