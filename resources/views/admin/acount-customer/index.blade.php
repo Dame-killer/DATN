@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Tài khoản khách hàng</h6>
+                        <h6>Quản lý khách hàng</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#addCustomerModal">
                             Thêm

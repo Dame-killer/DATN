@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/home', function () { return view('admin/home'); })->name('admin-home');
     Route::get('/admin/acount-customer', [UserController::class, 'index'])->name('admin-account-customer');
     Route::get('/admin/acount-employee', [UserController::class, 'index'])->name('admin-account-employee');
+    Route::get('/admin/cart', function () { return view('admin.cart.index'); })->name('admin-cart');
     Route::get('/admin/color', [ColorController::class, 'index'])->name('admin-color');
     Route::get('/admin/size', [SizeController::class, 'index'])->name('admin-size');
     Route::get('/admin/brand', [BrandController::class, 'index'])->name('admin-brand');
