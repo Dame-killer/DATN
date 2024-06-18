@@ -20,20 +20,20 @@
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             STT
                                         </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Mã đơn hàng
-                                        </th>
+{{--                                        <th--}}
+{{--                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">--}}
+{{--                                            Mã đơn hàng--}}
+{{--                                        </th>--}}
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Người nhận
                                         </th>
+{{--                                        <th--}}
+{{--                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">--}}
+{{--                                            Người duyệt--}}
+{{--                                        </th>--}}
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Người duyệt
-                                        </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Địa chỉ
                                         </th>
                                         <th
@@ -62,14 +62,25 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order->name }}</p>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $order->receiver }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $order->address }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $order->order_date }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $order->payment_method_id }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $order->status }}</p>
                                             </td>
                                             <td class="align-middle">
-                                                {{-- <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
-                                                    data-bs-target="#editProductModal" data-id="{{ $product->id }}"
-                                                    data-name="{{ $product->name }}">
+                                                <a href="{{ route('admin-order-detail', $order->id) }}"
+                                                   class="btn btn-info btn-sm mb-2">
                                                     Xem chi tiết
-                                                </button> --}}
+                                                </a>
                                                 <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
                                                     data-bs-target="#editProductModal" data-id="{{ $order->id }}"
                                                     data-name="{{ $order->name }}">
@@ -96,7 +107,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('products.store') }}" method="POST" autocomplete="off">
+                    <form action="{{ route('orders.store') }}" method="POST" autocomplete="off">
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Mã</label>

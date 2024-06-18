@@ -33,7 +33,7 @@
                                         Giá
                                     </th>
                                     <th
-                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Số lượng
                                     </th>
                                     <th
@@ -91,6 +91,13 @@
                                                     @csrf
                                                     <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
                                                 </form>
+                                                <form action="{{ route('cart.add', $product_detail->id) }}"
+                                                      method="POST">
+                                                    @csrf
+                                                    <button class="btn btn-success btn-sm" type="submit">
+                                                        Thêm vào giỏ hàng
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -102,7 +109,6 @@
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
                 </div>
             </div>

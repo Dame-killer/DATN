@@ -30,22 +30,25 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 //ADMIN
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'web')->group(function () {
     Route::get('/admin/home', function () { return view('admin/home'); })->name('admin-home');
     Route::get('/admin/acount-customer', [UserController::class, 'index'])->name('admin-account-customer');
     Route::get('/admin/acount-employee', [UserController::class, 'index'])->name('admin-account-employee');
-    Route::get('/admin/cart', function () { return view('admin.cart.index'); })->name('admin-cart');
+    Route::get('/admin/cart', [OrderDetailController::class, 'cart'])->name('admin-cart');
+    Route::post('/admin/product/{product_detail}', [OrderDetailController::class, 'addToCart'])->name('cart.add');
+    Route::delete('/admin/cart/{key}', [OrderDetailController::class, 'removeFromCart'])->name('cart.remove');
     Route::get('/admin/color', [ColorController::class, 'index'])->name('admin-color');
     Route::get('/admin/size', [SizeController::class, 'index'])->name('admin-size');
     Route::get('/admin/brand', [BrandController::class, 'index'])->name('admin-brand');
     Route::get('/admin/pay', [PaymentMethodController::class, 'index'])->name('admin-pay');
     Route::get('/admin/product', [ProductController::class, 'index'])->name('admin-product');
-    Route::get('/admin/product/{product_detail}', [ProductDetailController::class, 'show'])->name('admin-product_detail');
+    Route::get('/admin/product/{product_detail}', [ProductDetailController::class, 'show'])->name('admin-product-detail');
     Route::get('/admin/category', [CategoryController::class, 'index'])->name('admin-category');
     Route::get('/admin/image', [ImageProductController::class, 'index'])->name('admin-image');
     Route::get('/admin/order', [OrderController::class, 'index'])->name('admin-order');
+    Route::post('/admin/cart', [OrderController::class, 'store'])->name('orders-store');
     //order-detail xửa lại
-    Route::get('/admin/order/detail', [OrderDetailController::class, 'index'])->name('admin-order-detail');
+    Route::get('/admin/order/{order_detail}', [OrderDetailController::class, 'show'])->name('admin-order-detail');
 });
 
 //CUSTOMER

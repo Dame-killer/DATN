@@ -1,8 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Color;
+use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Product;
+use App\Models\ProductDetail;
+use App\Models\Size;
 use Illuminate\Http\Request;
+use Cart;
 
 class OrderDetailController extends Controller
 {
@@ -11,9 +17,47 @@ class OrderDetailController extends Controller
      */
     public function index()
     {
-        $orderDetails = OrderDetail::all();
+        $order_details = OrderDetail::with('productDetail.product', 'productDetail.color', 'productDetail.size')->get();
 
-        return view ('admin.order-detail.index')->with(compact('orderDetails'));
+        foreach ($order_details as $order_detail) {
+            $order_detail->price = $order_detail->amount * $order_detail->product_detail->price;
+        }
+
+        $totalPrice = $order_details->sum('price');
+
+        return view ('admin.cart.index')->with(compact('order_details', 'totalPrice'));
+    }
+
+    public function cart()
+    {
+        $cart = session()->get('cart', []); // Lấy nội dung giỏ hàng từ session
+
+        $order_details = [];
+        $totalPrice = 0;
+
+        foreach ($cart as $item) {
+            // Tạo một đối tượng OrderDetail tạm thời để hiển thị trên view
+            $order_detail = new \stdClass();
+            $order_detail->product_detail = new \stdClass();
+            $order_detail->product_detail->product = new \stdClass();
+            $order_detail->product_detail->color = new \stdClass();
+            $order_detail->product_detail->size = new \stdClass();
+
+            $order_detail->product_detail->product->code = $item['attributes']['product_code'];
+            $order_detail->product_detail->product->name = $item['name'];
+            $order_detail->product_detail->product->image = $item['attributes']['product_image'];
+            $order_detail->amount = $item['quantity'];
+            $order_detail->price = $order_detail->amount * $item['price'];
+            $order_detail->product_detail->size->size_name = $item['attributes']['size_name'];
+            $order_detail->product_detail->size->size_number = $item['attributes']['size_number'];
+            $order_detail->product_detail->color->name = $item['attributes']['color_name'];
+            $order_detail->product_detail->color->code = $item['attributes']['color_code'];
+
+            $order_details[] = $order_detail;
+            $totalPrice += $order_detail->price;
+        }
+
+        return view('admin.cart.index')->with(compact('order_details', 'totalPrice'));
     }
 
     /**
@@ -35,9 +79,21 @@ class OrderDetailController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $orders = Order::findOrFail($id);
+        $products = Product::all();
+        $sizes = Size::all();
+        $colors = Color::all();
+        $product_details = ProductDetail::all();
+        $order_details = OrderDetail::with('productDetail', 'productDetail.product', 'productDetail.size', 'productDetail.color')->where('order_id', $id)->get();
+
+        // Kiểm tra nếu không có chi tiết đơn hàng
+        if ($order_details->isEmpty()) {
+            throw new \Exception('Không tìm thấy chi tiết đơn hàng!');
+        }
+
+        return view('admin.order-detail.index', compact('orders', 'products', 'sizes', 'colors', 'product_details', 'order_details'));
     }
 
     /**
@@ -62,5 +118,61 @@ class OrderDetailController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function addToCart(ProductDetail $product_detail)
+    {
+        $cart = session()->get('cart', []);
+
+        // Lấy thông tin chi tiết sản phẩm
+        $product = $product_detail->product;
+        $size = $product_detail->size;
+        $color = $product_detail->color;
+
+        // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
+        if (isset($cart[$product_detail->id])) {
+            // Nếu đã tồn tại, tăng số lượng lên 1
+            $cart[$product_detail->id]['quantity']++;
+        } else {
+            // Nếu chưa tồn tại, thêm sản phẩm mới vào giỏ hàng
+            $cart[$product_detail->id] = [
+                'id' => $product_detail->id,
+                'name' => $product_detail->product->name,
+                'price' => $product_detail->price,
+                'quantity' => 1,
+                'attributes' => [
+                    'product_code' => $product->code,
+                    'product_name' => $product->name,
+                    'product_image' => asset('storage/' . $product->image),
+                    'size_name' => $size->size_name,
+                    'size_number' => $size->size_number,
+                    'color_name' => $color->name,
+                    'color_code' => $color->code
+                ]
+            ];
+        }
+
+        session()->put('cart', $cart);
+
+        // Redirect về trang quản lý giỏ hàng
+        return redirect()->route('admin-cart');
+    }
+
+    public function removeFromCart($key)
+    {
+        // Lấy giỏ hàng từ session
+        $cart = session()->get('cart', []);
+
+        // Kiểm tra xem key có tồn tại trong giỏ hàng không
+        if (array_key_exists($key, $cart)) {
+            unset($cart[$key]); // Xóa phần tử khỏi giỏ hàng
+            session()->put('cart', array_values($cart)); // Cập nhật lại session với mảng có chỉ số liên tục
+        }
+
+        // Debug thông tin giỏ hàng sau khi xóa
+        dd(session()->get('cart', []));
+
+        // Redirect về trang giỏ hàng với thông báo thành công
+        return redirect()->back()->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng.');
     }
 }

@@ -15,6 +15,8 @@ class OrderDetail extends Model
 
     public $timestamps = false;
 
+    protected $fillable = ['order_id', 'product_detail_id', 'price', 'amount'];
+
     public function order()
     {
         return $this->belongsTo(Order::class);

@@ -71,7 +71,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $product->brand->name }}</p>
                                         </td>
                                         <td class="align-middle">
-                                            <a href="{{ route('admin-product_detail', $product->id) }}"
+                                            <a href="{{ route('admin-product-detail', $product->id) }}"
                                                class="btn btn-info btn-sm mb-2">
                                                 Xem chi tiết
                                             </a>
