@@ -2,20 +2,22 @@
     class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 custom-sidenav"
     id="sidenav-main">
     <div class="sidenav-header" style="display: flex; justify-content: center; align-items: center; position: relative;">
-        <a class="nav-link {{ Route::currentRouteName() == 'admin-home' ? 'active' : '' }}"
-            href="{{ route('admin-home') }}">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="custom-svg-icon">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-            </svg>
-            <span class="ms-1 font-weight-bold custom-nav-link-text">Dashboard</span>
-        </a>
+        {{-- <img src="{{ asset('assets/images/logo1.png') }}" alt="Logo"> --}}
+        <span class="ms-1 font-weight-bold custom-nav-link-text">LivelyMuse</span>
     </div>
-
 
     <hr class="horizontal dark mt-0">
     <div class="w-auto" id="sidenav-collapse-main">
+        <li class="navbar-nav">
+            <a class="nav-link" href="{{ route('admin-home') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="custom-svg-icon">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                </svg>
+                <span class="nav-link-text ms-1">Trang chủ</span>
+            </a>
+        </li>
         <li class="navbar-nav">
             <a class="nav-link" href="{{ route('admin-order') }}">
                 <img
@@ -104,6 +106,36 @@
     </div>
 </aside>
 <style>
+    .custom-nav-link-text {
+        font-family: 'Arial', sans-serif;
+        /* Chọn font chữ */
+        font-size: 24px;
+        /* Kích thước chữ */
+        font-weight: bold;
+        /* Độ đậm của chữ */
+        color: #ffffff;
+        /* Màu chữ */
+        background: linear-gradient(45deg, #ff6f61, #de6262);
+        /* Màu nền gradient */
+        padding: 10px 20px;
+        /* Khoảng cách bên trong */
+        border-radius: 8px;
+        /* Bo góc */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        /* Bóng chữ */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* Bóng nền */
+        transition: transform 0.3s, box-shadow 0.3s;
+        /* Hiệu ứng chuyển động */
+    }
+
+    .custom-nav-link-text:hover {
+        transform: scale(1.05);
+        /* Tăng kích thước khi hover */
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        /* Thay đổi bóng nền khi hover */
+    }
+
     /* Hiệu ứng hover và active cho các mục điều hướng */
     .nav-link {
         transition: background-color 0.1s ease;
