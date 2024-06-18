@@ -10,6 +10,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ImageProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 /*
@@ -31,9 +32,8 @@ Auth::routes();
 //ADMIN
 Route::middleware('auth')->group(function () {
     Route::get('/admin/home', function () { return view('admin/home'); })->name('admin-home');
-    Route::get('/admin/account-customer', function () { return view('admin/acount-customer/index'); })->name('admin-account-customer');
-    Route::get('/admin/account-employee', function () { return view('admin/acount-employee/index'); })->name('admin-account-employee');
-    // Route::get('/admin/employee', [ColorController::class, 'index'])->name('admin-employee');
+    Route::get('/admin/acount-customer', [UserController::class, 'index'])->name('admin-account-customer');
+    Route::get('/admin/acount-employee', [UserController::class, 'index'])->name('admin-account-employee');
     Route::get('/admin/color', [ColorController::class, 'index'])->name('admin-color');
     Route::get('/admin/size', [SizeController::class, 'index'])->name('admin-size');
     Route::get('/admin/brand', [BrandController::class, 'index'])->name('admin-brand');

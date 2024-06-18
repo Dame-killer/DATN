@@ -8,7 +8,7 @@
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Quản lý nhân viên</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#addAuthorModal">
+                                data-bs-target="#addEmployeeModal">
                             Thêm
                         </button>
                     </div>
@@ -16,59 +16,72 @@
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
                                 <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            STT
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tên
-                                        </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Email
-                                        </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Số điện thoại
-                                        </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Quyền
-                                        </th>
-                                        <th class="text-secondary opacity-7"></th>
-                                    </tr>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        STT
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Tên
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Email
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Số điện thoại
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Quyền
+                                    </th>
+                                    <th class="text-secondary opacity-7"></th>
+                                </tr>
                                 </thead>
                                 <tbody>
+                                @foreach ($users as $user)
                                     <tr>
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">1</h6>
+                                                    <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">Long</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $user->name }}</p>
                                         </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <p class="text-xs font-weight-bold mb-0">Long@gmail.com</p>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $user->email }}</p>
                                         </td>
-                                        <td class="align-middle text-center"><span
-                                                class="text-secondary text-xs font-weight-bold">23/04/18</span></td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $user->phone }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                @if ($user->role == 1)
+                                                    Quản lý
+                                                @elseif ($user->role == 2)
+                                                    Nhân viên
+                                                @endif
+                                            </p>
+                                        </td>
                                         <td class="align-middle">
-                                            <button href="javascript:;" class="text-secondary font-weight-bold text-xs me-2"
-                                                data-bs-toggle="modal" data-bs-target="#editCustomerModal" data-id="1"
-                                                data-name="Long" data-status="Sử dụng" data-email="Long@gmail.com">
-                                                Edit
+                                            <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
+                                                    data-bs-target="#editEmployeeModal" data-id="{{ $user->id }}"
+                                                    data-name="{{ $user->name }}" data-email="{{ $user->email }}"
+                                                    data-phone="{{ $user->phone }}" data-role="{{ $user->role }}">
+                                                Cập nhật
                                             </button>
-                                            <button href="javascript:;" class="text-secondary font-weight-bold text-xs me-2"
-                                                data-bs-toggle="modal" data-bs-target="#editCustomerModal" data-id="1"
-                                                data-name="Long" data-status="Sử dụng" data-email="Long@gmail.com">
-                                                Xóa
-                                            </button>
+                                            <form action="{{ route('users.destroy', $user->id) }}" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
+                                            </form>
                                         </td>
                                     </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -78,32 +91,40 @@
         </div>
     </div>
 
-    <!-- Add Author Modal -->
-    <div class="modal fade" id="addAuthorModal" tabindex="-1" aria-labelledby="addAuthorModalLabel" aria-hidden="true">
+    <!-- Add Employee Modal -->
+    <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addAuthorModalLabel">Thêm mới nhân viên</h5>
+                    <h5 class="modal-title" id="addEmployeeModalLabel">Thêm mới nhân viên</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="POST">
+                    <form action="{{ route('users.store') }}" method="POST" autocomplete="off">
                         @csrf
                         <div class="mb-3">
-                            <label for="authorEmail" class="form-label">Tên</label>
-                            <input type="email" class="form-control" id="authorName" name="email" required>
+                            <label for="name" class="form-label">Tên</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="authorFunction" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="authorEmail" name="function" required>
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
                         </div>
                         <div class="mb-3">
-                            <label for="authorFunction" class="form-label">Phone</label>
-                            <input type="text" class="form-control" id="authorEmail" name="function" required>
+                            <label for="password" class="form-label">Mật khẩu</label>
+                            <input type="password" minlength="8" class="form-control" id="password" name="password" required>
                         </div>
                         <div class="mb-3">
-                            <label for="authorFunction" class="form-label">Quyền</label>
-                            <input type="text" class="form-control" id="authorEmail" name="function" required>
+                            <label for="phone" class="form-label">Số điện thoại</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Quyền</label>
+                            <select class="form-control" id="role" name="role" required>
+                                <option value="1">Quản lý</option>
+                                <option value="2">Nhân viên</option>
+                            </select>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -115,35 +136,39 @@
         </div>
     </div>
 
-    <!-- Edit Color Modal -->
-    <div class="modal fade" id="editCustomerModal" tabindex="-1" aria-labelledby="editCustomerModalLabel"
-        aria-hidden="true">
+    <!-- Edit Employee Modal -->
+    <div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="editEmployeeModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editCustomerModalLabel">Chỉnh sửa tài khoản</h5>
+                    <h5 class="modal-title" id="editEmployeeModalLabel">Cập nhật tài khoản</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="POST">
-                        @csrf
+                    <form action="{{ route('users.update', '') }}" method="POST" autocomplete="off"
+                          id="editEmployeeForm">
                         @method('PUT')
-                        <input type="hidden" id="editColorId" name="id">
+                        @csrf
+                        <input type="hidden" id="editEmployeeId" name="id">
                         <div class="mb-3">
-                            <label for="authorEmail" class="form-label">Tên</label>
-                            <input type="email" class="form-control" id="authorName" name="email" required>
+                            <label for="editEmployeeName" class="form-label">Tên</label>
+                            <input type="text" class="form-control" id="editEmployeeName" name="name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="authorFunction" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="authorEmail" name="function" required>
+                            <label for="editEmployeeEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="editEmployeeEmail" name="email" required>
                         </div>
                         <div class="mb-3">
-                            <label for="authorFunction" class="form-label">Phone</label>
-                            <input type="text" class="form-control" id="authorEmail" name="function" required>
+                            <label for="editEmployeePhone" class="form-label">Số điện thoại</label>
+                            <input type="tel" class="form-control" id="editEmployeePhone" name="phone" required>
                         </div>
                         <div class="mb-3">
-                            <label for="authorFunction" class="form-label">Quyền</label>
-                            <input type="text" class="form-control" id="authorEmail" name="function" required>
+                            <label for="editEmployeeRole" class="form-label">Quyền</label>
+                            <select class="form-control" id="editEmployeeRole" name="role" required>
+                                <option value="1">Quản lý</option>
+                                <option value="2">Nhân viên</option>
+                            </select>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -156,25 +181,30 @@
     </div>
 
     <script>
-        var editCustomerModal = document.getElementById('editCustomerModal')
-        editCustomerModal.addEventListener('show.bs.modal', function(event) {
+        var editEmployeeModal = document.getElementById('editEmployeeModal')
+        editEmployeeModal.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget
             var id = button.getAttribute('data-id')
             var name = button.getAttribute('data-name')
-            var status = button.getAttribute('data-status')
             var email = button.getAttribute('data-email')
+            var phone = button.getAttribute('data-phone')
+            var role = button.getAttribute('data-role')
+            var form = document.getElementById('editEmployeeForm')
 
-            var modalTitle = editCustomerModal.querySelector('.modal-title')
-            var modalBodyInputId = editCustomerModal.querySelector('#editColorId')
-            var modalBodyInputName = editCustomerModal.querySelector('#editColorName')
-            var modalBodySelectStatus = editCustomerModal.querySelector('#editColorStatus')
-            var modalBodySelectEmail = editCustomerModal.querySelector('#editColorEmail')
+            var modalTitle = editEmployeeModal.querySelector('.modal-title')
+            var modalBodyInputId = editEmployeeModal.querySelector('#editEmployeeId')
+            var modalBodyInputName = editEmployeeModal.querySelector('#editEmployeeName')
+            var modalBodyInputEmail = editEmployeeModal.querySelector('#editEmployeeEmail')
+            var modalBodyInputPhone = editEmployeeModal.querySelector('#editEmployeePhone')
+            var modalBodySelectRole = editEmployeeModal.querySelector('#editEmployeeRole')
 
-            modalTitle.textContent = 'Chỉnh sửa tài khoản: ' + name
+            modalTitle.textContent = 'Cập nhật tài khoản: ' + name
             modalBodyInputId.value = id
             modalBodyInputName.value = name
-            modalBodySelectStatus.value = status
-            modalBodySelectEmail.value = email
+            modalBodyInputEmail.value = email
+            modalBodyInputPhone.value = phone
+            modalBodySelectRole.value = role
+            form.action = "{{ route('users.update', '') }}/" + id
         })
     </script>
 @endsection
