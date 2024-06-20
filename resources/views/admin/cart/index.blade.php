@@ -91,7 +91,7 @@
                                             </div>
                                         </td>
                                         <td class="text-right">
-                                            <form action="{{ route('cart.remove', $key) }}" method="POST">
+                                            <form action="{{ route('cart.remove', $order_detail->product_detail->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-sm">Xóa</button>

@@ -33,6 +33,7 @@ class OrderDetailController extends Controller
         $cart = session()->get('cart', []); // Lấy nội dung giỏ hàng từ session
 
         $order_details = [];
+
         $totalPrice = 0;
 
         foreach ($cart as $item) {
@@ -43,6 +44,7 @@ class OrderDetailController extends Controller
             $order_detail->product_detail->color = new \stdClass();
             $order_detail->product_detail->size = new \stdClass();
 
+            $order_detail->product_detail->id = $item['id'];
             $order_detail->product_detail->product->code = $item['attributes']['product_code'];
             $order_detail->product_detail->product->name = $item['name'];
             $order_detail->product_detail->product->image = $item['attributes']['product_image'];
@@ -158,19 +160,19 @@ class OrderDetailController extends Controller
         return redirect()->route('admin-cart');
     }
 
-    public function removeFromCart($key)
+    public function removeFromCart($product_detail)
     {
         // Lấy giỏ hàng từ session
         $cart = session()->get('cart', []);
 
-        // Kiểm tra xem key có tồn tại trong giỏ hàng không
-        if (array_key_exists($key, $cart)) {
-            unset($cart[$key]); // Xóa phần tử khỏi giỏ hàng
-            session()->put('cart', array_values($cart)); // Cập nhật lại session với mảng có chỉ số liên tục
-        }
+        // Check if the product exists in the cart
+        if (isset($cart[$product_detail])) {
+            // Remove the product from the cart
+            unset($cart[$product_detail]);
 
-        // Debug thông tin giỏ hàng sau khi xóa
-        dd(session()->get('cart', []));
+            // Update the cart session
+            session()->put('cart', $cart);
+        }
 
         // Redirect về trang giỏ hàng với thông báo thành công
         return redirect()->back()->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng.');

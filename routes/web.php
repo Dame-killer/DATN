@@ -36,7 +36,7 @@ Route::middleware('auth', 'web')->group(function () {
     Route::get('/admin/acount-employee', [UserController::class, 'index'])->name('admin-account-employee');
     Route::get('/admin/cart', [OrderDetailController::class, 'cart'])->name('admin-cart');
     Route::post('/admin/product/{product_detail}', [OrderDetailController::class, 'addToCart'])->name('cart.add');
-    Route::delete('/admin/cart/{key}', [OrderDetailController::class, 'removeFromCart'])->name('cart.remove');
+    Route::delete('/admin/cart/{product_detail}', [OrderDetailController::class, 'removeFromCart'])->name('cart.remove');
     Route::get('/admin/color', [ColorController::class, 'index'])->name('admin-color');
     Route::get('/admin/size', [SizeController::class, 'index'])->name('admin-size');
     Route::get('/admin/brand', [BrandController::class, 'index'])->name('admin-brand');
