@@ -32,11 +32,14 @@ Auth::routes();
 //ADMIN
 Route::middleware('auth', 'web')->group(function () {
     Route::get('/admin/home', function () { return view('admin/home'); })->name('admin-home');
-    Route::get('/admin/acount-customer', [UserController::class, 'index'])->name('admin-account-customer');
-    Route::get('/admin/acount-employee', [UserController::class, 'index'])->name('admin-account-employee');
+    Route::get('/admin/order', [OrderController::class, 'index'])->name('admin-order');
+    Route::get('/admin/order/{order_detail}', [OrderDetailController::class, 'show'])->name('admin-order-detail');
     Route::get('/admin/cart', [OrderDetailController::class, 'cart'])->name('admin-cart');
     Route::post('/admin/product/{product_detail}', [OrderDetailController::class, 'addToCart'])->name('cart.add');
     Route::delete('/admin/cart/{product_detail}', [OrderDetailController::class, 'removeFromCart'])->name('cart.remove');
+    Route::post('/admin/cart', [OrderController::class, 'store'])->name('orders-store');
+    Route::get('/admin/acount-customer', [UserController::class, 'index'])->name('admin-account-customer');
+    Route::get('/admin/acount-employee', [UserController::class, 'index'])->name('admin-account-employee');
     Route::get('/admin/color', [ColorController::class, 'index'])->name('admin-color');
     Route::get('/admin/size', [SizeController::class, 'index'])->name('admin-size');
     Route::get('/admin/brand', [BrandController::class, 'index'])->name('admin-brand');
@@ -45,10 +48,6 @@ Route::middleware('auth', 'web')->group(function () {
     Route::get('/admin/product/{product_detail}', [ProductDetailController::class, 'show'])->name('admin-product-detail');
     Route::get('/admin/category', [CategoryController::class, 'index'])->name('admin-category');
     Route::get('/admin/image', [ImageProductController::class, 'index'])->name('admin-image');
-    Route::get('/admin/order', [OrderController::class, 'index'])->name('admin-order');
-    Route::post('/admin/cart', [OrderController::class, 'store'])->name('orders-store');
-    //order-detail xửa lại
-    Route::get('/admin/order/{order_detail}', [OrderDetailController::class, 'show'])->name('admin-order-detail');
 });
 
 //CUSTOMER

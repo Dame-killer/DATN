@@ -8,7 +8,6 @@ use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\Size;
 use Illuminate\Http\Request;
-use Cart;
 
 class OrderDetailController extends Controller
 {
@@ -17,15 +16,7 @@ class OrderDetailController extends Controller
      */
     public function index()
     {
-        $order_details = OrderDetail::with('productDetail.product', 'productDetail.color', 'productDetail.size')->get();
-
-        foreach ($order_details as $order_detail) {
-            $order_detail->price = $order_detail->amount * $order_detail->product_detail->price;
-        }
-
-        $totalPrice = $order_details->sum('price');
-
-        return view ('admin.cart.index')->with(compact('order_details', 'totalPrice'));
+        //
     }
 
     public function cart()
@@ -95,7 +86,9 @@ class OrderDetailController extends Controller
             throw new \Exception('Không tìm thấy chi tiết đơn hàng!');
         }
 
-        return view('admin.order-detail.index', compact('orders', 'products', 'sizes', 'colors', 'product_details', 'order_details'));
+        $totalPrice = $order_details->sum('price');
+
+        return view('admin.order-detail.index', compact('orders', 'products', 'sizes', 'colors', 'product_details', 'order_details', 'totalPrice'));
     }
 
     /**
@@ -156,8 +149,7 @@ class OrderDetailController extends Controller
 
         session()->put('cart', $cart);
 
-        // Redirect về trang quản lý giỏ hàng
-        return redirect()->route('admin-cart');
+        return redirect()->back()->with('success', 'Thêm sản phẩm vào giỏ hàng thành công!');
     }
 
     public function removeFromCart($product_detail)
@@ -175,6 +167,6 @@ class OrderDetailController extends Controller
         }
 
         // Redirect về trang giỏ hàng với thông báo thành công
-        return redirect()->back()->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng.');
+        return redirect()->back()->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng!');
     }
 }

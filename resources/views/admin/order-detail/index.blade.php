@@ -88,6 +88,18 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="6"></td>
+                                    <td
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Tổng tiền:
+                                    </td>
+                                    <td class="text-right text-bold text-lg" id="total-price">
+                                        {{ $totalPrice }}đ
+                                    </td>
+                                </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -96,3 +108,18 @@
         </div>
     </div>
 @endsection
+<style>
+    /* CSS cho tổng tiền */
+    tfoot tr td.text-bold {
+        font-weight: bold;
+    }
+
+    tfoot tr td.text-lg {
+        font-size: 2.5rem;
+        /* Hoặc kích thước lớn hơn */
+    }
+
+    tfoot tr td.text-right {
+        text-align: right;
+    }
+</style>

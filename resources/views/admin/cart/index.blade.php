@@ -53,7 +53,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($order_details as $key => $order_detail)
+                                @foreach ($order_details as $order_detail)
                                     <tr>
                                         <td>
                                             <div class="d-flex px-2 py-1">
