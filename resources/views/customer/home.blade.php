@@ -64,7 +64,7 @@
     @include('customer.product')
 
 
-    @include('customer.footer')
+    {{-- @include('customer.footer') --}}
 
 
     <!-- Back to top -->

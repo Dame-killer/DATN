@@ -12,6 +12,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 /*
@@ -56,7 +57,20 @@ Route::middleware('auth', 'web')->group(function () {
 
 //CUSTOMER
 
+//login
+Route::get('/customer/login', function () {
+    return view('customer/login');
+})->name('customer-login');
+Route::get('/customer/register', function () {
+    return view('customer/register');
+})->name('customer-register');
+
+Route::get('/customer/logout', [CustomerController::class, 'logout'])->name('customer-logout');
+Route::post('/customer/login', [CustomerController::class, 'login']);
+Route::post('/customer/register', [CustomerController::class, 'register']);
+
 Route::get('/customer/home', [HomeController::class, 'indexCustomer'])->name('customer-home');
 Route::get('/customer/product', [ProductController::class, 'indexCustomer'])->name('customer-product');
 Route::get('/customer/product_detail', function () { return view('customer/product-detail'); })->name('customer-product-detail');
 Route::get('/customer/cart', function () { return view('customer/shoping-cart'); })->name('customer-cart');
+Route::get('/customer/account', function () { return view('customer/account'); })->name('customer-account');

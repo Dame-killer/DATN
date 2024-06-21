@@ -6,7 +6,7 @@
             <div class="card-body p-4">
                 <h1>Đăng ký</h1>
 
-                <form method="POST" action="{{ route('register') }}">
+                <form method="POST" action="/customer/register">
                     @csrf
 
                     <div class="input-group mb-3"><span class="input-group-text">
