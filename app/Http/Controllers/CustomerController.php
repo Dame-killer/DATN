@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+
+class CustomerController extends Controller
+{
+    // Phương thức xử lý đăng ký
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'phone' => 'required|string|max:10',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'phone' => $request->phone,
+        ]);
+
+        Auth::login($user);
+        return view ('/customer/home')->with('success', 'Đăng ký thành công');
+        // return response()->json(['message' => 'Đăng ký thành công', 'user' => $user], 201);
+    }
+
+    // Phương thức xử lý đăng nhập
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+
+        if (Auth::attempt($request->only('email', 'password'))) {
+            $user = Auth::user();
+            return redirect('/customer/home')->with('success', 'Đăng nhập thành công');
+        }
+
+        return redirect()->back()->withErrors(['email' => 'Thông tin đăng nhập không chính xác']);
+    }
+
+    // Phương thức xử lý đăng xuất
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/customer/home')->with('success', 'Đăng xuất thành công');
+    }
+}
