@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Color;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -8,6 +9,7 @@ use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\Size;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderDetailController extends Controller
 {
@@ -168,5 +170,53 @@ class OrderDetailController extends Controller
 
         // Redirect về trang giỏ hàng với thông báo thành công
         return redirect()->back()->with('success', 'Đã xóa sản phẩm khỏi giỏ hàng!');
+    }
+
+    public function updateQuantity(Request $request)
+    {
+        // Lấy giỏ hàng từ session
+        $cart = session()->get('cart', []);
+        $totalPrice = 0;
+        $amount = 0;
+        $unitPrice = 0;
+
+        // Kiểm tra xem sản phẩm có tồn tại trong giỏ hàng không
+        if (isset($cart[$request->id])) {
+            // Lấy thông tin sản phẩm từ cơ sở dữ liệu
+            $productDetail = DB::table('product_details')->where('id', $request->id)->first();
+
+            if (!$productDetail) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Sản phẩm không tồn tại.'
+                ]);
+            }
+
+            // Kiểm tra và cập nhật số lượng sản phẩm
+            if ($request->action == 'increase' && $cart[$request->id]['quantity'] < $productDetail->quantity) {
+                $cart[$request->id]['quantity']++;
+            } elseif ($request->action == 'decrease' && $cart[$request->id]['quantity'] > 1) {
+                $cart[$request->id]['quantity']--;
+            }
+
+            $amount = $cart[$request->id]['quantity'];
+            $unitPrice = $cart[$request->id]['price'];
+            $cart[$request->id]['total'] = $amount * $unitPrice;
+        }
+
+        // Tính tổng tiền
+        foreach ($cart as $item) {
+            $totalPrice += $item['total'];
+        }
+
+        // Cập nhật lại session với giỏ hàng mới
+        session()->put('cart', $cart);
+
+        return response()->json([
+            'status' => 'success',
+            'totalPrice' => $totalPrice,
+            'amount' => $amount,
+            'price' => $amount * $unitPrice
+        ]);
     }
 }

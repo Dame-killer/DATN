@@ -76,7 +76,11 @@
                                                 style="width: 50px; height: 50px;">
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $order_detail->amount }}</p>
+                                            <div class="d-flex align-items-center">
+                                                <button class="btn btn-sm btn-warning update-quantity" data-id="{{ $order_detail->product_detail->id }}" data-action="decrease">-</button>
+                                                <p class="text-xs font-weight-bold mb-0 mx-2">{{ $order_detail->amount }}</p>
+                                                <button class="btn btn-sm btn-primary update-quantity" data-id="{{ $order_detail->product_detail->id }}" data-action="increase">+</button>
+                                            </div>
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $order_detail->price }}</p>
@@ -158,6 +162,35 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.querySelectorAll('.update-quantity').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.dataset.id;
+                const action = this.dataset.action;
+
+                fetch('{{ route('cart.updateQuantity') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ id, action })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            const amountElement = this.parentElement.querySelector('.text-xs.font-weight-bold.mb-0.mx-2');
+                            amountElement.textContent = data.amount;
+
+                            const totalPriceElement = document.getElementById('total-price');
+                            totalPriceElement.textContent = `${data.totalPrice}đ`;
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
 @endsection
 <style>
     /* CSS cho tổng tiền */
