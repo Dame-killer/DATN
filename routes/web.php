@@ -11,6 +11,7 @@ use App\Http\Controllers\ImageProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 /*
@@ -54,7 +55,8 @@ Route::middleware('auth', 'web')->group(function () {
 });
 
 //CUSTOMER
-Route::get('/customer/home', function () { return view('customer/home'); })->name('customer-home');
-Route::get('/customer/product', function () { return view('customer/product'); })->name('customer-product');
+
+Route::get('/customer/home', [HomeController::class, 'indexCustomer'])->name('customer-home');
+Route::get('/customer/product', [ProductController::class, 'indexCustomer'])->name('customer-product');
 Route::get('/customer/product_detail', function () { return view('customer/product-detail'); })->name('customer-product-detail');
 Route::get('/customer/cart', function () { return view('customer/shoping-cart'); })->name('customer-cart');
