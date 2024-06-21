@@ -8,7 +8,7 @@
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Quản lý hình ảnh quần áo</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#addProductModal">
+                                data-bs-target="#addImageProductModal">
                             Thêm
                         </button>
                     </div>
@@ -16,43 +16,73 @@
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
                                 <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            STT
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Hình ảnh
-                                        </th>
-                                        <th class="text-secondary opacity-7"></th>
-                                    </tr>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        STT
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Mã sản phẩm
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Tên sản phẩm
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Ảnh
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Màu sắc
+                                    </th>
+                                    <th class="text-secondary opacity-7"></th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($imageProducts as $imageProduct)
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
-                                                    </div>
+                                @foreach ($imageProducts as $imageProduct)
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $imageProduct->image }}</p>
-                                            </td>
-                                            <td class="align-middle">
-                                                <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
-                                                    data-bs-target="#editProductModal" data-id="{{ $product->id }}">
-                                                    Cập nhật
-                                                </button>
-                                                <form action="{{ route('products.destroy', $product->id) }}" method="POST">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $imageProduct->productDetail->product->code }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $imageProduct->productDetail->product->name }}</p>
+                                        </td>
+                                        <td>
+                                            <img src="{{ asset('storage/' . $imageProduct->url) }}"
+                                                 alt="" class="img-fluid"
+                                                 style="width: 50px; height: 50px;">
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $imageProduct->productDetail->color->name }}</p>
+                                            <div
+                                                style="width: 20px; height: 20px; background-color: {{ $imageProduct->productDetail->color->code }};">
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
+                                                    data-bs-target="#editImageProductModal"
+                                                    data-id="{{ $imageProduct->id }}"
+                                                    data-url="{{ asset('storage/' . $imageProduct->url) }}"
+                                                    data-product-detail="{{ $imageProduct->product_detail_id }}">
+                                                Cập nhật
+                                            </button>
+                                            <form action="{{ route('image_products.destroy', $imageProduct->id) }}"
+                                                  method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -62,21 +92,35 @@
         </div>
     </div>
 
-    <!-- Add Payment Method Modal -->
-    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <!-- Add Image Product Modal -->
+    <div class="modal fade" id="addImageProductModal" tabindex="-1" aria-labelledby="addImageProductModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addProductModalLabel">Thêm ảnh quần áo</h5>
+                    <h5 class="modal-title" id="addImageProductModalLabel">Thêm ảnh</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('products.store') }}" method="POST" autocomplete="off">
+                    <form action="{{ route('image_products.store') }}" method="POST" autocomplete="off"
+                          enctype="multipart/form-data">
                         @csrf
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Ảnh</label>
-                            <input type="text" class="form-control" id="image" name="name"
-                                placeholder="Nhập ảnh quần áo" required>
+                        <div class="form-group">
+                            <label for=url>Chọn Hình Ảnh</label>
+                            <img id="previewImage" src="#" alt="Preview Image" class="img-fluid mb-2"
+                                 style="width: 50px; height: 50px; display: none;">
+                            <input type="file" class="form-control" id="url" name="url" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productDetailId">Chọn Sản Phẩm</label>
+                            <select class="form-control" id="productDetailId" name="product_detail_id" required>
+                                @foreach($productDetails as $productDetail)
+                                    <option value="{{ $productDetail->id }}">{{ $productDetail->product->code }}
+                                        - {{ $productDetail->product->name }}
+                                        - {{ $productDetail->color->name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -88,24 +132,37 @@
         </div>
     </div>
 
-    <!-- Edit Payment Method Modal -->
-    <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+    <!-- Edit Image Product Modal -->
+    <div class="modal fade" id="editImageProductModal" tabindex="-1" aria-labelledby="editImageProductModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editProductModalLabel">Cập nhật ảnh quần áo</h5>
+                    <h5 class="modal-title" id="editImageProductModalLabel">Cập nhật ảnh</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('products.update', '') }}" method="POST" autocomplete="off"
-                        id="editProductForm">
+                    <form action="{{ route('image_products.update', '') }}" method="POST" autocomplete="off"
+                          id="editImageProductForm" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
-                        <input type="hidden" id="editProductId" name="id">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Ảnh</label>
-                            <input type="text" class="form-control" id="image" name="name"
-                                placeholder="Nhập ảnh quần áo" required>
+                        <input type="hidden" id="editImageProductId" name="id">
+                        <div class="form-group">
+                            <label for="editUrl">Chọn Hình Ảnh</label>
+                            <img id="currentProductImage" src="" alt="Current Product Image" class="img-fluid mb-2"
+                                 style="width: 50px; height: 50px;">
+                            <input type="file" class="form-control" id="editUrl" name="url">
+                        </div>
+                        <div class="form-group">
+                            <label for="editProductDetailId">Chọn Sản Phẩm</label>
+                            <select class="form-control" id="editProductDetailId" name="product_detail_id" required>
+                                @foreach($productDetails as $productDetail)
+                                    <option value="{{ $productDetail->id }}">{{ $productDetail->product->code }}
+                                        - {{ $productDetail->product->name }}
+                                        - {{ $productDetail->color->name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -118,21 +175,40 @@
     </div>
 
     <script>
-        var editProductModal = document.getElementById('editProductModal')
-        editProductModal.addEventListener('show.bs.modal', function(event) {
+        var editImageProductModal = document.getElementById('editImageProductModal')
+        editImageProductModal.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget
             var id = button.getAttribute('data-id')
-            var name = button.getAttribute('data-name')
-            var form = document.getElementById('editProductForm');
+            var url = button.getAttribute('data-url')
+            var productDetail = button.getAttribute('data-product-detail')
+            var form = document.getElementById('editImageProductForm')
 
-            var modalTitle = editProductModal.querySelector('.modal-title')
-            var modalBodyInputId = editProductModal.querySelector('#editProductId')
-            var modalBodyInputName = editProductModal.querySelector('#editProductName')
+            var modalTitle = editImageProductModal.querySelector('.modal-title')
+            var modalBodyInputId = editImageProductModal.querySelector('#editImageProductId')
+            var modalBodyInputUrl = editImageProductModal.querySelector('#editUrl')
+            var modalBodyInputCurrentImage = editImageProductModal.querySelector('#currentProductImage')
+            var modalBodyInputProductDetail = editImageProductModal.querySelector('#editProductDetailId')
 
-            modalTitle.textContent = 'Cập nhậtquần áo: ' + name
+            modalTitle.textContent = 'Cập nhật ảnh: '
             modalBodyInputId.value = id
-            modalBodyInputName.value = name
-            form.action = "{{ route('products.update', '') }}/" + id;
+            modalBodyInputCurrentImage.src = url
+            modalBodyInputProductDetail.value = productDetail
+            form.action = "{{ route('image_products.update', '') }}/" + id
+        })
+
+        document.getElementById("url").addEventListener("change", function (event) {
+            var previewImage = document.getElementById('previewImage')
+            var file = event.target.files[0]
+            var reader = new FileReader()
+
+            reader.onload = function (e) {
+                previewImage.src = e.target.result
+                previewImage.style.display = 'block'
+            };
+
+            if (file) {
+                reader.readAsDataURL(file)
+            }
         })
     </script>
 @endsection

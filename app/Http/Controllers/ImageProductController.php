@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\Models\ImageProduct;
+use App\Models\ProductDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ImageProductController extends Controller
 {
@@ -11,9 +13,10 @@ class ImageProductController extends Controller
      */
     public function index()
     {
-        $imageProducts = ImageProduct::all();
+        $imageProducts = ImageProduct::with('productDetail.product', 'productDetail.color')->get();
+        $productDetails = ProductDetail::with('product', 'color')->get();
 
-        return view ('admin.image-product.index')->with(compact('imageProducts'));
+        return view('admin.image-product.index', compact('imageProducts', 'productDetails'));
     }
 
     /**
@@ -29,7 +32,21 @@ class ImageProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'product_detail_id' => 'required|exists:product_details,id',
+            'url' => 'required',
+        ]);
+
+        $data = $request->all();
+
+        if ($request->hasFile('url')) {
+            $imagePath = $request->file('url')->store('images', 'public');
+            $data['url'] = $imagePath;
+        }
+
+        ImageProduct::create($data);
+
+        return redirect()->back()->with('success', 'Hình ảnh sản phẩm đã được thêm thành công!');
     }
 
     /**
@@ -51,16 +68,34 @@ class ImageProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $imageProduct)
     {
-        //
+        $request->validate([
+            'product_detail_id' => 'required|exists:product_details,id',
+            'url' => 'sometimes|file|image',
+        ]);
+
+        $imageProducts = ImageProduct::findOrFail($imageProduct);
+        $data = $request->only(['product_detail_id']);
+
+        if ($request->hasFile('url')) {
+            $filePath = $request->file('url')->store('images', 'public');
+            $imageProducts->url = $filePath;
+        }
+
+        $imageProducts->update($data);
+
+        return redirect()->back()->with('success', 'Hình ảnh sản phẩm đã được cập nhật thành công!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $imageProduct = ImageProduct::findOrFail($id);
+        $imageProduct->delete();
+
+        return redirect()->route('image_products.index')->with('success', 'Hình ảnh sản phẩm đã được xóa thành công.');
     }
 }
