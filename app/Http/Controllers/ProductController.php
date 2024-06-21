@@ -22,6 +22,15 @@ class ProductController extends Controller
         return view('admin.product.index')->with(compact('products', 'categories', 'brands'));
     }
 
+    public function indexCustomer()
+    {
+        $products = Product::all();
+        $categories = Category::all();
+        $brands = Brand::all();
+
+        return view('customer.product')->with(compact('products', 'categories', 'brands'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
