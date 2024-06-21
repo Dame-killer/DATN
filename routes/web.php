@@ -34,6 +34,8 @@ Route::middleware('auth', 'web')->group(function () {
     Route::get('/admin/home', function () { return view('admin/home'); })->name('admin-home');
     Route::get('/admin/order', [OrderController::class, 'index'])->name('admin-order');
     Route::get('/admin/order/{order_detail}', [OrderDetailController::class, 'show'])->name('admin-order-detail');
+    Route::post('/admin/order/quick-approve', [OrderController::class, 'quickApprove'])->name('admin-orders-quick-approve');
+    Route::post('/admin/order/{id}', [OrderController::class, 'approveOrder'])->name('admin-orders-approve');
     Route::get('/admin/cart', [OrderDetailController::class, 'cart'])->name('admin-cart');
     Route::post('/admin/product/{product_detail}', [OrderDetailController::class, 'addToCart'])->name('cart.add');
     Route::delete('/admin/cart/{product_detail}', [OrderDetailController::class, 'removeFromCart'])->name('cart.remove');

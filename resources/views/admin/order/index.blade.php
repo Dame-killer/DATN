@@ -7,88 +7,104 @@
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Quản lý đơn hàng</h6>
-                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#addProductModal">
-                            Thêm
+                        <button type="button" class="btn btn-primary btn-sm" id="quickApproveButton">
+                            Duyệt nhanh
                         </button>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
                                 <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            STT
-                                        </th>
-{{--                                        <th--}}
-{{--                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">--}}
-{{--                                            Mã đơn hàng--}}
-{{--                                        </th>--}}
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Người nhận
-                                        </th>
-{{--                                        <th--}}
-{{--                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">--}}
-{{--                                            Người duyệt--}}
-{{--                                        </th>--}}
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Địa chỉ
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Ngày đặt hàng
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Phương thức thanh toán
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Trạng thái
-                                        </th>
-                                        <th class="text-secondary opacity-7"></th>
-                                    </tr>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        STT
+                                    </th>
+                                    {{--                                        <th--}}
+                                    {{--                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">--}}
+                                    {{--                                            Mã đơn hàng--}}
+                                    {{--                                        </th>--}}
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Người nhận
+                                    </th>
+                                    {{--                                        <th--}}
+                                    {{--                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">--}}
+                                    {{--                                            Người duyệt--}}
+                                    {{--                                        </th>--}}
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Địa chỉ
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Ngày đặt hàng
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Phương thức thanh toán
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Trạng thái
+                                    </th>
+                                    <th class="text-secondary opacity-7"></th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($orders as $order)
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
-                                                    </div>
+                                @foreach ($orders as $order)
+                                    <tr id="order-{{ $order->id }}">
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order->receiver }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order->address }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order->order_date }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order->payment_method_id }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order->status }}</p>
-                                            </td>
-                                            <td class="align-middle">
-                                                <a href="{{ route('admin-order-detail', $order->id) }}"
-                                                   class="btn btn-info btn-sm mb-2">
-                                                    Xem chi tiết
-                                                </a>
-                                                <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
-                                                    data-bs-target="#editProductModal" data-id="{{ $order->id }}"
-                                                    data-name="{{ $order->name }}">
-                                                    Cập nhật
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $order->receiver }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $order->address }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $order->order_date }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $order->paymentMethod->name }}</p>
+                                        </td>
+                                        <td id="order-status-{{ $order->id }}">
+                                            @switch($order->status)
+                                                @case(0)
+                                                    <p class="text-xs font-weight-bold mb-0">Chưa duyệt</p>
+                                                    @break
+                                                @case(1)
+                                                    <p class="text-xs font-weight-bold mb-0">Đã duyệt</p>
+                                                    @break
+                                                @case(2)
+                                                    <p class="text-xs font-weight-bold mb-0">Đang giao hàng</p>
+                                                    @break
+                                                @case(3)
+                                                    <p class="text-xs font-weight-bold mb-0">Hoàn thành</p>
+                                                    @break
+                                                @case(4)
+                                                    <p class="text-xs font-weight-bold mb-0">Hủy</p>
+                                                    @break
+                                                @default
+                                                    <p class="text-xs font-weight-bold mb-0">Không xác định</p>
+                                            @endswitch
+                                        </td>
+                                        <td class="align-middle">
+                                            <a href="{{ route('admin-order-detail', $order->id) }}"
+                                               class="btn btn-info btn-sm mb-2">
+                                                Xem chi tiết
+                                            </a>
+                                            <button class="btn btn-warning btn-sm mb-2 approve-order-btn"
+                                                    data-id="{{ $order->id }}">
+                                                Duyệt
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -98,138 +114,81 @@
         </div>
     </div>
 
-    <!-- Add Payment Method Modal -->
-    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addProductModalLabel">Thêm đơn hàng</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('orders.store') }}" method="POST" autocomplete="off">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Mã</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Nhập tên quần áo" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Người nhận</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Nhập tên quần áo" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Người duyệt</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Nhập tên quần áo" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Địa chỉ</label>
-                            <input type="text" class="form-control" id="image" name="name"
-                                placeholder="Nhập ảnh quần áo" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Ngày đặt hàng</label>
-                            <input type="text" class="form-control" id="brand" name="name"
-                                placeholder="Nhập ảnh quần áo" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Phương thức thanh toán</label>
-                            <input type="text" class="form-control" id="brand" name="name"
-                                placeholder="Nhập ảnh quần áo" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Trạng thái</label>
-                            <input type="text" class="form-control" id="brand" name="name"
-                                placeholder="Nhập ảnh quần áo" required>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                            <button type="submit" class="btn btn-primary">Lưu</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Edit Payment Method Modal -->
-    <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editProductModalLabel">Cập nhật quần áo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('products.update', '') }}" method="POST" autocomplete="off"
-                        id="editProductForm">
-                        @method('PUT')
-                        @csrf
-                        <input type="hidden" id="editProductId" name="id">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Mã</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Nhập tên quần áo" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Người nhận</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Nhập tên quần áo" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Người duyệt</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Nhập tên quần áo" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Địa chỉ</label>
-                            <input type="text" class="form-control" id="image" name="name"
-                                placeholder="Nhập ảnh quần áo" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Ngày đặt hàng</label>
-                            <input type="text" class="form-control" id="brand" name="name"
-                                placeholder="Nhập ảnh quần áo" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Phương thức thanh toán</label>
-                            <input type="text" class="form-control" id="brand" name="name"
-                                placeholder="Nhập ảnh quần áo" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Trạng thái</label>
-                            <input type="text" class="form-control" id="brand" name="name"
-                                placeholder="Nhập ảnh quần áo" required>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
-        var editProductModal = document.getElementById('editProductModal')
-        editProductModal.addEventListener('show.bs.modal', function(event) {
-            var button = event.relatedTarget
-            var id = button.getAttribute('data-id')
-            var name = button.getAttribute('data-name')
-            var form = document.getElementById('editProductForm');
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('quickApproveButton').addEventListener('click', function () {
+                fetch('{{ route('admin-orders-quick-approve') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({})
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const rows = document.querySelectorAll('tbody tr')
+                            rows.forEach(row => {
+                                const statusCell = row.querySelector('td[id^="order-status-"]')
+                                const statusText = statusCell.textContent.trim()
+                                if (statusText === 'Chưa duyệt') {
+                                    statusCell.innerHTML = `<p class="text-xs font-weight-bold mb-0">Đã duyệt</p>`
+                                }
+                            })
+                        } else {
+                            alert('Có lỗi xảy ra.')
+                        }
+                    })
+                    .catch(error => console.error('Error:', error))
+            })
+        })
 
-            var modalTitle = editProductModal.querySelector('.modal-title')
-            var modalBodyInputId = editProductModal.querySelector('#editProductId')
-            var modalBodyInputName = editProductModal.querySelector('#editProductName')
+        document.addEventListener('DOMContentLoaded', function () {
+            const approveButtons = document.querySelectorAll('.approve-order-btn');
 
-            modalTitle.textContent = 'Cập nhậtquần áo: ' + name
-            modalBodyInputId.value = id
-            modalBodyInputName.value = name
-            form.action = "{{ route('products.update', '') }}/" + id;
+            approveButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const orderId = button.getAttribute('data-id');
+
+                    fetch(`/admin/order/${orderId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({})
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                const statusCell = document.getElementById(`order-status-${orderId}`)
+                                let statusText;
+                                switch (data.status) {
+                                    case 1:
+                                        statusText = 'Đã duyệt'
+                                        break
+                                    case 2:
+                                        statusText = 'Đang giao hàng'
+                                        break
+                                    case 3:
+                                        statusText = 'Hoàn thành'
+                                        break
+                                    case 4:
+                                        statusText = 'Hủy'
+                                        break
+                                    default:
+                                        statusText = 'Không xác định'
+                                        break
+                                }
+                                statusCell.innerHTML = `<p class="text-xs font-weight-bold mb-0">${statusText}</p>`
+                            } else {
+                                alert(data.message)
+                            }
+                        })
+                        .catch(error => console.error('Error:', error))
+                })
+            })
         })
     </script>
 @endsection

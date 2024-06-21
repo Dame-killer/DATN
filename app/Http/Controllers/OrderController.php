@@ -14,7 +14,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::with('paymentMethod')->get();
 
         return view ('admin.order.index')->with(compact('orders'));
     }
@@ -126,5 +126,26 @@ class OrderController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function quickApprove(Request $request)
+    {
+        // Cập nhật tất cả các đơn hàng có status bằng 0 lên 1
+        Order::where('status', 0)->update(['status' => 1]);
+
+        return response()->json(['success' => true]);
+    }
+
+    public function approveOrder(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+
+        if ($order->status < 3) {
+            $order->status += 1;
+            $order->save();
+            return response()->json(['success' => true, 'status' => $order->status]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Trạng thái đơn hàng không thể tăng thêm.']);
     }
 }
