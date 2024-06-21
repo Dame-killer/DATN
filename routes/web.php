@@ -51,4 +51,7 @@ Route::middleware('auth', 'web')->group(function () {
 });
 
 //CUSTOMER
-Route::get('/customer/home', function () { return view('customer/index'); })->name('customer-home');
+Route::get('/customer/home', function () { return view('customer/home'); })->name('customer-home');
+Route::get('/customer/product', function () { return view('customer/product'); })->name('customer-product');
+Route::get('/customer/product_detail', function () { return view('customer/product-detail'); })->name('customer-product-detail');
+Route::get('/customer/cart', function () { return view('customer/shoping-cart'); })->name('customer-cart');
