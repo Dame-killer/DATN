@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\ProductDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -61,12 +62,24 @@ class OrderController extends Controller
 
             // Tạo chi tiết đơn hàng từ giỏ hàng
             foreach ($cart as $item) {
+                // Lấy product_detail tương ứng
+                $productDetail = ProductDetail::findOrFail($item['id']);
+
+                // Kiểm tra nếu số lượng sản phẩm đủ để đặt hàng
+                if ($productDetail->quantity < $item['quantity']) {
+                    throw new \Exception('Số lượng sản phẩm không đủ!');
+                }
+
                 OrderDetail::create([
                     'order_id' => $order->id,
                     'product_detail_id' => $item['id'],
                     'amount' => $item['quantity'],
                     'price' => $item['price']
                 ]);
+
+                // Trừ số lượng sản phẩm
+                $productDetail->quantity -= $item['quantity'];
+                $productDetail->save();
             }
 
             // Xóa giỏ hàng sau khi tạo đơn hàng thành công

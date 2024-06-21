@@ -38,6 +38,7 @@ Route::middleware('auth', 'web')->group(function () {
     Route::get('/admin/cart', [OrderDetailController::class, 'cart'])->name('admin-cart');
     Route::post('/admin/product/{product_detail}', [OrderDetailController::class, 'addToCart'])->name('cart.add');
     Route::delete('/admin/cart/{product_detail}', [OrderDetailController::class, 'removeFromCart'])->name('cart.remove');
+    Route::post('/admin/cart/update-quantity', [OrderDetailController::class, 'updateQuantity'])->name('cart.updateQuantity');
     Route::post('/admin/cart', [OrderController::class, 'store'])->name('orders-store');
     Route::get('/admin/acount-customer', [UserController::class, 'index'])->name('admin-account-customer');
     Route::get('/admin/acount-employee', [UserController::class, 'index'])->name('admin-account-employee');
