@@ -53,7 +53,16 @@
 
     @include('customer.cart')
 
-    @yield('content')
+    {{-- @yield('content') --}}
+
+    @include('customer.slider')
+    @include('customer.banner')
+
+
+
+
+    @include('customer.product')
+
 
     @include('customer.footer')
 
