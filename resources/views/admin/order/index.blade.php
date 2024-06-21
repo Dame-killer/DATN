@@ -100,7 +100,11 @@
                                             </a>
                                             <button class="btn btn-warning btn-sm mb-2 approve-order-btn"
                                                     data-id="{{ $order->id }}">
-                                                Duyệt
+                                                @if ($order->status == 0)
+                                                    Duyệt
+                                                @else
+                                                    Cập nhật
+                                                @endif
                                             </button>
                                         </td>
                                     </tr>
