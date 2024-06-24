@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Danh mục</h6>
+                        <h6>Quản Lý Danh Mục</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#addCategoryModal">
                             Thêm
@@ -22,7 +22,7 @@
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Tên danh mục
+                                        Tên Danh Mục
                                     </th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
@@ -45,7 +45,7 @@
                                             <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
                                                     data-bs-target="#editCategoryModal" data-id="{{ $category->id }}"
                                                     data-name="{{ $category->name }}">
-                                                Cập nhật
+                                                Cập Nhật
                                             </button>
                                             <form action="{{ route('categories.destroy', $category->id) }}"
                                                   method="POST" style="display: inline-block;">
@@ -56,7 +56,7 @@
                                             <button class="btn btn-success btn-sm mb-2" data-bs-toggle="modal"
                                                     data-bs-target="#addCategoryModal"
                                                     data-parent-id="{{ $category->id }}">
-                                                Thêm danh mục con
+                                                Thêm Danh Mục Con
                                             </button>
                                         </td>
                                     </tr>
@@ -82,7 +82,7 @@
                                                                     data-bs-target="#editCategoryModal"
                                                                     data-id="{{ $child->id }}"
                                                                     data-name="{{ $child->name }}">
-                                                                Cập nhật
+                                                                Cập Nhật
                                                             </button>
                                                             <form action="{{ route('categories.destroy', $child->id) }}"
                                                                   method="POST" style="display: inline-block;">
@@ -115,7 +115,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addCategoryModalLabel">Thêm danh mục</h5>
+                    <h5 class="modal-title" id="addCategoryModalLabel">Thêm Danh Mục</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -124,9 +124,9 @@
                         @csrf
                         <input type="hidden" id="parentCategoryId" name="parent_id">
                         <div class="mb-3">
-                            <label for="name" class="form-label">Tên</label>
+                            <label for="name" class="form-label">Tên Danh Mục</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nhập tên danh mục" required>
+                                   placeholder="Nhập Tên Danh Mục" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -144,7 +144,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editCategoryModalLabel">Cập nhật danh mục</h5>
+                    <h5 class="modal-title" id="editCategoryModalLabel">Cập Nhật Danh Mục</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -154,12 +154,13 @@
                         @method('PUT')
                         <input type="hidden" id="editCategoryId" name="id">
                         <div class="mb-3">
-                            <label for="editCategoryName" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="editCategoryName" name="name" required>
+                            <label for="editCategoryName" class="form-label">Tên Danh Mục</label>
+                            <input type="text" class="form-control" id="editCategoryName" name="name"
+                                   placeholder="Nhập Tên Danh Mục" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
                         </div>
                     </form>
                 </div>
@@ -179,7 +180,7 @@
             var modalBodyInputId = editCategoryModal.querySelector('#editCategoryId')
             var modalBodyInputName = editCategoryModal.querySelector('#editCategoryName')
 
-            modalTitle.textContent = 'Cập nhật danh mục: ' + name
+            modalTitle.textContent = 'Cập Nhật Danh Mục: ' + name
             modalBodyInputId.value = id
             modalBodyInputName.value = name
             form.action = "{{ route('categories.update', '') }}/" + id
@@ -193,7 +194,7 @@
             var modalTitle = addCategoryModal.querySelector('.modal-title')
             var modalBodyInputParentId = addCategoryModal.querySelector('#parentCategoryId')
 
-            modalTitle.textContent = parentId ? 'Thêm danh mục con' : 'Thêm danh mục'
+            modalTitle.textContent = parentId ? 'Thêm Danh Mục Con' : 'Thêm Danh Mục'
             modalBodyInputParentId.value = parentId || ''
             form.action = "{{ route('categories.store') }}"
         })

@@ -6,9 +6,9 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Quản lý đơn hàng</h6>
+                        <h6>Quản Lý Đơn Hàng</h6>
                         <button type="button" class="btn btn-primary btn-sm" id="quickApproveButton">
-                            Duyệt nhanh
+                            Duyệt Nhanh
                         </button>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -27,10 +27,6 @@
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Người Nhận
                                     </th>
-                                    {{--                                        <th--}}
-                                    {{--                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">--}}
-                                    {{--                                            Người duyệt--}}
-                                    {{--                                        </th>--}}
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Địa Chỉ
@@ -82,35 +78,35 @@
                                         <td id="order-status-{{ $order->id }}">
                                             @switch($order->status)
                                                 @case(0)
-                                                    <p class="text-xs font-weight-bold mb-0">Chưa duyệt</p>
+                                                    <p class="text-xs font-weight-bold mb-0">Chưa Duyệt</p>
                                                     @break
                                                 @case(1)
-                                                    <p class="text-xs font-weight-bold mb-0">Đã duyệt</p>
+                                                    <p class="text-xs font-weight-bold mb-0">Đã Duyệt</p>
                                                     @break
                                                 @case(2)
-                                                    <p class="text-xs font-weight-bold mb-0">Đang giao hàng</p>
+                                                    <p class="text-xs font-weight-bold mb-0">Đang Giao Hàng</p>
                                                     @break
                                                 @case(3)
-                                                    <p class="text-xs font-weight-bold mb-0">Hoàn thành</p>
+                                                    <p class="text-xs font-weight-bold mb-0">Hoàn Thành</p>
                                                     @break
                                                 @case(4)
                                                     <p class="text-xs font-weight-bold mb-0">Hủy</p>
                                                     @break
                                                 @default
-                                                    <p class="text-xs font-weight-bold mb-0">Không xác định</p>
+                                                    <p class="text-xs font-weight-bold mb-0">Không Xác Định</p>
                                             @endswitch
                                         </td>
                                         <td class="align-middle">
                                             <a href="{{ route('admin-order-detail', $order->id) }}"
                                                class="btn btn-info btn-sm mb-2">
-                                                Xem chi tiết
+                                                Xem Chi Tiết
                                             </a>
                                             <button class="btn btn-warning btn-sm mb-2 approve-order-btn"
                                                     data-id="{{ $order->id }}" data-status="{{ $order->status }}">
                                                 @if ($order->status == 0)
                                                     Duyệt
                                                 @else
-                                                    Cập nhật
+                                                    Cập Nhật
                                                 @endif
                                             </button>
                                         </td>
@@ -143,12 +139,12 @@
                             rows.forEach(row => {
                                 const statusCell = row.querySelector('td[id^="order-status-"]')
                                 const statusText = statusCell.textContent.trim()
-                                if (statusText === 'Chưa duyệt') {
-                                    statusCell.innerHTML = `<p class="text-xs font-weight-bold mb-0">Đã duyệt</p>`
+                                if (statusText === 'Chưa Duyệt') {
+                                    statusCell.innerHTML = `<p class="text-xs font-weight-bold mb-0">Đã Duyệt</p>`
                                 }
                             })
                         } else {
-                            alert('Có lỗi xảy ra.')
+                            alert('Có Lỗi Xảy Ra!')
                         }
                     })
                     .catch(error => console.error('Error:', error))
@@ -178,27 +174,27 @@
                                 let statusText;
                                 switch (data.status) {
                                     case 1:
-                                        statusText = 'Đã duyệt'
+                                        statusText = 'Đã Duyệt'
                                         break
                                     case 2:
-                                        statusText = 'Đang giao hàng'
+                                        statusText = 'Đang Giao Hàng'
                                         break
                                     case 3:
-                                        statusText = 'Hoàn thành'
+                                        statusText = 'Hoàn Thành'
                                         break
                                     case 4:
                                         statusText = 'Hủy'
                                         break
                                     default:
-                                        statusText = 'Không xác định'
+                                        statusText = 'Không Xác Định'
                                         break
                                 }
                                 statusCell.innerHTML = `<p class="text-xs font-weight-bold mb-0">${statusText}</p>`
                                 if (orderStatus === 0) {
-                                    button.innerText = 'Cập nhật';
+                                    button.innerText = 'Cập Nhật';
                                     button.setAttribute('data-status', 1);
                                 } else {
-                                    alert('Trạng thái đơn hàng đã được cập nhật!');
+                                    alert('Trạng Thái Đơn Hàng Đã Được Cập Nhật!');
                                 }
                             } else {
                                 alert(data.message)

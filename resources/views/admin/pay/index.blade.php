@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Phương thức thanh toán</h6>
+                        <h6>Quản Lý Phương Thức Thanh Toán</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#addPaymentMethodModal">
                             Thêm
@@ -22,7 +22,7 @@
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Tên phương thức thanh toán
+                                        Tên Phương Thức Thanh Toán
                                     </th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
@@ -45,7 +45,7 @@
                                                     data-bs-target="#editPaymentMethodModal"
                                                     data-id="{{ $payment_method->id }}"
                                                     data-name="{{ $payment_method->name }}">
-                                                Cập nhật
+                                                Cập Nhật
                                             </button>
                                             <form action="{{ route('payment_methods.destroy', $payment_method->id) }}"
                                                   method="POST">
@@ -71,16 +71,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addPaymentMethodModalLabel">Thêm phương thức thanh toán</h5>
+                    <h5 class="modal-title" id="addPaymentMethodModalLabel">Thêm Phương Thức Thanh Toán</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('payment_methods.store') }}" method="POST" autocomplete="off">
                         @csrf
                         <div class="mb-3">
-                            <label for="name" class="form-label">Tên</label>
+                            <label for="name" class="form-label">Tên Phương Thức Thanh Toán</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nhập tên phương thức thanh toán" required>
+                                   placeholder="Nhập Tên Phương Thức Thanh Toán" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -98,7 +98,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editPaymentMethodModalLabel">Cập nhật phương thức thanh toán</h5>
+                    <h5 class="modal-title" id="editPaymentMethodModalLabel">Cập Nhật Phương Thức Thanh Toán</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -108,12 +108,13 @@
                         @csrf
                         <input type="hidden" id="editPaymentMethodId" name="id">
                         <div class="mb-3">
-                            <label for="editPaymentMethodName" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="editPaymentMethodName" name="name" required>
+                            <label for="editPaymentMethodName" class="form-label">Tên Phương Thức Thanh Toán</label>
+                            <input type="text" class="form-control" id="editPaymentMethodName" name="name"
+                                   placeholder="Nhập Tên Phương Thức Thanh Toán" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
                         </div>
                     </form>
                 </div>
@@ -133,7 +134,7 @@
             var modalBodyInputId = editPaymentMethodModal.querySelector('#editPaymentMethodId')
             var modalBodyInputName = editPaymentMethodModal.querySelector('#editPaymentMethodName')
 
-            modalTitle.textContent = 'Cập nhật phương thức thanh toán: ' + name
+            modalTitle.textContent = 'Cập Nhật Phương Thức Thanh Toán: ' + name
             modalBodyInputId.value = id
             modalBodyInputName.value = name
             form.action = "{{ route('payment_methods.update', '') }}/" + id

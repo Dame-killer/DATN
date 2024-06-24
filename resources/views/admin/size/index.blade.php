@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Kích cỡ</h6>
+                        <h6>Quản Lý Kích Cỡ</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#addSizeModal">
                             Thêm
@@ -22,7 +22,7 @@
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Kích cỡ
+                                        Kích Cỡ
                                     </th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
@@ -46,7 +46,7 @@
                                                     data-bs-target="#editSizeModal" data-id="{{ $size->id }}"
                                                     data-name="{{ $size->size_name }}"
                                                     data-number="{{ $size->size_number }}">
-                                                Cập nhật
+                                                Cập Nhật
                                             </button>
                                             <form action="{{ route('sizes.destroy', $size->id) }}" method="POST">
                                                 @method('DELETE')
@@ -70,21 +70,21 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addSizeModalLabel">Thêm kích cỡ</h5>
+                    <h5 class="modal-title" id="addSizeModalLabel">Thêm Kích Cỡ</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('sizes.store') }}" method="POST" autocomplete="off">
                         @csrf
                         <div class="mb-3">
-                            <label for="size_name" class="form-label">Tên</label>
+                            <label for="size_name" class="form-label">Tên Kích Cỡ</label>
                             <input type="text" class="form-control" id="size_name" name="size_name"
-                                   placeholder="Nhập tên kích cỡ" required>
+                                   placeholder="Nhập Tên Kích Cỡ" required>
                         </div>
                         <div class="mb-3">
-                            <label for="size_number" class="form-label">Số</label>
+                            <label for="size_number" class="form-label">Số Kích Cỡ</label>
                             <input type="number" class="form-control" id="size_number" name="size_number"
-                                   placeholder="Nhập số kích cỡ" required>
+                                   placeholder="Nhập Số Kích Cỡ" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -101,7 +101,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editSizeModalLabel">Cập nhật kích cỡ</h5>
+                    <h5 class="modal-title" id="editSizeModalLabel">Cập Nhật Kích Cỡ</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -110,16 +110,18 @@
                         @csrf
                         <input type="hidden" id="editSizeId" name="id">
                         <div class="mb-3">
-                            <label for="editSizeName" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="editSizeName" name="size_name" required>
+                            <label for="editSizeName" class="form-label">Tên Kích Cỡ</label>
+                            <input type="text" class="form-control" id="editSizeName" name="size_name"
+                                   placeholder="Nhập Tên Kích Cỡ" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editSizeNumber" class="form-label">Số</label>
-                            <input type="number" class="form-control" id="editSizeNumber" name="size_number" required>
+                            <label for="editSizeNumber" class="form-label">Số Kích Cỡ</label>
+                            <input type="number" class="form-control" id="editSizeNumber" name="size_number"
+                                   placeholder="Nhập Số Kích Cỡ" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
                         </div>
                     </form>
                 </div>
@@ -141,7 +143,7 @@
             var modalBodyInputName = editSizeModal.querySelector('#editSizeName')
             var modalBodyInputNumber = editSizeModal.querySelector('#editSizeNumber')
 
-            modalTitle.textContent = 'Cập nhật kích cỡ: ' + size_name + size_number
+            modalTitle.textContent = 'Cập Nhật Kích Cỡ: ' + size_name + size_number
             modalBodyInputId.value = id
             modalBodyInputName.value = size_name
             modalBodyInputNumber.value = size_number

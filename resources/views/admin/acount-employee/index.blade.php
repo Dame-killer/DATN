@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Quản lý nhân viên</h6>
+                        <h6>Quản Lý Nhân Viên</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#addEmployeeModal">
                             Thêm
@@ -22,7 +22,7 @@
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Tên
+                                        Tên Nhân Viên
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -30,7 +30,7 @@
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Số điện thoại
+                                        Số Điện Thoại
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -61,9 +61,9 @@
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">
                                                 @if ($user->role == 1)
-                                                    Quản lý
+                                                    Quản Lý
                                                 @elseif ($user->role == 2)
-                                                    Nhân viên
+                                                    Nhân Viên
                                                 @endif
                                             </p>
                                         </td>
@@ -72,7 +72,7 @@
                                                     data-bs-target="#editEmployeeModal" data-id="{{ $user->id }}"
                                                     data-name="{{ $user->name }}" data-email="{{ $user->email }}"
                                                     data-phone="{{ $user->phone }}" data-role="{{ $user->role }}">
-                                                Cập nhật
+                                                Cập Nhật
                                             </button>
                                             <form action="{{ route('users.destroy', $user->id) }}" method="POST">
                                                 @method('DELETE')
@@ -97,33 +97,38 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addEmployeeModalLabel">Thêm mới nhân viên</h5>
+                    <h5 class="modal-title" id="addEmployeeModalLabel">Thêm Nhân Viên</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('users.store') }}" method="POST" autocomplete="off">
                         @csrf
                         <div class="mb-3">
-                            <label for="name" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
+                            <label for="name" class="form-label">Tên Nhân Viên</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                   placeholder="Nhập Tên Nhân Viên" required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Nhập Email"
+                                   required>
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label">Mật khẩu</label>
-                            <input type="password" minlength="8" class="form-control" id="password" name="password" required>
+                            <label for="password" class="form-label">Mật Khẩu</label>
+                            <input type="password" minlength="8" class="form-control" id="password" name="password"
+                                   placeholder="Nhập Mật Khẩu" required>
                         </div>
                         <div class="mb-3">
-                            <label for="phone" class="form-label">Số điện thoại</label>
-                            <input type="tel" class="form-control" id="phone" name="phone" required>
+                            <label for="phone" class="form-label">Số Điện Thoại</label>
+                            <input type="tel" class="form-control" id="phone" name="phone"
+                                   placeholder="Nhập Số Điện Thoại" required>
                         </div>
                         <div class="mb-3">
                             <label for="role" class="form-label">Quyền</label>
                             <select class="form-control" id="role" name="role" required>
-                                <option value="1">Quản lý</option>
-                                <option value="2">Nhân viên</option>
+                                <option value="">Chọn Quyền</option>
+                                <option value="1">Quản Lý</option>
+                                <option value="2">Nhân Viên</option>
                             </select>
                         </div>
                         <div class="modal-footer">
@@ -142,7 +147,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editEmployeeModalLabel">Cập nhật tài khoản</h5>
+                    <h5 class="modal-title" id="editEmployeeModalLabel">Cập Nhật Tài Khoản</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -152,27 +157,30 @@
                         @csrf
                         <input type="hidden" id="editEmployeeId" name="id">
                         <div class="mb-3">
-                            <label for="editEmployeeName" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="editEmployeeName" name="name" required>
+                            <label for="editEmployeeName" class="form-label">Tên Nhân Viên</label>
+                            <input type="text" class="form-control" id="editEmployeeName" name="name"
+                                   placeholder="Nhập Tên Nhân Viên" required>
                         </div>
                         <div class="mb-3">
                             <label for="editEmployeeEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="editEmployeeEmail" name="email" required>
+                            <input type="email" class="form-control" id="editEmployeeEmail" name="email"
+                                   placeholder="Nhập Email" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editEmployeePhone" class="form-label">Số điện thoại</label>
-                            <input type="tel" class="form-control" id="editEmployeePhone" name="phone" required>
+                            <label for="editEmployeePhone" class="form-label">Số Điện Thoại</label>
+                            <input type="tel" class="form-control" id="editEmployeePhone" name="phone"
+                                   placeholder="Nhập Số Điện Thoại" required>
                         </div>
                         <div class="mb-3">
                             <label for="editEmployeeRole" class="form-label">Quyền</label>
                             <select class="form-control" id="editEmployeeRole" name="role" required>
-                                <option value="1">Quản lý</option>
-                                <option value="2">Nhân viên</option>
+                                <option value="1">Quản Lý</option>
+                                <option value="2">Nhân Viên</option>
                             </select>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
                         </div>
                     </form>
                 </div>
@@ -198,7 +206,7 @@
             var modalBodyInputPhone = editEmployeeModal.querySelector('#editEmployeePhone')
             var modalBodySelectRole = editEmployeeModal.querySelector('#editEmployeeRole')
 
-            modalTitle.textContent = 'Cập nhật tài khoản: ' + name
+            modalTitle.textContent = 'Cập Nhật Tài Khoản: ' + name
             modalBodyInputId.value = id
             modalBodyInputName.value = name
             modalBodyInputEmail.value = email

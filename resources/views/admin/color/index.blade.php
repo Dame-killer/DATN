@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Màu sắc</h6>
+                        <h6>Quản Lý Màu Sắc</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#addColorModal">
                             Thêm
@@ -22,11 +22,11 @@
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Tên màu sắc
+                                        Tên Màu Sắc
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Màu sắc
+                                        Màu Sắc
                                     </th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
@@ -53,7 +53,7 @@
                                             <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
                                                     data-bs-target="#editColorModal" data-id="{{ $color->id }}"
                                                     data-name="{{ $color->name }}" data-code="{{ $color->code }}">
-                                                Cập nhật
+                                                Cập Nhật
                                             </button>
                                             <form action="{{ route('colors.destroy', $color->id) }}" method="POST">
                                                 @method('DELETE')
@@ -77,19 +77,19 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addColorModalLabel">Thêm màu sắc</h5>
+                    <h5 class="modal-title" id="addColorModalLabel">Thêm Màu Sắc</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('colors.store') }}" method="POST" autocomplete="off">
                         @csrf
                         <div class="mb-3">
-                            <label for="name" class="form-label">Tên</label>
+                            <label for="name" class="form-label">Tên Màu Sắc</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nhập tên màu" required>
+                                   placeholder="Nhập Tên Màu Sắc" required>
                         </div>
                         <div class="mb-3">
-                            <label for="code" class="form-label">Mã màu</label>
+                            <label for="code" class="form-label">Mã Màu</label>
                             <input type="color" class="form-control" id="code" name="code" required>
                         </div>
                         <div class="modal-footer">
@@ -107,7 +107,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editColorModalLabel">Cập nhật màu sắc</h5>
+                    <h5 class="modal-title" id="editColorModalLabel">Cập Nhật Màu Sắc</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -116,16 +116,17 @@
                         @csrf
                         <input type="hidden" id="editColorId" name="id">
                         <div class="mb-3">
-                            <label for="editColorName" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="editColorName" name="name" required>
+                            <label for="editColorName" class="form-label">Tên Màu Sắc</label>
+                            <input type="text" class="form-control" id="editColorName" name="name"
+                                   placeholder="Nhập Tên Màu Sắc" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editColorCode" class="form-label">Mã màu</label>
+                            <label for="editColorCode" class="form-label">Mã Màu</label>
                             <input type="color" class="form-control" id="editColorCode" name="code" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
                         </div>
                     </form>
                 </div>
@@ -147,7 +148,7 @@
             var modalBodyInputName = editColorModal.querySelector('#editColorName')
             var modalBodyInputCode = editColorModal.querySelector('#editColorCode')
 
-            modalTitle.textContent = 'Cập nhật màu sắc: ' + name
+            modalTitle.textContent = 'Cập Nhật Màu Sắc: ' + name
             modalBodyInputId.value = id
             modalBodyInputName.value = name
             modalBodyInputCode.value = code

@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Quản lý hình ảnh quần áo</h6>
+                        <h6>Quản Lý Hình Ảnh</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#addImageProductModal">
                             Thêm
@@ -22,19 +22,19 @@
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Mã sản phẩm
+                                        Mã Sản Phẩm
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Tên sản phẩm
+                                        Tên Sản Phẩm
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Ảnh
+                                        Hình Ảnh
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Màu sắc
+                                        Màu Sắc
                                     </th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
@@ -72,7 +72,7 @@
                                                     data-id="{{ $imageProduct->id }}"
                                                     data-url="{{ asset('storage/' . $imageProduct->url) }}"
                                                     data-product-detail="{{ $imageProduct->product_detail_id }}">
-                                                Cập nhật
+                                                Cập Nhật
                                             </button>
                                             <form action="{{ route('image_products.destroy', $imageProduct->id) }}"
                                                   method="POST">
@@ -98,7 +98,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addImageProductModalLabel">Thêm ảnh</h5>
+                    <h5 class="modal-title" id="addImageProductModalLabel">Thêm Ảnh</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -114,6 +114,7 @@
                         <div class="form-group">
                             <label for="productDetailId">Chọn Sản Phẩm</label>
                             <select class="form-control" id="productDetailId" name="product_detail_id" required>
+                                <option value="">Chọn Sản Phẩm</option>
                                 @foreach($productDetails as $productDetail)
                                     <option value="{{ $productDetail->id }}">{{ $productDetail->product->code }}
                                         - {{ $productDetail->product->name }}
@@ -138,7 +139,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editImageProductModalLabel">Cập nhật ảnh</h5>
+                    <h5 class="modal-title" id="editImageProductModalLabel">Cập Nhật Ảnh</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -166,7 +167,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
                         </div>
                     </form>
                 </div>
@@ -189,7 +190,7 @@
             var modalBodyInputCurrentImage = editImageProductModal.querySelector('#currentProductImage')
             var modalBodyInputProductDetail = editImageProductModal.querySelector('#editProductDetailId')
 
-            modalTitle.textContent = 'Cập nhật ảnh: '
+            modalTitle.textContent = 'Cập Nhật Ảnh: '
             modalBodyInputId.value = id
             modalBodyInputCurrentImage.src = url
             modalBodyInputProductDetail.value = productDetail

@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Quản lý quần áo</h6>
+                        <h6>Quản Lý Sản Phẩm</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#addProductModal">
                             Thêm
@@ -22,23 +22,23 @@
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Mã sản phẩm
+                                        Mã Sản Phẩm
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Tên sản phẩm
+                                        Tên Sản Phẩm
                                     </th>
                                     <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Ảnh
+                                        Hình Ảnh
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Danh mục
+                                        Danh Mục
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Thương hiệu
+                                        Thương Hiệu
                                     </th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
@@ -73,7 +73,7 @@
                                         <td class="align-middle">
                                             <a href="{{ route('admin-product-detail', $product->id) }}"
                                                class="btn btn-info btn-sm mb-2">
-                                                Xem chi tiết
+                                                Xem Chi Tiết
                                             </a>
                                             <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
                                                     data-bs-target="#editProductModal" data-id="{{ $product->id }}"
@@ -81,7 +81,7 @@
                                                     data-image="{{ asset('storage/' . $product->image) }}"
                                                     data-category="{{ $product->category->id }}"
                                                     data-brand="{{ $product->brand->id }}">
-                                                Cập nhật
+                                                Cập Nhật
                                             </button>
                                             <form action="{{ route('products.destroy', $product->id) }}" method="POST">
                                                 @method('DELETE')
@@ -106,7 +106,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addProductModalLabel">Thêm quần áo</h5>
+                    <h5 class="modal-title" id="addProductModalLabel">Thêm Sản Phẩm</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -114,34 +114,34 @@
                           enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label for="code" class="form-label">Mã</label>
+                            <label for="code" class="form-label">Mã Sản Phẩm</label>
                             <input type="text" class="form-control" id="code" name="code"
-                                   placeholder="Nhập mã sản phẩm" required>
+                                   placeholder="Nhập Mã Sản Phẩm" required>
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="form-label">Tên</label>
+                            <label for="name" class="form-label">Tên Sản Phẩm</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nhập tên sản phẩm" required>
+                                   placeholder="Nhập Tên Sản Phẩm" required>
                         </div>
                         <div class="mb-3">
-                            <label for="image" class="form-label">Ảnh</label>
+                            <label for="image" class="form-label">Hình Ảnh</label>
                             <img id="previewImage" src="#" alt="Preview Image" class="img-fluid mb-2"
                                  style="width: 50px; height: 50px; display: none;">
                             <input type="file" class="form-control" id="image" name="image" required>
                         </div>
                         <div class="mb-3">
-                            <label for="category_id" class="form-label">Danh mục</label>
+                            <label for="category_id" class="form-label">Danh Mục</label>
                             <select class="form-control" id="category_id" name="category_id" required>
-                                <option value="">Chọn danh mục</option>
+                                <option value="">Chọn Danh Mục</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="brand_id" class="form-label">Thương hiệu</label>
+                            <label for="brand_id" class="form-label">Thương Hiệu</label>
                             <select class="form-control" id="brand_id" name="brand_id" required>
-                                <option value="">Chọn thương hiệu</option>
+                                <option value="">Chọn Thương Hiệu</option>
                                 @foreach ($brands as $brand)
                                     <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                 @endforeach
@@ -163,7 +163,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editProductModalLabel">Cập nhật quần áo</h5>
+                    <h5 class="modal-title" id="editProductModalLabel">Cập Nhật Sản Phẩm</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -173,32 +173,30 @@
                         @csrf
                         <input type="hidden" id="editProductId" name="id">
                         <div class="mb-3">
-                            <label for="editProductCode" class="form-label">Mã</label>
-                            <input type="text" class="form-control" id="editProductCode" name="code" required>
+                            <label for="editProductCode" class="form-label">Mã Sản Phẩm</label>
+                            <input type="text" class="form-control" id="editProductCode" name="code" placeholder="Nhập Mã Sản Phẩm" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editProductName" class="form-label">Tên</label>
-                            <input type="text" class="form-control" id="editProductName" name="name" required>
+                            <label for="editProductName" class="form-label">Tên Sản Phẩm</label>
+                            <input type="text" class="form-control" id="editProductName" name="name" placeholder="Nhập Tên Sản Phẩm" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editProductImage" class="form-label">Ảnh</label>
+                            <label for="editProductImage" class="form-label">Hình Ảnh</label>
                             <img id="currentProductImage" src="" alt="Current Product Image" class="img-fluid mb-2"
                                  style="width: 50px; height: 50px;">
                             <input type="file" class="form-control" id="editProductImage" name="image">
                         </div>
                         <div class="mb-3">
-                            <label for="editProductCategory" class="form-label">Danh mục</label>
+                            <label for="editProductCategory" class="form-label">Danh Mục</label>
                             <select class="form-control" id="editProductCategory" name="category_id" required>
-                                <option value="">Chọn danh mục</option>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="editProductBrand" class="form-label">Thương hiệu</label>
+                            <label for="editProductBrand" class="form-label">Thương Hiệu</label>
                             <select class="form-control" id="editProductBrand" name="brand_id" required>
-                                <option value="">Chọn thương hiệu</option>
                                 @foreach ($brands as $brand)
                                     <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                 @endforeach
@@ -206,7 +204,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
                         </div>
                     </form>
                 </div>
@@ -235,7 +233,7 @@
             var modalBodyInputCategory = editProductModal.querySelector('#editProductCategory')
             var modalBodyInputBrand = editProductModal.querySelector('#editProductBrand')
 
-            modalTitle.textContent = 'Cập nhật quần áo: ' + name
+            modalTitle.textContent = 'Cập Nhật Sản Phẩm: ' + name
             modalBodyInputId.value = id
             modalBodyInputName.value = name
             modalBodyInputCode.value = code

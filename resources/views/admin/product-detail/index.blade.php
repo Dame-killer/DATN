@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                        <h6>Chi tiết sản phẩm: {{ $products->code }} - {{ $products->name }}</h6>
+                        <h6>Chi Tiết Sản Phẩm: {{ $products->code }} - {{ $products->name }}</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#addProductDetailModal" data-product-id="{{ $products->id }}">
                             Thêm
@@ -22,11 +22,11 @@
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Kích cỡ
+                                        Kích Cỡ
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Màu sắc
+                                        Màu Sắc
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -34,11 +34,11 @@
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Số lượng
+                                        Số Lượng
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Mô tả
+                                        Mô Tả
                                     </th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
@@ -65,7 +65,8 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $product_detail->price }}đ</p>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $product_detail->price }}
+                                                    đ</p>
                                             </td>
                                             <td>
                                                 <p class="text-xs font-weight-bold mb-0">{{ $product_detail->quantity }}</p>
@@ -82,7 +83,7 @@
                                                         data-price="{{ $product_detail->price }}"
                                                         data-quantity="{{ $product_detail->quantity }}"
                                                         data-introduce="{{ $product_detail->introduce }}">
-                                                    Cập nhật
+                                                    Cập Nhật
                                                 </button>
                                                 <form
                                                     action="{{ route('product_details.destroy', $product_detail->id) }}"
@@ -95,7 +96,7 @@
                                                       method="POST">
                                                     @csrf
                                                     <button class="btn btn-success btn-sm" type="submit">
-                                                        Thêm vào giỏ hàng
+                                                        Thêm Vào Giỏ Hàng
                                                     </button>
                                                 </form>
                                             </td>
@@ -103,7 +104,7 @@
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="5" class="text-center">Chưa có sản phẩm chi tiết nào</td>
+                                        <td colspan="5" class="text-center">Chưa Có Sản Phẩm Chi Tiết Nào!</td>
                                     </tr>
                                 @endif
                                 </tbody>
@@ -121,7 +122,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addProductDetailModalLabel">Thêm sản phẩm chi tiết</h5>
+                    <h5 class="modal-title" id="addProductDetailModalLabel">Thêm Sản Phẩm Chi Tiết</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -129,9 +130,9 @@
                         @csrf
                         <input type="hidden" id="product_id" name="product_id">
                         <div class="mb-3">
-                            <label for="size_id" class="form-label">Kích cỡ</label>
+                            <label for="size_id" class="form-label">Kích Cỡ</label>
                             <select class="form-control" id="size_id" name="size_id" required>
-                                <option value="">Chọn kích cỡ</option>
+                                <option value="">Chọn Kích Cỡ</option>
                                 @foreach ($sizes as $size)
                                     <option value="{{ $size->id }}">{{ $size->size_name }}
                                         - {{ $size->size_number }}</option>
@@ -139,9 +140,9 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="color_id" class="form-label">Màu sắc</label>
+                            <label for="color_id" class="form-label">Màu Sắc</label>
                             <select class="form-control" id="color_id" name="color_id" required>
-                                <option value="">Chọn màu sắc</option>
+                                <option value="">Chọn Màu Sắc</option>
                                 @foreach ($colors as $color)
                                     <option value="{{ $color->id }}">{{ $color->name }}</option>
                                 @endforeach
@@ -149,18 +150,18 @@
                         </div>
                         <div class="mb-3">
                             <label for="price" class="form-label">Giá</label>
-                            <input type="text" class="form-control" id="price" name="price" placeholder="Nhập giá"
+                            <input type="number" class="form-control" id="price" name="price" placeholder="Nhập Giá"
                                    required>
                         </div>
                         <div class="mb-3">
-                            <label for="quantity" class="form-label">Số lượng</label>
+                            <label for="quantity" class="form-label">Số Lượng</label>
                             <input type="number" class="form-control" id="quantity" name="quantity"
-                                   placeholder="Nhập số lượng" required>
+                                   placeholder="Nhập Số Lượng" required>
                         </div>
                         <div class="mb-3">
-                            <label for="introduce" class="form-label">Mô tả</label>
+                            <label for="introduce" class="form-label">Mô Tả</label>
                             <input type="text" class="form-control" id="introduce" name="introduce"
-                                   placeholder="Nhập mô tả" required>
+                                   placeholder="Nhập Mô Tả" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -178,7 +179,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editProductDetailModalLabel">Cập nhật sản phẩm chi tiết</h5>
+                    <h5 class="modal-title" id="editProductDetailModalLabel">Cập Nhật Sản Phẩm Chi Tiết</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -189,9 +190,8 @@
                         <input type="hidden" name="product_id" value="{{ $products->id }}">
                         <input type="hidden" id="editProductDetailId" name="id">
                         <div class="mb-3">
-                            <label for="editSizeId" class="form-label">Kích cỡ</label>
+                            <label for="editSizeId" class="form-label">Kích Cỡ</label>
                             <select class="form-control" id="editSizeId" name="size_id" required>
-                                <option value="">Chọn kích cỡ</option>
                                 @foreach ($sizes as $size)
                                     <option value="{{ $size->id }}">{{ $size->size_name }}
                                         - {{ $size->size_number }}</option>
@@ -199,9 +199,8 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="editColorId" class="form-label">Màu sắc</label>
+                            <label for="editColorId" class="form-label">Màu Sắc</label>
                             <select class="form-control" id="editColorId" name="color_id" required>
-                                <option value="">Chọn màu sắc</option>
                                 @foreach ($colors as $color)
                                     <option value="{{ $color->id }}">{{ $color->name }}</option>
                                 @endforeach
@@ -209,18 +208,18 @@
                         </div>
                         <div class="mb-3">
                             <label for="editPrice" class="form-label">Giá</label>
-                            <input type="text" class="form-control" id="editPrice" name="price" placeholder="Nhập giá"
+                            <input type="number" class="form-control" id="editPrice" name="price" placeholder="Nhập Giá"
                                    required>
                         </div>
                         <div class="mb-3">
-                            <label for="editQuantity" class="form-label">Số lượng</label>
-                            <input type="text" class="form-control" id="editQuantity" name="quantity"
-                                   placeholder="Nhập số lượng" required>
+                            <label for="editQuantity" class="form-label">Số Lượng</label>
+                            <input type="number" class="form-control" id="editQuantity" name="quantity"
+                                   placeholder="Nhập Số Lượng" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editIntroduce" class="form-label">Mô tả</label>
+                            <label for="editIntroduce" class="form-label">Mô Tả</label>
                             <input type="text" class="form-control" id="editIntroduce" name="introduce"
-                                   placeholder="Nhập mô tả" required>
+                                   placeholder="Nhập Mô Tả" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -260,7 +259,7 @@
             var modalBodyInputQuantity = editProductDetailModal.querySelector('#editQuantity')
             var modalBodyInputIntroduce = editProductDetailModal.querySelector('#editIntroduce')
 
-            modalTitle.textContent = 'Cập nhật sản phẩm chi tiết'
+            modalTitle.textContent = 'Cập Nhật Sản Phẩm Chi Tiết: '
             modalBodyInputId.value = id
             modalBodyInputSizeId.value = size_id
             modalBodyInputColorId.value = color_id
