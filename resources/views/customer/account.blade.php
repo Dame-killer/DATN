@@ -12,22 +12,20 @@
                 <div class="col-md-10"> <!-- Thêm lớp này để giới hạn chiều rộng của form -->
                     <section>
                         <div class='box form-box__border mb-1 w-100'>
-                            <div class="row-detail">
-                                <span class="row-detail__label">Tên tài khoản</span>
-                                <p class="row-detail__content">Kim Minh</p>
-                            </div>
-                            <div class="row-detail">
-                                <span class="row-detail__label">Email</span>
-                                <p class="row-detail__content">a@gmail.com</p>
-                            </div>
-                            <div class="row-detail">
-                                <span class="row-detail__label">Địa chỉ</span>
-                                <p class="row-detail__content">Hà Nội</p>
-                            </div>
-                            <div class="row-detail">
-                                <span class="row-detail__label">Số điện thoại</span>
-                                <p class="row-detail__content">0123456</p>
-                            </div>
+                            @if (Auth::check())
+                                <div class="row-detail">
+                                    <span class="row-detail__label">Tên tài khoản</span>
+                                    <p class="row-detail__content">{{ Auth::user()->name }}</p>
+                                </div>
+                                <div class="row-detail">
+                                    <span class="row-detail__label">Email</span>
+                                    <p class="row-detail__content">{{ Auth::user()->email }}</p>
+                                </div>
+                                <div class="row-detail">
+                                    <span class="row-detail__label">Số điện thoại</span>
+                                    <p class="row-detail__content">{{ Auth::user()->phone }}</p>
+                                </div>
+                            @endif
                         </div>
                     </section>
                     <div class="card mb-4">

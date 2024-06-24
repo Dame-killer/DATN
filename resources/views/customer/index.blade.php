@@ -72,7 +72,7 @@
         <div class="container">
             <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
                 <button class="how-pos3 hov3 trans-04 js-hide-modal1">
-                    <img src="images/icons/icon-close.png" alt="CLOSE">
+                    <img src="{{ asset('assets/images/icons/icon-close.png') }}" alt="CLOSE">
                 </button>
 
                 <div class="row">
@@ -123,7 +123,7 @@
                     <div class="col-md-6 col-lg-5 p-b-30">
                         <div class="p-r-50 p-t-5 p-lr-0-lg">
                             <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                                Lightweight Jacket
+                                {{-- {{ $products->name }} --}}
                             </h4>
 
                             <span class="mtext-106 cl2">

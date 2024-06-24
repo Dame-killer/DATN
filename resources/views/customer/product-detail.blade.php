@@ -1,5 +1,7 @@
 @extends('customer.index')
 @section('content')
+    <div class="custom-header text-center">
+    </div>
     <!-- breadcrumb -->
     <div class="container">
         <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
@@ -68,109 +70,49 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 col-lg-5 p-b-30">
+                <div class="col-md-6 col-lg-5 p-b-30 product-detail-container">
                     <div class="p-r-50 p-t-5 p-lr-0-lg">
                         <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                            Lightweight Jacket
+                            {{ $products->name }}
                         </h4>
+                        @foreach ($product_details as $product_detail)
+                            <div class="product-detail">
+                                <span class="mtext-106 cl2 product-price">
+                                    {{ $product_detail->price }} đ
+                                </span>
 
-                        <span class="mtext-106 cl2">
-                            $58.79
-                        </span>
+                                <p class="stext-102 cl3 p-t-23 product-introduce">
+                                    {{ $product_detail->introduce }}
+                                </p>
 
-                        <p class="stext-102 cl3 p-t-23">
-                            Nulla eget sem vitae eros pharetra viverra. Nam vitae luctus ligula. Mauris consequat ornare
-                            feugiat.
-                        </p>
+                                <div class="p-t-33 product-size-color">
+                                    <button class="size-color-label">Size - Màu sắc: {{ $product_detail->size->size_name }}
+                                        -
+                                        {{ $product_detail->color->name }}</button>
+                                    <div class="flex-w flex-r-m p-b-10">
+                                        <div class="size-204 flex-w flex-m respon6-next">
+                                            <div class="wrap-num-product flex-w m-r-20 m-tb-10">
+                                                <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                                                    <i class="fs-16 zmdi zmdi-minus"></i>
+                                                </div>
 
-                        <!--  -->
-                        <div class="p-t-33">
-                            <div class="flex-w flex-r-m p-b-10">
-                                <div class="size-203 flex-c-m respon6">
-                                    Size
-                                </div>
+                                                <input class="mtext-104 cl3 txt-center num-product" type="number"
+                                                    name="num-product" value="1">
 
-                                <div class="size-204 respon6-next">
-                                    <div class="rs1-select2 bor8 bg0">
-                                        <select class="js-select2" name="time">
-                                            <option>Choose an option</option>
-                                            <option>Size S</option>
-                                            <option>Size M</option>
-                                            <option>Size L</option>
-                                            <option>Size XL</option>
-                                        </select>
-                                        <div class="dropDownSelect2"></div>
-                                    </div>
-                                </div>
-                            </div>
+                                                <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                                                    <i class="fs-16 zmdi zmdi-plus"></i>
+                                                </div>
+                                            </div>
 
-                            <div class="flex-w flex-r-m p-b-10">
-                                <div class="size-203 flex-c-m respon6">
-                                    Color
-                                </div>
-
-                                <div class="size-204 respon6-next">
-                                    <div class="rs1-select2 bor8 bg0">
-                                        <select class="js-select2" name="time">
-                                            <option>Choose an option</option>
-                                            <option>Red</option>
-                                            <option>Blue</option>
-                                            <option>White</option>
-                                            <option>Grey</option>
-                                        </select>
-                                        <div class="dropDownSelect2"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="flex-w flex-r-m p-b-10">
-                                <div class="size-204 flex-w flex-m respon6-next">
-                                    <div class="wrap-num-product flex-w m-r-20 m-tb-10">
-                                        <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                            <i class="fs-16 zmdi zmdi-minus"></i>
-                                        </div>
-
-                                        <input class="mtext-104 cl3 txt-center num-product" type="number"
-                                            name="num-product" value="1">
-
-                                        <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                            <i class="fs-16 zmdi zmdi-plus"></i>
+                                            <button
+                                                class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+                                                Add to cart
+                                            </button>
                                         </div>
                                     </div>
-
-                                    <button
-                                        class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-                                        Add to cart
-                                    </button>
                                 </div>
                             </div>
-                        </div>
-
-                        <!--  -->
-                        <div class="flex-w flex-m p-l-100 p-t-40 respon7">
-                            <div class="flex-m bor9 p-r-10 m-r-11">
-                                <a href="#"
-                                    class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
-                                    data-tooltip="Add to Wishlist">
-                                    <i class="zmdi zmdi-favorite"></i>
-                                </a>
-                            </div>
-
-                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                                data-tooltip="Facebook">
-                                <i class="fa fa-facebook"></i>
-                            </a>
-
-                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                                data-tooltip="Twitter">
-                                <i class="fa fa-twitter"></i>
-                            </a>
-
-                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                                data-tooltip="Google Plus">
-                                <i class="fa fa-google-plus"></i>
-                            </a>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -181,8 +123,7 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item p-b-10">
-                            <a class="nav-link active" data-toggle="tab" href="#description"
-                                role="tab">Description</a>
+                            <a class="nav-link active" data-toggle="tab" href="#description" role="tab">Description</a>
                         </li>
 
                         <li class="nav-item p-b-10">
@@ -671,3 +612,71 @@
         </div>
     </section>
 @endsection
+<style>
+    .custom-header {
+        background-color: rgba(255, 255, 255, 0.8);
+        /* Màu nền trắng với độ trong suốt */
+        color: rgb(182, 120, 120);
+        /* Màu chữ đen */
+        padding-top: 50px;
+        padding-bottom: 50px;
+        position: relative;
+        z-index: 10;
+        max-height: 100px;
+        /* Đảm bảo header đè lên các phần tử khác */
+    }
+
+    .bread-crumb a.stext-109,
+    .bread-crumb span.stext-109 {
+        font-size: 18px;
+        /* Thay đổi giá trị này theo kích thước mong muốn */
+    }
+
+    .product-detail-container {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-detail {
+        margin-bottom: 20px;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 20px;
+    }
+
+    .product-price {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .product-introduce {
+        margin-top: 10px;
+        font-size: 16px;
+        color: #666;
+    }
+
+    .product-size-color {
+        margin-top: 20px;
+    }
+
+    .size-color-label {
+        font-size: 16px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    .js-addcart-detail {
+        background-color: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .js-addcart-detail:hover {
+        background-color: #555;
+    }
+</style>

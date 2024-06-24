@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Color;
+use App\Models\Size;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -27,8 +29,10 @@ class ProductController extends Controller
         $products = Product::all();
         $categories = Category::all();
         $brands = Brand::all();
+        $colors = Color::all();
+        $sizes = Size::all();
 
-        return view('customer.product')->with(compact('products', 'categories', 'brands'));
+        return view('customer.product')->with(compact('products', 'categories', 'brands', 'colors', 'sizes'));
     }
 
     /**

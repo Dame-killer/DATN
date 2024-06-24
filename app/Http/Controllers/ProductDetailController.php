@@ -57,6 +57,15 @@ class ProductDetailController extends Controller
 
         return view('admin.product-detail.index', compact('products', 'sizes', 'colors', 'product_details'));
     }
+    public function showCustomer($id)
+    {
+        $products = Product::findOrFail($id);
+        $sizes = Size::all();
+        $colors = Color::all();
+        $product_details = ProductDetail::with('product', 'size', 'color')->where('product_id', $id)->get();
+
+        return view('customer.product-detail', compact('products', 'sizes', 'colors', 'product_details'));
+    }
 
     /**
      * Show the form for editing the specified resource.

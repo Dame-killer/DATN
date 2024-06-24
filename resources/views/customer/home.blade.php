@@ -53,19 +53,10 @@
 
     @include('customer.cart')
 
-    {{-- @yield('content') --}}
-
     @include('customer.slider')
     @include('customer.banner')
 
-
-
-
-    @include('customer.product')
-
-
-    {{-- @include('customer.footer') --}}
-
+    @include('customer.product-home')
 
     <!-- Back to top -->
     <div class="btn-back-to-top" id="myBtn">

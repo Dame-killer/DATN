@@ -27,7 +27,7 @@ class CustomerController extends Controller
         ]);
 
         Auth::login($user);
-        return view ('/customer/home')->with('success', 'Đăng ký thành công');
+        return redirect()->route('customer-home')->with('success', 'Đăng ký thành công');
         // return response()->json(['message' => 'Đăng ký thành công', 'user' => $user], 201);
     }
 

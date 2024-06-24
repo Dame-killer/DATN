@@ -71,6 +71,6 @@ Route::post('/customer/register', [CustomerController::class, 'register']);
 
 Route::get('/customer/home', [HomeController::class, 'indexCustomer'])->name('customer-home');
 Route::get('/customer/product', [ProductController::class, 'indexCustomer'])->name('customer-product');
-Route::get('/customer/product_detail', function () { return view('customer/product-detail'); })->name('customer-product-detail');
+Route::get('/customer/{product_detail}', [ProductDetailController::class, 'showCustomer'])->name('customer-product-detail');
 Route::get('/customer/cart', function () { return view('customer/shoping-cart'); })->name('customer-cart');
 Route::get('/customer/account', function () { return view('customer/account'); })->name('customer-account');
