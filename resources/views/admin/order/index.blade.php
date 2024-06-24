@@ -99,7 +99,7 @@
                                                 Xem chi tiết
                                             </a>
                                             <button class="btn btn-warning btn-sm mb-2 approve-order-btn"
-                                                    data-id="{{ $order->id }}">
+                                                    data-id="{{ $order->id }}" data-status="{{ $order->status }}">
                                                 @if ($order->status == 0)
                                                     Duyệt
                                                 @else
@@ -153,7 +153,8 @@
 
             approveButtons.forEach(button => {
                 button.addEventListener('click', function () {
-                    const orderId = button.getAttribute('data-id');
+                    const orderId = button.getAttribute('data-id')
+                    const orderStatus = parseInt(button.getAttribute('data-status'))
 
                     fetch(`/admin/order/${orderId}`, {
                         method: 'POST',
@@ -161,7 +162,7 @@
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': '{{ csrf_token() }}'
                         },
-                        body: JSON.stringify({})
+                        body: JSON.stringify({status: orderStatus === 0 ? 1 : orderStatus})
                     })
                         .then(response => response.json())
                         .then(data => {
@@ -186,6 +187,12 @@
                                         break
                                 }
                                 statusCell.innerHTML = `<p class="text-xs font-weight-bold mb-0">${statusText}</p>`
+                                if (orderStatus === 0) {
+                                    button.innerText = 'Cập nhật';
+                                    button.setAttribute('data-status', 1);
+                                } else {
+                                    alert('Trạng thái đơn hàng đã được cập nhật!');
+                                }
                             } else {
                                 alert(data.message)
                             }
