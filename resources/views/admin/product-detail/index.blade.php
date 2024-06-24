@@ -65,7 +65,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $product_detail->price }}</p>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $product_detail->price }}đ</p>
                                             </td>
                                             <td>
                                                 <p class="text-xs font-weight-bold mb-0">{{ $product_detail->quantity }}</p>

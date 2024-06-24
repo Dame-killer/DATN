@@ -49,6 +49,10 @@
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Màu sắc
                                     </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Tổng
+                                    </th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
                                 </thead>
@@ -83,7 +87,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $order_detail->price }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $order_detail->price }}đ</p>
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $order_detail->product_detail->size->size_name }}-{{ $order_detail->product_detail->size->size_number }}</p>
@@ -93,6 +97,9 @@
                                             <div
                                                 style="width: 20px; height: 20px; background-color: {{ $order_detail->product_detail->color->code }};">
                                             </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0 total-price-per-product">{{ $order_detail->totalPricePerProduct }}đ</p>
                                         </td>
                                         <td class="text-right">
                                             <form action="{{ route('cart.remove', $order_detail->product_detail->id) }}" method="POST">
@@ -166,8 +173,8 @@
     <script>
         document.querySelectorAll('.update-quantity').forEach(button => {
             button.addEventListener('click', function() {
-                const id = this.dataset.id;
-                const action = this.dataset.action;
+                const id = this.dataset.id
+                const action = this.dataset.action
 
                 fetch('{{ route('cart.updateQuantity') }}', {
                     method: 'POST',
@@ -180,16 +187,19 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.status === 'success') {
-                            const amountElement = this.parentElement.querySelector('.text-xs.font-weight-bold.mb-0.mx-2');
-                            amountElement.textContent = data.amount;
+                            const amountElement = this.parentElement.querySelector('.text-xs.font-weight-bold.mb-0.mx-2')
+                            amountElement.textContent = data.amount
 
-                            const totalPriceElement = document.getElementById('total-price');
-                            totalPriceElement.textContent = `${data.totalPrice}đ`;
+                            const totalPricePerProductElement = this.closest('tr').querySelector('.total-price-per-product')
+                            totalPricePerProductElement.textContent = `${data.totalPricePerProduct}đ`
+
+                            const totalPriceElement = document.getElementById('total-price')
+                            totalPriceElement.textContent = `${data.totalPrice}đ`
                         }
                     })
-                    .catch(error => console.error('Error:', error));
-            });
-        });
+                    .catch(error => console.error('Error:', error))
+            })
+        })
     </script>
 @endsection
 <style>

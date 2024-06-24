@@ -42,14 +42,15 @@ class OrderDetailController extends Controller
             $order_detail->product_detail->product->name = $item['name'];
             $order_detail->product_detail->product->image = $item['attributes']['product_image'];
             $order_detail->amount = $item['quantity'];
-            $order_detail->price = $order_detail->amount * $item['price'];
+            $order_detail->price = $item['price'];
             $order_detail->product_detail->size->size_name = $item['attributes']['size_name'];
             $order_detail->product_detail->size->size_number = $item['attributes']['size_number'];
             $order_detail->product_detail->color->name = $item['attributes']['color_name'];
             $order_detail->product_detail->color->code = $item['attributes']['color_code'];
+            $order_detail->totalPricePerProduct = $order_detail->price * $order_detail->amount;
 
             $order_details[] = $order_detail;
-            $totalPrice += $order_detail->price;
+            $totalPrice += $order_detail->totalPricePerProduct;
         }
 
         return view('admin.cart.index')->with(compact('order_details', 'totalPrice'));
@@ -88,7 +89,12 @@ class OrderDetailController extends Controller
             throw new \Exception('Không tìm thấy chi tiết đơn hàng!');
         }
 
-        $totalPrice = $order_details->sum('price');
+        // Tính tổng giá từng sản phẩm và tổng giá tất cả các sản phẩm
+        $totalPrice = 0;
+        foreach ($order_details as $order_detail) {
+            $order_detail->totalPricePerProduct = $order_detail->price * $order_detail->amount;
+            $totalPrice += $order_detail->totalPricePerProduct;
+        }
 
         return view('admin.order-detail.index', compact('orders', 'products', 'sizes', 'colors', 'product_details', 'order_details', 'totalPrice'));
     }
@@ -177,8 +183,6 @@ class OrderDetailController extends Controller
         // Lấy giỏ hàng từ session
         $cart = session()->get('cart', []);
         $totalPrice = 0;
-        $amount = 0;
-        $unitPrice = 0;
 
         // Kiểm tra xem sản phẩm có tồn tại trong giỏ hàng không
         if (isset($cart[$request->id])) {
@@ -198,15 +202,20 @@ class OrderDetailController extends Controller
             } elseif ($request->action == 'decrease' && $cart[$request->id]['quantity'] > 1) {
                 $cart[$request->id]['quantity']--;
             }
-
-            $amount = $cart[$request->id]['quantity'];
-            $unitPrice = $cart[$request->id]['price'];
-            $cart[$request->id]['total'] = $amount * $unitPrice;
         }
 
         // Tính tổng tiền
         foreach ($cart as $item) {
-            $totalPrice += $item['total'];
+            $totalPricePerProduct = $item['price'] * $item['quantity'];
+            $totalPrice += $totalPricePerProduct;
+
+            if ($item['id'] == $request->id) {
+                $updatedItem = [
+                    'amount' => $item['quantity'],
+                    'totalPricePerProduct' => $totalPricePerProduct,
+                    'totalPrice' => $totalPrice
+                ];
+            }
         }
 
         // Cập nhật lại session với giỏ hàng mới
@@ -214,9 +223,9 @@ class OrderDetailController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'totalPrice' => $totalPrice,
-            'amount' => $amount,
-            'price' => $amount * $unitPrice
+            'amount' => $updatedItem['amount'],
+            'totalPricePerProduct' => $updatedItem['totalPricePerProduct'],
+            'totalPrice' => $updatedItem['totalPrice']
         ]);
     }
 }

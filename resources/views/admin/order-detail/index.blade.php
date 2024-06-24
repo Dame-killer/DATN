@@ -45,6 +45,10 @@
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Màu sắc
                                         </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Tổng
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -74,7 +78,7 @@
                                                 <p class="text-xs font-weight-bold mb-0">{{ $order_detail->amount }}</p>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order_detail->price }}</p>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $order_detail->price }}đ</p>
                                             </td>
                                             <td>
                                                 <p class="text-xs font-weight-bold mb-0">{{ $order_detail->productDetail->size->size_name }}-{{ $order_detail->productDetail->size->size_number }}</p>
@@ -84,6 +88,9 @@
                                                 <div
                                                     style="width: 20px; height: 20px; background-color: {{ $order_detail->productDetail->color->code }};">
                                                 </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $order_detail->totalPricePerProduct }}đ</p>
                                             </td>
                                         </tr>
                                     @endforeach
