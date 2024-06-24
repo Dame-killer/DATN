@@ -34,8 +34,9 @@ class OrderController extends Controller
     {
         $request->validate([
             'receiver' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
 //             'phone' => 'nullable|string|max:15',
-            'address' => 'required|string|max:255'
+            'user_id' => 'exists:users,id'
         ]);
 
         // Lấy giỏ hàng từ session
@@ -57,7 +58,8 @@ class OrderController extends Controller
                 'status' => 0,
                 'order_date' => now(),
                 'payment_method_id' => $request->input('payment_method_id'),
-                'user_id' => auth()->id(), // Lấy id người dùng hiện tại, bạn có thể sử dụng auth()->user()->id nếu sử dụng Laravel Sanctum
+//                'user_id' => auth()->id() // Lấy id người dùng hiện tại, bạn có thể sử dụng auth()->user()->id nếu sử dụng Laravel Sanctum
+                'user_id' => $request->input('user_id'),
             ]);
 
             // Tạo chi tiết đơn hàng từ giỏ hàng

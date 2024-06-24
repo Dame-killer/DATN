@@ -25,7 +25,7 @@
                                     {{--                                        </th>--}}
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Người nhận
+                                        Người Nhận
                                     </th>
                                     {{--                                        <th--}}
                                     {{--                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">--}}
@@ -33,19 +33,23 @@
                                     {{--                                        </th>--}}
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Địa chỉ
+                                        Địa Chỉ
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Ngày đặt hàng
+                                        Ngày Đặt Hàng
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Phương thức thanh toán
+                                        Phương Thức Thanh Toán
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Trạng thái
+                                        Tài Khoản Khách Hàng
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Trạng Thái
                                     </th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
@@ -71,6 +75,9 @@
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $order->paymentMethod->name }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $order->user->name }} - {{ $order->user->email }}</p>
                                         </td>
                                         <td id="order-status-{{ $order->id }}">
                                             @switch($order->status)

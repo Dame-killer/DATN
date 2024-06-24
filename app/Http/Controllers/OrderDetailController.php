@@ -8,6 +8,7 @@ use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\Size;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -23,6 +24,8 @@ class OrderDetailController extends Controller
 
     public function cart()
     {
+        $users = User::where('role', 0)->get();
+
         $cart = session()->get('cart', []); // Lấy nội dung giỏ hàng từ session
 
         $order_details = [];
@@ -53,7 +56,7 @@ class OrderDetailController extends Controller
             $totalPrice += $order_detail->totalPricePerProduct;
         }
 
-        return view('admin.cart.index')->with(compact('order_details', 'totalPrice'));
+        return view('admin.cart.index')->with(compact('users', 'order_details', 'totalPrice'));
     }
 
     /**

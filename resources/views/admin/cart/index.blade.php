@@ -145,7 +145,7 @@
                     <form  action="{{ route('orders-store') }}"  method="POST" autocomplete="off">
                         @csrf
                         <div class="mb-3">
-                            <label for="receiver" class="form-label">Tên người nhận: </label>
+                            <label for="receiver" class="form-label">Tên Người Nhận: </label>
                             <input type="text" class="form-control" id="receiver" name="receiver"
                                    placeholder="Nhập tên người nhận" required>
                         </div>
@@ -155,10 +155,20 @@
 {{--                                   placeholder="Nhập số điện thoại" required>--}}
 {{--                        </div>--}}
                         <div class="mb-3">
-                            <label for="address" class="form-label">Địa chỉ: </label>
+                            <label for="address" class="form-label">Địa Chỉ: </label>
                             <input type="text" class="form-control" id="address" name="address"
                                    placeholder="Nhập địa chỉ" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="userId" class="form-label">TK Khách Hàng: </label>
+                            <select class="form-control" id="userId" name="user_id">
+                                <option value="">Chọn TK</option>
+                                @foreach($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }} - {{ $user->email }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
                         <input type="hidden" name="payment_method_id" value="1">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
