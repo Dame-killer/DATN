@@ -1,6 +1,8 @@
 @extends('customer.index')
 
 @section('content')
+    <div class="custom-header text-center">
+    </div>
     <!-- breadcrumb -->
     <div class="container">
         <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
@@ -18,27 +20,27 @@
     <div class="bg0 p-t-75 p-b-85">
         <div class="container">
             <div class="row">
-                <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+                <div class="col-lg-12 ">
                     <div class="m-l-25 m-r--38 m-lr-0-xl">
                         <div class="wrap-table-shopping-cart">
                             <table class="table-shopping-cart">
                                 <tr class="table_head">
-                                    <th class="column-1">Sản phẩm</th>
-                                    <th class="column-2"></th>
-                                    <th class="column-3">Giá</th>
-                                    <th class="column-4">Số lượng</th>
-                                    <th class="column-5">Tổng</th>
-                                    <th class="column-6">Sản phẩm</th>
-                                    <th class="column-7"></th>
-                                    <th class="column-8">Giá</th>
-                                    <th class="column-9">Số lượng</th>
+                                    <th class="column-1">STT</th>
+                                    <th class="column-2">Mã Sản Phẩm</th>
+                                    <th class="column-3">Tên Sản Phẩm</th>
+                                    <th class="column-4">Hình Ảnh</th>
+                                    <th class="column-5">Số Lượng</th>
+                                    <th class="column-6">Giá</th>
+                                    <th class="column-7">Kích Cỡ</th>
+                                    <th class="column-8">Màu sắc</th>
+                                    <th class="column-9">Tổng</th>
                                     <th></th>
                                 </tr>
                                 <tbody>
                                     @foreach ($order_details as $order_detail)
                                         <tr>
                                             <td>
-                                                <div class="d-flex px-2 py-1">
+                                                <div class="d-flex ">
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
                                                     </div>
@@ -109,30 +111,29 @@
 
                     </div>
                 </div>
+            </div>
+            <div class="col-sm-10 col-lg-7 col-xl-5 ms-auto me-2 m-b-50">
+                <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
 
-                <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
-                    <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
-
-                        <div class="flex-w flex-t bor12 p-b-13">
-                            <div class="size-208">
-                                <span class="stext-110 cl2">
-                                    Tổng cộng
-                                </span>
-                            </div>
-
-                            <div class="size-209">
-                                <span class="mtext-110 cl2">
-                                    {{ $totalPrice }}đ
-                                </span>
-                            </div>
+                    <div class="flex-w flex-t bor12 p-b-13">
+                        <div class="size-208">
+                            <span class="stext-110 cl2">
+                                Tổng cộng
+                            </span>
                         </div>
 
-                        <button type="button"
-                            class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
-                            data-bs-toggle="modal" data-bs-target="#addOrderModal">
-                            Thanh toán
-                        </button>
+                        <div class="size-209">
+                            <span class="mtext-110 cl2" id="total-price">
+                                {{ $totalPrice }}đ
+                            </span>
+                        </div>
                     </div>
+
+                    <button type="button"
+                        class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
+                        data-bs-toggle="modal" data-bs-target="#addOrderModal">
+                        Thanh toán
+                    </button>
                 </div>
             </div>
         </div>
@@ -192,7 +193,7 @@
                 const id = this.dataset.id
                 const action = this.dataset.action
 
-                fetch('{{ route('cart.updateQuantity') }}', {
+                fetch('{{ route('customer-cart-updateQuantity') }}', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -223,3 +224,88 @@
         })
     </script>
 @endsection
+<style>
+    .bread-crumb a.stext-109,
+    .bread-crumb span.stext-109 {
+        font-size: 18px;
+        /* Thay đổi giá trị này theo kích thước mong muốn */
+    }
+
+    .custom-header {
+        background-color: rgba(255, 255, 255, 0.8);
+        /* Màu nền trắng với độ trong suốt */
+        padding-top: 50px;
+        padding-bottom: 50px;
+        position: relative;
+        z-index: 10;
+        /* Đảm bảo header đè lên các phần tử khác */
+    }
+
+    .table-shopping-cart {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 16px;
+        text-align: left;
+    }
+
+    .table-shopping-cart th,
+    .table-shopping-cart td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+    }
+
+    .table-shopping-cart thead th {
+        background-color: #f8f9fa;
+        color: #333;
+        font-weight: bold;
+    }
+
+    .table-shopping-cart tbody tr {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .table-shopping-cart tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+
+    .table-shopping-cart tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .table-shopping-cart .text-center {
+        text-align: center;
+    }
+
+    .table-shopping-cart .text-right {
+        text-align: right;
+    }
+
+    .table-shopping-cart img {
+        max-width: 50px;
+        height: auto;
+        border-radius: 5px;
+    }
+
+    .table-shopping-cart .btn {
+        margin: 0 5px;
+    }
+
+    .table-shopping-cart .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        color: #fff;
+    }
+
+    .table-shopping-cart .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+    }
+
+    .table-shopping-cart .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: #fff;
+    }
+</style>

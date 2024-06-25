@@ -76,4 +76,5 @@ Route::get('/cart', [OrderDetailController::class, 'cartCustomer'])->name('custo
 Route::post('/customer/product/{product_detail}', [OrderDetailController::class, 'addToCart'])->name('customer-cart-add');
 Route::post('/cart', [OrderController::class, 'storeCustomer'])->name('customer-cart-store');
 Route::delete('/customer/cart/{product_detail}', [OrderDetailController::class, 'removeFromCart'])->name('customer-cart-remove');
-Route::get('/customer/account', function () { return view('customer/account'); })->name('customer-account');
+Route::post('/cart/updated', [OrderDetailController::class, 'updateQuantity'])->name('customer-cart-updateQuantity');
+Route::get('/account', function () { return view('customer/account'); })->name('customer-account');

@@ -14,13 +14,11 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/material-design-iconic-font.min.css') }}">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/linearicons-v1.0.0/icon-font.min.css') }}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/linearicons-v1.0.0/icon-font.min.css') }}"> --}}
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/animate.css') }}">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/animate.css') }}">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/select2.min.css') }}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/select2.min.css') }}"> --}}
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/daterangepicker.css') }}">
     <!--===============================================================================================-->
@@ -79,17 +77,17 @@
     <script src="{{ asset('assets/js/popper.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <!--===============================================================================================-->
-    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
-    <script>
+    {{-- <script src="{{ asset('assets/js/select2.min.js') }}"></script> --}}
+    {{-- <script>
         $(".js-select2").each(function() {
             $(this).select2({
                 minimumResultsForSearch: 20,
                 dropdownParent: $(this).next('.dropDownSelect2')
             });
         })
-    </script>
+    </script> --}}
     <!--===============================================================================================-->
-    <script src="{{ asset('assets/js/moment.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/moment.min.js') }}"></script> --}}
     <script src="{{ asset('assets/js/daterangepicker.js') }}"></script>
     <!--===============================================================================================-->
     <script src="{{ asset('assets/js/slick.min.js') }}"></script>
@@ -101,10 +99,10 @@
     </script>
     <!--===============================================================================================-->
     <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
-    <script>
-        $('.gallery-lb').each(function() { // the containers for all your galleries
+    {{-- <script>
+        $('.gallery-lb').each(function() {
             $(this).magnificPopup({
-                delegate: 'a', // the selector for gallery item
+                delegate: 'a',
                 type: 'image',
                 gallery: {
                     enabled: true
@@ -112,43 +110,18 @@
                 mainClass: 'mfp-fade'
             });
         });
-    </script>
+    </script> --}}
     <!--===============================================================================================-->
-    <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script> --}}
     <!--===============================================================================================-->
     <script src="{{ asset('assets/js/sweetalert.min.js') }}"></script>
     <script>
-        $('.js-addwish-b2').on('click', function(e) {
-            e.preventDefault();
-        });
-
-        $('.js-addwish-b2').each(function() {
-            var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
-            $(this).on('click', function() {
-                swal(nameProduct, "is added to wishlist !", "success");
-
-                $(this).addClass('js-addedwish-b2');
-                $(this).off('click');
-            });
-        });
-
-        $('.js-addwish-detail').each(function() {
-            var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
-
-            $(this).on('click', function() {
-                swal(nameProduct, "is added to wishlist !", "success");
-
-                $(this).addClass('js-addedwish-detail');
-                $(this).off('click');
-            });
-        });
-
         /*---------------------------------------------*/
 
         $('.js-addcart-detail').each(function() {
             var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
             $(this).on('click', function() {
-                swal(nameProduct, "is added to cart !", "success");
+                swal(nameProduct, "Thêm vào giỏ hàng thành công !", "Thành công");
             });
         });
     </script>

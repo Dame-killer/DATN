@@ -82,7 +82,7 @@
                                 <div class="block2">
                                     <div class="block2-pic hov-img0">
                                         <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
-                                            class="img-fluid" style="width: 100%; height: auto;">
+                                            class="img-fluid">
                                     </div>
 
                                     <div class="block2-txt flex-w flex-t p-t-14">

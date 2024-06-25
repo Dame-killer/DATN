@@ -49,6 +49,9 @@
                         <ul class="main-menu">
                             <li class="active-menu">
                                 <i class="zmdi zmdi-account"></i>
+                                @if (Auth::check())
+                                    <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
+                                @endif
                                 <ul class="sub-menu">
                                     <li><a href="{{ route('customer-account') }}">Tài khoản</a></li>
                                     <li><a href="{{ route('customer-login') }}">Đăng nhập</a></li>
