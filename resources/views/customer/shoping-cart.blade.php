@@ -1,4 +1,5 @@
 @extends('customer.index')
+
 @section('content')
     <!-- breadcrumb -->
     <div class="container">
@@ -13,10 +14,8 @@
             </span>
         </div>
     </div>
-
-
     <!-- Shoping Cart -->
-    <form class="bg0 p-t-75 p-b-85">
+    <div class="bg0 p-t-75 p-b-85">
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
@@ -28,52 +27,86 @@
                                     <th class="column-2"></th>
                                     <th class="column-3">Giá</th>
                                     <th class="column-4">Số lượng</th>
+                                    <th class="column-5">Tổng</th>
+                                    <th class="column-6">Sản phẩm</th>
+                                    <th class="column-7"></th>
+                                    <th class="column-8">Giá</th>
+                                    <th class="column-9">Số lượng</th>
+                                    <th></th>
                                 </tr>
-
-                                <tr class="table_row">
-                                    <td class="column-1">
-                                        <div class="how-itemcart1">
-                                            <img src="images/item-cart-04.jpg" alt="IMG">
-                                        </div>
-                                    </td>
-                                    <td class="column-2">Fresh Strawberries</td>
-                                    <td class="column-3">$ 36.00</td>
-                                    <td class="column-4">
-                                        <div class="wrap-num-product flex-w m-l-auto m-r-0">
-                                            <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-minus"></i>
-                                            </div>
-
-                                            <input class="mtext-104 cl3 txt-center num-product" type="number"
-                                                name="num-product1" value="1">
-
-                                            <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                                <i class="fs-16 zmdi zmdi-plus"></i>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    {{-- <td class="column-5">$ 36.00</td> --}}
-                                </tr>
-
+                                <tbody>
+                                    @foreach ($order_details as $order_detail)
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">
+                                                    {{ $order_detail->product_detail->product->code }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">
+                                                    {{ $order_detail->product_detail->product->name }}</p>
+                                            </td>
+                                            <td class="text-center">
+                                                <img src="{{ $order_detail->product_detail->product->image }}"
+                                                    alt="{{ $order_detail->product_detail->product->name }}"
+                                                    class="img-fluid" style="width: 50px; height: 50px;">
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <button class="btn btn-sm btn-warning update-quantity"
+                                                        data-id="{{ $order_detail->product_detail->id }}"
+                                                        data-action="decrease">-
+                                                    </button>
+                                                    <p class="text-xs font-weight-bold mb-0 mx-2">
+                                                        {{ $order_detail->amount }}
+                                                    </p>
+                                                    <button class="btn btn-sm btn-primary update-quantity"
+                                                        data-id="{{ $order_detail->product_detail->id }}"
+                                                        data-action="increase">+
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $order_detail->price }}đ</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">
+                                                    {{ $order_detail->product_detail->size->size_name }}
+                                                    -{{ $order_detail->product_detail->size->size_number }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">
+                                                    {{ $order_detail->product_detail->color->name }}</p>
+                                                <div
+                                                    style="width: 20px; height: 20px; background-color: {{ $order_detail->product_detail->color->code }};">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0 total-price-per-product">
+                                                    {{ $order_detail->totalPricePerProduct }}
+                                                    đ</p>
+                                            </td>
+                                            <td class="text-right">
+                                                <form
+                                                    action="{{ route('customer-cart-remove', $order_detail->product_detail->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
                             </table>
                         </div>
 
-                        <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-                            {{-- <div class="flex-w flex-m m-r-20 m-tb-5">
-                                <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
-                                    name="coupon" placeholder="Coupon Code">
-
-                                <div
-                                    class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
-                                    Apply coupon
-                                </div>
-                            </div> --}}
-
-                            <div
-                                class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-                                Update Cart
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -89,17 +122,104 @@
 
                             <div class="size-209">
                                 <span class="mtext-110 cl2">
-                                    $79.65
+                                    {{ $totalPrice }}đ
                                 </span>
                             </div>
                         </div>
 
-                        <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                        <button type="button"
+                            class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
+                            data-bs-toggle="modal" data-bs-target="#addOrderModal">
                             Thanh toán
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+
+    <div class="modal fade" id="addOrderModal" tabindex="-1" aria-labelledby="addOrderModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addOrderModalLabel">Thêm Thông Tin Đơn Hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('customer-cart-store') }}" method="POST" autocomplete="off">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="receiver" class="form-label">Tên Người Nhận</label>
+                            <input type="text" class="form-control" id="receiver" name="receiver"
+                                placeholder="Nhập Tên Người Nhận" required>
+                        </div>
+                        {{--                        <div class="mb-3"> --}}
+                        {{--                            <label for="phone" class="form-label">Số điện thoại: </label> --}}
+                        {{--                            <input type="tel" class="form-control" id="phone" name="phone" --}}
+                        {{--                                   placeholder="Nhập số điện thoại" required> --}}
+                        {{--                        </div> --}}
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Địa Chỉ</label>
+                            <input type="text" class="form-control" id="address" name="address"
+                                placeholder="Nhập Địa Chỉ" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="payment_method_id" class="form-label">Phương thức thanh toán</label>
+                            <select class="form-control" id="payment_method_id" name="payment_method_id" required>
+                                <option value="">Chọn PTTT</option>
+                                @foreach ($payment_methods as $payment_method)
+                                    <option value="{{ $payment_method->id }}">{{ $payment_method->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            {{-- <input type="hidden" name="payment_method_id" value="1"> --}}
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                <button type="submit" class="btn btn-primary">Xác Nhận</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.update-quantity').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.dataset.id
+                const action = this.dataset.action
+
+                fetch('{{ route('cart.updateQuantity') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            id,
+                            action
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            const amountElement = this.parentElement.querySelector(
+                                '.text-xs.font-weight-bold.mb-0.mx-2')
+                            amountElement.textContent = data.amount
+
+                            const totalPricePerProductElement = this.closest('tr').querySelector(
+                                '.total-price-per-product')
+                            totalPricePerProductElement.textContent = `${data.totalPricePerProduct}đ`
+
+                            const totalPriceElement = document.getElementById('total-price')
+                            totalPriceElement.textContent = `${data.totalPrice}đ`
+                        }
+                    })
+                    .catch(error => console.error('Error:', error))
+            })
+        })
+    </script>
 @endsection

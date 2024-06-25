@@ -24,7 +24,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('customer-cart') }}">
+                            <a href="{{ route('customer-shopping-cart') }}">
                                 <h4>Giỏ hàng</h4>
                             </a>
                         </li>
