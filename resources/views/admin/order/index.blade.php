@@ -73,7 +73,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $order->paymentMethod->name }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $order->user->name }} - {{ $order->user->email }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $order->user->email }}</p>
                                         </td>
                                         <td id="order-status-{{ $order->id }}">
                                             @switch($order->status)
@@ -99,7 +99,7 @@
                                         <td class="align-middle">
                                             <a href="{{ route('admin-order-detail', $order->id) }}"
                                                class="btn btn-info btn-sm mb-2">
-                                                Xem Chi Tiết
+                                                Chi Tiết
                                             </a>
                                             <button class="btn btn-warning btn-sm mb-2 approve-order-btn"
                                                     data-id="{{ $order->id }}" data-status="{{ $order->status }}">

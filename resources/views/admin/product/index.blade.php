@@ -73,7 +73,7 @@
                                             <td class="align-middle">
                                                 <a href="{{ route('admin-product-detail', $product->id) }}"
                                                     class="btn btn-info btn-sm mb-2">
-                                                    Xem Chi Tiết
+                                                    Chi Tiết
                                                 </a>
                                                 <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
                                                     data-bs-target="#editProductModal" data-id="{{ $product->id }}"

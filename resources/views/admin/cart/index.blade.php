@@ -177,8 +177,8 @@
                                 @endforeach
                             </select>
                         </div>
+                        <input type="hidden" name="payment_method_id" value="1">
                         <div class="mb-3">
-                            <input type="hidden" name="payment_method_id" value="1">
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                                 <button type="submit" class="btn btn-primary">Xác Nhận</button>
