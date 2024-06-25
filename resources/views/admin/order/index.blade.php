@@ -44,7 +44,7 @@
                                         Tài Khoản Khách Hàng
                                     </th>
                                     <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Trạng Thái
                                     </th>
                                     <th class="text-secondary opacity-7"></th>
@@ -75,25 +75,25 @@
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $order->user->email }}</p>
                                         </td>
-                                        <td id="order-status-{{ $order->id }}">
+                                        <td class="align-middle text-center" id="order-status-{{ $order->id }}">
                                             @switch($order->status)
                                                 @case(0)
-                                                    <p class="text-xs font-weight-bold mb-0">Chưa Duyệt</p>
+                                                    <span class="badge badge-sm bg-gradient-secondary">Chưa Duyệt</span>
                                                     @break
                                                 @case(1)
-                                                    <p class="text-xs font-weight-bold mb-0">Đã Duyệt</p>
+                                                    <span class="badge badge-sm bg-gradient-info">Đã Duyệt</span>
                                                     @break
                                                 @case(2)
-                                                    <p class="text-xs font-weight-bold mb-0">Đang Giao Hàng</p>
+                                                    <span class="badge badge-sm bg-gradient-warning">Đang Giao Hàng</span>
                                                     @break
                                                 @case(3)
-                                                    <p class="text-xs font-weight-bold mb-0">Hoàn Thành</p>
+                                                    <span class="badge badge-sm bg-gradient-success">Hoàn Thành</span>
                                                     @break
                                                 @case(4)
-                                                    <p class="text-xs font-weight-bold mb-0">Hủy</p>
+                                                    <span class="badge badge-sm bg-gradient-danger">Hủy</span>
                                                     @break
                                                 @default
-                                                    <p class="text-xs font-weight-bold mb-0">Không Xác Định</p>
+                                                    <span class="badge badge-sm bg-gradient-faded-dark">Không Xác Định</span>
                                             @endswitch
                                         </td>
                                         <td class="align-middle">
