@@ -5,18 +5,18 @@
     <!-- breadcrumb -->
     <div class="container">
         <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-            <a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
-                Home
+            <a href="{{ route('customer-home') }}" class="stext-109 cl8 hov-cl1 trans-04">
+                Trang chủ
                 <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
             </a>
 
-            <a href="product.html" class="stext-109 cl8 hov-cl1 trans-04">
-                Men
+            <a href="{{ route('customer-product') }}" class="stext-109 cl8 hov-cl1 trans-04">
+                Danh mục sản phẩm
                 <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
             </a>
 
             <span class="stext-109 cl4">
-                Lightweight Jacket
+                {{ $products->name }}
             </span>
         </div>
     </div>
@@ -84,40 +84,38 @@
                                 <p class="stext-102 cl3 p-t-23 product-introduce">
                                     {{ $product_detail->introduce }}
                                 </p>
-
+                                Size - Màu sắc:
                                 <div class="p-t-33 product-size-color">
-                                    <button class="size-color-label">Size - Màu sắc: {{ $product_detail->size->size_name }}
-                                        -
-                                        {{ $product_detail->color->name }}</button>
-                                    <div class="flex-w flex-r-m p-b-10">
-                                        <div class="size-204 flex-w flex-m respon6-next">
-                                            <div class="wrap-num-product flex-w m-r-20 m-tb-10">
-                                                <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                                    <i class="fs-16 zmdi zmdi-minus"></i>
-                                                </div>
-
-                                                <input class="mtext-104 cl3 txt-center num-product" type="number"
-                                                    name="num-product" value="1">
-
-                                                <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                                    <i class="fs-16 zmdi zmdi-plus"></i>
-                                                </div>
-                                            </div>
-                                            <form action="{{ route('customer-cart-add', $product_detail->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                <button
-                                                    class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
-                                                    type="submit">
-                                                    Add to cart
-                                                </button>
-                                            </form>
-
-                                        </div>
-                                    </div>
+                                    <button class="btn btn-primary"> {{ $product_detail->size->size_name }}</button>
+                                    <button class="btn btn-primary">{{ $product_detail->color->name }}</button>
                                 </div>
                             </div>
                         @endforeach
+                        <div class="flex-w flex-r-m p-b-10">
+                            <div class="size-204 flex-w flex-m respon6-next">
+                                <div class="wrap-num-product flex-w m-r-20 m-tb-10">
+                                    <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                                        <i class="fs-16 zmdi zmdi-minus"></i>
+                                    </div>
+
+                                    <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product"
+                                        value="1">
+
+                                    <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                                        <i class="fs-16 zmdi zmdi-plus"></i>
+                                    </div>
+                                </div>
+                                <form action="{{ route('customer-cart-add', $product_detail->id) }}" method="POST">
+                                    @csrf
+                                    <button
+                                        class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
+                                        type="submit">
+                                        Add to cart
+                                    </button>
+                                </form>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

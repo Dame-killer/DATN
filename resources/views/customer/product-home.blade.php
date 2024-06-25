@@ -259,13 +259,8 @@
                         <!-- Block2 -->
                         <div class="block2">
                             <div class="block2-pic hov-img0">
-                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
-                                    class="img-fluid" style="width: 50px; height: 50px;">
+                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
 
-                                <a href="#"
-                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                    Quick View
-                                </a>
                             </div>
 
                             <div class="block2-txt flex-w flex-t p-t-14">
@@ -274,18 +269,6 @@
                                         {{ $product->name }}
                                     </a>
 
-                                    {{-- <span class="stext-105 cl3">
-                                        $16.64
-                                    </span> --}}
-                                </div>
-
-                                <div class="block2-txt-child2 flex-r p-t-3">
-                                    <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                        <img class="icon-heart1 dis-block trans-04"
-                                            src="{{ asset('assets/images/icons/icon-heart-01.png') }}" alt="ICON">
-                                        <img class="icon-heart2 dis-block trans-04 ab-t-l"
-                                            src="{{ asset('assets/mages/icons/icon-heart-02.png') }}" alt="ICON">
-                                    </a>
                                 </div>
                             </div>
                         </div>
