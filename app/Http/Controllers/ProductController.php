@@ -26,6 +26,7 @@ class ProductController extends Controller
 
     public function indexCustomer()
     {
+
         $products = Product::all();
         $categories = Category::all();
         $brands = Brand::all();
