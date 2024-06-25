@@ -36,7 +36,7 @@ class OrderController extends Controller
             'receiver' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'phone' => 'required|string|max:10',
-            'user_id' => 'exists:users,id'
+            'user_id' => 'nullable|exists:users,id'
         ]);
 
         // Lấy giỏ hàng từ session

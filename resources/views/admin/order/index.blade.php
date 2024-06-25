@@ -83,7 +83,7 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $order->paymentMethod->name }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $order->user->email }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $order->user ? $order->user->email : 'N/A' }}</p>
                                         </td>
                                         <td class="align-middle text-center" id="order-status-{{ $order->id }}">
                                             @switch($order->status)
