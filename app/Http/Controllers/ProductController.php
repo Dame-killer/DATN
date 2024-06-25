@@ -50,9 +50,10 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'code' => 'required',
-            'name' => 'required',
-            'image' => 'required',
+            'name' => 'required|string',
+            'image' => 'required|file|image',
+            'price' => 'required|integer',
+            'introduce' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
             'brand_id' => 'required|exists:brands,id',
         ]);
@@ -91,15 +92,16 @@ class ProductController extends Controller
     public function update(Request $request, $product)
     {
         $request->validate([
-            'code' => 'required',
-            'name' => 'required',
+            'name' => 'required|string',
             'image' => 'sometimes|file|image',
+            'price' => 'required|integer',
+            'introduce' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
             'brand_id' => 'required|exists:brands,id',
         ]);
 
         $products = Product::findOrFail($product);
-        $data = $request->only(['code', 'name', 'category_id', 'brand_id']);
+        $data = $request->only(['name', 'price', 'introduce', 'category_id', 'brand_id']);
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images', 'public');
@@ -117,9 +119,6 @@ class ProductController extends Controller
     public function destroy($product)
     {
         $products = Product::findOrFail($product);
-        if ($products->image && Storage::disk('public')->exists($products->image)) {
-            Storage::disk('public')->delete($products->image);
-        }
         $products->delete();
 
         return redirect()->back()->with('success', 'Sản phẩm đã được xóa thành công!');

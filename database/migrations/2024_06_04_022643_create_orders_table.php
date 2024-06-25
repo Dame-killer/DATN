@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,11 +14,13 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->unique()->nullable();
             $table->string('receiver');
             $table->string('address');
-            $table->dateTime('order_date');
-            $table->string('status');
-            $table->unsignedBigInteger('user_id');
+            $table->string('phone');
+            $table->dateTime('order_date')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->integer('status')->default(0);
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('payment_method_id');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

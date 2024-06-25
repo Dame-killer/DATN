@@ -15,7 +15,7 @@ class OrderDetail extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['order_id', 'product_detail_id', 'price', 'amount'];
+    protected $fillable = ['order_id', 'product_detail_id', 'unit_price', 'amount'];
 
     public function order()
     {

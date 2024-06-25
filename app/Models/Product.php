@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -17,7 +18,7 @@ class Product extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['code', 'name', 'image', 'category_id', 'brand_id'];
+    protected $fillable = ['name', 'image', 'price', 'introduce', 'category_id', 'brand_id'];
 
     protected $table = 'products';
 
@@ -35,5 +36,22 @@ class Product extends Model
     public function brand()
     {
         return $this->belongsTo(Brand::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($product) {
+            $product->code = self::generateUniqueCode();
+        });
+    }
+
+    private static function generateUniqueCode()
+    {
+        // Định dạng tùy chỉnh: ORD-DDMMYYYY-RANDOMSTRING
+        $date = date('dmY');
+        $randomString = strtoupper(Str::random(5));
+        return "PRD-{$date}-{$randomString}";
     }
 }

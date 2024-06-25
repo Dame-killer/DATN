@@ -46,12 +46,12 @@ class OrderDetailController extends Controller
             $order_detail->product_detail->product->name = $item['name'];
             $order_detail->product_detail->product->image = $item['attributes']['product_image'];
             $order_detail->amount = $item['quantity'];
-            $order_detail->price = $item['price'];
+            $order_detail->unit_price = $item['attributes']['product_price'];
             $order_detail->product_detail->size->size_name = $item['attributes']['size_name'];
             $order_detail->product_detail->size->size_number = $item['attributes']['size_number'];
             $order_detail->product_detail->color->name = $item['attributes']['color_name'];
             $order_detail->product_detail->color->code = $item['attributes']['color_code'];
-            $order_detail->totalPricePerProduct = $order_detail->price * $order_detail->amount;
+            $order_detail->totalPricePerProduct = $order_detail->unit_price * $order_detail->amount;
 
             $order_details[] = $order_detail;
             $totalPrice += $order_detail->totalPricePerProduct;
@@ -84,12 +84,12 @@ class OrderDetailController extends Controller
             $order_detail->product_detail->product->name = $item['name'];
             $order_detail->product_detail->product->image = $item['attributes']['product_image'];
             $order_detail->amount = $item['quantity'];
-            $order_detail->price = $item['price'];
+            $order_detail->unit_price = $item['attributes']['product_price'];
             $order_detail->product_detail->size->size_name = $item['attributes']['size_name'];
             $order_detail->product_detail->size->size_number = $item['attributes']['size_number'];
             $order_detail->product_detail->color->name = $item['attributes']['color_name'];
             $order_detail->product_detail->color->code = $item['attributes']['color_code'];
-            $order_detail->totalPricePerProduct = $order_detail->price * $order_detail->amount;
+            $order_detail->totalPricePerProduct = $order_detail->unit_price * $order_detail->amount;
 
             $order_details[] = $order_detail;
             $totalPrice += $order_detail->totalPricePerProduct;
@@ -134,7 +134,7 @@ class OrderDetailController extends Controller
         // Tính tổng giá từng sản phẩm và tổng giá tất cả các sản phẩm
         $totalPrice = 0;
         foreach ($order_details as $order_detail) {
-            $order_detail->totalPricePerProduct = $order_detail->price * $order_detail->amount;
+            $order_detail->totalPricePerProduct = $order_detail->unit_price * $order_detail->amount;
             $totalPrice += $order_detail->totalPricePerProduct;
         }
 
@@ -183,12 +183,12 @@ class OrderDetailController extends Controller
             $cart[$product_detail->id] = [
                 'id' => $product_detail->id,
                 'name' => $product_detail->product->name,
-                'price' => $product_detail->price,
                 'quantity' => 1,
                 'attributes' => [
                     'product_code' => $product->code,
                     'product_name' => $product->name,
                     'product_image' => asset('storage/' . $product->image),
+                    'product_price' => $product->price,
                     'size_name' => $size->size_name,
                     'size_number' => $size->size_number,
                     'color_name' => $color->name,
@@ -234,7 +234,7 @@ class OrderDetailController extends Controller
             if (!$productDetail) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Sản phẩm không tồn tại.'
+                    'message' => 'Sản phẩm không tồn tại!'
                 ]);
             }
 
@@ -248,14 +248,13 @@ class OrderDetailController extends Controller
 
         // Tính tổng tiền
         foreach ($cart as $item) {
-            $totalPricePerProduct = $item['price'] * $item['quantity'];
+            $totalPricePerProduct = $item['attributes']['product_price'] * $item['quantity'];
             $totalPrice += $totalPricePerProduct;
 
             if ($item['id'] == $request->id) {
                 $updatedItem = [
                     'amount' => $item['quantity'],
-                    'totalPricePerProduct' => $totalPricePerProduct,
-                    'totalPrice' => $totalPrice
+                    'totalPricePerProduct' => $totalPricePerProduct
                 ];
             }
         }
@@ -267,7 +266,7 @@ class OrderDetailController extends Controller
             'status' => 'success',
             'amount' => $updatedItem['amount'],
             'totalPricePerProduct' => $updatedItem['totalPricePerProduct'],
-            'totalPrice' => $updatedItem['totalPrice']
+            'totalPrice' => $totalPrice
         ]);
     }
 }

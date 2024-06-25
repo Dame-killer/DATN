@@ -19,10 +19,10 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         STT
                                     </th>
-                                    {{--                                        <th--}}
-                                    {{--                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">--}}
-                                    {{--                                            Mã đơn hàng--}}
-                                    {{--                                        </th>--}}
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Mã Đơn Hàng
+                                    </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Người Nhận
@@ -30,6 +30,10 @@
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Địa Chỉ
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Số Điện Thoại
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -61,10 +65,16 @@
                                             </div>
                                         </td>
                                         <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $order->code }}</p>
+                                        </td>
+                                        <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $order->receiver }}</p>
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $order->address }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $order->phone }}</p>
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $order->order_date }}</p>
@@ -84,7 +94,8 @@
                                                     <span class="badge badge-sm bg-gradient-info">Đã Duyệt</span>
                                                     @break
                                                 @case(2)
-                                                    <span class="badge badge-sm bg-gradient-warning">Đang Giao Hàng</span>
+                                                    <span
+                                                        class="badge badge-sm bg-gradient-warning">Đang Giao Hàng</span>
                                                     @break
                                                 @case(3)
                                                     <span class="badge badge-sm bg-gradient-success">Hoàn Thành</span>
@@ -93,7 +104,8 @@
                                                     <span class="badge badge-sm bg-gradient-danger">Hủy</span>
                                                     @break
                                                 @default
-                                                    <span class="badge badge-sm bg-gradient-faded-dark">Không Xác Định</span>
+                                                    <span
+                                                        class="badge badge-sm bg-gradient-faded-dark">Không Xác Định</span>
                                             @endswitch
                                         </td>
                                         <td class="align-middle">
@@ -172,24 +184,31 @@
                             if (data.success) {
                                 const statusCell = document.getElementById(`order-status-${orderId}`)
                                 let statusText;
+                                let statusClass;
+
                                 switch (data.status) {
                                     case 1:
                                         statusText = 'Đã Duyệt'
+                                        statusClass = 'badge badge-sm bg-gradient-info'
                                         break
                                     case 2:
                                         statusText = 'Đang Giao Hàng'
+                                        statusClass = 'badge badge-sm bg-gradient-warning'
                                         break
                                     case 3:
                                         statusText = 'Hoàn Thành'
+                                        statusClass = 'badge badge-sm bg-gradient-success'
                                         break
                                     case 4:
                                         statusText = 'Hủy'
+                                        statusClass = 'badge badge-sm bg-gradient-danger'
                                         break
                                     default:
                                         statusText = 'Không Xác Định'
+                                        statusClass = 'badge badge-sm bg-gradient-faded-dark'
                                         break
                                 }
-                                statusCell.innerHTML = `<p class="text-xs font-weight-bold mb-0">${statusText}</p>`
+                                statusCell.innerHTML = `<span class="${statusClass}">${statusText}</span>`
                                 if (orderStatus === 0) {
                                     button.innerText = 'Cập Nhật';
                                     button.setAttribute('data-status', 1);

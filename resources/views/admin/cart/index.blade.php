@@ -93,7 +93,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $order_detail->price }}đ</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $order_detail->unit_price }}đ</p>
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $order_detail->product_detail->size->size_name }}
@@ -128,7 +128,7 @@
                                         Tổng Tiền:
                                     </td>
                                     <td class="text-right text-bold text-lg" id="total-price">
-                                        {{ $totalPrice }}đ
+                                        {{ number_format($totalPrice) }}đ
                                     </td>
                                 </tr>
                                 </tfoot>
@@ -158,11 +158,11 @@
                             <input type="text" class="form-control" id="receiver" name="receiver"
                                    placeholder="Nhập Tên Người Nhận" required>
                         </div>
-                        {{--                        <div class="mb-3">--}}
-                        {{--                            <label for="phone" class="form-label">Số điện thoại: </label>--}}
-                        {{--                            <input type="tel" class="form-control" id="phone" name="phone"--}}
-                        {{--                                   placeholder="Nhập số điện thoại" required>--}}
-                        {{--                        </div>--}}
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Số Điện Thoại</label>
+                            <input type="tel" class="form-control" id="phone" name="phone"
+                                   placeholder="Nhập Số Điện Thoại" required>
+                        </div>
                         <div class="mb-3">
                             <label for="address" class="form-label">Địa Chỉ</label>
                             <input type="text" class="form-control" id="address" name="address"

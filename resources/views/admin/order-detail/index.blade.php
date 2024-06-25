@@ -78,7 +78,7 @@
                                                 <p class="text-xs font-weight-bold mb-0">{{ $order_detail->amount }}</p>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order_detail->price }}đ</p>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $order_detail->unit_price }}đ</p>
                                             </td>
                                             <td>
                                                 <p class="text-xs font-weight-bold mb-0">{{ $order_detail->productDetail->size->size_name }}-{{ $order_detail->productDetail->size->size_number }}</p>

@@ -35,7 +35,7 @@ class OrderController extends Controller
         $request->validate([
             'receiver' => 'required|string|max:255',
             'address' => 'required|string|max:255',
-//             'phone' => 'nullable|string|max:15',
+            'phone' => 'required|string|max:10',
             'user_id' => 'exists:users,id'
         ]);
 
@@ -55,10 +55,8 @@ class OrderController extends Controller
             $order = Order::create([
                 'receiver' => $request->input('receiver'),
                 'address' => $request->input('address'),
-                'status' => 0,
-                'order_date' => now(),
+                'phone' => $request->input('phone'),
                 'payment_method_id' => $request->input('payment_method_id'),
-//                'user_id' => auth()->id() // Lấy id người dùng hiện tại, bạn có thể sử dụng auth()->user()->id nếu sử dụng Laravel Sanctum
                 'user_id' => $request->input('user_id'),
             ]);
 
@@ -76,7 +74,7 @@ class OrderController extends Controller
                     'order_id' => $order->id,
                     'product_detail_id' => $item['id'],
                     'amount' => $item['quantity'],
-                    'price' => $item['price']
+                    'unit_price' => $item['attributes']['product_price']
                 ]);
 
                 // Trừ số lượng sản phẩm
@@ -104,7 +102,7 @@ class OrderController extends Controller
         $data = $request->validate([
             'receiver' => 'required|string|max:255',
             'address' => 'required|string|max:255',
-//             'phone' => 'nullable|string|max:15',
+            'phone' => 'nullable|string|max:10',
             'payment_method_id' => 'required|exists:payment_methods,id',
             // 'user_id' => auth()->user()->id
         ]);
@@ -131,8 +129,7 @@ class OrderController extends Controller
             $order = Order::create([
                 'receiver' => $request->input('receiver'),
                 'address' => $request->input('address'),
-                'status' => 0,
-                'order_date' => now(),
+                'phone' => $request->input('phone'),
                 'payment_method_id' => $request->input('payment_method_id'),
 //                'user_id' => auth()->id() // Lấy id người dùng hiện tại, bạn có thể sử dụng auth()->user()->id nếu sử dụng Laravel Sanctum
                 'user_id' => $request->input('user_id'),
@@ -152,7 +149,7 @@ class OrderController extends Controller
                     'order_id' => $order->id,
                     'product_detail_id' => $item['id'],
                     'amount' => $item['quantity'],
-                    'price' => $item['price']
+                    'unit_price' => $item['attributes']['product_price']
                 ]);
 
                 // Trừ số lượng sản phẩm

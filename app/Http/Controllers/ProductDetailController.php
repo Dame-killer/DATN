@@ -35,9 +35,7 @@ class ProductDetailController extends Controller
             'product_id' => 'required|exists:products,id',
             'size_id' => 'required|exists:sizes,id',
             'color_id' => 'required|exists:colors,id',
-            'price' => 'required|numeric',
-            'quantity' => 'required|integer',
-            'introduce' => 'nullable|string',
+            'quantity' => 'required|integer'
         ]);
 
         ProductDetail::create($request->all());
@@ -83,9 +81,7 @@ class ProductDetailController extends Controller
         $request->validate([
             'size_id' => 'required|exists:sizes,id',
             'color_id' => 'required|exists:colors,id',
-            'price' => 'required|numeric',
-            'quantity' => 'required|integer',
-            'introduce' => 'nullable|string',
+            'quantity' => 'required|integer'
         ]);
 
         $product_details = ProductDetail::findOrFail($product_detail);

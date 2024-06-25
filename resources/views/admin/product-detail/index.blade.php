@@ -30,15 +30,7 @@
                                     </th>
                                     <th
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Giá
-                                    </th>
-                                    <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Số Lượng
-                                    </th>
-                                    <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Mô Tả
                                     </th>
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
@@ -65,14 +57,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $product_detail->price }}
-                                                    đ</p>
-                                            </td>
-                                            <td>
                                                 <p class="text-xs font-weight-bold mb-0">{{ $product_detail->quantity }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $product_detail->introduce }}</p>
                                             </td>
                                             <td class="align-middle">
                                                 <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
@@ -80,9 +65,7 @@
                                                         data-id="{{ $product_detail->id }}"
                                                         data-size-id="{{ $product_detail->size->id }}"
                                                         data-color-id="{{ $product_detail->color->id }}"
-                                                        data-price="{{ $product_detail->price }}"
-                                                        data-quantity="{{ $product_detail->quantity }}"
-                                                        data-introduce="{{ $product_detail->introduce }}">
+                                                        data-quantity="{{ $product_detail->quantity }}">
                                                     Cập Nhật
                                                 </button>
                                                 <form
@@ -149,19 +132,9 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="price" class="form-label">Giá</label>
-                            <input type="number" class="form-control" id="price" name="price" placeholder="Nhập Giá"
-                                   required>
-                        </div>
-                        <div class="mb-3">
                             <label for="quantity" class="form-label">Số Lượng</label>
                             <input type="number" class="form-control" id="quantity" name="quantity"
                                    placeholder="Nhập Số Lượng" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="introduce" class="form-label">Mô Tả</label>
-                            <input type="text" class="form-control" id="introduce" name="introduce"
-                                   placeholder="Nhập Mô Tả" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -207,19 +180,9 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="editPrice" class="form-label">Giá</label>
-                            <input type="number" class="form-control" id="editPrice" name="price" placeholder="Nhập Giá"
-                                   required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editQuantity" class="form-label">Số Lượng</label>
-                            <input type="number" class="form-control" id="editQuantity" name="quantity"
+                            <label for="editProductDetailQuantity" class="form-label">Số Lượng</label>
+                            <input type="number" class="form-control" id="editProductDetailQuantity" name="quantity"
                                    placeholder="Nhập Số Lượng" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editIntroduce" class="form-label">Mô Tả</label>
-                            <input type="text" class="form-control" id="editIntroduce" name="introduce"
-                                   placeholder="Nhập Mô Tả" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -246,26 +209,20 @@
             var id = button.getAttribute('data-id')
             var size_id = button.getAttribute('data-size-id')
             var color_id = button.getAttribute('data-color-id')
-            var price = button.getAttribute('data-price')
             var quantity = button.getAttribute('data-quantity')
-            var introduce = button.getAttribute('data-introduce')
             var form = document.getElementById('editProductDetailForm')
 
             var modalTitle = editProductDetailModal.querySelector('.modal-title')
             var modalBodyInputId = editProductDetailModal.querySelector('#editProductDetailId')
             var modalBodyInputSizeId = editProductDetailModal.querySelector('#editSizeId')
             var modalBodyInputColorId = editProductDetailModal.querySelector('#editColorId')
-            var modalBodyInputPrice = editProductDetailModal.querySelector('#editPrice')
-            var modalBodyInputQuantity = editProductDetailModal.querySelector('#editQuantity')
-            var modalBodyInputIntroduce = editProductDetailModal.querySelector('#editIntroduce')
+            var modalBodyInputQuantity = editProductDetailModal.querySelector('#editProductDetailQuantity')
 
             modalTitle.textContent = 'Cập Nhật Sản Phẩm Chi Tiết: '
             modalBodyInputId.value = id
             modalBodyInputSizeId.value = size_id
             modalBodyInputColorId.value = color_id
-            modalBodyInputPrice.value = price
             modalBodyInputQuantity.value = quantity
-            modalBodyInputIntroduce.value = introduce
             form.action = "{{ route('product_details.update', '') }}/" + id
         })
     </script>

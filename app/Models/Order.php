@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Order extends Model
 {
@@ -17,7 +18,7 @@ class Order extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['receiver', 'address', 'order_date', 'status', 'user_id', 'payment_method_id'];
+    protected $fillable = ['receiver', 'address', 'phone', 'order_date', 'status', 'user_id', 'payment_method_id'];
 
     protected $table = 'orders';
 
@@ -35,5 +36,22 @@ class Order extends Model
     public function paymentMethod()
     {
         return $this->belongsTo(PaymentMethod::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($order) {
+            $order->code = self::generateUniqueCode();
+        });
+    }
+
+    private static function generateUniqueCode()
+    {
+        // Định dạng tùy chỉnh: ORD-DDMMYYYY-RANDOMSTRING
+        $date = date('dmY');
+        $randomString = strtoupper(Str::random(5));
+        return "ORD-{$date}-{$randomString}";
     }
 }

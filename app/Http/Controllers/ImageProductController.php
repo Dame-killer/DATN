@@ -34,7 +34,7 @@ class ImageProductController extends Controller
     {
         $request->validate([
             'product_detail_id' => 'required|exists:product_details,id',
-            'url' => 'required',
+            'url' => 'required|file|image',
         ]);
 
         $data = $request->all();
