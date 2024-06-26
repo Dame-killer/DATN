@@ -30,8 +30,11 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'parent_id' => 'nullable|exists:categories,id',
+            'name' => 'required|unique:categories,name',
+            'parent_id' => 'nullable|exists:categories,id'
+        ], [
+            'name.required' => 'Vui Lòng Nhập Tên Danh Mục!',
+            'name.unique' => 'Danh Mục Đã Tồn Tại! Vui Lòng Nhập Tên Khác!'
         ]);
 
         if ($request->parent_id) {
@@ -65,12 +68,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $category)
     {
+        $categories = Category::findOrFail($category);
+
         $request->validate([
-            'name' => 'required',
-            'parent_id' => 'nullable|exists:categories,id',
+            'name' => 'required|unique:categories,name,' . $categories->id,
+            'parent_id' => 'nullable|exists:categories,id'
+        ], [
+            'name.required' => 'Vui Lòng Nhập Tên Danh Mục!',
+            'name.unique' => 'Danh Mục Đã Tồn Tại! Vui Lòng Nhập Tên Khác!'
         ]);
 
-        $categories = Category::findOrFail($category);
         $categories->update($request->all());
 
         return redirect()->back()->with('success', 'Danh mục đã được cập nhật thành công!');

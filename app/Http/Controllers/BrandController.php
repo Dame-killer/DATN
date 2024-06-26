@@ -39,7 +39,10 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required'
+            'name' => 'required|unique:brands,name'
+        ], [
+            'name.required' => 'Vui Lòng Nhập Tên Thương Hiệu!',
+            'name.unique' => 'Thương Hiệu Đã Tồn Tại! Vui Lòng Nhập Tên Khác!'
         ]);
 
         Brand::create($request->all());
@@ -68,11 +71,15 @@ class BrandController extends Controller
      */
     public function update(Request $request, $brand)
     {
+        $brands = Brand::findOrFail($brand);
+
         $request->validate([
-            'name' => 'required'
+            'name' => 'required|unique:brands,name,' . $brands->id
+        ], [
+            'name.required' => 'Vui Lòng Nhập Tên Thương Hiệu!',
+            'name.unique' => 'Tên Thương Hiệu Đã Tồn Tại! Vui Lòng Nhập Tên Khác!'
         ]);
 
-        $brands = Brand::findOrFail($brand);
         $brands->update($request->all());
 
         return redirect()->back()->with('success', 'Thương hiệu đã được cập nhật thành công!');

@@ -26,7 +26,6 @@
                                 </form>
                             </div>
                         </div>
-
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -64,12 +63,11 @@
                                                     data-name="{{ $brand->name }}">
                                                 Cập Nhật
                                             </button>
-                                            <form action="{{ route('brands.destroy', $brand->id) }}" method="POST"
-                                                  style="display: inline;">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
-                                            </form>
+                                            <button type="button" class="btn btn-danger btn-sm mb-2"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#deleteBrandModal" data-id="{{ $brand->id }}">
+                                                Xóa
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -139,6 +137,30 @@
         </div>
     </div>
 
+    <!-- Delete Brand Modal -->
+    <div class="modal fade" id="deleteBrandModal" tabindex="-1" aria-labelledby="deleteBrandModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteBrandModalLabel">Xác Nhận Xóa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn xóa thương hiệu này không?
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ route('brands.destroy', '') }}" id="deleteBrandForm" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         var editBrandModal = document.getElementById('editBrandModal')
         editBrandModal.addEventListener('show.bs.modal', function (event) {
@@ -151,10 +173,20 @@
             var modalBodyInputId = editBrandModal.querySelector('#editBrandId')
             var modalBodyInputName = editBrandModal.querySelector('#editBrandName')
 
-            modalTitle.textContent = 'Cập nhật thương hiệu: ' + name
+            modalTitle.textContent = 'Cập Nhật Thương Hiệu: ' + name
             modalBodyInputId.value = id
             modalBodyInputName.value = name
             form.action = "{{ route('brands.update', '') }}/" + id
+        })
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var deleteBrandModal = document.getElementById('deleteBrandModal')
+            deleteBrandModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget
+                var id = button.getAttribute('data-id')
+                var form = document.getElementById('deleteBrandForm')
+                form.action = "{{ route('brands.destroy', '') }}/" + id
+            })
         })
     </script>
 @endsection
