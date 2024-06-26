@@ -36,17 +36,29 @@ class ProductController extends Controller
 }
 
 
-    public function indexCustomer()
-    {
+public function indexCustomer(Request $request)
+{
+    $query = Product::query();
+    $categories = Category::all();
+    $brands = Brand::all();
 
-        $products = Product::all();
-        $categories = Category::all();
-        $brands = Brand::all();
-        $colors = Color::all();
-        $sizes = Size::all();
-
-        return view('customer.product')->with(compact('products', 'categories', 'brands', 'colors', 'sizes'));
+    if ($request->has('category') && !empty($request->category)) {
+        $query->where('category_id', $request->category);
     }
+
+    if ($request->has('brand') && !empty($request->brand)) {
+        $query->where('brand_id', $request->brand);
+    }
+
+    if ($request->has('sort')) {
+        $sortOrder = $request->sort == 'asc' ? 'asc' : 'desc';
+        $query->orderBy('price', $sortOrder);
+    }
+
+    $products = $query->paginate(8);
+
+    return view('customer.product')->with(compact('products', 'categories', 'brands'));
+}
 
     /**
      * Show the form for creating a new resource.
