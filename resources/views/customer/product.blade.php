@@ -76,16 +76,15 @@
                     </div>
 
                     <div class="row isotope-grid">
-                        @forelse  ($products as $product)
-                            <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
-                                <!-- Block2 -->
-                                <div class="block2 card">
+                        @forelse ($products as $product)
+                            <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item">
+                                <div class="block2 card h-100 d-flex flex-column">
                                     <div class="block2-pic hov-img0">
                                         <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
                                             class="img-fluid card-img-top">
                                     </div>
-                                    <div class="block2-txt flex-w flex-t p-t-14 card-body">
-                                        <div class="block2-txt-child1 flex-col-l">
+                                    <div class="block2-txt flex-w flex-t p-t-14 card-body d-flex flex-column">
+                                        <div class="block2-txt-child1 flex-col-l mb-auto">
                                             <a href="{{ route('customer-product-detail', $product->id) }}"
                                                 class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 card-title">
                                                 {{ $product->name }}
@@ -103,6 +102,7 @@
                             </div>
                         @endforelse
                     </div>
+
                     <div class="d-flex justify-content-center mt-3">
                         {{ $products->appends(request()->query())->links() }}
                     </div>
@@ -152,13 +152,32 @@
         color: #888;
     }
 
-    .card-title {
-        color: #333;
-        text-decoration: none;
+    .isotope-grid {
+        display: flex;
+        flex-wrap: wrap;
     }
 
-    .card-title:hover {
-        color: #e74c3c;
+    .isotope-item {
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+        font-weight: bold;
     }
 
     .card-text {
@@ -166,6 +185,42 @@
         color: #333;
     }
 
+    .block2 {
+        border: 1px solid #e1e1e1;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .block2:hover {
+        transform: translateY(-5px);
+    }
+
+    .block2-pic img {
+        width: 100%;
+        height: auto;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .block2:hover .block2-pic img {
+        transform: scale(1.1);
+    }
+
+    .stext-104 {
+        color: #555;
+        text-decoration: none;
+    }
+
+    .stext-104:hover {
+        color: #000;
+    }
+
+    .stext-105 {
+        color: #999;
+    }
+
+
+    //
     .custom-header {
         background-color: rgba(255, 255, 255, 0.8);
         /* Màu nền trắng với độ trong suốt */
