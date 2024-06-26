@@ -11,10 +11,10 @@ class ColorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
         $query = Color::query();
-
+        $query->orderBy('id', 'desc');
         $colors = $query->paginate(5);
 
         return view ('admin.color.index')->with(compact('colors'));

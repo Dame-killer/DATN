@@ -10,10 +10,8 @@ class SizeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        // $sizes = Size::all();
-
         $query = Size::query();
         $query->orderBy('id', 'desc');
         $sizes = $query->paginate(5);

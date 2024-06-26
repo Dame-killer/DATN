@@ -8,7 +8,7 @@
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Quản Lý Kích Cỡ</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#addSizeModal">
+                                data-bs-target="#addSizeModal">
                             Thêm
                         </button>
                     </div>
@@ -16,46 +16,48 @@
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
                                 <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            STT
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Kích Cỡ
-                                        </th>
-                                        <th class="text-secondary opacity-7"></th>
-                                    </tr>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        STT
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Kích Cỡ
+                                    </th>
+                                    <th class="text-secondary opacity-7"></th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($sizes as $size)
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
-                                                    </div>
+                                @foreach ($sizes as $size)
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">
+                                                        {{ ($sizes->currentPage() - 1) * $sizes->perPage() + $loop->iteration }}
+                                                    </h6>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">
-                                                    {{ $size->size_name }}-{{ $size->size_number }}</p>
-                                            </td>
-                                            <td class="align-middle">
-                                                <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                {{ $size->size_name }}-{{ $size->size_number }}</p>
+                                        </td>
+                                        <td class="align-middle">
+                                            <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
                                                     data-bs-target="#editSizeModal" data-id="{{ $size->id }}"
                                                     data-name="{{ $size->size_name }}"
                                                     data-number="{{ $size->size_number }}">
-                                                    Cập Nhật
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-sm mb-2"
+                                                Cập Nhật
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-sm mb-2"
                                                     data-bs-toggle="modal" data-bs-target="#deleteSizeModal"
                                                     data-id="{{ $size->id }}">
-                                                    Xóa
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                                Xóa
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                             <div class="d-flex justify-content-center mt-3">
@@ -82,12 +84,12 @@
                         <div class="mb-3">
                             <label for="size_name" class="form-label">Tên Kích Cỡ</label>
                             <input type="text" class="form-control" id="size_name" name="size_name"
-                                placeholder="Nhập Tên Kích Cỡ" required>
+                                   placeholder="Nhập Tên Kích Cỡ" required>
                         </div>
                         <div class="mb-3">
                             <label for="size_number" class="form-label">Số Kích Cỡ</label>
                             <input type="number" class="form-control" id="size_number" name="size_number"
-                                placeholder="Nhập Số Kích Cỡ" required>
+                                   placeholder="Nhập Số Kích Cỡ" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -115,12 +117,12 @@
                         <div class="mb-3">
                             <label for="editSizeName" class="form-label">Tên Kích Cỡ</label>
                             <input type="text" class="form-control" id="editSizeName" name="size_name"
-                                placeholder="Nhập Tên Kích Cỡ" required>
+                                   placeholder="Nhập Tên Kích Cỡ" required>
                         </div>
                         <div class="mb-3">
                             <label for="editSizeNumber" class="form-label">Số Kích Cỡ</label>
                             <input type="number" class="form-control" id="editSizeNumber" name="size_number"
-                                placeholder="Nhập Số Kích Cỡ" required>
+                                   placeholder="Nhập Số Kích Cỡ" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -134,7 +136,7 @@
 
     <!-- Delete Size Modal -->
     <div class="modal fade" id="deleteSizeModal" tabindex="-1" aria-labelledby="deleteSizeModalLabel"
-        aria-hidden="true">
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -158,7 +160,7 @@
 
     <script>
         var editSizeModal = document.getElementById('editSizeModal')
-        editSizeModal.addEventListener('show.bs.modal', function(event) {
+        editSizeModal.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget
             var id = button.getAttribute('data-id')
             var size_name = button.getAttribute('data-name')
@@ -177,9 +179,9 @@
             form.action = "{{ route('sizes.update', '') }}/" + id
         })
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             var deleteSizeModal = document.getElementById('deleteSizeModal')
-            deleteSizeModal.addEventListener('show.bs.modal', function(event) {
+            deleteSizeModal.addEventListener('show.bs.modal', function (event) {
                 var button = event.relatedTarget
                 var id = button.getAttribute('data-id')
                 var form = document.getElementById('deleteSizeForm')

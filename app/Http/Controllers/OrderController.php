@@ -19,6 +19,7 @@ class OrderController extends Controller
         if ($request->has('search')) {
             $query->where('code', 'like', '%' . $request->search . '%');
         }
+
         $query->orderBy('id', 'desc');
         $orders = $query->paginate(5);
 

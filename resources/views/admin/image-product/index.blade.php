@@ -45,7 +45,9 @@
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
+                                                    <h6 class="mb-0 text-sm">
+                                                        {{ ($imageProducts->currentPage() - 1) * $imageProducts->perPage() + $loop->iteration }}
+                                                    </h6>
                                                 </div>
                                             </div>
                                         </td>
@@ -84,9 +86,9 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            {{-- <div class="d-flex justify-content-center mt-3">
-                                {{ $brands->appends(request()->query())->links() }}
-                            </div> --}}
+                            <div class="d-flex justify-content-center mt-3">
+                                {{ $imageProducts->appends(request()->query())->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>

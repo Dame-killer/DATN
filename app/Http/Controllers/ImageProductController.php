@@ -13,8 +13,10 @@ class ImageProductController extends Controller
      */
     public function index()
     {
-        $imageProducts = ImageProduct::with('productDetail.product', 'productDetail.color')->get();
+        $query = ImageProduct::with('productDetail.product', 'productDetail.color');
         $productDetails = ProductDetail::with('product', 'color')->get();
+        $query->orderBy('id', 'desc');
+        $imageProducts = $query->paginate(5);
 
         return view('admin.image-product.index', compact('imageProducts', 'productDetails'));
     }
