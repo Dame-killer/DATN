@@ -13,7 +13,7 @@
                                 Thêm
                             </button>
                         </div>
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col-md-4">
                                 <form class="d-flex align-items-center search-bar" method="GET"
                                     action="{{ route('brands.index') }}">
@@ -25,7 +25,7 @@
                                     </button>
                                 </form>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -39,7 +39,8 @@
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Tên Thương Hiệu
                                         </th>
-                                        <th class="text-secondary opacity-7"></th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Thao
+                                            tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>

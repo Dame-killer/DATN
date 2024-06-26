@@ -8,7 +8,7 @@
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Quản Lý Danh Mục</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#addCategoryModal">
+                            data-bs-target="#addCategoryModal">
                             Thêm
                         </button>
                     </div>
@@ -16,85 +16,88 @@
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
                                 <thead>
-                                <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        STT
-                                    </th>
-                                    <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Tên Danh Mục
-                                    </th>
-                                    <th class="text-secondary opacity-7"></th>
-                                </tr>
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            STT
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Tên Danh Mục
+                                        </th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Thao
+                                            tác</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($categories as $category)
-                                    <tr data-bs-toggle="collapse" data-bs-target="#children-{{ $category->id }}"
-                                        aria-expanded="false" aria-controls="children-{{ $category->id }}">
-                                        <td>
-                                            <div class="d-flex px-2 py-1">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
+                                    @foreach ($categories as $category)
+                                        <tr data-bs-toggle="collapse" data-bs-target="#children-{{ $category->id }}"
+                                            aria-expanded="false" aria-controls="children-{{ $category->id }}">
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $category->name }}</p>
-                                        </td>
-                                        <td class="align-middle">
-                                            <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $category->name }}</p>
+                                            </td>
+                                            <td class="align-middle">
+                                                <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
                                                     data-bs-target="#editCategoryModal" data-id="{{ $category->id }}"
                                                     data-name="{{ $category->name }}">
-                                                Cập Nhật
-                                            </button>
-                                            <button class="btn btn-danger btn-sm mb-2" data-bs-toggle="modal"
+                                                    Cập Nhật
+                                                </button>
+                                                <button class="btn btn-danger btn-sm mb-2" data-bs-toggle="modal"
                                                     data-bs-target="#deleteCategoryModal" data-id="{{ $category->id }}">
-                                                Xóa
-                                            </button>
-                                            <button class="btn btn-success btn-sm mb-2" data-bs-toggle="modal"
-                                                    data-bs-target="#addCategoryModal"
-                                                    data-parent-id="{{ $category->id }}">
-                                                Thêm Danh Mục Con
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr class="collapse" id="children-{{ $category->id }}">
-                                        <td colspan="3">
-                                            <table class="table align-items-center mb-0">
-                                                <tbody>
-                                                @foreach ($category->children as $child)
-                                                    <tr>
-                                                        <td>
-                                                            <div class="d-flex px-2 py-1">
-                                                                <div class="d-flex flex-column justify-content-center">
-                                                                    <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <p class="text-xs font-weight-bold mb-0">{{ $child->name }}</p>
-                                                        </td>
-                                                        <td class="align-middle">
-                                                            <button class="btn btn-warning btn-sm mb-2"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#editCategoryModal"
-                                                                    data-id="{{ $child->id }}"
-                                                                    data-name="{{ $child->name }}">
-                                                                Cập Nhật
-                                                            </button>
-                                                            <button class="btn btn-danger btn-sm mb-2"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#deleteCategoryModal"
-                                                                    data-id="{{ $child->id }}">Xóa
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                                    Xóa
+                                                </button>
+                                                <button class="btn btn-success btn-sm mb-2" data-bs-toggle="modal"
+                                                    data-bs-target="#addCategoryModal" data-parent-id="{{ $category->id }}">
+                                                    Thêm Danh Mục Con
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr class="collapse" id="children-{{ $category->id }}">
+                                            <td colspan="3">
+                                                <table class="table align-items-center mb-0">
+                                                    <tbody>
+                                                        @foreach ($category->children as $child)
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="d-flex px-2 py-1">
+                                                                        <div
+                                                                            class="d-flex flex-column justify-content-center">
+                                                                            <h6 class="mb-0 text-sm">{{ $loop->iteration }}
+                                                                            </h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <p class="text-xs font-weight-bold mb-0">
+                                                                        {{ $child->name }}</p>
+                                                                </td>
+                                                                <td class="align-middle">
+                                                                    <button class="btn btn-warning btn-sm mb-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#editCategoryModal"
+                                                                        data-id="{{ $child->id }}"
+                                                                        data-name="{{ $child->name }}">
+                                                                        Cập Nhật
+                                                                    </button>
+                                                                    <button class="btn btn-danger btn-sm mb-2"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#deleteCategoryModal"
+                                                                        data-id="{{ $child->id }}">Xóa
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -105,8 +108,7 @@
     </div>
 
     <!-- Add Category Modal -->
-    <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel"
-         aria-hidden="true">
+    <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -114,14 +116,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('categories.store') }}" method="POST" autocomplete="off"
-                          id="addCategoryForm">
+                    <form action="{{ route('categories.store') }}" method="POST" autocomplete="off" id="addCategoryForm">
                         @csrf
                         <input type="hidden" id="parentCategoryId" name="parent_id">
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên Danh Mục</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nhập Tên Danh Mục" required>
+                                placeholder="Nhập Tên Danh Mục" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -135,7 +136,7 @@
 
     <!-- Edit Category Modal -->
     <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -144,14 +145,14 @@
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('categories.update', '') }}" method="POST" autocomplete="off"
-                          id="editCategoryForm">
+                        id="editCategoryForm">
                         @csrf
                         @method('PUT')
                         <input type="hidden" id="editCategoryId" name="id">
                         <div class="mb-3">
                             <label for="editCategoryName" class="form-label">Tên Danh Mục</label>
                             <input type="text" class="form-control" id="editCategoryName" name="name"
-                                   placeholder="Nhập Tên Danh Mục" required>
+                                placeholder="Nhập Tên Danh Mục" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -165,7 +166,7 @@
 
     <!-- Delete Category Modal -->
     <div class="modal fade" id="deleteCategoryModal" tabindex="-1" aria-labelledby="deleteCategoryModalLabel"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -189,7 +190,7 @@
 
     <script>
         var editCategoryModal = document.getElementById('editCategoryModal')
-        editCategoryModal.addEventListener('show.bs.modal', function (event) {
+        editCategoryModal.addEventListener('show.bs.modal', function(event) {
             var button = event.relatedTarget
             var id = button.getAttribute('data-id')
             var name = button.getAttribute('data-name')
@@ -206,7 +207,7 @@
         })
 
         var addCategoryModal = document.getElementById('addCategoryModal')
-        addCategoryModal.addEventListener('show.bs.modal', function (event) {
+        addCategoryModal.addEventListener('show.bs.modal', function(event) {
             var button = event.relatedTarget
             var parentId = button ? button.getAttribute('data-parent-id') : null
             var form = document.getElementById('addCategoryForm')
@@ -218,9 +219,9 @@
             form.action = "{{ route('categories.store') }}"
         })
 
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const deleteCategoryModal = document.getElementById('deleteCategoryModal')
-            deleteCategoryModal.addEventListener('show.bs.modal', function (event) {
+            deleteCategoryModal.addEventListener('show.bs.modal', function(event) {
                 const button = event.relatedTarget
                 const id = button.getAttribute('data-id')
                 const form = document.getElementById('deleteCategoryForm')
