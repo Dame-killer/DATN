@@ -34,6 +34,12 @@ class PaymentMethodController extends Controller
             'name' => 'required'
         ]);
 
+        $existing = PaymentMethod::where('name', $request->name)->first();
+
+        if ($existing) {
+            return redirect()->back()->withErrors(['error' => 'Phương thức thanh toán đã tồn tại!']);
+        }
+
         PaymentMethod::create($request->all());
 
         return redirect()->back()->with('success', 'Phương thức thanh toán đã được thêm thành công!');
@@ -65,6 +71,13 @@ class PaymentMethodController extends Controller
         ]);
 
         $payment_methods = PaymentMethod::findOrFail($payment_method);
+
+        $existing = PaymentMethod::where('name', $request->name)->where('id', '!=', $payment_method)->first();
+
+        if ($existing) {
+            return redirect()->back()->withErrors(['error' => 'Phương thức thanh toán đã tồn tại!']);
+        }
+
         $payment_methods->update($request->all());
 
         return redirect()->back()->with('success', 'Phương thức thanh toán đã được cập nhật thành công!');

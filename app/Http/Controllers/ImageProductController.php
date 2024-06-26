@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\ImageProduct;
 use App\Models\ProductDetail;
 use Illuminate\Http\Request;
@@ -42,8 +43,16 @@ class ImageProductController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('url')) {
-            $imagePath = $request->file('url')->store('images', 'public');
-            $data['url'] = $imagePath;
+            $filePath = $request->file('url')->store('images', 'public');
+            $data['url'] = $filePath;
+        }
+
+        $existing = ImageProduct::where('product_detail_id', $request->product_detail_id)
+            ->where('url', $filePath)
+            ->first();
+
+        if ($existing) {
+            return redirect()->back()->withErrors(['error' => 'Hình ảnh sản phẩm đã tồn tại!']);
         }
 
         ImageProduct::create($data);
@@ -83,6 +92,15 @@ class ImageProductController extends Controller
         if ($request->hasFile('url')) {
             $filePath = $request->file('url')->store('images', 'public');
             $imageProducts->url = $filePath;
+        }
+
+        $existing = ImageProduct::where('product_detail_id', $request->product_detail_id)
+            ->where('url', $filePath)
+            ->where('id', '!=', $imageProduct->id)
+            ->first();
+
+        if ($existing) {
+            return redirect()->back()->withErrors(['error' => 'Hình ảnh sản phẩm đã tồn tại!']);
         }
 
         $imageProducts->update($data);

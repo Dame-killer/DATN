@@ -37,6 +37,15 @@ class SizeController extends Controller
             'size_number' => 'required',
         ]);
 
+        // Kiểm tra trùng lặp
+        $exists = Size::where('size_name', $request->size_name)
+            ->where('size_number', $request->size_number)
+            ->exists();
+
+        if ($exists) {
+            return redirect()->back()->withErrors(['error' => 'Kích cỡ với tên và số này đã tồn tại!']);
+        }
+
         Size::create($request->all());
 
         return redirect()->back()->with('success', 'Kích cỡ đã được thêm thành công!');
@@ -69,6 +78,17 @@ class SizeController extends Controller
         ]);
 
         $sizes = Size::findOrFail($size);
+
+        // Kiểm tra trùng lặp, bỏ qua bản ghi hiện tại
+        $exists = Size::where('size_name', $request->size_name)
+            ->where('size_number', $request->size_number)
+            ->where('id', '!=', $sizes->id)
+            ->exists();
+
+        if ($exists) {
+            return redirect()->back()->withErrors(['error' => 'Kích cỡ với tên và số này đã tồn tại!']);
+        }
+
         $sizes->update($request->all());
 
         return redirect()->back()->with('success', 'Kích cỡ đã được cập nhật thành công!');

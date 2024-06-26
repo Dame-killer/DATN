@@ -79,14 +79,15 @@ class UserController extends Controller
      */
     public function update(Request $request, $user)
     {
+        $users = User::findOrFail($user);
+
         $data = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user,
+            'email' => 'required|string|email|max:255|unique:users,email,' . $users->id,
             'phone' => 'required|string|max:15',
             'role' => 'required|integer'
         ]);
 
-        $users = User::findOrFail($user);
         $users->update($data);
 
         return redirect()->back()->with('success', 'Thông tin người dùng đã được cập nhật thành công!');
