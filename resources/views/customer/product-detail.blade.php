@@ -75,22 +75,38 @@
                         <h4 class="mtext-105 cl2 js-name-detail p-b-14">
                             {{ $products->name }}
                         </h4>
-                        @foreach ($product_details as $product_detail)
-                            <div class="product-detail">
-                                <span class="mtext-106 cl2 product-price">
-                                    {{ $product_detail->price }} đ
-                                </span>
-
-                                <p class="stext-102 cl3 p-t-23 product-introduce">
-                                    {{ $product_detail->introduce }}
-                                </p>
-                                Size - Màu sắc:
-                                <div class="p-t-33 product-size-color">
-                                    <button class="btn btn-primary"> {{ $product_detail->size->size_name }}</button>
-                                    <button class="btn btn-primary">{{ $product_detail->color->name }}</button>
-                                </div>
+                        <div class="product-detail">
+                            Size:
+                            <div class="p-t-33 product-size">
+                                @foreach ($sizes as $size)
+                                    <button class="btn btn-primary size-button" data-size="{{ $size->size_name }}">
+                                        {{ $size->size_name }}
+                                    </button>
+                                @endforeach
                             </div>
-                        @endforeach
+
+                            Màu sắc:
+                            <div class="p-t-33 product-color">
+                                @foreach ($colors as $color)
+                                    <button class="btn color-button" data-color="{{ $color->name }}"
+                                        style="background-color: {{ $color->code }};">
+                                        {{-- {{ $color->name }} --}}
+                                    </button>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <!-- Hidden element to store product details for JavaScript use -->
+                        <div id="product-details" style="display: none;">
+                            @foreach ($product_details as $product_detail)
+                                <div class="product-detail-item" data-size="{{ $product_detail->size->size_name }}"
+                                    data-color="{{ $product_detail->color->name }}">
+                                </div>
+                            @endforeach
+                        </div>
+
+
+
                         <div class="flex-w flex-r-m p-b-10">
                             <div class="size-204 flex-w flex-m respon6-next">
                                 <div class="wrap-num-product flex-w m-r-20 m-tb-10">
@@ -628,6 +644,58 @@
         max-height: 100px;
         /* Đảm bảo header đè lên các phần tử khác */
     }
+    ///
+    .product-detail {
+        margin-bottom: 20px;
+    }
+
+    .product-size,
+    .product-color {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .size-button,
+    .color-button {
+        padding: 15px 25px;
+        /* Increase padding for larger buttons */
+        border-radius: 5px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        /* Increase font size */
+    }
+
+    .size-button.active,
+    .color-button.active {
+        border: 2px solid #333;
+    }
+
+    .color-button {
+        color: #fff;
+        /* Default text color for color buttons */
+        width: 60px;
+        /* Fixed width for color buttons */
+        height: 60px;
+        /* Fixed height for color buttons */
+        text-align: center;
+        line-height: 30px;
+        /* Center text vertically */
+    }
+
+    .color-button.disabled {
+        background-color: #e0e0e0;
+        color: #a0a0a0;
+        pointer-events: none;
+    }
+
+
+    /////////
+
 
     .bread-crumb a.stext-109,
     .bread-crumb span.stext-109 {
@@ -683,3 +751,51 @@
         background-color: #555;
     }
 </style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sizeButtons = document.querySelectorAll('.size-button');
+        const colorButtons = document.querySelectorAll('.color-button');
+        const productDetails = document.querySelectorAll('.product-detail-item');
+
+        sizeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Clear active states
+                sizeButtons.forEach(btn => btn.classList.remove('active'));
+                colorButtons.forEach(btn => btn.classList.remove('active'));
+                colorButtons.forEach(btn => btn.classList.add('disabled'));
+
+                // Set active state for selected size
+                this.classList.add('active');
+
+                // Get selected size
+                const selectedSize = this.getAttribute('data-size');
+
+                // Filter available colors based on selected size
+                const availableColors = new Set();
+                productDetails.forEach(detail => {
+                    if (detail.getAttribute('data-size') === selectedSize) {
+                        availableColors.add(detail.getAttribute('data-color'));
+                    }
+                });
+
+                // Enable available color buttons
+                colorButtons.forEach(button => {
+                    if (availableColors.has(button.getAttribute('data-color'))) {
+                        button.classList.remove('disabled');
+                    }
+                });
+            });
+        });
+
+        colorButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                if (!this.classList.contains('disabled')) {
+                    // Clear active states
+                    colorButtons.forEach(btn => btn.classList.remove('active'));
+                    // Set active state for selected color
+                    this.classList.add('active');
+                }
+            });
+        });
+    });
+</script>

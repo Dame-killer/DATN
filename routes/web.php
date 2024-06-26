@@ -26,13 +26,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
- Route::get('/', function () {
-     return redirect()->route('login');
- });
+Route::get('/', function () {
+    if (Auth::check()) {
+        if (Auth::user()->role == 1) {
+            return redirect()->route('admin-home');
+        } else {
+            return redirect()->route('customer-home');
+        }
+    } else {
+        return redirect()->route('customer-home'); // Nếu chưa đăng nhập, mặc định chuyển hướng đến trang customer-home
+    }
+});
+
 
 Auth::routes();
 //ADMIN
-Route::middleware('auth', 'web')->group(function () {
+Route::middleware('auth', 'web', 'role:1')->group(function () {
     Route::get('/admin/home', function () { return view('admin/home'); })->name('admin-home');
     Route::get('/admin/order', [OrderController::class, 'index'])->name('admin-order');
     Route::get('/admin/order/{order_detail}', [OrderDetailController::class, 'show'])->name('admin-order-detail');
@@ -77,4 +86,7 @@ Route::post('/customer/product/{product_detail}', [OrderDetailController::class,
 Route::post('/cart', [OrderController::class, 'storeCustomer'])->name('customer-cart-store');
 Route::delete('/customer/cart/{product_detail}', [OrderDetailController::class, 'removeFromCart'])->name('customer-cart-remove');
 Route::post('/cart/updated', [OrderDetailController::class, 'updateQuantity'])->name('customer-cart-updateQuantity');
-Route::get('/account', function () { return view('customer/account'); })->name('customer-account');
+
+Route::middleware(['auth', 'web', 'role:0'])->group(function () {
+    Route::get('/account', function () { return view('customer/account'); })->name('customer-account');
+});

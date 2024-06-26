@@ -79,21 +79,22 @@
                         @foreach ($products as $product)
                             <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
                                 <!-- Block2 -->
-                                <div class="block2">
+                                <div class="block2 card">
                                     <div class="block2-pic hov-img0">
                                         <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
-                                            class="img-fluid">
+                                            class="img-fluid card-img-top">
                                     </div>
-
-                                    <div class="block2-txt flex-w flex-t p-t-14">
-                                        <div class="block2-txt-child1 flex-col-l ">
+                                    <div class="block2-txt flex-w flex-t p-t-14 card-body">
+                                        <div class="block2-txt-child1 flex-col-l">
                                             <a href="{{ route('customer-product-detail', $product->id) }}"
-                                                class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                                class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6 card-title">
                                                 {{ $product->name }}
                                             </a>
+                                            <span class="stext-105 cl3 card-text">
+                                                {{ $product->price }} đ
+                                            </span>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         @endforeach
@@ -113,6 +114,59 @@
 @endsection
 
 <style>
+    .block2 {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+    }
+
+    .block2:hover {
+        transform: scale(1.05);
+    }
+
+    .block2-pic {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .block2-pic img {
+        transition: transform 0.3s ease;
+    }
+
+    .block2-pic:hover img {
+        transform: scale(1.1);
+    }
+
+    .block2-txt {
+        padding: 15px;
+        text-align: center;
+    }
+
+    .stext-104 {
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+
+    .stext-105 {
+        font-size: 1rem;
+        color: #888;
+    }
+
+    .card-title {
+        color: #333;
+        text-decoration: none;
+    }
+
+    .card-title:hover {
+        color: #e74c3c;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        color: #333;
+    }
+
     .custom-header {
         background-color: rgba(255, 255, 255, 0.8);
         /* Màu nền trắng với độ trong suốt */

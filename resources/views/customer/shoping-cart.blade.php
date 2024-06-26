@@ -75,7 +75,8 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order_detail->price }}đ</p>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $order_detail->unit_price }}đ
+                                                </p>
                                             </td>
                                             <td>
                                                 <p class="text-xs font-weight-bold mb-0">
@@ -140,7 +141,7 @@
     </div>
 
     <div class="modal fade" id="addOrderModal" tabindex="-1" aria-labelledby="addOrderModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered"> <!-- Add modal-dialog-centered class here -->
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addOrderModalLabel">Thêm Thông Tin Đơn Hàng</h5>
@@ -154,11 +155,11 @@
                             <input type="text" class="form-control" id="receiver" name="receiver"
                                 placeholder="Nhập Tên Người Nhận" required>
                         </div>
-                        {{--                        <div class="mb-3"> --}}
-                        {{--                            <label for="phone" class="form-label">Số điện thoại: </label> --}}
-                        {{--                            <input type="tel" class="form-control" id="phone" name="phone" --}}
-                        {{--                                   placeholder="Nhập số điện thoại" required> --}}
-                        {{--                        </div> --}}
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Số Điện Thoại</label>
+                            <input type="tel" class="form-control" id="phone" name="phone"
+                                placeholder="Nhập Số Điện Thoại" required>
+                        </div>
                         <div class="mb-3">
                             <label for="address" class="form-label">Địa Chỉ</label>
                             <input type="text" class="form-control" id="address" name="address"
@@ -186,6 +187,7 @@
             </div>
         </div>
     </div>
+
 
     <script>
         document.querySelectorAll('.update-quantity').forEach(button => {
@@ -225,6 +227,19 @@
     </script>
 @endsection
 <style>
+    .header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        /* Example z-index value for header */
+    }
+
+    .modal {
+        z-index: 1050;
+        /* Bootstrap default z-index for modals is usually around this value */
+    }
+
     .bread-crumb a.stext-109,
     .bread-crumb span.stext-109 {
         font-size: 18px;

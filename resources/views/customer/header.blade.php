@@ -66,6 +66,10 @@
     </div>
 </header>
 <style>
+    .header {
+        z-index: 1000;
+    }
+
     /* Tăng cỡ chữ */
     .main-menu a {
         font-size: 18px;
