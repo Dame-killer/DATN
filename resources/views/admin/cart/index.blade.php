@@ -93,8 +93,9 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ number_format($order_detail->unit_price) }}
-                                                đ</p>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                {{ number_format($order_detail->unit_price) }}đ
+                                            </p>
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $order_detail->product_detail->size->size_name }}
