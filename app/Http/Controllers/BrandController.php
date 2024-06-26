@@ -35,11 +35,14 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:brands,name'
-        ], [
-            'name.required' => 'Vui Lòng Nhập Tên Thương Hiệu!',
-            'name.unique' => 'Thương Hiệu Đã Tồn Tại! Vui Lòng Nhập Tên Khác!'
+            'name' => 'required'
         ]);
+
+        $existing = Brand::where('name', $request->name)->first();
+
+        if ($existing) {
+            return redirect()->back()->withErrors(['error' => 'Thương hiệu đã tồn tại!']);
+        }
 
         Brand::create($request->all());
 
@@ -67,14 +70,17 @@ class BrandController extends Controller
      */
     public function update(Request $request, $brand)
     {
+        $request->validate([
+            'name' => 'required'
+        ]);
+
         $brands = Brand::findOrFail($brand);
 
-        $request->validate([
-            'name' => 'required|unique:brands,name,' . $brands->id
-        ], [
-            'name.required' => 'Vui Lòng Nhập Tên Thương Hiệu!',
-            'name.unique' => 'Tên Thương Hiệu Đã Tồn Tại! Vui Lòng Nhập Tên Khác!'
-        ]);
+        $existing = Brand::where('name', $request->name)->where('id', '!=', $brand)->first();
+
+        if ($existing) {
+            return redirect()->back()->withErrors(['error' => 'Thương hiệu đã tồn tại!']);
+        }
 
         $brands->update($request->all());
 

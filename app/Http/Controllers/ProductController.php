@@ -82,6 +82,11 @@ public function indexCustomer(Request $request)
             'brand_id' => 'required|exists:brands,id',
         ]);
 
+        $existing = Product::where('name', $request->name)->first();
+        if ($existing) {
+            return redirect()->back()->withErrors(['error' => 'Tên sản phẩm đã tồn tại!']);
+        }
+
         $data = $request->all();
 
         if ($request->hasFile('image')) {
@@ -126,6 +131,11 @@ public function indexCustomer(Request $request)
 
         $products = Product::findOrFail($product);
         $data = $request->only(['name', 'price', 'introduce', 'category_id', 'brand_id']);
+
+        $existing = Product::where('name', $request->name)->where('id', '!=', $product)->first();
+        if ($existing) {
+            return redirect()->back()->withErrors(['error' => 'Tên sản phẩm đã tồn tại!']);
+        }
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images', 'public');

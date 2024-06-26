@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -32,12 +33,24 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:categories,name',
+            'name' => 'required',
             'parent_id' => 'nullable|exists:categories,id'
-        ], [
-            'name.required' => 'Vui Lòng Nhập Tên Danh Mục!',
-            'name.unique' => 'Danh Mục Đã Tồn Tại! Vui Lòng Nhập Tên Khác!'
         ]);
+
+        // Kiểm tra trùng lặp tên
+        $exists = Category::where('name', $request->name)
+            ->where(function ($query) use ($request) {
+                if ($request->parent_id) {
+                    $query->where('parent_id', $request->parent_id);
+                } else {
+                    $query->whereNull('parent_id');
+                }
+            })
+            ->exists();
+
+        if ($exists) {
+            return redirect()->back()->withErrors(['error' => 'Danh mục đã tồn tại!']);
+        }
 
         if ($request->parent_id) {
             $parent = Category::findOrFail($request->parent_id);
@@ -70,15 +83,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $category)
     {
+        $request->validate([
+            'name' => 'required',
+            'parent_id' => 'nullable|exists:categories,id'
+        ]);
+
         $categories = Category::findOrFail($category);
 
-        $request->validate([
-            'name' => 'required|unique:categories,name,' . $categories->id,
-            'parent_id' => 'nullable|exists:categories,id'
-        ], [
-            'name.required' => 'Vui Lòng Nhập Tên Danh Mục!',
-            'name.unique' => 'Danh Mục Đã Tồn Tại! Vui Lòng Nhập Tên Khác!'
-        ]);
+        $existing = Category::where('name', $request->name)->where('id', '!=', $category)->first();
+
+        if ($existing) {
+            return redirect()->back()->withErrors(['error' => 'Danh mục đã tồn tại!']);
+        }
 
         $categories->update($request->all());
 

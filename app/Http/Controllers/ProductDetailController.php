@@ -38,6 +38,16 @@ class ProductDetailController extends Controller
             'quantity' => 'required|integer'
         ]);
 
+        // Kiểm tra trùng lặp
+        $exists = ProductDetail::where('product_id', $request->product_id)
+            ->where('size_id', $request->size_id)
+            ->where('color_id', $request->color_id)
+            ->exists();
+
+        if ($exists) {
+            return redirect()->back()->withErrors(['error' => 'Sản phẩm chi tiết với kích thước và màu sắc này đã tồn tại!']);
+        }
+
         ProductDetail::create($request->all());
 
         return redirect()->back()->with('success', 'Sản phẩm chi tiết đã được thêm thành công!');
@@ -55,6 +65,7 @@ class ProductDetailController extends Controller
 
         return view('admin.product-detail.index', compact('products', 'sizes', 'colors', 'product_details'));
     }
+
     public function showCustomer($id)
     {
         $products = Product::findOrFail($id);
@@ -85,6 +96,18 @@ class ProductDetailController extends Controller
         ]);
 
         $product_details = ProductDetail::findOrFail($product_detail);
+
+        // Kiểm tra trùng lặp, bỏ qua bản ghi hiện tại
+        $exists = ProductDetail::where('product_id', $product_details->product_id)
+            ->where('size_id', $request->size_id)
+            ->where('color_id', $request->color_id)
+            ->where('id', '!=', $product_details->id)
+            ->exists();
+
+        if ($exists) {
+            return redirect()->back()->withErrors(['error' => 'Sản phẩm chi tiết với kích thước và màu sắc này đã tồn tại!']);
+        }
+
         $product_details->update($request->all());
 
         return redirect()->back()->with('success', 'Sản phẩm chi tiết đã được cập nhật thành công!');
