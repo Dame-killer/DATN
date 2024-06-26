@@ -74,8 +74,9 @@
                                                     data-phone="{{ $user->phone }}" data-role="{{ $user->role }}">
                                                 Cập Nhật
                                             </button>
-                                            <button class="btn btn-danger btn-sm mb-2" data-bs-toggle="modal"
-                                                    data-bs-target="#deleteEmployeeModal" data-id="{{ $user->id }}">
+                                            <button type="button" class="btn btn-danger btn-sm mb-2"
+                                                    data-bs-toggle="modal" data-bs-target="#deleteEmployeeModal"
+                                                    data-id="{{ $user->id }}">
                                                 Xóa
                                             </button>
                                         </td>
@@ -188,7 +189,8 @@
     </div>
 
     <!-- Delete Employee Modal -->
-    <div class="modal fade" id="deleteEmployeeModal" tabindex="-1" aria-labelledby="deleteEmployeeModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteEmployeeModal" tabindex="-1" aria-labelledby="deleteEmployeeModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -238,11 +240,11 @@
         })
 
         document.addEventListener('DOMContentLoaded', function () {
-            const deleteEmployeeModal = document.getElementById('deleteEmployeeModal')
+            var deleteEmployeeModal = document.getElementById('deleteEmployeeModal')
             deleteEmployeeModal.addEventListener('show.bs.modal', function (event) {
-                const button = event.relatedTarget
-                const id = button.getAttribute('data-id')
-                const form = document.getElementById('deleteEmployeeForm')
+                var button = event.relatedTarget
+                var id = button.getAttribute('data-id')
+                var form = document.getElementById('deleteEmployeeForm')
                 form.action = "{{ route('users.destroy', '') }}/" + id
             })
         })

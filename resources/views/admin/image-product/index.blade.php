@@ -228,7 +228,7 @@
             reader.onload = function (e) {
                 previewImage.src = e.target.result
                 previewImage.style.display = 'block'
-            };
+            }
 
             if (file) {
                 reader.readAsDataURL(file)

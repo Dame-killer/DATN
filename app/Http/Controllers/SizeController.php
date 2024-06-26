@@ -10,9 +10,13 @@ class SizeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $sizes = Size::all();
+        // $sizes = Size::all();
+
+        $query = Size::query();
+
+        $sizes = $query->paginate(5);
 
         return view ('admin.size.index')->with(compact('sizes'));
     }

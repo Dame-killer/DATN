@@ -270,7 +270,7 @@
                                         {{ $product->name }}
                                     </a>
                                     <span class="stext-105 cl3">
-                                        {{ $product->price }} đ
+                                        {{ number_format($product->price) }} đ
                                     </span>
                                 </div>
                             </div>

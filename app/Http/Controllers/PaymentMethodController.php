@@ -10,9 +10,13 @@ class PaymentMethodController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $payment_methods = PaymentMethod::all();
+        // $payment_methods = PaymentMethod::all();
+
+        $query = PaymentMethod::query();
+
+        $payment_methods = $query->paginate(5);
 
         return view ('admin.pay.index')->with(compact('payment_methods'));
     }
