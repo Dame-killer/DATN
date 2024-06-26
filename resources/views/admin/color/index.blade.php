@@ -8,7 +8,7 @@
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Quản Lý Màu Sắc</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#addColorModal">
+                            data-bs-target="#addColorModal">
                             Thêm
                         </button>
                     </div>
@@ -16,54 +16,57 @@
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
                                 <thead>
-                                <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        STT
-                                    </th>
-                                    <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Tên Màu Sắc
-                                    </th>
-                                    <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Màu Sắc
-                                    </th>
-                                    <th class="text-secondary opacity-7"></th>
-                                </tr>
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            STT
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Tên Màu Sắc
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Màu Sắc
+                                        </th>
+                                        <th class="text-secondary opacity-7"></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($colors as $color)
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex px-2 py-1">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
+                                    @foreach ($colors as $color)
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $color->name }}</p>
-                                        </td>
-                                        <td>
-                                            <div
-                                                style="width: 20px; height: 20px; background-color: {{ $color->code }};">
-                                            </div>
-                                        </td>
-                                        <td class="align-middle">
-                                            <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $color->name }}</p>
+                                            </td>
+                                            <td>
+                                                <div
+                                                    style="width: 20px; height: 20px; background-color: {{ $color->code }};">
+                                                </div>
+                                            </td>
+                                            <td class="align-middle">
+                                                <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
                                                     data-bs-target="#editColorModal" data-id="{{ $color->id }}"
                                                     data-name="{{ $color->name }}" data-code="{{ $color->code }}">
-                                                Cập Nhật
-                                            </button>
-                                            <button class="btn btn-danger btn-sm mb-2" data-bs-toggle="modal"
+                                                    Cập Nhật
+                                                </button>
+                                                <button class="btn btn-danger btn-sm mb-2" data-bs-toggle="modal"
                                                     data-bs-target="#deleteColorModal" data-id="{{ $color->id }}">
-                                                Xóa
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                                    Xóa
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
+                            <div class="d-flex justify-content-center mt-3">
+                                {{ $colors->appends(request()->query())->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -85,7 +88,7 @@
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên Màu Sắc</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nhập Tên Màu Sắc" required>
+                                placeholder="Nhập Tên Màu Sắc" required>
                         </div>
                         <div class="mb-3">
                             <label for="code" class="form-label">Mã Màu</label>
@@ -117,7 +120,7 @@
                         <div class="mb-3">
                             <label for="editColorName" class="form-label">Tên Màu Sắc</label>
                             <input type="text" class="form-control" id="editColorName" name="name"
-                                   placeholder="Nhập Tên Màu Sắc" required>
+                                placeholder="Nhập Tên Màu Sắc" required>
                         </div>
                         <div class="mb-3">
                             <label for="editColorCode" class="form-label">Mã Màu</label>
@@ -134,7 +137,8 @@
     </div>
 
     <!-- Delete Color Modal -->
-    <div class="modal fade" id="deleteColorModal" tabindex="-1" aria-labelledby="deleteColorModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteColorModal" tabindex="-1" aria-labelledby="deleteColorModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -158,7 +162,7 @@
 
     <script>
         var editColorModal = document.getElementById('editColorModal')
-        editColorModal.addEventListener('show.bs.modal', function (event) {
+        editColorModal.addEventListener('show.bs.modal', function(event) {
             var button = event.relatedTarget
             var id = button.getAttribute('data-id')
             var name = button.getAttribute('data-name')
@@ -177,9 +181,9 @@
             form.action = "{{ route('colors.update', '') }}/" + id
         })
 
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const deleteColorModal = document.getElementById('deleteColorModal')
-            deleteColorModal.addEventListener('show.bs.modal', function (event) {
+            deleteColorModal.addEventListener('show.bs.modal', function(event) {
                 const button = event.relatedTarget
                 const id = button.getAttribute('data-id')
                 const form = document.getElementById('deleteColorForm')

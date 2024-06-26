@@ -24,7 +24,8 @@
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Kích Cỡ
                                         </th>
-                                        <th class="text-secondary opacity-7">Thao tác</th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Thao
+                                            tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -41,8 +42,8 @@
                                                 <p class="text-xs font-weight-bold mb-0">
                                                     {{ $size->size_name }}-{{ $size->size_number }}</p>
                                             </td>
-                                            <td class="align-middle">
-                                                <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
+                                            <td class="d-flex align-middle">
+                                                <button class="btn btn-warning btn-sm mb-2 m-1" data-bs-toggle="modal"
                                                     data-bs-target="#editSizeModal" data-id="{{ $size->id }}"
                                                     data-name="{{ $size->size_name }}"
                                                     data-number="{{ $size->size_number }}">
@@ -51,13 +52,17 @@
                                                 <form action="{{ route('sizes.destroy', $size->id) }}" method="POST">
                                                     @method('DELETE')
                                                     @csrf
-                                                    <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
+                                                    <button class="btn btn-danger btn-sm mb-2 m-1"
+                                                        type="submit">Xóa</button>
                                                 </form>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="d-flex justify-content-center mt-3">
+                                {{ $sizes->appends(request()->query())->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>
