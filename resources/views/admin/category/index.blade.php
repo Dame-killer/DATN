@@ -35,7 +35,7 @@
                                             <td>
                                                 <div class="d-flex px-2 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
+                                                        {{ ($categories->currentPage() - 1) * $categories->perPage() + $loop->iteration }}
                                                     </div>
                                                 </div>
                                             </td>
@@ -100,6 +100,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="d-flex justify-content-center mt-3">
+                                {{ $categories->appends(request()->query())->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>

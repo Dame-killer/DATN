@@ -11,9 +11,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::with('children')->whereNull('parent_id')->get();
+        $query = Category::with('children')->whereNull('parent_id');
+        $query->orderBy('id', 'desc');
+        $categories = $query->paginate(2);
 
-        return view ('admin.category.index')->with(compact('categories'));
+        return view('admin.category.index', compact('categories'));
     }
 
     /**

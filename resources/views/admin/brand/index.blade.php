@@ -13,19 +13,6 @@
                                 Thêm
                             </button>
                         </div>
-                        {{-- <div class="row">
-                            <div class="col-md-4">
-                                <form class="d-flex align-items-center search-bar" method="GET"
-                                    action="{{ route('brands.index') }}">
-                                    <input class="form-control form-control-sm me-2 custom-input" type="search"
-                                        name="search" placeholder="Nhập Từ Khóa" aria-label="Tìm kiếm"
-                                        value="{{ request('search') }}">
-                                    <button class="btn btn-outline-success btn-sm custom-button" type="submit">
-                                        Tìm Kiếm
-                                    </button>
-                                </form>
-                            </div>
-                        </div> --}}
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
