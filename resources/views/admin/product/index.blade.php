@@ -73,7 +73,7 @@
                                                  style="width: 50px; height: 50px;">
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $product->price }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ number_format($product->price) }}đ</p>
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $product->introduce }}</p>

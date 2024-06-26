@@ -78,7 +78,7 @@
                                                 <p class="text-xs font-weight-bold mb-0">{{ $order_detail->amount }}</p>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order_detail->unit_price }}đ</p>
+                                                <p class="text-xs font-weight-bold mb-0">{{ number_format($order_detail->unit_price) }}đ</p>
                                             </td>
                                             <td>
                                                 <p class="text-xs font-weight-bold mb-0">{{ $order_detail->productDetail->size->size_name }}-{{ $order_detail->productDetail->size->size_number }}</p>
@@ -90,7 +90,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order_detail->totalPricePerProduct }}đ</p>
+                                                <p class="text-xs font-weight-bold mb-0">{{ number_format($order_detail->totalPricePerProduct) }}đ</p>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -103,7 +103,7 @@
                                         Tổng Tiền:
                                     </td>
                                     <td class="text-right text-bold text-lg" id="total-price">
-                                        {{ $totalPrice }}đ
+                                        {{ number_format($totalPrice) }}đ
                                     </td>
                                 </tr>
                                 </tfoot>

@@ -265,8 +265,8 @@ class OrderDetailController extends Controller
         return response()->json([
             'status' => 'success',
             'amount' => $updatedItem['amount'],
-            'totalPricePerProduct' => $updatedItem['totalPricePerProduct'],
-            'totalPrice' => $totalPrice
+            'totalPricePerProduct' => number_format($updatedItem['totalPricePerProduct']),
+            'totalPrice' => number_format($totalPrice)
         ]);
     }
 }

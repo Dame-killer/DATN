@@ -93,7 +93,8 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $order_detail->unit_price }}đ</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ number_format($order_detail->unit_price) }}
+                                                đ</p>
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $order_detail->product_detail->size->size_name }}
@@ -106,8 +107,9 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0 total-price-per-product">{{ $order_detail->totalPricePerProduct }}
-                                                đ</p>
+                                            <p class="text-xs font-weight-bold mb-0 total-price-per-product">
+                                                {{ number_format($order_detail->totalPricePerProduct) }}đ
+                                            </p>
                                         </td>
                                         <td class="text-right">
                                             <form action="{{ route('cart.remove', $order_detail->product_detail->id) }}"
