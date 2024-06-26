@@ -54,37 +54,40 @@
                                             </th>
                                             <th
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Mã Đơn Hàng
+                                                Mã Sản Phẩm
                                             </th>
                                             <th
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Người Nhận
-                                            </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Địa Chỉ
-                                            </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Số Điện Thoại
-                                            </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Ngày Đặt Hàng
-                                            </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Phương Thức Thanh Toán
+                                                Tên Sản Phẩm
                                             </th>
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Trạng Thái
+                                                Hình Ảnh
                                             </th>
-                                            <th class="text-secondary opacity-7"></th>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Số Lượng
+                                            </th>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Giá
+                                            </th>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Kích Cỡ
+                                            </th>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Màu Sắc
+                                            </th>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Tổng
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($orders as $order)
+                                        @foreach ($order_details as $order_detail)
                                             <tr>
                                                 <td>
                                                     <div class="d-flex px-2 py-1">
@@ -94,68 +97,57 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0">{{ $order->code }}</p>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">{{ $order->receiver }}</p>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">{{ $order->address }}</p>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">{{ $order->phone }}</p>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">{{ $order->order_date }}</p>
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        {{ $order_detail->productDetail->product->code }}</p>
                                                 </td>
                                                 <td>
                                                     <p class="text-xs font-weight-bold mb-0">
-                                                        {{ $order->paymentMethod->name }}</p>
+                                                        {{ $order_detail->productDetail->product->name }}</p>
                                                 </td>
-                                                <td class="align-middle text-center" id="order-status-{{ $order->id }}">
-                                                    @switch($order->status)
-                                                        @case(0)
-                                                            <span class="badge badge-sm bg-gradient-secondary">Chưa Duyệt</span>
-                                                        @break
-
-                                                        @case(1)
-                                                            <span class="badge badge-sm bg-gradient-info">Đã Duyệt</span>
-                                                        @break
-
-                                                        @case(2)
-                                                            <span class="badge badge-sm bg-gradient-warning">Đang Giao Hàng</span>
-                                                        @break
-
-                                                        @case(3)
-                                                            <span class="badge badge-sm bg-gradient-success">Hoàn Thành</span>
-                                                        @break
-
-                                                        @case(4)
-                                                            <span class="badge badge-sm bg-gradient-danger">Hủy</span>
-                                                        @break
-
-                                                        @default
-                                                            <span class="badge badge-sm bg-gradient-faded-dark">Không Xác
-                                                                Định</span>
-                                                    @endswitch
+                                                <td class="text-center">
+                                                    <img src="{{ asset('storage/' . $order_detail->productDetail->product->image) }}"
+                                                        alt="{{ $order_detail->productDetail->product->name }}"
+                                                        class="img-fluid" style="width: 50px; height: 50px;">
                                                 </td>
-                                                <td class="align-middle">
-                                                    <a href="{{ route('customer-order-detail', $order->id) }}"
-                                                        class="btn btn-info btn-sm mb-2">
-                                                        Chi Tiết
-                                                    </a>
-                                                    <button class="btn btn-warning btn-sm mb-2 approve-order-btn"
-                                                        data-id="{{ $order->id }}" data-status="{{ $order->status }}">
-                                                        @if ($order->status == 0)
-                                                            Duyệt
-                                                        @else
-                                                            Cập Nhật
-                                                        @endif
-                                                    </button>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ $order_detail->amount }}
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        {{ $order_detail->unit_price }}đ</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        {{ $order_detail->productDetail->size->size_name }}-{{ $order_detail->productDetail->size->size_number }}
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        {{ $order_detail->productDetail->color->name }}</p>
+                                                    <div
+                                                        style="width: 20px; height: 20px; background-color: {{ $order_detail->productDetail->color->code }};">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        {{ $order_detail->totalPricePerProduct }}đ</p>
                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="6"></td>
+                                            <td
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Tổng Tiền:
+                                            </td>
+                                            <td class="text-right text-bold text-lg" id="total-price">
+                                                {{ $totalPrice }}đ
+                                            </td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -211,18 +203,6 @@
         font-size: 12px;
     }
 
-    /* CSS cho dải màu đen với tiêu đề */
-    .bg-dark {
-        background-color: #343a40;
-        padding: 10px 0;
-        margin: 2px;
-    }
-
-    .bg-dark h1 {
-        font-size: 24px;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
 
     /* CSS cho box chứa thông tin tài khoản */
     .box {

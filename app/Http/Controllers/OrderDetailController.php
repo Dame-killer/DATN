@@ -141,6 +141,30 @@ class OrderDetailController extends Controller
         return view('admin.order-detail.index', compact('orders', 'products', 'sizes', 'colors', 'product_details', 'order_details', 'totalPrice'));
     }
 
+    public function showCustomer($id)
+    {
+        $orders = Order::findOrFail($id);
+        $products = Product::all();
+        $sizes = Size::all();
+        $colors = Color::all();
+        $product_details = ProductDetail::all();
+        $order_details = OrderDetail::with('productDetail', 'productDetail.product', 'productDetail.size', 'productDetail.color')->where('order_id', $id)->get();
+
+        // Kiểm tra nếu không có chi tiết đơn hàng
+        if ($order_details->isEmpty()) {
+            throw new \Exception('Không tìm thấy chi tiết đơn hàng!');
+        }
+
+        // Tính tổng giá từng sản phẩm và tổng giá tất cả các sản phẩm
+        $totalPrice = 0;
+        foreach ($order_details as $order_detail) {
+            $order_detail->totalPricePerProduct = $order_detail->unit_price * $order_detail->amount;
+            $totalPrice += $order_detail->totalPricePerProduct;
+        }
+
+        return view('customer.account-detail', compact('orders', 'products', 'sizes', 'colors', 'product_details', 'order_details', 'totalPrice'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

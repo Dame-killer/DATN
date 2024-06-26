@@ -19,6 +19,14 @@ class OrderController extends Controller
         return view ('admin.order.index')->with(compact('orders'));
     }
 
+    public function indexCustomer()
+    {
+
+        $orders = Order::with('paymentMethod')->where('user_id', auth()->user()->id)->get();
+
+        return view ('customer.account')->with(compact('orders'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */

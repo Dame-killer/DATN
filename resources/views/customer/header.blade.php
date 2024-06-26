@@ -53,13 +53,17 @@
                                     <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
                                 @endif
                                 <ul class="sub-menu">
-                                    <li><a href="{{ route('customer-account') }}">Tài khoản</a></li>
-                                    <li><a href="{{ route('customer-login') }}">Đăng nhập</a></li>
-                                    <li><a href="{{ route('customer-logout') }}">Đăng xuất</a></li>
+                                    @if (Auth::check())
+                                        <li><a href="{{ route('customer-account') }}">Tài khoản</a></li>
+                                        <li><a href="{{ route('customer-logout') }}">Đăng xuất</a></li>
+                                    @else
+                                        <li><a href="{{ route('customer-login') }}">Đăng nhập</a></li>
+                                    @endif
                                 </ul>
                             </li>
                         </ul>
                     </div>
+
                 </div>
             </nav>
         </div>
