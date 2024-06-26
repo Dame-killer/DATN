@@ -74,11 +74,10 @@
                                                     data-phone="{{ $user->phone }}" data-role="{{ $user->role }}">
                                                 Cập Nhật
                                             </button>
-                                            <form action="{{ route('users.destroy', $user->id) }}" method="POST">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
-                                            </form>
+                                            <button class="btn btn-danger btn-sm mb-2" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteEmployeeModal" data-id="{{ $user->id }}">
+                                                Xóa
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -188,6 +187,29 @@
         </div>
     </div>
 
+    <!-- Delete Employee Modal -->
+    <div class="modal fade" id="deleteEmployeeModal" tabindex="-1" aria-labelledby="deleteEmployeeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteEmployeeModalLabel">Xác Nhận Xóa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn xóa người dùng này không?
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ route('users.destroy', '') }}" id="deleteEmployeeForm" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         var editEmployeeModal = document.getElementById('editEmployeeModal')
         editEmployeeModal.addEventListener('show.bs.modal', function (event) {
@@ -213,6 +235,16 @@
             modalBodyInputPhone.value = phone
             modalBodySelectRole.value = role
             form.action = "{{ route('users.update', '') }}/" + id
+        })
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteEmployeeModal = document.getElementById('deleteEmployeeModal')
+            deleteEmployeeModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget
+                const id = button.getAttribute('data-id')
+                const form = document.getElementById('deleteEmployeeForm')
+                form.action = "{{ route('users.destroy', '') }}/" + id
+            })
         })
     </script>
 @endsection

@@ -68,13 +68,12 @@
                                                         data-quantity="{{ $product_detail->quantity }}">
                                                     Cập Nhật
                                                 </button>
-                                                <form
-                                                    action="{{ route('product_details.destroy', $product_detail->id) }}"
-                                                    method="POST">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
-                                                </form>
+                                                <button type="button" class="btn btn-danger btn-sm mb-2"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#deleteProductDetailModal"
+                                                        data-id="{{ $product_detail->id }}">
+                                                    Xóa
+                                                </button>
                                                 <form action="{{ route('cart.add', $product_detail->id) }}"
                                                       method="POST">
                                                     @csrf
@@ -194,6 +193,30 @@
         </div>
     </div>
 
+    <!-- Delete Product Detail Modal -->
+    <div class="modal fade" id="deleteProductDetailModal" tabindex="-1" aria-labelledby="deleteProductDetailModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteProductDetailModalLabel">Xác Nhận Xóa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn xóa sản phẩm chi tiết này không?
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ route('product_details.destroy', '') }}" id="deleteProductDetailForm" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         var addProductDetailModal = document.getElementById('addProductDetailModal')
         addProductDetailModal.addEventListener('show.bs.modal', function (event) {
@@ -224,6 +247,16 @@
             modalBodyInputColorId.value = color_id
             modalBodyInputQuantity.value = quantity
             form.action = "{{ route('product_details.update', '') }}/" + id
+        })
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var deleteProductDetailModal = document.getElementById('deleteProductDetailModal')
+            deleteProductDetailModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget
+                var id = button.getAttribute('data-id')
+                var form = document.getElementById('deleteProductDetailForm')
+                form.action = "{{ route('product_details.destroy', '') }}/" + id
+            })
         })
     </script>
 @endsection

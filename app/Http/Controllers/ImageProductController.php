@@ -96,6 +96,6 @@ class ImageProductController extends Controller
         $imageProduct = ImageProduct::findOrFail($id);
         $imageProduct->delete();
 
-        return redirect()->route('image_products.index')->with('success', 'Hình ảnh sản phẩm đã được xóa thành công.');
+        return redirect()->back()->with('success', 'Hình ảnh sản phẩm đã được xóa thành công!');
     }
 }

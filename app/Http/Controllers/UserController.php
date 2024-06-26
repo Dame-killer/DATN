@@ -47,7 +47,7 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'phone' => 'required|string|max:15',
-            'role' => 'required|integer'
+            'role' => 'required|integer|in:1,2'
         ]);
 
         // Hash the password before saving

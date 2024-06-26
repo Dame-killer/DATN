@@ -47,12 +47,12 @@
                                                     data-name="{{ $payment_method->name }}">
                                                 Cập Nhật
                                             </button>
-                                            <form action="{{ route('payment_methods.destroy', $payment_method->id) }}"
-                                                  method="POST">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
-                                            </form>
+                                            <button type="button" class="btn btn-danger btn-sm mb-2"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#deletePaymentMethodModal"
+                                                    data-id="{{ $payment_method->id }}">
+                                                Xóa
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -122,6 +122,30 @@
         </div>
     </div>
 
+    <!-- Delete Payment Method Modal -->
+    <div class="modal fade" id="deletePaymentMethodModal" tabindex="-1" aria-labelledby="deletePaymentMethodModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deletePaymentMethodModalLabel">Xác Nhận Xóa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn xóa phương thức thanh toán này không?
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ route('payment_methods.destroy', '') }}" id="deletePaymentMethodForm" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         var editPaymentMethodModal = document.getElementById('editPaymentMethodModal')
         editPaymentMethodModal.addEventListener('show.bs.modal', function (event) {
@@ -138,6 +162,16 @@
             modalBodyInputId.value = id
             modalBodyInputName.value = name
             form.action = "{{ route('payment_methods.update', '') }}/" + id
+        })
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var deletePaymentMethodModal = document.getElementById('deletePaymentMethodModal')
+            deletePaymentMethodModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget
+                var id = button.getAttribute('data-id')
+                var form = document.getElementById('deletePaymentMethodForm')
+                form.action = "{{ route('payment_methods.destroy', '') }}/" + id
+            })
         })
     </script>
 @endsection

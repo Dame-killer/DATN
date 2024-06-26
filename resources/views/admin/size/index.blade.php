@@ -48,11 +48,11 @@
                                                     data-number="{{ $size->size_number }}">
                                                 Cập Nhật
                                             </button>
-                                            <form action="{{ route('sizes.destroy', $size->id) }}" method="POST">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
-                                            </form>
+                                            <button type="button" class="btn btn-danger btn-sm mb-2"
+                                                    data-bs-toggle="modal" data-bs-target="#deleteSizeModal"
+                                                    data-id="{{ $size->id }}">
+                                                Xóa
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -129,6 +129,30 @@
         </div>
     </div>
 
+    <!-- Delete Size Modal -->
+    <div class="modal fade" id="deleteSizeModal" tabindex="-1" aria-labelledby="deleteSizeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteSizeModalLabel">Xác Nhận Xóa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn xóa kích cỡ này không?
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ route('sizes.destroy', '') }}" id="deleteSizeForm" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         var editSizeModal = document.getElementById('editSizeModal')
         editSizeModal.addEventListener('show.bs.modal', function (event) {
@@ -148,6 +172,16 @@
             modalBodyInputName.value = size_name
             modalBodyInputNumber.value = size_number
             form.action = "{{ route('sizes.update', '') }}/" + id
+        })
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var deleteSizeModal = document.getElementById('deleteSizeModal')
+            deleteSizeModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget
+                var id = button.getAttribute('data-id')
+                var form = document.getElementById('deleteSizeForm')
+                form.action = "{{ route('sizes.destroy', '') }}/" + id
+            })
         })
     </script>
 @endsection
