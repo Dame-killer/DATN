@@ -88,5 +88,6 @@ Route::delete('/customer/cart/{product_detail}', [OrderDetailController::class, 
 Route::post('/cart/updated', [OrderDetailController::class, 'updateQuantity'])->name('customer-cart-updateQuantity');
 
 Route::middleware(['auth', 'web', 'role:0'])->group(function () {
-    Route::get('/account', function () { return view('customer/account'); })->name('customer-account');
+    Route::get('/account',  [OrderController::class, 'indexCustomer'])->name('customer-account');
+    Route::get('/account/{order_detail}', [OrderDetailController::class, 'showCustomer'])->name('customer-order-detail');
 });
