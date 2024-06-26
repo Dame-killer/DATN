@@ -50,12 +50,12 @@ class HomeController extends Controller
             $order_detail->product_detail->product->name = $item['name'];
             $order_detail->product_detail->product->image = $item['attributes']['product_image'];
             $order_detail->amount = $item['quantity'];
-            $order_detail->price = $item['price'];
+            $order_detail->unit_price = $item['attributes']['product_price'];
             $order_detail->product_detail->size->size_name = $item['attributes']['size_name'];
             $order_detail->product_detail->size->size_number = $item['attributes']['size_number'];
             $order_detail->product_detail->color->name = $item['attributes']['color_name'];
             $order_detail->product_detail->color->code = $item['attributes']['color_code'];
-            $order_detail->totalPricePerProduct = $order_detail->price * $order_detail->amount;
+            $order_detail->totalPricePerProduct = $order_detail->unit_price * $order_detail->amount;
 
             $order_details[] = $order_detail;
             $totalPrice += $order_detail->totalPricePerProduct;

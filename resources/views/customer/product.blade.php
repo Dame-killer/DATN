@@ -90,7 +90,7 @@
                                                 {{ $product->name }}
                                             </a>
                                             <span class="stext-105 cl3 card-text">
-                                                {{ $product->price }} đ
+                                                {{ number_format($product->price) }}đ
                                             </span>
                                         </div>
                                     </div>
@@ -218,7 +218,6 @@
     .stext-105 {
         color: #999;
     }
-
 
     //
     .custom-header {
