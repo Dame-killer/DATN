@@ -15,7 +15,7 @@ class SizeController extends Controller
         // $sizes = Size::all();
 
         $query = Size::query();
-
+        $query->orderBy('id', 'desc');
         $sizes = $query->paginate(5);
 
         return view ('admin.size.index')->with(compact('sizes'));

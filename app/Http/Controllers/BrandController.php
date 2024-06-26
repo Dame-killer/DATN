@@ -15,11 +15,10 @@ class BrandController extends Controller
     public function index(Request $request)
     {
         $query = Brand::query();
-
         if ($request->has('search')) {
             $query->where('name', 'like', '%' . $request->search . '%');
         }
-
+        $query->orderBy('id', 'desc');
         $brands = $query->paginate(5); // Adjust the number to the number of items per page you want
 
         return view('admin.brand.index', compact('brands'));

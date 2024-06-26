@@ -28,7 +28,7 @@ class ProductController extends Controller
               ->orWhere('code', 'like', '%' . $search . '%');
         });
     }
-
+    $query->orderBy('id', 'desc');
     $products = $query->paginate(5);
 
     return view('admin.product.index')->with(compact('products', 'categories', 'brands'));

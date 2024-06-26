@@ -15,7 +15,7 @@ class PaymentMethodController extends Controller
         // $payment_methods = PaymentMethod::all();
 
         $query = PaymentMethod::query();
-
+        $query->orderBy('id', 'desc');
         $payment_methods = $query->paginate(5);
 
         return view ('admin.pay.index')->with(compact('payment_methods'));
