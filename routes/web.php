@@ -47,6 +47,7 @@ Route::middleware('auth', 'web', 'role:1')->group(function () {
     Route::get('/admin/order/{order_detail}', [OrderDetailController::class, 'show'])->name('admin-order-detail');
     Route::post('/admin/order/quick-approve', [OrderController::class, 'quickApprove'])->name('admin-orders-quick-approve');
     Route::post('/admin/order/{id}', [OrderController::class, 'approveOrder'])->name('admin-orders-approve');
+    Route::post('/admin/order/{id}', [OrderController::class, 'cancelOrder'])->name('admin-order-cancel');
     Route::get('/admin/cart', [OrderDetailController::class, 'cart'])->name('admin-cart');
     Route::post('/admin/product/{product_detail}', [OrderDetailController::class, 'addToCart'])->name('cart.add');
     Route::delete('/admin/cart/{product_detail}', [OrderDetailController::class, 'removeFromCart'])->name('cart.remove');

@@ -226,7 +226,7 @@ class OrderController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function approveOrder(Request $request, $id)
+    public function approveOrder($id)
     {
         $order = Order::findOrFail($id);
 
@@ -237,5 +237,14 @@ class OrderController extends Controller
         }
 
         return response()->json(['success' => false, 'message' => 'Trạng thái đơn hàng không thể tăng thêm.']);
+    }
+
+    public function cancelOrder($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->status = 4;
+        $order->save();
+
+        return redirect()->back()->with(['success' => 'Đơn hàng đã được hủy thành công!']);
     }
 }
