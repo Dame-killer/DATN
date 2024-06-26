@@ -12,9 +12,15 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::with('paymentMethod')->get();
+        $query = Order::query();
+
+        if ($request->has('search')) {
+            $query->where('code', 'like', '%' . $request->search . '%');
+        }
+
+        $orders = $query->paginate(5);
 
         return view ('admin.order.index')->with(compact('orders'));
     }

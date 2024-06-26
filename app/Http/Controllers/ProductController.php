@@ -15,14 +15,25 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $products = Product::all();
-        $categories = Category::all();
-        $brands = Brand::all();
+    public function index(Request $request)
+{
+    $query = Product::query();
+    $categories = Category::all();
+    $brands = Brand::all();
 
-        return view('admin.product.index')->with(compact('products', 'categories', 'brands'));
+    if ($request->has('search')) {
+        $search = $request->search;
+        $query->where(function($q) use ($search) {
+            $q->where('name', 'like', '%' . $search . '%')
+              ->orWhere('code', 'like', '%' . $search . '%');
+        });
     }
+
+    $products = $query->paginate(5);
+
+    return view('admin.product.index')->with(compact('products', 'categories', 'brands'));
+}
+
 
     public function indexCustomer()
     {
