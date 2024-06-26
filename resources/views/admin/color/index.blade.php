@@ -55,11 +55,10 @@
                                                     data-name="{{ $color->name }}" data-code="{{ $color->code }}">
                                                 Cập Nhật
                                             </button>
-                                            <form action="{{ route('colors.destroy', $color->id) }}" method="POST">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
-                                            </form>
+                                            <button class="btn btn-danger btn-sm mb-2" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteColorModal" data-id="{{ $color->id }}">
+                                                Xóa
+                                            </button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -134,6 +133,29 @@
         </div>
     </div>
 
+    <!-- Delete Color Modal -->
+    <div class="modal fade" id="deleteColorModal" tabindex="-1" aria-labelledby="deleteColorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteColorModalLabel">Xác Nhận Xóa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn xóa màu sắc này không?
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ route('colors.destroy', '') }}" id="deleteColorForm" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         var editColorModal = document.getElementById('editColorModal')
         editColorModal.addEventListener('show.bs.modal', function (event) {
@@ -153,6 +175,16 @@
             modalBodyInputName.value = name
             modalBodyInputCode.value = code
             form.action = "{{ route('colors.update', '') }}/" + id
+        })
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteColorModal = document.getElementById('deleteColorModal')
+            deleteColorModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget
+                const id = button.getAttribute('data-id')
+                const form = document.getElementById('deleteColorForm')
+                form.action = "{{ route('colors.destroy', '') }}/" + id
+            })
         })
     </script>
 @endsection
