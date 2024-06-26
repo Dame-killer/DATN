@@ -47,12 +47,10 @@
                                                     data-name="{{ $category->name }}">
                                                 Cập Nhật
                                             </button>
-                                            <form action="{{ route('categories.destroy', $category->id) }}"
-                                                  method="POST" style="display: inline-block;">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button class="btn btn-danger btn-sm" type="submit">Xóa</button>
-                                            </form>
+                                            <button class="btn btn-danger btn-sm mb-2" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteCategoryModal" data-id="{{ $category->id }}">
+                                                Xóa
+                                            </button>
                                             <button class="btn btn-success btn-sm mb-2" data-bs-toggle="modal"
                                                     data-bs-target="#addCategoryModal"
                                                     data-parent-id="{{ $category->id }}">
@@ -84,14 +82,11 @@
                                                                     data-name="{{ $child->name }}">
                                                                 Cập Nhật
                                                             </button>
-                                                            <form action="{{ route('categories.destroy', $child->id) }}"
-                                                                  method="POST" style="display: inline-block;">
-                                                                @method('DELETE')
-                                                                @csrf
-                                                                <button class="btn btn-danger btn-sm" type="submit">
-                                                                    Xóa
-                                                                </button>
-                                                            </form>
+                                                            <button class="btn btn-danger btn-sm mb-2"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#deleteCategoryModal"
+                                                                    data-id="{{ $child->id }}">Xóa
+                                                            </button>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -168,6 +163,30 @@
         </div>
     </div>
 
+    <!-- Delete Category Modal -->
+    <div class="modal fade" id="deleteCategoryModal" tabindex="-1" aria-labelledby="deleteCategoryModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteCategoryModalLabel">Xác Nhận Xóa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn xóa danh mục này không?
+                </div>
+                <div class="modal-footer">
+                    <form action="{{ route('categories.destroy', '') }}" id="deleteCategoryForm" method="POST">
+                        @method('DELETE')
+                        @csrf
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         var editCategoryModal = document.getElementById('editCategoryModal')
         editCategoryModal.addEventListener('show.bs.modal', function (event) {
@@ -197,6 +216,16 @@
             modalTitle.textContent = parentId ? 'Thêm Danh Mục Con' : 'Thêm Danh Mục'
             modalBodyInputParentId.value = parentId || ''
             form.action = "{{ route('categories.store') }}"
+        })
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteCategoryModal = document.getElementById('deleteCategoryModal')
+            deleteCategoryModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget
+                const id = button.getAttribute('data-id')
+                const form = document.getElementById('deleteCategoryForm')
+                form.action = "{{ route('categories.destroy', '') }}/" + id
+            })
         })
     </script>
 @endsection

@@ -89,7 +89,7 @@ class CategoryController extends Controller
     public function destroy($category)
     {
         $categories = Category::findOrFail($category);
-        $category->children()->delete();
+        $categories->children()->delete();
         $categories->delete();
 
         return redirect()->back()->with('success', 'Danh mục đã được xóa thành công!');
