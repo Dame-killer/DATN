@@ -6,7 +6,9 @@ use App\Models\Color;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\Size;
+use App\Models\ImageProduct;
 use Illuminate\Http\Request;
+
 
 class ProductDetailController extends Controller
 {
@@ -67,14 +69,22 @@ class ProductDetailController extends Controller
     }
 
     public function showCustomer($id)
-    {
-        $products = Product::findOrFail($id);
-        $sizes = Size::all();
-        $colors = Color::all();
-        $product_details = ProductDetail::with('product', 'size', 'color')->where('product_id', $id)->get();
+{
+    $products = Product::findOrFail($id);
+    $sizes = Size::all();
+    $colors = Color::all();
+    // Lấy các chi tiết sản phẩm kèm theo thông tin về size và color
+    $product_details = ProductDetail::with('size', 'color')
+                                    ->where('product_id', $id)
+                                    ->get();
 
-        return view('customer.product-detail', compact('products', 'sizes', 'colors', 'product_details'));
-    }
+    // Lấy các hình ảnh sản phẩm dựa trên các chi tiết sản phẩm
+    $imageProducts = ImageProduct::whereIn('product_detail_id', $product_details->pluck('id')->toArray())
+                                  ->get();
+
+    return view('customer.product-detail', compact('products', 'sizes', 'colors', 'product_details', 'imageProducts'));
+}
+
 
     /**
      * Show the form for editing the specified resource.

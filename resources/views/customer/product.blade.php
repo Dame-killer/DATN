@@ -221,6 +221,12 @@
     }
 
     /* Hiển thị sản phẩm */
+    .isotope-grid .block2-pic img {
+        width: 350px;
+        height: 400px;
+        object-fit: cover;
+    }
+
     .card {
         border: none;
         /* Bỏ khung */

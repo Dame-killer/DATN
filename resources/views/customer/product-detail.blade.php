@@ -33,7 +33,17 @@
                             <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
 
                             <div class="slick3 gallery-lb">
-                                <div class="item-slick3" data-thumb="images/product-detail-01.jpg">
+                                @foreach ($imageProducts as $imageProduct)
+                                    <div class="item-slick3" data-thumb="{{ asset('storage/' . $imageProduct->url) }}"
+                                        data-product-detail-id="{{ $imageProduct->product_detail_id }}">
+                                        <div class="wrap-pic-w pos-relative">
+                                            <img src="{{ asset('storage/' . $imageProduct->url) }}" alt="Product Image"
+                                                class="product-image" style="display: none;">
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                                {{-- <div class="item-slick3" data-thumb="images/product-detail-01.jpg">
                                     <div class="wrap-pic-w pos-relative">
                                         <img src="images/product-detail-01.jpg" alt="IMG-PRODUCT">
 
@@ -64,7 +74,7 @@
                                             <i class="fa fa-expand"></i>
                                         </a>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -144,15 +154,6 @@
                         <li class="nav-item p-b-10">
                             <a class="nav-link active" data-toggle="tab" href="#description" role="tab">Description</a>
                         </li>
-
-                        <li class="nav-item p-b-10">
-                            <a class="nav-link" data-toggle="tab" href="#information" role="tab">Additional
-                                information</a>
-                        </li>
-
-                        <li class="nav-item p-b-10">
-                            <a class="nav-link" data-toggle="tab" href="#reviews" role="tab">Reviews (1)</a>
-                        </li>
                     </ul>
 
                     <!-- Tab panes -->
@@ -170,152 +171,6 @@
                                     purus nunc porta lacus, vel efficitur tellus augue in ipsum. Cras in arcu sed metus
                                     rutrum iaculis. Nulla non tempor erat. Duis in egestas nunc.
                                 </p>
-                            </div>
-                        </div>
-
-                        <!-- - -->
-                        <div class="tab-pane fade" id="information" role="tabpanel">
-                            <div class="row">
-                                <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
-                                    <ul class="p-lr-28 p-lr-15-sm">
-                                        <li class="flex-w flex-t p-b-7">
-                                            <span class="stext-102 cl3 size-205">
-                                                Weight
-                                            </span>
-
-                                            <span class="stext-102 cl6 size-206">
-                                                0.79 kg
-                                            </span>
-                                        </li>
-
-                                        <li class="flex-w flex-t p-b-7">
-                                            <span class="stext-102 cl3 size-205">
-                                                Dimensions
-                                            </span>
-
-                                            <span class="stext-102 cl6 size-206">
-                                                110 x 33 x 100 cm
-                                            </span>
-                                        </li>
-
-                                        <li class="flex-w flex-t p-b-7">
-                                            <span class="stext-102 cl3 size-205">
-                                                Materials
-                                            </span>
-
-                                            <span class="stext-102 cl6 size-206">
-                                                60% cotton
-                                            </span>
-                                        </li>
-
-                                        <li class="flex-w flex-t p-b-7">
-                                            <span class="stext-102 cl3 size-205">
-                                                Color
-                                            </span>
-
-                                            <span class="stext-102 cl6 size-206">
-                                                Black, Blue, Grey, Green, Red, White
-                                            </span>
-                                        </li>
-
-                                        <li class="flex-w flex-t p-b-7">
-                                            <span class="stext-102 cl3 size-205">
-                                                Size
-                                            </span>
-
-                                            <span class="stext-102 cl6 size-206">
-                                                XL, L, M, S
-                                            </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- - -->
-                        <div class="tab-pane fade" id="reviews" role="tabpanel">
-                            <div class="row">
-                                <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
-                                    <div class="p-b-30 m-lr-15-sm">
-                                        <!-- Review -->
-                                        <div class="flex-w flex-t p-b-68">
-                                            <div class="wrap-pic-s size-109 bor0 of-hidden m-r-18 m-t-6">
-                                                <img src="images/avatar-01.jpg" alt="AVATAR">
-                                            </div>
-
-                                            <div class="size-207">
-                                                <div class="flex-w flex-sb-m p-b-17">
-                                                    <span class="mtext-107 cl2 p-r-20">
-                                                        Ariana Grande
-                                                    </span>
-
-                                                    <span class="fs-18 cl11">
-                                                        <i class="zmdi zmdi-star"></i>
-                                                        <i class="zmdi zmdi-star"></i>
-                                                        <i class="zmdi zmdi-star"></i>
-                                                        <i class="zmdi zmdi-star"></i>
-                                                        <i class="zmdi zmdi-star-half"></i>
-                                                    </span>
-                                                </div>
-
-                                                <p class="stext-102 cl6">
-                                                    Quod autem in homine praestantissimum atque optimum est, id deseruit.
-                                                    Apud ceteros autem philosophos
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <!-- Add review -->
-                                        <form class="w-full">
-                                            <h5 class="mtext-108 cl2 p-b-7">
-                                                Add a review
-                                            </h5>
-
-                                            <p class="stext-102 cl6">
-                                                Your email address will not be published. Required fields are marked *
-                                            </p>
-
-                                            <div class="flex-w flex-m p-t-50 p-b-23">
-                                                <span class="stext-102 cl3 m-r-16">
-                                                    Your Rating
-                                                </span>
-
-                                                <span class="wrap-rating fs-18 cl11 pointer">
-                                                    <i class="item-rating pointer zmdi zmdi-star-outline"></i>
-                                                    <i class="item-rating pointer zmdi zmdi-star-outline"></i>
-                                                    <i class="item-rating pointer zmdi zmdi-star-outline"></i>
-                                                    <i class="item-rating pointer zmdi zmdi-star-outline"></i>
-                                                    <i class="item-rating pointer zmdi zmdi-star-outline"></i>
-                                                    <input class="dis-none" type="number" name="rating">
-                                                </span>
-                                            </div>
-
-                                            <div class="row p-b-25">
-                                                <div class="col-12 p-b-5">
-                                                    <label class="stext-102 cl3" for="review">Your review</label>
-                                                    <textarea class="size-110 bor8 stext-102 cl2 p-lr-20 p-tb-10" id="review" name="review"></textarea>
-                                                </div>
-
-                                                <div class="col-sm-6 p-b-5">
-                                                    <label class="stext-102 cl3" for="name">Name</label>
-                                                    <input class="size-111 bor8 stext-102 cl2 p-lr-20" id="name"
-                                                        type="text" name="name">
-                                                </div>
-
-                                                <div class="col-sm-6 p-b-5">
-                                                    <label class="stext-102 cl3" for="email">Email</label>
-                                                    <input class="size-111 bor8 stext-102 cl2 p-lr-20" id="email"
-                                                        type="text" name="email">
-                                                </div>
-                                            </div>
-
-                                            <button
-                                                class="flex-c-m stext-101 cl0 size-112 bg7 bor11 hov-btn3 p-lr-15 trans-04 m-b-10">
-                                                Submit
-                                            </button>
-                                        </form>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -344,292 +199,100 @@
                 </h3>
             </div>
 
-            <!-- Slide2 -->
-            <div class="wrap-slick2">
-                <div class="slick2">
-                    <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                        <!-- Block2 -->
-                        <div class="block2">
-                            <div class="block2-pic hov-img0">
-                                <img src="images/product-01.jpg" alt="IMG-PRODUCT">
-
-                                <a href="#"
-                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                    Quick View
-                                </a>
-                            </div>
-
-                            <div class="block2-txt flex-w flex-t p-t-14">
-                                <div class="block2-txt-child1 flex-col-l ">
-                                    <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                        Esprit Ruffle Shirt
-                                    </a>
-
-                                    <span class="stext-105 cl3">
-                                        $16.64
-                                    </span>
-                                </div>
-
-                                <div class="block2-txt-child2 flex-r p-t-3">
-                                    <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                        <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png"
-                                            alt="ICON">
-                                        <img class="icon-heart2 dis-block trans-04 ab-t-l"
-                                            src="images/icons/icon-heart-02.png" alt="ICON">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                        <!-- Block2 -->
-                        <div class="block2">
-                            <div class="block2-pic hov-img0">
-                                <img src="images/product-02.jpg" alt="IMG-PRODUCT">
-
-                                <a href="#"
-                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                    Quick View
-                                </a>
-                            </div>
-
-                            <div class="block2-txt flex-w flex-t p-t-14">
-                                <div class="block2-txt-child1 flex-col-l ">
-                                    <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                        Herschel supply
-                                    </a>
-
-                                    <span class="stext-105 cl3">
-                                        $35.31
-                                    </span>
-                                </div>
-
-                                <div class="block2-txt-child2 flex-r p-t-3">
-                                    <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                        <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png"
-                                            alt="ICON">
-                                        <img class="icon-heart2 dis-block trans-04 ab-t-l"
-                                            src="images/icons/icon-heart-02.png" alt="ICON">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                        <!-- Block2 -->
-                        <div class="block2">
-                            <div class="block2-pic hov-img0">
-                                <img src="images/product-03.jpg" alt="IMG-PRODUCT">
-
-                                <a href="#"
-                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                    Quick View
-                                </a>
-                            </div>
-
-                            <div class="block2-txt flex-w flex-t p-t-14">
-                                <div class="block2-txt-child1 flex-col-l ">
-                                    <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                        Only Check Trouser
-                                    </a>
-
-                                    <span class="stext-105 cl3">
-                                        $25.50
-                                    </span>
-                                </div>
-
-                                <div class="block2-txt-child2 flex-r p-t-3">
-                                    <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                        <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png"
-                                            alt="ICON">
-                                        <img class="icon-heart2 dis-block trans-04 ab-t-l"
-                                            src="images/icons/icon-heart-02.png" alt="ICON">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                        <!-- Block2 -->
-                        <div class="block2">
-                            <div class="block2-pic hov-img0">
-                                <img src="images/product-04.jpg" alt="IMG-PRODUCT">
-
-                                <a href="#"
-                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                    Quick View
-                                </a>
-                            </div>
-
-                            <div class="block2-txt flex-w flex-t p-t-14">
-                                <div class="block2-txt-child1 flex-col-l ">
-                                    <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                        Classic Trench Coat
-                                    </a>
-
-                                    <span class="stext-105 cl3">
-                                        $75.00
-                                    </span>
-                                </div>
-
-                                <div class="block2-txt-child2 flex-r p-t-3">
-                                    <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                        <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png"
-                                            alt="ICON">
-                                        <img class="icon-heart2 dis-block trans-04 ab-t-l"
-                                            src="images/icons/icon-heart-02.png" alt="ICON">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                        <!-- Block2 -->
-                        <div class="block2">
-                            <div class="block2-pic hov-img0">
-                                <img src="images/product-05.jpg" alt="IMG-PRODUCT">
-
-                                <a href="#"
-                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                    Quick View
-                                </a>
-                            </div>
-
-                            <div class="block2-txt flex-w flex-t p-t-14">
-                                <div class="block2-txt-child1 flex-col-l ">
-                                    <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                        Front Pocket Jumper
-                                    </a>
-
-                                    <span class="stext-105 cl3">
-                                        $34.75
-                                    </span>
-                                </div>
-
-                                <div class="block2-txt-child2 flex-r p-t-3">
-                                    <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                        <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png"
-                                            alt="ICON">
-                                        <img class="icon-heart2 dis-block trans-04 ab-t-l"
-                                            src="images/icons/icon-heart-02.png" alt="ICON">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                        <!-- Block2 -->
-                        <div class="block2">
-                            <div class="block2-pic hov-img0">
-                                <img src="images/product-06.jpg" alt="IMG-PRODUCT">
-
-                                <a href="#"
-                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                    Quick View
-                                </a>
-                            </div>
-
-                            <div class="block2-txt flex-w flex-t p-t-14">
-                                <div class="block2-txt-child1 flex-col-l ">
-                                    <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                        Vintage Inspired Classic
-                                    </a>
-
-                                    <span class="stext-105 cl3">
-                                        $93.20
-                                    </span>
-                                </div>
-
-                                <div class="block2-txt-child2 flex-r p-t-3">
-                                    <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                        <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png"
-                                            alt="ICON">
-                                        <img class="icon-heart2 dis-block trans-04 ab-t-l"
-                                            src="images/icons/icon-heart-02.png" alt="ICON">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                        <!-- Block2 -->
-                        <div class="block2">
-                            <div class="block2-pic hov-img0">
-                                <img src="images/product-07.jpg" alt="IMG-PRODUCT">
-
-                                <a href="#"
-                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                    Quick View
-                                </a>
-                            </div>
-
-                            <div class="block2-txt flex-w flex-t p-t-14">
-                                <div class="block2-txt-child1 flex-col-l ">
-                                    <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                        Shirt in Stretch Cotton
-                                    </a>
-
-                                    <span class="stext-105 cl3">
-                                        $52.66
-                                    </span>
-                                </div>
-
-                                <div class="block2-txt-child2 flex-r p-t-3">
-                                    <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                        <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png"
-                                            alt="ICON">
-                                        <img class="icon-heart2 dis-block trans-04 ab-t-l"
-                                            src="images/icons/icon-heart-02.png" alt="ICON">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                        <!-- Block2 -->
-                        <div class="block2">
-                            <div class="block2-pic hov-img0">
-                                <img src="images/product-08.jpg" alt="IMG-PRODUCT">
-
-                                <a href="#"
-                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                    Quick View
-                                </a>
-                            </div>
-
-                            <div class="block2-txt flex-w flex-t p-t-14">
-                                <div class="block2-txt-child1 flex-col-l ">
-                                    <a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                        Pieces Metallic Printed
-                                    </a>
-
-                                    <span class="stext-105 cl3">
-                                        $18.96
-                                    </span>
-                                </div>
-
-                                <div class="block2-txt-child2 flex-r p-t-3">
-                                    <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                        <img class="icon-heart1 dis-block trans-04" src="images/icons/icon-heart-01.png"
-                                            alt="ICON">
-                                        <img class="icon-heart2 dis-block trans-04 ab-t-l"
-                                            src="images/icons/icon-heart-02.png" alt="ICON">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('customer.slide')
         </div>
     </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let selectedSize = null;
+            let selectedColor = null;
+
+            const sizeButtons = document.querySelectorAll('.size-button');
+            const colorButtons = document.querySelectorAll('.color-button');
+            const productDetails = document.querySelectorAll('.product-detail-item');
+            const productImages = document.querySelectorAll('.product-image');
+
+            sizeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    selectedSize = this.getAttribute('data-size');
+                    filterProductDetails();
+                });
+            });
+
+            colorButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    selectedColor = this.getAttribute('data-color');
+                    filterProductDetails();
+                });
+            });
+
+            function filterProductDetails() {
+                if (selectedSize && selectedColor) {
+                    let matchingDetailId = null;
+
+                    productDetails.forEach(detail => {
+                        const size = detail.getAttribute('data-size');
+                        const color = detail.getAttribute('data-color');
+                        if (size === selectedSize && color === selectedColor) {
+                            matchingDetailId = detail.getAttribute('data-id');
+                        }
+                    });
+
+                    if (matchingDetailId) {
+                        productImages.forEach(img => {
+                            const imgDetailId = img.parentElement.getAttribute('data-product-detail-id');
+                            if (imgDetailId === matchingDetailId) {
+                                img.style.display = 'block';
+                            } else {
+                                img.style.display = 'none';
+                            }
+                        });
+                    }
+                }
+            }
+        });
+
+        // sizeButtons.forEach(button => {
+        //     button.addEventListener('click', function() {
+        //         // Clear active states
+        //         sizeButtons.forEach(btn => btn.classList.remove('active'));
+        //         colorButtons.forEach(btn => btn.classList.remove('active'));
+        //         colorButtons.forEach(btn => btn.classList.add('disabled'));
+
+        //         // Set active state for selected size
+        //         this.classList.add('active');
+
+        //         // Get selected size
+        //         const selectedSize = this.getAttribute('data-size');
+
+        //         // Filter available colors based on selected size
+        //         const availableColors = new Set();
+        //         productDetails.forEach(detail => {
+        //             if (detail.getAttribute('data-size') === selectedSize) {
+        //                 availableColors.add(detail.getAttribute('data-color'));
+        //             }
+        //         });
+
+        //         // Enable available color buttons
+        //         colorButtons.forEach(button => {
+        //             if (availableColors.has(button.getAttribute('data-color'))) {
+        //                 button.classList.remove('disabled');
+        //             }
+        //         });
+        //     });
+        // });
+
+        // colorButtons.forEach(button => {
+        //     button.addEventListener('click', function() {
+        //         if (!this.classList.contains('disabled')) {
+        //             // Clear active states
+        //             colorButtons.forEach(btn => btn.classList.remove('active'));
+        //             // Set active state for selected color
+        //             this.classList.add('active');
+        //         }
+        //     });
+        // });
+    </script>
 @endsection
 <style>
     .custom-header {
@@ -644,6 +307,7 @@
         max-height: 100px;
         /* Đảm bảo header đè lên các phần tử khác */
     }
+
     ///
     .product-detail {
         margin-bottom: 20px;
@@ -751,51 +415,3 @@
         background-color: #555;
     }
 </style>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const sizeButtons = document.querySelectorAll('.size-button');
-        const colorButtons = document.querySelectorAll('.color-button');
-        const productDetails = document.querySelectorAll('.product-detail-item');
-
-        sizeButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Clear active states
-                sizeButtons.forEach(btn => btn.classList.remove('active'));
-                colorButtons.forEach(btn => btn.classList.remove('active'));
-                colorButtons.forEach(btn => btn.classList.add('disabled'));
-
-                // Set active state for selected size
-                this.classList.add('active');
-
-                // Get selected size
-                const selectedSize = this.getAttribute('data-size');
-
-                // Filter available colors based on selected size
-                const availableColors = new Set();
-                productDetails.forEach(detail => {
-                    if (detail.getAttribute('data-size') === selectedSize) {
-                        availableColors.add(detail.getAttribute('data-color'));
-                    }
-                });
-
-                // Enable available color buttons
-                colorButtons.forEach(button => {
-                    if (availableColors.has(button.getAttribute('data-color'))) {
-                        button.classList.remove('disabled');
-                    }
-                });
-            });
-        });
-
-        colorButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                if (!this.classList.contains('disabled')) {
-                    // Clear active states
-                    colorButtons.forEach(btn => btn.classList.remove('active'));
-                    // Set active state for selected color
-                    this.classList.add('active');
-                }
-            });
-        });
-    });
-</script>

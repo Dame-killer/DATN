@@ -1,4 +1,4 @@
-@extends('customer.index')
+{{-- @extends('customer.index')
 
 @section('content')
     <!-- Product -->
@@ -289,4 +289,4 @@
             </div>
         </div>
     </div>
-@endsection
+@endsection --}}

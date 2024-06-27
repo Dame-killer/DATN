@@ -10,11 +10,11 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/font-awesome.min.css') }}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/font-awesome.min.css') }}"> --}}
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/material-design-iconic-font.min.css') }}">
     <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/linearicons-v1.0.0/icon-font.min.css') }}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/linearicons-v1.0.0/icon-font.min.css') }}"> --}}
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/animate.css') }}">
     <!--===============================================================================================-->
@@ -42,9 +42,6 @@
     <link
         href="https://cdn.jsdelivr.net/npm/material-design-iconic-font@2.2.0/dist/css/material-design-iconic-font.min.css"
         rel="stylesheet" />
-    <link href="../../css/argon-dashboard.css" rel="stylesheet" />
-    <link href="../../css/nucleo-icons.css" rel="stylesheet" />
-    <link href="../../css/nucleo-svg.css" rel="stylesheet" />
 </head>
 
 <body class="animsition">
