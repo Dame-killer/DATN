@@ -2,12 +2,11 @@
 <header>
     <!-- Header desktop -->
     <div class="container-menu-desktop">
-        <div class="wrap-menu-desktop">
+        <div class="wrap-menu-desktop" style="background-color: #e0f7fa">
             <nav class="limiter-menu-desktop container">
-
                 <!-- Logo desktop -->
                 <a href="{{ route('customer-home') }}" class="logo">
-                    <img src="{{ asset('assets/images/logo1.png') }}" alt="IMG-LOGO">
+                    <img src="{{ asset('assets/images/logo-header.png') }}" alt="IMG-LOGO">
                 </a>
 
                 <!-- Menu desktop -->
@@ -18,7 +17,7 @@
                                 <h4>Trang chủ</h4>
                             </a>
                         </li>
-                        <li>
+                        <li class="label1" data-label1="hot">
                             <a href="{{ route('customer-product') }}">
                                 <h4>Danh mục sản phẩm</h4>
                             </a>
@@ -69,59 +68,41 @@
         </div>
     </div>
 </header>
+
 <style>
-    .header {
-        z-index: 1000;
+    /* Make the logo image clearer */
+    .logo img {
+        max-height: 80px;
+        /* Adjust the height as needed */
+        display: block;
     }
 
-    /* Tăng cỡ chữ */
+    /* Remove underline from the menu text */
     .main-menu a {
-        font-size: 18px;
+        text-decoration: none;
+        font-family: 'Arial', sans-serif;
+        /* Change to your preferred font */
+        font-size: 16px;
+        /* Adjust font size as needed */
     }
 
-    .icon-header-item {
-        font-size: 32px;
+    /* Change font style of the menu text */
+    .main-menu a h4 {
+        font-family: 'Arial', sans-serif;
+        /* Change to your preferred font */
+        font-weight: 700;
+        /* Adjust the font weight as needed */
+        color: #333;
+        /* Adjust the text color as needed */
     }
 
-    /* CSS cho ô input search */
-    .input-search-header {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        transform: translateY(-50%);
-        display: none;
-        /* Ẩn ban đầu để khi click mới hiển thị */
-        align-items: center;
-        padding: 5px 10px;
-        background-color: white;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
+    /* Apply a more appealing background color to the header */
 
-    .input-search-header .form-control {
-        width: 200px;
-        border: none;
-        outline: none;
-    }
 
-    .input-search-header .form-control::placeholder {
-        color: #aaa;
-    }
-
-    /* Điều chỉnh vị trí hiển thị của ô search */
-    .icon-header-item {
-        position: relative;
-        /* Để có thể định vị tương đối cho con bên trong */
-    }
-
-    /* Điều chỉnh vị trí hiển thị khi click vào icon search */
-    .icon-header-item .input-search-header {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        transform: translateY(10px);
-        /* Điều chỉnh khoảng cách từ icon xuống input */
+    /* Add hover effect to menu items */
+    .main-menu li a:hover h4 {
+        color: #ff6f61;
+        /* Change to your preferred hover color */
     }
 </style>
 
