@@ -63,6 +63,8 @@
 
             <!-- Phần 2: Hiển thị sản phẩm -->
             <div class="col-lg-10 col-md-9 col-sm-8">
+                <!-- Thêm anchor vào đây -->
+                <a id="product-list"></a>
                 <div class="flex-w flex-sb-m p-b-52">
                     <div class="flex-w flex-l-m filter-tope-group m-tb-10">
                         <select id="sort-options" class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5">
@@ -283,7 +285,7 @@
         sortSelect.addEventListener('change', function() {
             var selectedOption = sortSelect.value;
             if (selectedOption) {
-                window.location.href = selectedOption;
+                window.location.href = selectedOption + '#product-list';
             }
         });
     });
