@@ -241,10 +241,41 @@ class OrderController extends Controller
 
     public function cancelOrder($id)
     {
-        $order = Order::findOrFail($id);
-        $order->status = 4;
-        $order->save();
+        try {
+            // Tìm đơn hàng và kiểm tra tồn tại
+            $order = Order::findOrFail($id);
 
-        return redirect()->back()->with(['success' => 'Đơn hàng đã được hủy thành công!']);
+            // Kiểm tra xem đơn hàng đã được hủy hay chưa
+            if ($order->status === 4) {
+                throw new \Exception('Đơn hàng đã được hủy trước đó.');
+            }
+
+            // Bắt đầu giao dịch database
+            DB::beginTransaction();
+
+            // Đặt trạng thái của đơn hàng thành "Hủy" (status = 4)
+            $order->status = 4;
+            $order->save();
+
+            // Lấy danh sách các chi tiết đơn hàng để phục hồi số lượng sản phẩm
+            $orderDetails = OrderDetail::where('order_id', $id)->get();
+
+            foreach ($orderDetails as $orderDetail) {
+                $productDetail = $orderDetail->productDetail;
+
+                // Phục hồi số lượng sản phẩm
+                $productDetail->quantity += $orderDetail->amount;
+                $productDetail->save();
+            }
+
+            // Commit giao dịch database
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Đơn hàng đã được hủy thành công và số lượng sản phẩm đã được phục hồi.');
+        } catch (\Exception $e) {
+            // Nếu có lỗi xảy ra, rollback giao dịch và hiển thị thông báo lỗi
+            DB::rollback();
+            return redirect()->back()->with('error', 'Đã xảy ra lỗi khi hủy đơn hàng: ' . $e->getMessage());
+        }
     }
 }
