@@ -51,8 +51,11 @@ public function indexCustomer(Request $request)
     }
 
     if ($request->has('sort')) {
-        $sortOrder = $request->sort == 'asc' ? 'asc' : 'desc';
-        $query->orderBy('price', $sortOrder);
+        if ($request->sort == 'asc' || $request->sort == 'desc') {
+            $query->orderBy('price', $request->sort);
+        } elseif ($request->sort == 'newest') {
+            $query->orderBy('id', 'desc');
+        }
     }
 
     $products = $query->paginate(8);

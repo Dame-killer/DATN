@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="{{ asset('assets/images/logo1.png') }}" />
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/logo_header.png') }}" />
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <!--===============================================================================================-->
@@ -14,11 +14,13 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/material-design-iconic-font.min.css') }}">
     <!--===============================================================================================-->
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/linearicons-v1.0.0/icon-font.min.css') }}"> --}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/linearicons-v1.0.0/icon-font.min.css') }}">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/animate.css') }}">
     <!--===============================================================================================-->
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/select2.min.css') }}"> --}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/animate.css') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/select2.min.css') }}">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/daterangepicker.css') }}">
     <!--===============================================================================================-->
@@ -46,21 +48,22 @@
 </head>
 
 <body class="animsition">
+    <div class="index-content">
+        @include('customer.header')
 
-    @include('customer.header')
+        @include('customer.cart')
 
-    @include('customer.cart')
+        @yield('content')
 
-    @yield('content')
-
-    @include('customer.footer')
+        @include('customer.footer')
 
 
-    <!-- Back to top -->
-    <div class="btn-back-to-top" id="myBtn">
-        <span class="symbol-btn-back-to-top">
-            <i class="zmdi zmdi-chevron-up"></i>
-        </span>
+        <!-- Back to top -->
+        <div class="btn-back-to-top" id="myBtn">
+            <span class="symbol-btn-back-to-top">
+                <i class="zmdi zmdi-chevron-up"></i>
+            </span>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -77,17 +80,17 @@
     <script src="{{ asset('assets/js/popper.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <!--===============================================================================================-->
-    {{-- <script src="{{ asset('assets/js/select2.min.js') }}"></script> --}}
-    {{-- <script>
+    <script src="{{ asset('assets/js/select2.min.js') }}"></script>
+    <script>
         $(".js-select2").each(function() {
             $(this).select2({
                 minimumResultsForSearch: 20,
                 dropdownParent: $(this).next('.dropDownSelect2')
             });
         })
-    </script> --}}
+    </script>
     <!--===============================================================================================-->
-    {{-- <script src="{{ asset('assets/js/moment.min.js') }}"></script> --}}
+    <script src="{{ asset('assets/js/moment.min.js') }}"></script>
     <script src="{{ asset('assets/js/daterangepicker.js') }}"></script>
     <!--===============================================================================================-->
     <script src="{{ asset('assets/js/slick.min.js') }}"></script>
@@ -99,10 +102,10 @@
     </script>
     <!--===============================================================================================-->
     <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
-    {{-- <script>
-        $('.gallery-lb').each(function() {
+    <script>
+        $('.gallery-lb').each(function() { // the containers for all your galleries
             $(this).magnificPopup({
-                delegate: 'a',
+                delegate: 'a', // the selector for gallery item
                 type: 'image',
                 gallery: {
                     enabled: true
@@ -110,18 +113,43 @@
                 mainClass: 'mfp-fade'
             });
         });
-    </script> --}}
+    </script>
     <!--===============================================================================================-->
-    {{-- <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script> --}}
+    <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
     <!--===============================================================================================-->
     <script src="{{ asset('assets/js/sweetalert.min.js') }}"></script>
     <script>
+        $('.js-addwish-b2').on('click', function(e) {
+            e.preventDefault();
+        });
+
+        $('.js-addwish-b2').each(function() {
+            var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+            $(this).on('click', function() {
+                swal(nameProduct, "is added to wishlist !", "success");
+
+                $(this).addClass('js-addedwish-b2');
+                $(this).off('click');
+            });
+        });
+
+        $('.js-addwish-detail').each(function() {
+            var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+
+            $(this).on('click', function() {
+                swal(nameProduct, "is added to wishlist !", "success");
+
+                $(this).addClass('js-addedwish-detail');
+                $(this).off('click');
+            });
+        });
+
         /*---------------------------------------------*/
 
         $('.js-addcart-detail').each(function() {
             var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
             $(this).on('click', function() {
-                swal(nameProduct, "Thêm vào giỏ hàng thành công !", "Thành công");
+                swal(nameProduct, "is added to cart !", "success");
             });
         });
     </script>
