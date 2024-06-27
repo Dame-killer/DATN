@@ -217,7 +217,7 @@
                     const orderId = button.getAttribute('data-id')
                     const orderStatus = parseInt(button.getAttribute('data-status'))
 
-                    fetch(`/admin/order/${orderId}`, {
+                    fetch(`/admin/order/approve/${orderId}`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -230,8 +230,7 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                const statusCell = document.getElementById(
-                                    `order-status-${orderId}`)
+                                const statusCell = document.getElementById(`order-status-${orderId}`)
                                 let statusText;
                                 let statusClass;
 
@@ -257,13 +256,13 @@
                                         statusClass = 'badge badge-sm bg-gradient-faded-dark'
                                         break
                                 }
-                                statusCell.innerHTML =
-                                    `<span class="${statusClass}">${statusText}</span>`
+                                statusCell.innerHTML = `<span class="${statusClass}">${statusText}</span>`
                                 if (orderStatus === 0) {
                                     button.innerText = 'Cập Nhật';
                                     button.setAttribute('data-status', 1);
+                                    alert('Đơn Hàng Đã Được Duyệt Thành Công!');
                                 } else {
-                                    alert('Trạng Thái Đơn Hàng Đã Được Cập Nhật!');
+                                    alert('Trạng Thái Đơn Hàng Đã Được Cập Nhật Thành Công!');
                                 }
                             } else {
                                 alert(data.message)
@@ -281,7 +280,7 @@
             cancelOrderButtons.forEach(button => {
                 button.addEventListener('click', function () {
                     const orderId = this.getAttribute('data-id')
-                    const actionUrl = `/admin/order/${orderId}`
+                    const actionUrl = `/admin/order/cancel/${orderId}`
                     const form = document.getElementById('cancelOrderForm')
                     form.setAttribute('action', actionUrl)
                     cancelOrderModal.show()

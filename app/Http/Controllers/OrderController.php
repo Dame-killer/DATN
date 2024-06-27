@@ -23,7 +23,7 @@ class OrderController extends Controller
         $query->orderBy('id', 'desc');
         $orders = $query->paginate(5);
 
-        return view ('admin.order.index')->with(compact('orders'));
+        return view('admin.order.index')->with(compact('orders'));
     }
 
     public function indexCustomer()
@@ -31,7 +31,7 @@ class OrderController extends Controller
 
         $orders = Order::with('paymentMethod')->where('user_id', auth()->user()->id)->get();
 
-        return view ('customer.account')->with(compact('orders'));
+        return view('customer.account')->with(compact('orders'));
     }
 
     /**
