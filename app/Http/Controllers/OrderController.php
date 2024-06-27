@@ -20,6 +20,10 @@ class OrderController extends Controller
             $query->where('code', 'like', '%' . $request->search . '%');
         }
 
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
         $query->orderBy('id', 'desc');
         $orders = $query->paginate(5);
 
