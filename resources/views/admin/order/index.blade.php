@@ -74,7 +74,7 @@
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Trạng Thái
                                     </th>
-                                    <th class="text-secondary opacity-7">Thao tác</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Thao tác</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -83,7 +83,7 @@
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
+                                                    <h6 class="mb-0 text-sm ms-2">{{ $loop->iteration }}</h6>
                                                 </div>
                                             </div>
                                         </td>
