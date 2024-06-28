@@ -18,7 +18,7 @@ class Order extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['receiver', 'address', 'phone', 'order_date', 'status', 'user_id', 'payment_method_id'];
+    protected $fillable = ['receiver', 'address', 'phone', 'order_date', 'status', 'tracking_code', 'user_id', 'payment_method_id'];
 
     protected $table = 'orders';
 

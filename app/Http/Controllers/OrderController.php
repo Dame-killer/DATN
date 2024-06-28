@@ -230,17 +230,23 @@ class OrderController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function approveOrder($id)
+    public function approveOrder(Request $request, $id)
     {
         $order = Order::findOrFail($id);
 
         if ($order->status < 3) {
+            if ($order->status == 1 && $request->status == 2) {
+                // Khi chuyển trạng thái từ Đã Duyệt (1) sang Đang Giao Hàng (2), lưu mã vận đơn
+                $order->tracking_code = $request->tracking_code;
+            }
+
             $order->status += 1;
             $order->save();
-            return response()->json(['success' => true, 'status' => $order->status]);
+
+            return response()->json(['success' => true, 'status' => $order->status, 'tracking_code' => $order->tracking_code]);
         }
 
-        return response()->json(['success' => false, 'message' => 'Trạng thái đơn hàng không thể tăng thêm.']);
+        return response()->json(['success' => false, 'message' => 'Trạng thái đơn hàng không thể tăng thêm!']);
     }
 
     public function cancelOrder($id)

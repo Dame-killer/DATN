@@ -20,7 +20,8 @@
                                 <option value="">Tất cả trạng thái</option>
                                 <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>Chưa Duyệt</option>
                                 <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Đã Duyệt</option>
-                                <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Đang Giao Hàng</option>
+                                <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Đang Giao Hàng
+                                </option>
                                 <option value="3" {{ request('status') == '3' ? 'selected' : '' }}>Hoàn Thành</option>
                                 <option value="4" {{ request('status') == '4' ? 'selected' : '' }}>Hủy</option>
                             </select>
@@ -66,6 +67,10 @@
                                         Tài Khoản Khách Hàng
                                     </th>
                                     <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Mã Vận Đơn
+                                    </th>
+                                    <th
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Trạng Thái
                                     </th>
@@ -98,12 +103,15 @@
                                             <p class="text-xs font-weight-bold mb-0">{{ $order->order_date }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $order->paymentMethod->name }}
-                                            </p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $order->paymentMethod->name }}</p>
                                         </td>
                                         <td>
-                                            <p class="text-xs font-weight-bold mb-0">
-                                                {{ $order->user ? $order->user->email : 'N/A' }}</p>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $order->user ? $order->user->email : 'N/A' }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0"
+                                               id="tracking-code-{{ $order->id }}">{{ $order->tracking_code ?? 'N/A' }}
+                                            </p>
                                         </td>
                                         <td class="align-middle text-center" id="order-status-{{ $order->id }}">
                                             @switch($order->status)
@@ -186,6 +194,33 @@
         </div>
     </div>
 
+    <!-- Tracking Code Modal -->
+    <div class="modal fade" id="trackingCodeModal" tabindex="-1" aria-labelledby="trackingCodeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="trackingCodeModalLabel">Nhập Mã Vận Đơn</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="trackingCodeForm">
+                        <div class="mb-3">
+                            <label for="trackingCode" class="form-label">Mã Vận Đơn</label>
+                            <input type="text" class="form-control" id="trackingCode" name="tracking_code" required>
+                        </div>
+                        <input type="hidden" id="orderId" name="order_id">
+                        <input type="hidden" id="orderStatus" name="status">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" id="saveTrackingCodeBtn">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('quickApproveButton').addEventListener('click', function () {
@@ -218,67 +253,95 @@
         })
 
         document.addEventListener('DOMContentLoaded', function () {
-            const approveButtons = document.querySelectorAll('.approve-order-btn');
+            const approveButtons = document.querySelectorAll('.approve-order-btn')
+            const trackingCodeModal = new bootstrap.Modal(document.getElementById('trackingCodeModal'))
+            const saveTrackingCodeBtn = document.getElementById('saveTrackingCodeBtn')
 
             approveButtons.forEach(button => {
                 button.addEventListener('click', function () {
                     const orderId = button.getAttribute('data-id')
                     const orderStatus = parseInt(button.getAttribute('data-status'))
 
-                    fetch(`/admin/order/approve/${orderId}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            status: orderStatus === 0 ? 1 : orderStatus
-                        })
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                const statusCell = document.getElementById(`order-status-${orderId}`)
-                                let statusText;
-                                let statusClass;
-
-                                switch (data.status) {
-                                    case 1:
-                                        statusText = 'Đã Duyệt'
-                                        statusClass = 'badge badge-sm bg-gradient-info'
-                                        break
-                                    case 2:
-                                        statusText = 'Đang Giao Hàng'
-                                        statusClass = 'badge badge-sm bg-gradient-warning'
-                                        break
-                                    case 3:
-                                        statusText = 'Hoàn Thành'
-                                        statusClass = 'badge badge-sm bg-gradient-success'
-                                        break
-                                    case 4:
-                                        statusText = 'Hủy'
-                                        statusClass = 'badge badge-sm bg-gradient-danger'
-                                        break
-                                    default:
-                                        statusText = 'Không Xác Định'
-                                        statusClass = 'badge badge-sm bg-gradient-faded-dark'
-                                        break
-                                }
-                                statusCell.innerHTML = `<span class="${statusClass}">${statusText}</span>`
-                                if (orderStatus === 0) {
-                                    button.innerText = 'Cập Nhật';
-                                    button.setAttribute('data-status', 1);
-                                    alert('Đơn Hàng Đã Được Duyệt Thành Công!');
-                                } else {
-                                    alert('Trạng Thái Đơn Hàng Đã Được Cập Nhật Thành Công!');
-                                }
-                            } else {
-                                alert(data.message)
-                            }
-                        })
-                        .catch(error => console.error('Error:', error))
+                    if (orderStatus === 1) {
+                        document.getElementById('orderId').value = orderId
+                        document.getElementById('orderStatus').value = orderStatus
+                        trackingCodeModal.show()
+                    } else {
+                        updateOrderStatus(orderId, orderStatus)
+                    }
                 })
             })
+
+            saveTrackingCodeBtn.addEventListener('click', function () {
+                const orderId = document.getElementById('orderId').value
+                const orderStatus = document.getElementById('orderStatus').value
+                const trackingCode = document.getElementById('trackingCode').value
+
+                if (trackingCode.trim() === '') {
+                    alert('Mã vận đơn không được để trống!')
+                    return
+                }
+
+                updateOrderStatus(orderId, parseInt(orderStatus), trackingCode)
+                trackingCodeModal.hide()
+            })
+
+            function updateOrderStatus(orderId, orderStatus, trackingCode = null) {
+                fetch(`/admin/order/approve/${orderId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        status: orderStatus === 1 ? 2 : orderStatus,
+                        tracking_code: trackingCode
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            refreshOrderList()
+                            alert(data.message || 'Trạng thái đơn hàng đã được cập nhật thành công!')
+                        } else {
+                            alert(data.message || 'Có lỗi xảy ra!')
+                        }
+                    })
+                    .catch(error => console.error('Error:', error))
+            }
+
+            function refreshOrderList() {
+                const searchParams = new URLSearchParams(window.location.search)
+                fetch(`/admin/order?${searchParams.toString()}`)
+                    .then(response => response.text())
+                    .then(html => {
+                        const parser = new DOMParser()
+                        const doc = parser.parseFromString(html, 'text/html')
+                        const newTableBody = doc.querySelector('table tbody')
+                        const currentTableBody = document.querySelector('table tbody')
+                        currentTableBody.innerHTML = newTableBody.innerHTML
+                        bindEventsToNewButtons()
+                    })
+                    .catch(error => console.error('Error:', error))
+            }
+
+            function bindEventsToNewButtons() {
+                const newApproveButtons = document.querySelectorAll('.approve-order-btn')
+                newApproveButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const orderId = button.getAttribute('data-id')
+                        const orderStatus = parseInt(button.getAttribute('data-status'))
+
+                        if (orderStatus === 1) {
+                            document.getElementById('orderId').value = orderId
+                            document.getElementById('orderStatus').value = orderStatus
+                            trackingCodeModal.show()
+                        } else {
+                            updateOrderStatus(orderId, orderStatus)
+                        }
+                    })
+                })
+            }
         })
 
         document.addEventListener('DOMContentLoaded', function () {
