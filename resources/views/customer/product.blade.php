@@ -1,14 +1,15 @@
 @extends('customer.index')
 
-<div class="custom-header text-center">
-</div>
+
 
 @section('content')
+    <div class="custom-header text-center">
+    </div>
     <!-- Product -->
     <div class="bg0 m-t-23 p-b-140">
         <!-- breadcrumb -->
         <div class="container">
-            <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+            <div class="bread-crumb flex-w p-l-25 p-r-15 p-lr-0-lg">
                 <a href="{{ route('customer-home') }}" class="stext-109 cl8 hov-cl1 trans-04">
                     Trang chủ
                     <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
@@ -65,7 +66,7 @@
             <div class="col-lg-10 col-md-9 col-sm-8">
                 <!-- Thêm anchor vào đây -->
                 <a id="product-list"></a>
-                <div class="flex-w flex-sb-m p-b-52">
+                <div class="flex-w justify-content-end p-b-52">
                     <div class="flex-w flex-l-m filter-tope-group m-tb-10">
                         <select id="sort-options" class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5">
                             <option

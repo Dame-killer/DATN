@@ -175,6 +175,10 @@
                                 @endforeach
                             </select>
                         </div>
+                        @if (Auth::check())
+                            <input class="form-control" id="userId" name="user_id" value="{{ Auth::user()->id }}"
+                                hidden></input>
+                        @endif
                         <div class="mb-3">
                             {{-- <input type="hidden" name="payment_method_id" value="1"> --}}
                             <div class="modal-footer">
