@@ -16,6 +16,14 @@
                               action="{{ route('admin-order') }}">
                             <input class="form-control form-control-sm custom-input" type="search" name="search"
                                    placeholder="Nhập Từ Khóa" aria-label="Tìm kiếm" value="{{ request('search') }}">
+                            <select class="form-control form-control-sm custom-select m-1" name="status">
+                                <option value="">Tất cả trạng thái</option>
+                                <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>Chưa Duyệt</option>
+                                <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Đã Duyệt</option>
+                                <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Đang Giao Hàng</option>
+                                <option value="3" {{ request('status') == '3' ? 'selected' : '' }}>Hoàn Thành</option>
+                                <option value="4" {{ request('status') == '4' ? 'selected' : '' }}>Hủy</option>
+                            </select>
                             <button class="btn btn-outline-success btn-sm custom-button m-1" type="submit">
                                 Tìm Kiếm
                             </button>
@@ -328,6 +336,7 @@
         padding: 5px;
         margin-bottom: 10px;
         margin-left: 15px;
+        margin-right: 15px;
         background-color: #f8f9fa;
         /* Optional: Background color for the search bar container */
         border-radius: 8px;
