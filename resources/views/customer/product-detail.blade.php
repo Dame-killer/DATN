@@ -29,52 +29,13 @@
                 <div class="col-md-6 col-lg-7 p-b-30">
                     <div class="p-l-25 p-r-30 p-lr-0-lg">
                         <div class="wrap-slick3 flex-sb flex-w">
-                            <div class="wrap-slick3-dots"></div>
-                            <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
-
-                            <div class="slick3 gallery-lb">
-                                @foreach ($imageProducts as $imageProduct)
-                                    <div class="item-slick3" data-thumb="{{ asset('storage/' . $imageProduct->url) }}"
-                                        data-product-detail-id="{{ $imageProduct->product_detail_id }}">
-                                        <div class="wrap-pic-w pos-relative">
-                                            <img src="{{ asset('storage/' . $imageProduct->url) }}" alt="Product Image"
-                                                class="product-image" style="display: none;">
-                                        </div>
-                                    </div>
-                                @endforeach
-
-                                {{-- <div class="item-slick3" data-thumb="images/product-detail-01.jpg">
-                                    <div class="wrap-pic-w pos-relative">
-                                        <img src="images/product-detail-01.jpg" alt="IMG-PRODUCT">
-
-                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                            href="images/product-detail-01.jpg">
-                                            <i class="fa fa-expand"></i>
-                                        </a>
-                                    </div>
+                            {{-- <div class="wrap-slick3-dots"> --}}
+                            <div class="product-view">
+                                <div class="large-image-container">
+                                    <!-- Ảnh phóng to hiển thị ở đây -->
+                                    <img id="largeImage" src="{{ asset('storage/' . $imageProducts->first()->url) }}"
+                                        alt="Large Product Image">
                                 </div>
-
-                                <div class="item-slick3" data-thumb="images/product-detail-02.jpg">
-                                    <div class="wrap-pic-w pos-relative">
-                                        <img src="images/product-detail-02.jpg" alt="IMG-PRODUCT">
-
-                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                            href="images/product-detail-02.jpg">
-                                            <i class="fa fa-expand"></i>
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div class="item-slick3" data-thumb="images/product-detail-03.jpg">
-                                    <div class="wrap-pic-w pos-relative">
-                                        <img src="images/product-detail-03.jpg" alt="IMG-PRODUCT">
-
-                                        <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                            href="images/product-detail-03.jpg">
-                                            <i class="fa fa-expand"></i>
-                                        </a>
-                                    </div>
-                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -87,37 +48,41 @@
                         </h4>
                         <div class="product-detail">
                             Size:
-                            <div class="p-t-33 product-size">
-                                @foreach ($sizes as $size)
-                                    <button class="btn btn-primary size-button" data-size="{{ $size->size_name }}">
-                                        {{ $size->size_name }}
+                            <div class="product-size">
+                                @php
+                                    $availableSizes = $product_details->pluck('size.size_name')->unique();
+                                @endphp
+                                @foreach ($availableSizes as $size)
+                                    <button class="btn btn-primary size-button" data-size="{{ $size }}">
+                                        {{ $size }}
                                     </button>
                                 @endforeach
                             </div>
 
                             Màu sắc:
-                            <div class="p-t-33 product-color">
-                                @foreach ($colors as $color)
-                                    <button class="btn color-button" data-color="{{ $color->name }}"
-                                        style="background-color: {{ $color->code }};">
-                                        {{-- {{ $color->name }} --}}
+                            <div class="product-color">
+                                @php
+                                    $availableColors = $product_details->pluck('color.name')->unique();
+                                @endphp
+                                @foreach ($availableColors as $color)
+                                    <button class="btn color-button" data-color="{{ $color }}">
+                                        {{ $color }}
                                     </button>
                                 @endforeach
                             </div>
                         </div>
 
-                        <!-- Hidden element to store product details for JavaScript use -->
+                        <!-- Phần tử ẩn để lưu trữ sản phẩm chi tiết cho JavaScript sử dụng -->
                         <div id="product-details" style="display: none;">
                             @foreach ($product_details as $product_detail)
                                 <div class="product-detail-item" data-size="{{ $product_detail->size->size_name }}"
                                     data-color="{{ $product_detail->color->name }}">
+                                    <input type="hidden" class="product-detail-id" value="{{ $product_detail->id }}">
                                 </div>
                             @endforeach
                         </div>
 
-
-
-                        <div class="flex-w flex-r-m p-b-10">
+                        <div class="flex-w d-flex p-b-10">
                             <div class="size-204 flex-w flex-m respon6-next">
                                 <div class="wrap-num-product flex-w m-r-20 m-tb-10">
                                     <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
@@ -131,18 +96,18 @@
                                         <i class="fs-16 zmdi zmdi-plus"></i>
                                     </div>
                                 </div>
-                                <form action="{{ route('customer-cart-add', $product_detail->id) }}" method="POST">
+                                <form action="" method="POST" id="cart-form">
                                     @csrf
-                                    <button
-                                        class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail"
-                                        type="submit">
-                                        Add to cart
+                                    <input type="hidden" name="num_product" id="num_product" value="1">
+                                    <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04"
+                                        type="submit" id="add-to-cart-button">
+                                        Thêm vào giỏ hàng
                                     </button>
                                 </form>
-
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
@@ -177,21 +142,11 @@
                 </div>
             </div>
         </div>
-
-        <div class="bg6 flex-c-m flex-w size-302 m-t-73 p-tb-15">
-            <span class="stext-107 cl6 p-lr-25">
-                SKU: JAK-01
-            </span>
-
-            <span class="stext-107 cl6 p-lr-25">
-                Categories: Jacket, Men
-            </span>
-        </div>
     </section>
 
 
     <!-- Related Products -->
-    <section class="sec-relate-product bg0 p-t-45 p-b-105">
+    {{-- <section class="sec-relate-product bg0 p-t-45 p-b-105">
         <div class="container">
             <div class="p-b-45">
                 <h3 class="ltext-106 cl5 txt-center">
@@ -201,7 +156,7 @@
 
             @include('customer.slide')
         </div>
-    </section>
+    </section> --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let selectedSize = null;
@@ -209,89 +164,59 @@
 
             const sizeButtons = document.querySelectorAll('.size-button');
             const colorButtons = document.querySelectorAll('.color-button');
-            const productDetails = document.querySelectorAll('.product-detail-item');
-            const productImages = document.querySelectorAll('.product-image');
+            const productDetailItems = document.querySelectorAll('.product-detail-item');
+            const cartForm = document.getElementById('cart-form');
+            const numProductInput = document.getElementById('num_product');
+
+            function updateProductDetails() {
+                let matchingProductDetail = null;
+
+                if (selectedSize && selectedColor) {
+                    productDetailItems.forEach(item => {
+                        const itemSize = item.getAttribute('data-size');
+                        const itemColor = item.getAttribute('data-color');
+
+                        if (itemSize === selectedSize && itemColor === selectedColor) {
+                            matchingProductDetail = item;
+                        }
+                    });
+                }
+
+                if (matchingProductDetail) {
+                    const productDetailId = matchingProductDetail.querySelector('.product-detail-id').value;
+                    cartForm.action = `/customer/product/${productDetailId}`;
+                } else {
+                    cartForm.action = ''; // Clear the action if no matching product detail is found
+                }
+            }
 
             sizeButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    selectedSize = this.getAttribute('data-size');
-                    filterProductDetails();
+                button.addEventListener('click', () => {
+                    sizeButtons.forEach(btn => btn.classList.remove('selected'));
+                    button.classList.add('selected');
+                    selectedSize = button.getAttribute('data-size');
+                    updateProductDetails();
                 });
             });
 
             colorButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    selectedColor = this.getAttribute('data-color');
-                    filterProductDetails();
+                button.addEventListener('click', () => {
+                    colorButtons.forEach(btn => btn.classList.remove('selected'));
+                    button.classList.add('selected');
+                    selectedColor = button.getAttribute('data-color');
+                    updateProductDetails();
                 });
             });
 
-            function filterProductDetails() {
-                if (selectedSize && selectedColor) {
-                    let matchingDetailId = null;
-
-                    productDetails.forEach(detail => {
-                        const size = detail.getAttribute('data-size');
-                        const color = detail.getAttribute('data-color');
-                        if (size === selectedSize && color === selectedColor) {
-                            matchingDetailId = detail.getAttribute('data-id');
-                        }
-                    });
-
-                    if (matchingDetailId) {
-                        productImages.forEach(img => {
-                            const imgDetailId = img.parentElement.getAttribute('data-product-detail-id');
-                            if (imgDetailId === matchingDetailId) {
-                                img.style.display = 'block';
-                            } else {
-                                img.style.display = 'none';
-                            }
-                        });
-                    }
+            cartForm.addEventListener('submit', function(event) {
+                if (!selectedSize || !selectedColor || !cartForm.action) {
+                    event.preventDefault();
+                    alert('Vui lòng chọn cả kích thước và màu sắc.');
+                } else {
+                    numProductInput.value = document.querySelector('.num-product').value;
                 }
-            }
+            });
         });
-
-        // sizeButtons.forEach(button => {
-        //     button.addEventListener('click', function() {
-        //         // Clear active states
-        //         sizeButtons.forEach(btn => btn.classList.remove('active'));
-        //         colorButtons.forEach(btn => btn.classList.remove('active'));
-        //         colorButtons.forEach(btn => btn.classList.add('disabled'));
-
-        //         // Set active state for selected size
-        //         this.classList.add('active');
-
-        //         // Get selected size
-        //         const selectedSize = this.getAttribute('data-size');
-
-        //         // Filter available colors based on selected size
-        //         const availableColors = new Set();
-        //         productDetails.forEach(detail => {
-        //             if (detail.getAttribute('data-size') === selectedSize) {
-        //                 availableColors.add(detail.getAttribute('data-color'));
-        //             }
-        //         });
-
-        //         // Enable available color buttons
-        //         colorButtons.forEach(button => {
-        //             if (availableColors.has(button.getAttribute('data-color'))) {
-        //                 button.classList.remove('disabled');
-        //             }
-        //         });
-        //     });
-        // });
-
-        // colorButtons.forEach(button => {
-        //     button.addEventListener('click', function() {
-        //         if (!this.classList.contains('disabled')) {
-        //             // Clear active states
-        //             colorButtons.forEach(btn => btn.classList.remove('active'));
-        //             // Set active state for selected color
-        //             this.classList.add('active');
-        //         }
-        //     });
-        // });
     </script>
 @endsection
 <style>
@@ -413,5 +338,58 @@
 
     .js-addcart-detail:hover {
         background-color: #555;
+    }
+
+    /* sản phẩm image */
+    .product-view {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .large-image-container {
+        width: 70%;
+        text-align: center;
+    }
+
+    .large-image-container img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .thumbnail-container {
+        width: 25%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .thumbnail img {
+        width: 100%;
+        cursor: pointer;
+        border: 2px solid transparent;
+    }
+
+    .thumbnail img:hover,
+    .thumbnail img.active {
+        border-color: #333;
+    }
+
+    /* trạng thái chọn size vs color */
+    /* .size-button.active,
+    .color-button.active {
+        border: 2px solid #333;
+        background-color: #e62a2a;
+    } */
+
+    .hidden {
+        display: none;
+    }
+
+    .size-button.selected,
+    .color-button.selected {
+        background-color: #ffcc00;
+        /* Màu tô khi được chọn */
+        border: 1px solid #000;
+        /* Tùy chọn: Thêm viền cho các nút được chọn */
     }
 </style>

@@ -1,75 +1,88 @@
 <!-- Header -->
 <header>
     <!-- Header desktop -->
-    <div class="container-menu-desktop">
-        <div class="wrap-menu-desktop" style="background-color: #e0f7fa">
-            <nav class="limiter-menu-desktop container">
-                <!-- Logo desktop -->
-                <a href="{{ route('customer-home') }}" class="logo">
-                    <img src="{{ asset('assets/images/logo-header.png') }}" alt="IMG-LOGO">
-                </a>
+    {{-- <div class="container-menu-desktop"> --}}
+    <div class="wrap-menu-desktop" style="background-color: #e0f7fa">
+        <nav class="limiter-menu-desktop container">
+            <!-- Logo desktop -->
+            <a href="{{ route('customer-home') }}" class="logo">
+                <img src="{{ asset('assets/images/logo-header.png') }}" alt="IMG-LOGO">
+            </a>
 
-                <!-- Menu desktop -->
-                <div class="menu-desktop">
+            <!-- Menu desktop -->
+            <div class="menu-desktop">
+                <ul class="main-menu">
+                    <li class="active-menu">
+                        <a href="{{ route('customer-home') }}">
+                            <h5>Trang chủ</h5>
+                        </a>
+                    </li>
+                    <li class="label1" data-label1="hot">
+                        <a href="{{ route('customer-product') }}">
+                            <h5>Danh mục sản phẩm</h5>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('customer-shopping-cart') }}">
+                            <h5>Giỏ hàng</h5>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Icon header -->
+            <div class="wrap-icon-header flex-w flex-r-m">
+                <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+                    <i class="zmdi zmdi-search js-show-input-search"></i>
+                    <div class="input-search-header" style="display: none;">
+                        <form action="#" method="get">
+                            <input class="form-control" type="text" name="search" placeholder="Tìm kiếm...">
+                        </form>
+                    </div>
+                </div>
+                <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
+                    data-notify="2">
+                    <i class="zmdi zmdi-shopping-cart"></i>
+                </div>
+                <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
                     <ul class="main-menu">
                         <li class="active-menu">
-                            <a href="{{ route('customer-home') }}">
-                                <h4>Trang chủ</h4>
-                            </a>
-                        </li>
-                        <li class="label1" data-label1="hot">
-                            <a href="{{ route('customer-product') }}">
-                                <h4>Danh mục sản phẩm</h4>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('customer-shopping-cart') }}">
-                                <h4>Giỏ hàng</h4>
-                            </a>
+                            <i class="zmdi zmdi-account"></i>
+                            @if (Auth::check())
+                                <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
+                            @endif
+                            <ul class="sub-menu">
+                                @if (Auth::check())
+                                    <li><a href="{{ route('customer-account') }}">Tài khoản</a></li>
+                                    <li><a href="{{ route('customer-logout') }}">Đăng xuất</a></li>
+                                @else
+                                    <li><a href="{{ route('customer-login') }}">Đăng nhập</a></li>
+                                @endif
+                            </ul>
                         </li>
                     </ul>
                 </div>
 
-                <!-- Icon header -->
-                <div class="wrap-icon-header flex-w flex-r-m">
-                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-                        <i class="zmdi zmdi-search js-show-input-search"></i>
-                        <div class="input-search-header" style="display: none;">
-                            <form action="#" method="get">
-                                <input class="form-control" type="text" name="search" placeholder="Tìm kiếm...">
-                            </form>
-                        </div>
-                    </div>
-                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
-                        data-notify="2">
-                        <i class="zmdi zmdi-shopping-cart"></i>
-                    </div>
-                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-                        <ul class="main-menu">
-                            <li class="active-menu">
-                                <i class="zmdi zmdi-account"></i>
-                                @if (Auth::check())
-                                    <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
-                                @endif
-                                <ul class="sub-menu">
-                                    @if (Auth::check())
-                                        <li><a href="{{ route('customer-account') }}">Tài khoản</a></li>
-                                        <li><a href="{{ route('customer-logout') }}">Đăng xuất</a></li>
-                                    @else
-                                        <li><a href="{{ route('customer-login') }}">Đăng nhập</a></li>
-                                    @endif
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-            </nav>
-        </div>
+            </div>
+        </nav>
     </div>
+    {{-- </div> --}}
 </header>
 
 <style>
+    header {
+        /* position: fixed; */
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        /* Đảm bảo header hiển thị trên mọi phần tử khác */
+        background-color: #e0f7fa;
+        /* Màu nền của header */
+        padding: 10px 0;
+        /* Điều chỉnh padding theo ý của bạn */
+    }
+
     /* Make the logo image clearer */
     .logo img {
         max-height: 80px;
