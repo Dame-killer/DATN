@@ -7,9 +7,6 @@
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Quản Lý Đơn Hàng</h6>
-                        {{-- <button type="button" class="btn btn-primary btn-sm" id="quickApproveButton">
-                            Duyệt Nhanh
-                        </button> --}}
                     </div>
                     <div class="search-container">
                         <form class="d-flex align-items-center search-bar" method="GET"
@@ -74,7 +71,9 @@
                                         class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Trạng Thái
                                     </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Thao tác</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Thao tác
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -154,6 +153,10 @@
                                                     data-id="{{ $order->id }}">
                                                 Hủy
                                             </button>
+                                            <a href="{{ route('admin-order-invoice', $order->id) }}"
+                                               class="btn btn-primary btn-sm mb-2">
+                                                In Hóa Đơn
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -288,4 +288,18 @@ class OrderController extends Controller
             return redirect()->back()->with('error', 'Đã xảy ra lỗi khi hủy đơn hàng: ' . $e->getMessage());
         }
     }
+
+    public function printInvoice($order)
+    {
+        $orders = Order::with('paymentMethod', 'user')->findOrFail($order);
+        $orderDetails = OrderDetail::with('productDetail', 'productDetail.product', 'productDetail.size', 'productDetail.color')->where('order_id', $order)->get();
+        $totalPrice = 0;
+
+        foreach ($orderDetails as $orderDetail) {
+            $orderDetail->totalPricePerProduct = $orderDetail->unit_price * $orderDetail->amount;
+            $totalPrice += $orderDetail->totalPricePerProduct;
+        }
+
+        return view('admin.order.invoice', compact('orders', 'orderDetails', 'totalPrice'));
+    }
 }
