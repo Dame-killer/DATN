@@ -207,7 +207,8 @@
                     <form id="trackingCodeForm">
                         <div class="mb-3">
                             <label for="trackingCode" class="form-label">Mã Vận Đơn</label>
-                            <input type="text" class="form-control" id="trackingCode" name="tracking_code" required>
+                            <input type="text" class="form-control" id="trackingCode" name="tracking_code"
+                                   placeholder="Nhập Mã Vận Đơn" required>
                         </div>
                         <input type="hidden" id="orderId" name="order_id">
                         <input type="hidden" id="orderStatus" name="status">
