@@ -104,7 +104,7 @@
         </div>
         <div class="payment-info">
             <div>Phương Thức Thanh Toán: {{ $orders->paymentMethod->name }}</div>
-            <div>Mã Vận Đơn: {{ $orders->tracking_code }}</div>
+            <div>Mã Vận Đơn: {{ $orders->tracking_code ?? 'N/A' }}</div>
         </div>
         <div class="information">
             <table class="m-2">
@@ -119,19 +119,21 @@
                 @foreach ($orderDetails as $orderDetail)
                     <tr class="item">
                         <td>{{ $orderDetail->productDetail->product->code }} -
-                            {{ $orderDetail->productDetail->product->name }}</td>
+                            {{ $orderDetail->productDetail->product->name }}
+                        </td>
                         <td>{{ $orderDetail->productDetail->size->size_name }} -
-                            {{ $orderDetail->productDetail->size->size_number }}</td>
+                            {{ $orderDetail->productDetail->size->size_number }}
+                        </td>
                         <td>{{ $orderDetail->productDetail->color->name }}</td>
-                        <td>{{ number_format($orderDetail->unit_price) }} VNĐ</td>
+                        <td>{{ number_format($orderDetail->unit_price) }}VNĐ</td>
                         <td>{{ $orderDetail->amount }}</td>
-                        <td>{{ number_format($orderDetail->totalPricePerProduct) }} VNĐ</td>
+                        <td>{{ number_format($orderDetail->totalPricePerProduct) }}VNĐ</td>
                     </tr>
                 @endforeach
                 <tr class="total">
                     <td colspan="4"></td>
                     <td>Tổng Cộng</td>
-                    <td>{{ number_format($totalPrice) }} VNĐ</td>
+                    <td>{{ number_format($totalPrice) }}VNĐ</td>
                 </tr>
             </table>
         </div>
