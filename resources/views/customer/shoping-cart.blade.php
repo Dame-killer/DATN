@@ -62,11 +62,11 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <p class="text-right font-weight-bold mb-0">{{ $order_detail->unit_price }}đ</p>
+                                        <p class="text-right font-weight-bold mb-0">{{ number_format($order_detail->unit_price) }}đ</p>
                                     </td>
                                     <td>
                                         <p class="text-right font-weight-bold mb-0 total-price-per-product">
-                                            {{ $order_detail->totalPricePerProduct }}đ</p>
+                                            {{ number_format($order_detail->totalPricePerProduct) }}đ</p>
                                     </td>
                                     <td class="text-right">
                                         <form
@@ -93,7 +93,7 @@
                         </div>
                         <div class="size-209">
                             <span class="mtext-110 cl2" id="total-price">
-                                {{ $totalPrice }}đ
+                                {{ number_format($totalPrice) }}đ
                             </span>
                         </div>
                     </div>
