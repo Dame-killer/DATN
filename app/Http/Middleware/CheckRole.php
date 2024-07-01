@@ -13,6 +13,6 @@ class CheckRole
             return $next($request);
         }
 
-        abort(403, 'Trang web không tòn tại');
+        abort(403, 'Trang web không tồn tại!');
     }
 }

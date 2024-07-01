@@ -28,13 +28,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     if (Auth::check()) {
-        if (Auth::user()->role == 1) {
-            return redirect()->route('admin-home');
-        } else {
+        if (Auth::user()->role == 0) {
             return redirect()->route('customer-home');
+        } else {
+            return redirect()->route('admin-home');
         }
     } else {
-        return redirect()->route('customer-home'); // Nếu chưa đăng nhập, mặc định chuyển hướng đến trang customer-home
+        return redirect()->route('login'); // Nếu chưa đăng nhập, mặc định chuyển hướng đến trang customer-home
     }
 });
 

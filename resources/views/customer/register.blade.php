@@ -1,7 +1,7 @@
 @extends('customer.index')
 
 @section('content')
-    <div class="col-md-6">
+    <div class="col-md-6 mt-6">
         <div class="card mb-4 mx-4">
             <div class="card-body p-4">
                 <h1>Đăng ký</h1>

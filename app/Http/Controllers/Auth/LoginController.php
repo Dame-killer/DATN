@@ -40,6 +40,16 @@ class LoginController extends Controller
          $this->middleware('guest')->except('logout');
      }
 
+    protected function authenticated(Request $request, $user)
+    {
+        if ($user->role == 0) {
+            Auth::logout();
+            return redirect()->route('login')->withErrors([
+                'email' => 'Email hoặc mật khẩu không đúng',
+            ]);
+        }
+    }
+
     // GET: /admin/login
     // function viewLoginForm()
     // {

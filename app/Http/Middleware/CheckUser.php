@@ -17,7 +17,7 @@ class CheckUser
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::guard('user')->check() == false){
-            return redirect()->route('home');
+            return redirect()->route('login');
         }
         return $next($request);
     }

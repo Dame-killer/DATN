@@ -11,7 +11,7 @@
                 <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
             </a>
 
-            <span class="stext-109 cl4">
+            <span class="stext-109 cl4 mb-3">
                 Đăng nhập
             </span>
         </div>
@@ -60,6 +60,7 @@
                                 <button class="btn btn-dark btn-lg" type="submit">Đăng nhập</button>
                             </div>
                         </div>
+                        <a href="{{ route('customer-register') }}">Chưa có tài khoản</a>
                     </form>
                 </div>
             </div>
