@@ -42,6 +42,12 @@
         margin-bottom: 20px;
     }
 
+    .invoice-box .payment-info {
+        /* display: flex;
+        justify-content: space-between; */
+        margin-bottom: 20px;
+    }
+
     .invoice-box .information .receiver-info,
     .invoice-box .information .customer-account {
         width: 45%;
@@ -94,17 +100,17 @@
         </div>
         <div class="information">
             <div class="receiver-info">
-                <div>Người Nhận: {{ $orders->receiver }}</div>
-                <div>Địa chỉ: {{ $orders->address }}</div>
-                <div>Số điện thoại: {{ $orders->phone }}</div>
+                <span class="label">Người Nhận: </span>{{ $orders->receiver }}<br>
+                <span class="label">Địa chỉ: </span>{{ $orders->address }}<br>
+                <span class="label">Số điện thoại: </span>{{ $orders->phone }}
             </div>
             <div class="customer-account">
-                <div>Tài Khoản Khách Hàng: {{ $orders->user ? $orders->user->email : 'N/A' }}</div>
+                <span class="label">Tài Khoản Khách Hàng:</span>{{ $orders->user ? $orders->user->email : 'N/A' }}
             </div>
         </div>
         <div class="payment-info">
-            <div>Phương Thức Thanh Toán: {{ $orders->paymentMethod->name }}</div>
-            <div>Mã Vận Đơn: {{ $orders->tracking_code ?? 'N/A' }}</div>
+            <span class="label">Phương Thức Thanh Toán: </span>{{ $orders->paymentMethod->name }}<br>
+            <span class="label">Mã Vận Đơn: </span>{{ $orders->tracking_code ?? 'N/A' }}
         </div>
         <div class="information">
             <table class="m-2">
