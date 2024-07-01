@@ -1,0 +1,18 @@
+
+Ngân hàng	NCB
+Số thẻ	9704198526191432198
+Tên chủ thẻ	NGUYEN VAN A
+Ngày phát hành	07/15
+Mật khẩu OTP	123456
+
+Terminal ID / Mã Website (vnp_TmnCode): ONHK27YO
+
+Secret Key / Chuỗi bí mật tạo checksum (vnp_HashSecret): HX4UTYXJJAVGUIYTF9EY0RFDBT8N6M5V
+
+
+Thông tin cấu hình:
+Terminal ID / Mã Website (vnp_TmnCode): BZMPCP5D
+
+Secret Key / Chuỗi bí mật tạo checksum (vnp_HashSecret): GLGL7DE370Z3GC653WDWQOD9JDMU8EU9
+
+Url thanh toán môi trường TEST (vnp_Url): https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
