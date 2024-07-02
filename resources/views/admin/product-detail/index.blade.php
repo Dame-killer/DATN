@@ -42,7 +42,7 @@
                                             <td>
                                                 <div class="d-flex px-2 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
+                                                        <h6 class="mb-0 text-sm ms-2">{{ $loop->iteration }}</h6>
                                                     </div>
                                                 </div>
                                             </td>
@@ -53,7 +53,7 @@
                                             <td>
                                                 <p class="text-xs font-weight-bold mb-0">{{ $product_detail->color->name }}</p>
                                                 <div
-                                                    style="width: 20px; height: 20px; background-color: {{ $product_detail->color->code }};">
+                                                    style="width: 20px; height: 20px; background-color: {{ $product_detail->color->code }}; border: 1px solid #000;">
                                                 </div>
                                             </td>
                                             <td>
@@ -206,7 +206,8 @@
                     Bạn có chắc chắn muốn xóa sản phẩm chi tiết này không?
                 </div>
                 <div class="modal-footer">
-                    <form action="{{ route('product_details.destroy', '') }}" id="deleteProductDetailForm" method="POST">
+                    <form action="{{ route('product_details.destroy', '') }}" id="deleteProductDetailForm"
+                          method="POST">
                         @method('DELETE')
                         @csrf
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>

@@ -20,8 +20,7 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         STT
                                     </th>
-                                    <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Kích Cỡ
                                     </th>
                                     <th class="text-secondary opacity-7"></th>
@@ -33,7 +32,7 @@
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">
+                                                    <h6 class="mb-0 text-sm ms-2">
                                                         {{ ($sizes->currentPage() - 1) * $sizes->perPage() + $loop->iteration }}
                                                     </h6>
                                                 </div>
@@ -41,7 +40,7 @@
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">
-                                                {{ $size->size_name }}-{{ $size->size_number }}</p>
+                                                {{ $size->size_name }} - {{ $size->size_number }}</p>
                                         </td>
                                         <td class="align-middle">
                                             <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
