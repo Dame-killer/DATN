@@ -42,7 +42,7 @@ Route::get('/', function () {
 Auth::routes();
 //ADMIN
 Route::middleware('auth', 'web', 'role:1,2')->group(function () {
-    Route::get('/admin/home', function () { return view('admin/home'); })->name('admin-home');
+    Route::get('/admin/home', [HomeController::class, 'dashboard'])->name('admin-home');
     Route::get('/admin/order', [OrderController::class, 'index'])->name('admin-order');
     Route::get('/admin/order/{order_detail}', [OrderDetailController::class, 'show'])->name('admin-order-detail');
     Route::post('/admin/order/quick-approve', [OrderController::class, 'quickApprove'])->name('admin-orders-quick-approve');

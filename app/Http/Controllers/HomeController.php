@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -25,6 +28,70 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+
+    public function dashboard()
+    {
+        $currentMonth = Carbon::now()->month;
+        $lastMonth = Carbon::now()->subMonth()->month;
+
+        // Total monthly revenue for the current month
+        $totalRevenue = DB::table('order_details')
+            ->join('orders', 'order_details.order_id', '=', 'orders.id')
+            ->whereMonth('orders.order_date', $currentMonth)
+            ->sum(DB::raw('order_details.unit_price * order_details.amount'));
+
+        // Total monthly revenue for the last month
+        $lastMonthRevenue = DB::table('order_details')
+            ->join('orders', 'order_details.order_id', '=', 'orders.id')
+            ->whereMonth('orders.order_date', $lastMonth)
+            ->sum(DB::raw('order_details.unit_price * order_details.amount'));
+
+        // Total number of sold products in the current month
+        $totalSoldProducts = DB::table('order_details')
+            ->join('orders', 'order_details.order_id', '=', 'orders.id')
+            ->whereMonth('orders.order_date', $currentMonth)
+            ->sum('order_details.amount');
+
+        // Total number of sold products in the last month
+        $lastMonthSoldProducts = DB::table('order_details')
+            ->join('orders', 'order_details.order_id', '=', 'orders.id')
+            ->whereMonth('orders.order_date', $lastMonth)
+            ->sum('order_details.amount');
+
+        // Total number of completed orders in the current month
+        $completedOrders = DB::table('orders')
+            ->whereMonth('order_date', $currentMonth)
+            ->where('status', 3)
+            ->count();
+
+        // Total number of completed orders in the last month
+        $lastMonthCompletedOrders = DB::table('orders')
+            ->whereMonth('order_date', $lastMonth)
+            ->where('status', 3)
+            ->count();
+
+        // Total number of canceled orders in the current month
+        $canceledOrders = DB::table('orders')
+            ->whereMonth('order_date', $currentMonth)
+            ->where('status', 4)
+            ->count();
+
+        // Total number of canceled orders in the last month
+        $lastMonthCanceledOrders = DB::table('orders')
+            ->whereMonth('order_date', $lastMonth)
+            ->where('status', 4)
+            ->count();
+
+        // Calculate percentage changes
+        $revenueChange = $lastMonthRevenue ? (($totalRevenue - $lastMonthRevenue) / $lastMonthRevenue) * 100 : 0;
+        $soldProductsChange = $lastMonthSoldProducts ? (($totalSoldProducts - $lastMonthSoldProducts) / $lastMonthSoldProducts) * 100 : 0;
+        $completedOrdersChange = $lastMonthCompletedOrders ? (($completedOrders - $lastMonthCompletedOrders) / $lastMonthCompletedOrders) * 100 : 0;
+        $canceledOrdersChange = $lastMonthCanceledOrders ? (($canceledOrders - $lastMonthCanceledOrders) / $lastMonthCanceledOrders) * 100 : 0;
+
+        return view('admin.home', compact('totalRevenue', 'totalSoldProducts', 'completedOrders', 'canceledOrders',
+            'revenueChange', 'soldProductsChange', 'completedOrdersChange', 'canceledOrdersChange'));
+    }
+
     public function indexCustomer()
     {
         $products = Product::all();
@@ -63,6 +130,7 @@ class HomeController extends Controller
 
         return view('customer.home')->with(compact('products', 'categories', 'brands', 'order_details', 'totalPrice'));
     }
+
     public function acount()
     {
         return redirect()->route('acount');

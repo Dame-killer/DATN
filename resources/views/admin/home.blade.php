@@ -8,11 +8,13 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Today's Money</p>
-                                    <h5 class="font-weight-bolder">$53,000</h5>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Doanh Thu</p>
+                                    <h5 class="font-weight-bolder">{{ number_format($totalRevenue) }} VNĐ</h5>
                                     <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+55%</span>
-                                        since yesterday
+                                        <span class="text-{{ $revenueChange >= 0 ? 'success' : 'danger' }} text-sm font-weight-bolder">
+                                            {{ $revenueChange >= 0 ? '+' : '' }}{{ number_format($revenueChange, 2) }}%
+                                        </span>
+                                        kể từ tháng trước
                                     </p>
                                 </div>
                             </div>
@@ -31,11 +33,13 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Today's Users</p>
-                                    <h5 class="font-weight-bolder">2,300</h5>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Sản Phẩm Đã Bán</p>
+                                    <h5 class="font-weight-bolder">{{ $totalSoldProducts }}</h5>
                                     <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+3%</span>
-                                        since last week
+                                        <span class="text-{{ $soldProductsChange >= 0 ? 'success' : 'danger' }} text-sm font-weight-bolder">
+                                            {{ $soldProductsChange >= 0 ? '+' : '' }}{{ number_format($soldProductsChange, 2) }}%
+                                        </span>
+                                        kể từ tháng trước
                                     </p>
                                 </div>
                             </div>
@@ -54,11 +58,13 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">New Clients</p>
-                                    <h5 class="font-weight-bolder">+3,462</h5>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Order Hoàn Thành</p>
+                                    <h5 class="font-weight-bolder">{{ $completedOrders }}</h5>
                                     <p class="mb-0">
-                                        <span class="text-danger text-sm font-weight-bolder">-2%</span>
-                                        since last quarter
+                                        <span class="text-{{ $completedOrdersChange >= 0 ? 'success' : 'danger' }} text-sm font-weight-bolder">
+                                            {{ $completedOrdersChange >= 0 ? '+' : '' }}{{ number_format($completedOrdersChange, 2) }}%
+                                        </span>
+                                        kể từ tháng trước
                                     </p>
                                 </div>
                             </div>
@@ -77,11 +83,13 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Sales</p>
-                                    <h5 class="font-weight-bolder">$103,430</h5>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Order Hủy</p>
+                                    <h5 class="font-weight-bolder">{{ $canceledOrders }}</h5>
                                     <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+5%</span>
-                                        than last month
+                                        <span class="text-{{ $canceledOrdersChange >= 0 ? 'success' : 'danger' }} text-sm font-weight-bolder">
+                                            {{ $canceledOrdersChange >= 0 ? '+' : '' }}{{ number_format($canceledOrdersChange, 2) }}%
+                                        </span>
+                                        kể từ tháng trước
                                     </p>
                                 </div>
                             </div>
