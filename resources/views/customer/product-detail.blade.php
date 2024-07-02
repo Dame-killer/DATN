@@ -28,86 +28,80 @@
             <div class="row">
                 <div class="col-md-6 col-lg-7 p-b-30">
                     <div class="p-l-25 p-r-30 p-lr-0-lg">
-                        <div class="wrap-slick3 flex-sb flex-w">
-                            {{-- <div class="wrap-slick3-dots"> --}}
-                            <div class="product-view">
-                                <div class="large-image-container">
-                                    <!-- Ảnh phóng to hiển thị ở đây -->
-                                    <img id="largeImage" src="{{ asset('storage/' . $imageProducts->first()->url) }}"
-                                        alt="Large Product Image">
-                                </div>
-                            </div>
+                        <div class="large-image-container">
+                            <!-- Ảnh phóng to hiển thị ở đây -->
+                            <img id="largeImage" src="{{ asset('storage/' . $imageProducts->first()->url) }}"
+                                alt="Large Product Image">
                         </div>
                     </div>
                 </div>
 
                 <div class="col-md-6 col-lg-5 p-b-30 product-detail-container">
-                    <div class="p-r-50 p-t-5 p-lr-0-lg">
-                        <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                            {{ $products->name }}
-                        </h4>
-                        <div class="product-detail">
-                            Size:
-                            <div class="product-size">
-                                @php
-                                    $availableSizes = $product_details->pluck('size.size_name')->unique();
-                                @endphp
-                                @foreach ($availableSizes as $size)
-                                    <button class="btn btn-primary size-button" data-size="{{ $size }}">
-                                        {{ $size }}
-                                    </button>
-                                @endforeach
-                            </div>
-
-                            Màu sắc:
-                            <div class="product-color">
-                                @php
-                                    $availableColors = $product_details->pluck('color.name')->unique();
-                                @endphp
-                                @foreach ($availableColors as $color)
-                                    <button class="btn color-button" data-color="{{ $color }}">
-                                        {{ $color }}
-                                    </button>
-                                @endforeach
-                            </div>
-                        </div>
-
-                        <!-- Phần tử ẩn để lưu trữ sản phẩm chi tiết cho JavaScript sử dụng -->
-                        <div id="product-details" style="display: none;">
-                            @foreach ($product_details as $product_detail)
-                                <div class="product-detail-item" data-size="{{ $product_detail->size->size_name }}"
-                                    data-color="{{ $product_detail->color->name }}">
-                                    <input type="hidden" class="product-detail-id" value="{{ $product_detail->id }}">
-                                </div>
+                    {{-- <div class="p-r-50 p-t-5 p-lr-0-lg"> --}}
+                    <h4 class="mtext-105 cl2 js-name-detail p-b-14">
+                        {{ $products->name }}
+                    </h4>
+                    <div class="product-detail">
+                        Size:
+                        <div class="product-size">
+                            @php
+                                $availableSizes = $product_details->pluck('size.size_name')->unique();
+                            @endphp
+                            @foreach ($availableSizes as $size)
+                                <button class="btn btn-primary size-button" data-size="{{ $size }}">
+                                    {{ $size }}
+                                </button>
                             @endforeach
                         </div>
 
-                        <div class="flex-w d-flex p-b-10">
-                            <div class="size-204 flex-w flex-m respon6-next">
-                                <div class="wrap-num-product flex-w m-r-20 m-tb-10">
-                                    <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-                                        <i class="fs-16 zmdi zmdi-minus"></i>
-                                    </div>
-
-                                    <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product"
-                                        value="1">
-
-                                    <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-                                        <i class="fs-16 zmdi zmdi-plus"></i>
-                                    </div>
-                                </div>
-                                <form action="" method="POST" id="cart-form">
-                                    @csrf
-                                    <input type="hidden" name="num_product" id="num_product" value="1">
-                                    <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04"
-                                        type="submit" id="add-to-cart-button">
-                                        Thêm vào giỏ hàng
-                                    </button>
-                                </form>
-                            </div>
+                        Màu sắc:
+                        <div class="product-color">
+                            @php
+                                $availableColors = $product_details->pluck('color.name')->unique();
+                            @endphp
+                            @foreach ($availableColors as $color)
+                                <button class="btn color-button" data-color="{{ $color }}">
+                                    {{ $color }}
+                                </button>
+                            @endforeach
                         </div>
                     </div>
 
+                    <!-- Phần tử ẩn để lưu trữ sản phẩm chi tiết cho JavaScript sử dụng -->
+                    <div id="product-details" style="display: none;">
+                        @foreach ($product_details as $product_detail)
+                            <div class="product-detail-item" data-size="{{ $product_detail->size->size_name }}"
+                                data-color="{{ $product_detail->color->name }}">
+                                <input type="hidden" class="product-detail-id" value="{{ $product_detail->id }}">
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="flex-w d-flex p-b-12">
+                        <div class="size-204 flex-w flex-m respon6-next">
+                            <div class="wrap-num-product flex-w m-r-20 m-tb-10">
+                                <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+                                    <i class="fs-16 zmdi zmdi-minus"></i>
+                                </div>
+
+                                <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product"
+                                    value="1">
+
+                                <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+                                    <i class="fs-16 zmdi zmdi-plus"></i>
+                                </div>
+                            </div>
+                            <form action="" method="POST" id="cart-form">
+                                @csrf
+                                <input type="hidden" name="num_product" id="num_product" value="1">
+                                <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04"
+                                    type="submit" id="add-to-cart-button">
+                                    Thêm vào giỏ hàng
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {{-- </div> --}}
                 </div>
             </div>
 
@@ -167,6 +161,7 @@
             const productDetailItems = document.querySelectorAll('.product-detail-item');
             const cartForm = document.getElementById('cart-form');
             const numProductInput = document.getElementById('num_product');
+            const numProductField = document.querySelector('.num-product');
 
             function updateProductDetails() {
                 let matchingProductDetail = null;
@@ -213,7 +208,8 @@
                     event.preventDefault();
                     alert('Vui lòng chọn cả kích thước và màu sắc.');
                 } else {
-                    numProductInput.value = document.querySelector('.num-product').value;
+                    // Cập nhật giá trị số lượng vào input ẩn trước khi gửi form
+                    numProductInput.value = numProductField.value;
                 }
             });
         });
@@ -294,6 +290,7 @@
 
     .product-detail-container {
         background-color: #f8f9fa;
+        max-height: 50%;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -347,13 +344,15 @@
     }
 
     .large-image-container {
-        width: 70%;
-        text-align: center;
+        width: 100%;
+        height: 80%;
+        overflow: hidden;
     }
 
     .large-image-container img {
-        max-width: 100%;
-        height: auto;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .thumbnail-container {

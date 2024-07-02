@@ -87,7 +87,7 @@ Route::get('/customer/product/{product_detail}', [ProductDetailController::class
 Route::post('/save-selection-to-session', [App\Http\Controllers\ProductDetailController::class, 'saveSelectionToSession'])->name('save-selection-to-session');
 
 Route::get('/cart', [OrderDetailController::class, 'cartCustomer'])->name('customer-shopping-cart');
-Route::post('/customer/product/{product_detail}', [OrderDetailController::class, 'addToCart'])->name('customer-cart-add');
+Route::post('/customer/product/{product_detail}', [OrderDetailController::class, 'addToCartCustomer'])->name('customer-cart-add');
 Route::post('/cart', [OrderController::class, 'storeCustomer'])->name('customer-cart-store');
 Route::delete('/customer/cart/{product_detail}', [OrderDetailController::class, 'removeFromCart'])->name('customer-cart-remove');
 Route::post('/cart/updated', [OrderDetailController::class, 'updateQuantity'])->name('customer-cart-updateQuantity');

@@ -225,6 +225,44 @@ class OrderDetailController extends Controller
 
         return redirect()->back()->with('success', 'Thêm sản phẩm vào giỏ hàng thành công!');
     }
+    public function addToCartCustomer(Request $request, ProductDetail $product_detail)
+    {
+        // Lấy số lượng sản phẩm từ request
+        $quantity = $request->input('num_product', 1);
+        $cart = session()->get('cart', []);
+
+        // Lấy thông tin chi tiết sản phẩm
+        $product = $product_detail->product;
+        $size = $product_detail->size;
+        $color = $product_detail->color;
+        $productDetailId = $product_detail->id;
+
+        if (isset($cart[$productDetailId])) {
+            // Nếu đã tồn tại, tăng số lượng lên
+            $cart[$productDetailId]['quantity'] += $quantity;
+        } else {
+            // Nếu chưa tồn tại, thêm sản phẩm mới vào giỏ hàng
+            $cart[$productDetailId] = [
+                'id' => $product_detail->id,
+                'name' => $product_detail->product->name,
+                'quantity' => $quantity,
+                'attributes' => [
+                    'product_code' => $product->code,
+                    'product_name' => $product->name,
+                    'product_image' => asset('storage/' . $product->image),
+                    'product_price' => $product->price,
+                    'size_name' => $size->size_name,
+                    'size_number' => $size->size_number,
+                    'color_name' => $color->name,
+                    'color_code' => $color->code
+                ]
+            ];
+        }
+
+        session()->put('cart', $cart);
+
+        return redirect()->back()->with('success', 'Thêm sản phẩm vào giỏ hàng thành công!');
+    }
 
     public function removeFromCart($product_detail)
     {
