@@ -103,5 +103,42 @@
                 </div>
             </div>
         </div>
+
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Doanh Thu Trong 6 Tháng Qua</h5>
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('revenueChart').getContext('2d');
+            var revenueChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: {!! json_encode(array_column($revenues, 'month')) !!},
+                    datasets: [{
+                        label: 'Doanh Thu (VNĐ)',
+                        data: {!! json_encode(array_column($revenues, 'revenue')) !!},
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

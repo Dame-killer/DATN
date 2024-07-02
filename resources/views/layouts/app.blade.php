@@ -173,6 +173,8 @@
         {{-- @include('layouts.footer') --}}
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!--   Core JS Files   -->
     <script src="../../js/core/bootstrap.min.js"></script>
     <script src="../../js/core/popper.min.js"></script>

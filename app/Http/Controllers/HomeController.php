@@ -31,6 +31,24 @@ class HomeController extends Controller
 
     public function dashboard()
     {
+        $revenues = [];
+
+        $months = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
+
+        for ($i = 5; $i >= 0; $i--) {
+            $month = Carbon::now()->subMonths($i)->month;
+            $year = Carbon::now()->subMonths($i)->year;
+            $revenue = DB::table('order_details')
+                ->join('orders', 'order_details.order_id', '=', 'orders.id')
+                ->whereMonth('orders.order_date', $month)
+                ->whereYear('orders.order_date', $year)
+                ->sum(DB::raw('order_details.unit_price * order_details.amount'));
+            $revenues[] = [
+                'month' => $months[$month - 1] . ' ' . $year,
+                'revenue' => $revenue
+            ];
+        }
+
         $currentMonth = Carbon::now()->month;
         $lastMonth = Carbon::now()->subMonth()->month;
 
@@ -88,7 +106,7 @@ class HomeController extends Controller
         $completedOrdersChange = $lastMonthCompletedOrders ? (($completedOrders - $lastMonthCompletedOrders) / $lastMonthCompletedOrders) * 100 : 0;
         $canceledOrdersChange = $lastMonthCanceledOrders ? (($canceledOrders - $lastMonthCanceledOrders) / $lastMonthCanceledOrders) * 100 : 0;
 
-        return view('admin.home', compact('totalRevenue', 'totalSoldProducts', 'completedOrders', 'canceledOrders',
+        return view('admin.home', compact('revenues', 'totalRevenue', 'totalSoldProducts', 'completedOrders', 'canceledOrders',
             'revenueChange', 'soldProductsChange', 'completedOrdersChange', 'canceledOrdersChange'));
     }
 
