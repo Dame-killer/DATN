@@ -293,7 +293,191 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
   background-color: #fff;
 }
 
+/* sản phẩm chi tiết radio */
+.custom-radio .custom-control-input:disabled:checked ~ .custom-control-label::before {
+    background-color: rgba(209, 156, 151, 0.5);
+}
 
+.custom-radio .custom-control-label::before {
+    border-radius: 50%;
+}
+
+/* image sản phẩm chi tiết */
+.carousel-item {
+    position: relative;
+    display: none;
+    float: left;
+    width: 100%;
+    margin-right: -100%;
+    backface-visibility: hidden;
+    transition: transform 0.6s ease-in-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-item {
+      transition: none;
+    }
+  }
+
+  .carousel-item.active,
+  .carousel-item-next,
+  .carousel-item-prev {
+    display: block;
+  }
+
+  .carousel-item-next:not(.carousel-item-left),
+  .active.carousel-item-right {
+    transform: translateX(100%);
+  }
+
+  .carousel-item-prev:not(.carousel-item-right),
+  .active.carousel-item-left {
+    transform: translateX(-100%);
+  }
+
+  .carousel-fade .carousel-item {
+    opacity: 0;
+    transition-property: opacity;
+    transform: none;
+  }
+
+  .carousel-fade .carousel-item.active,
+  .carousel-fade .carousel-item-next.carousel-item-left,
+  .carousel-fade .carousel-item-prev.carousel-item-right {
+    z-index: 1;
+    opacity: 1;
+  }
+
+  .carousel-fade .active.carousel-item-left,
+  .carousel-fade .active.carousel-item-right {
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0s 0.6s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-fade .active.carousel-item-left,
+    .carousel-fade .active.carousel-item-right {
+      transition: none;
+    }
+  }
+
+  .container-fluid {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  @media (max-width: 575.98px) {
+    .container-fluid{
+        padding-right: 0;
+        padding-left: 0;
+    }
+  }
+  @media (max-width: 767.98px) {
+    .container-fluid{
+        padding-right: 0;
+        padding-left: 0;
+    }
+  }
+  @media (min-width: 576px){
+    .container-fluid{
+        flex-wrap: nowrap;
+    }
+  }
+  @media (min-width: 768px){
+    .container-fluid{
+        flex-wrap: nowrap;
+    }
+  }
+  .carousel-inner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+.carousel-inner::after {
+    display: block;
+    clear: both;
+    content: "";
+  }
+
+  .carousel-item {
+    position: relative;
+    display: none;
+    float: left;
+    width: 100%;
+    margin-right: -100%;
+    backface-visibility: hidden;
+    transition: transform 0.6s ease-in-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-item {
+      transition: none;
+    }
+  }
+
+  .carousel-item.active,
+  .carousel-item-next,
+  .carousel-item-prev {
+    display: block;
+  }
+
+  .carousel-item-next:not(.carousel-item-left),
+  .active.carousel-item-right {
+    transform: translateX(100%);
+  }
+
+  .carousel-item-prev:not(.carousel-item-right),
+  .active.carousel-item-left {
+    transform: translateX(-100%);
+  }
+
+  .carousel-fade .carousel-item {
+    opacity: 0;
+    transition-property: opacity;
+    transform: none;
+  }
+
+  .carousel-fade .carousel-item.active,
+  .carousel-fade .carousel-item-next.carousel-item-left,
+  .carousel-fade .carousel-item-prev.carousel-item-right {
+    z-index: 1;
+    opacity: 1;
+  }
+
+  .carousel-fade .active.carousel-item-left,
+  .carousel-fade .active.carousel-item-right {
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0s 0.6s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-fade .active.carousel-item-left,
+    .carousel-fade .active.carousel-item-right {
+      transition: none;
+    }
+  }
+  .bg-secondary {
+    background-color: #EDF1FF !important;
+  }
+
+  a.bg-secondary:hover, a.bg-secondary:focus,
+  button.bg-secondary:hover,
+  button.bg-secondary:focus {
+    background-color: #bac9ff !important;
+  }
+  .text-dark {
+    color: #1C1C1C !important;
+  }
+
+  a.text-dark:hover, a.text-dark:focus {
+    color: black !important;
+  }
 /*---------------------------------------------*/
 .limiter-menu-desktop {
   height: 100%;
@@ -1971,7 +2155,95 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #EDF1FF;
+    border-radius: 0;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
 
+  @media (prefers-reduced-motion: reduce) {
+    .form-control {
+      transition: none;
+    }
+  }
+
+  .form-control::-ms-expand {
+    background-color: transparent;
+    border: 0;
+  }
+
+  .form-control:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #495057;
+  }
+
+  .form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #f8f0ef;
+    outline: 0;
+    box-shadow: none;
+  }
+
+  .form-control::placeholder {
+    color: #999999;
+    opacity: 1;
+  }
+
+  .form-control:disabled, .form-control[readonly] {
+    background-color: #e9ecef;
+    opacity: 1;
+  }
+
+  input[type="date"].form-control,
+  input[type="time"].form-control,
+  input[type="datetime-local"].form-control,
+  input[type="month"].form-control {
+    appearance: none;
+  }
+
+  select.form-control:focus::-ms-value {
+    color: #495057;
+    background-color: #fff;
+  }
+
+  .form-control-file,
+  .form-control-range {
+    display: block;
+    width: 100%;
+  }
+
+  .font-weight-medium {
+    font-weight: 500;
+  }
+  .text-dark {
+    color: #1C1C1C !important;
+  }
+
+  a.text-dark:hover, a.text-dark:focus {
+    color: black !important;
+  }
+  .text-primary {
+    color: #D19C97 !important;
+  }
+
+  a.text-primary:hover, a.text-primary:focus {
+    color: #ba6a62 !important;
+  }
+
+  .font-weight-semi-bold {
+    font-weight: 600;
+  }
 /*//////////////////////////////////////////////////////////////////
 [ Block1 ]*/
 .block1 {
