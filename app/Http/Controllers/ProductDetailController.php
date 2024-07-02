@@ -69,21 +69,21 @@ class ProductDetailController extends Controller
     }
 
     public function showCustomer($id)
-{
-    $products = Product::findOrFail($id);
-    $sizes = Size::all();
-    $colors = Color::all();
-    // Lấy các chi tiết sản phẩm kèm theo thông tin về size và color
-    $product_details = ProductDetail::with('size', 'color')
-                                    ->where('product_id', $id)
-                                    ->get();
+    {
+        $products = Product::findOrFail($id);
+        $sizes = Size::all();
+        $colors = Color::all();
+        // Lấy các chi tiết sản phẩm kèm theo thông tin về size và color
+        $product_details = ProductDetail::with('size', 'color')
+            ->where('product_id', $id)
+            ->get();
 
-    // Lấy các hình ảnh sản phẩm dựa trên các chi tiết sản phẩm
-    $imageProducts = ImageProduct::whereIn('product_detail_id', $product_details->pluck('id')->toArray())
-                                  ->get();
+        // Lấy các hình ảnh sản phẩm dựa trên các chi tiết sản phẩm
+        $imageProducts = ImageProduct::whereIn('product_detail_id', $product_details->pluck('id')->toArray())
+            ->get();
 
-    return view('customer.product-detail', compact('products', 'sizes', 'colors', 'product_details', 'imageProducts'));
-}
+        return view('customer.product-detail', compact('products', 'sizes', 'colors', 'product_details', 'imageProducts'));
+    }
 
 
     /**
