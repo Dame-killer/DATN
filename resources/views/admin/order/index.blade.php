@@ -149,13 +149,15 @@
                                                     Cập Nhật
                                                 @endif
                                             </button>
-                                            <button class="btn btn-danger btn-sm mb-2 cancel-order-btn"
-                                                    data-bs-toggle="modal" data-bs-target="#cancelOrderModal"
-                                                    data-id="{{ $order->id }}">
-                                                Hủy
-                                            </button>
+                                            @if ($order->status < 2)
+                                                <button class="btn btn-danger btn-sm mb-2 cancel-order-btn"
+                                                        data-bs-toggle="modal" data-bs-target="#cancelOrderModal"
+                                                        data-id="{{ $order->id }}">
+                                                    Hủy
+                                                </button>
+                                            @endif
                                             <a href="{{ route('admin-order-invoice', $order->id) }}"
-                                               class="btn btn-primary btn-sm mb-2">
+                                               class="btn btn-success btn-sm mb-2">
                                                 In Hóa Đơn
                                             </a>
                                         </td>
