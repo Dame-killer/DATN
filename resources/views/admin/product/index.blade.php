@@ -343,6 +343,7 @@
         padding: 5px;
         margin-bottom: 10px;
         margin-left: 15px;
+        margin-right: 15px;
         background-color: #f8f9fa;
         /* Optional: Background color for the search bar container */
         border-radius: 8px;
