@@ -42,6 +42,7 @@ class HomeController extends Controller
                 ->join('orders', 'order_details.order_id', '=', 'orders.id')
                 ->whereMonth('orders.order_date', $month)
                 ->whereYear('orders.order_date', $year)
+                ->where('orders.status', 3)
                 ->sum(DB::raw('order_details.unit_price * order_details.amount'));
             $revenues[] = [
                 'month' => $months[$month - 1] . ' ' . $year,
@@ -56,24 +57,28 @@ class HomeController extends Controller
         $totalRevenue = DB::table('order_details')
             ->join('orders', 'order_details.order_id', '=', 'orders.id')
             ->whereMonth('orders.order_date', $currentMonth)
+            ->where('orders.status', 3)
             ->sum(DB::raw('order_details.unit_price * order_details.amount'));
 
         // Total monthly revenue for the last month
         $lastMonthRevenue = DB::table('order_details')
             ->join('orders', 'order_details.order_id', '=', 'orders.id')
             ->whereMonth('orders.order_date', $lastMonth)
+            ->where('orders.status', 3)
             ->sum(DB::raw('order_details.unit_price * order_details.amount'));
 
         // Total number of sold products in the current month
         $totalSoldProducts = DB::table('order_details')
             ->join('orders', 'order_details.order_id', '=', 'orders.id')
             ->whereMonth('orders.order_date', $currentMonth)
+            ->where('orders.status', 3)
             ->sum('order_details.amount');
 
         // Total number of sold products in the last month
         $lastMonthSoldProducts = DB::table('order_details')
             ->join('orders', 'order_details.order_id', '=', 'orders.id')
             ->whereMonth('orders.order_date', $lastMonth)
+            ->where('orders.status', 3)
             ->sum('order_details.amount');
 
         // Total number of completed orders in the current month

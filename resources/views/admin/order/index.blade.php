@@ -141,7 +141,8 @@
                                                 Chi Tiết
                                             </a>
                                             <button class="btn btn-warning btn-sm mb-2 approve-order-btn"
-                                                    data-id="{{ $order->id }}" data-status="{{ $order->status }}">
+                                                    data-id="{{ $order->id }}" data-status="{{ $order->status }}"
+                                                    data-payment-method-id="{{ $order->payment_method_id }}">
                                                 @if ($order->status == 0)
                                                     Duyệt
                                                 @else
@@ -265,8 +266,11 @@
                 button.addEventListener('click', function () {
                     const orderId = button.getAttribute('data-id')
                     const orderStatus = parseInt(button.getAttribute('data-status'))
+                    const paymentMethodId = parseInt(button.getAttribute('data-payment-method-id'))
 
-                    if (orderStatus === 1) {
+                    if (orderStatus === 1 && paymentMethodId === 1) {
+                        updateOrderStatus(orderId, orderStatus)
+                    } else if (orderStatus === 1) {
                         document.getElementById('orderId').value = orderId
                         document.getElementById('orderStatus').value = orderStatus
                         trackingCodeModal.show()
@@ -335,8 +339,11 @@
                     button.addEventListener('click', function () {
                         const orderId = button.getAttribute('data-id')
                         const orderStatus = parseInt(button.getAttribute('data-status'))
+                        const paymentMethodId = parseInt(button.getAttribute('data-payment-method-id'))
 
-                        if (orderStatus === 1) {
+                        if (orderStatus === 1 && paymentMethodId === 1) {
+                            updateOrderStatus(orderId, orderStatus)
+                        } else if (orderStatus === 1) {
                             document.getElementById('orderId').value = orderId
                             document.getElementById('orderStatus').value = orderStatus
                             trackingCodeModal.show()
