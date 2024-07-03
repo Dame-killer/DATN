@@ -1,1 +1,42 @@
 // Here you can add other styles
+.product-description {
+    position: relative;
+    max-width: 200px;
+    /* Giới hạn độ rộng tối đa của cột */
+    overflow: hidden;
+    /* Ẩn nội dung tràn */
+    white-space: nowrap;
+    /* Không xuống dòng */
+    text-overflow: ellipsis;
+    /* Thêm dấu ba chấm khi tràn */
+    cursor: pointer;
+    /* Thêm con trỏ chuột để chỉ ra rằng có thể di chuột vào */
+}
+
+.product-description::after {
+    content: attr(data-description);
+    display: none;
+    /* Ẩn tooltip mặc định */
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    bottom: 100%;
+    /* Hiển thị tooltip phía trên */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: normal;
+    max-width: 300px;
+    /* Giới hạn độ rộng của tooltip */
+    z-index: 1;
+    font-size: 12px;
+    /* Chỉnh cỡ chữ nhỏ hơn */
+    pointer-events: none;
+}
+
+.product-description:hover::after,
+.product-description:hover::before {
+    display: block;
+    /* Hiển thị tooltip và mũi tên khi di chuột vào */
+}

@@ -36,7 +36,6 @@
             <div class="col-lg-7 pb-5">
                 <h3 class="font-weight-semi-bold">{{ $products->name }} - {{ $products->code }}</h3><br>
                 <h4 class="font-weight-semi-bold mb-4">{{ $products->price }} VNĐ</h4>
-                <p class="mb-4">{{ $products->introduce }}</p>
                 <div class="product-detail">
                     <div class="d-flex mb-3">
                         <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
@@ -124,7 +123,10 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item p-b-10">
-                        <a class="nav-link active" data-toggle="tab" href="#description" role="tab">Description</a>
+                        <a class="nav-link active" data-toggle="tab" href="#description" role="tab">Mô tả sản phẩm</a>
+                    </li>
+                    <li class="nav-item p-b-10">
+                        <a class="nav-link" data-toggle="tab" href="#information" role="tab">Hướng dẫn bảo quản</a>
                     </li>
                 </ul>
 
@@ -134,19 +136,34 @@
                     <div class="tab-pane fade show active" id="description" role="tabpanel">
                         <div class="how-pos2 p-lr-15-md">
                             <p class="stext-102 cl6">
-                                Aenean sit amet gravida nisi. Nam fermentum est felis, quis feugiat nunc fringilla
-                                sit
-                                amet. Ut in blandit ipsum. Quisque luctus dui at ante aliquet, in hendrerit lectus
-                                interdum. Morbi elementum sapien rhoncus pretium maximus. Nulla lectus enim, cursus
-                                et
-                                elementum sed, sodales vitae eros. Ut ex quam, porta consequat interdum in, faucibus
-                                eu
-                                velit. Quisque rhoncus ex ac libero varius molestie. Aenean tempor sit amet orci nec
-                                iaculis. Cras sit amet nulla libero. Curabitur dignissim, nunc nec laoreet
-                                consequat,
-                                purus nunc porta lacus, vel efficitur tellus augue in ipsum. Cras in arcu sed metus
-                                rutrum iaculis. Nulla non tempor erat. Duis in egestas nunc.
+                                {{ $products->name }} - {{ $products->code }}
                             </p>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="information" role="tabpanel">
+                        <div class="row">
+                            <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
+                                <ul class="p-lr-28 p-lr-15-sm">
+                                    <li class="flex-w flex-t p-b-7">
+                                        <span class="stext-102 cl3 size-205">
+                                            Giặt máy ở nhiệt độ dưới 30°C
+                                        </span>
+                                    </li>
+
+                                    <li class="flex-w flex-t p-b-7">
+                                        <span class="stext-102 cl3 size-205">
+                                            Tránh sử dụng chất tẩy mạnh
+                                        </span>
+                                    </li>
+
+                                    <li class="flex-w flex-t p-b-7">
+                                        <span class="stext-102 cl3 size-205">
+                                            Phơi nơi thoáng mát, tránh ánh nắng trực tiếp
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -78,18 +78,19 @@
                                                     alt="{{ $order_detail->product_detail->product->name }}"
                                                     class="img-fluid" style="width: 50px; height: 50px;">
                                             </td>
-                                            <td>
-                                                <div class="d-flex align-items-center">
+                                            <td class="align-middle quantity-column">
+                                                <div class="justify-content-center">
+                                                    {{-- <td class="quantity-column"> --}}
                                                     <button class="btn btn-sm btn-warning update-quantity"
                                                         data-id="{{ $order_detail->product_detail->id }}"
-                                                        data-action="decrease">-
-                                                    </button>
-                                                    <p class="text-xs font-weight-bold mb-0 mx-2">
-                                                        {{ $order_detail->amount }}</p>
+                                                        data-action="decrease">-</button>
+                                                    <input type="text"
+                                                        class="quantity-input text-xs font-weight-bold mb-0 mx-2"
+                                                        value="{{ $order_detail->amount }}">
                                                     <button class="btn btn-sm btn-primary update-quantity"
                                                         data-id="{{ $order_detail->product_detail->id }}"
-                                                        data-action="increase">+
-                                                    </button>
+                                                        data-action="increase">+</button>
+                                                    {{-- </td> --}}
                                                 </div>
                                             </td>
                                             <td>
@@ -246,5 +247,39 @@
 
     tfoot tr td.text-right {
         text-align: right;
+    }
+
+    .quantity-column .btn {
+        /* display: flex; */
+        align-items: center;
+        justify-content: center;
+    }
+
+    .quantity-column .btn {
+        min-width: 30px;
+        padding: 5px 10px;
+        font-size: 14px;
+        line-height: 1;
+    }
+
+    .quantity-input {
+        width: 50px;
+        text-align: center;
+        margin: 0 5px;
+        font-size: 14px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .quantity-column .btn-warning {
+        background-color: #f0ad4e;
+        border-color: #f0ad4e;
+
+    }
+
+    .quantity-column .btn-primary {
+        background-color: #0275d8;
+        border-color: #0275d8;
     }
 </style>

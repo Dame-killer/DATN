@@ -19,6 +19,7 @@
     <link href="../../css/nucleo-svg.css" rel="stylesheet" />
     @vite('resources/sass/app.scss')
     @vite('resources/sass/argon-dashboard.scss')
+    @vite('resources/sass/_custom.scss')
 </head>
 
 <body>
