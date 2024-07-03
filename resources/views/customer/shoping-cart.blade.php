@@ -1,10 +1,10 @@
 @extends('customer.index')
 
 @section('content')
-    <div class="custom-header text-center">
-    </div>
+    {{-- <div class="custom-header text-center">
+    </div> --}}
     <!-- breadcrumb -->
-    <div class="container">
+    {{-- <div class="container">
         <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
             <a href="{{ route('customer-home') }}" class="stext-109 cl8 hov-cl1 trans-04">
                 Trang chủ
@@ -15,73 +15,87 @@
                 Giỏ hàng
             </span>
         </div>
+    </div> --}}
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">Giỏ hàng</h1>
+            <div class="d-inline-flex">
+                <p class="m-0"><a href="{{ route('customer-home') }}">Trang chủ</a></p>
+                <p class="m-0 px-2">-</p>
+                <p class="m-0">Giỏ hàng</p>
+            </div>
+        </div>
     </div>
     <!-- Shoping Cart -->
     <div class="bg0 p-t-75 p-b-85">
         {{-- <div class="container"> --}}
-        <div class="row">
+        <div class="row px-xl-5">
             <div class="col-xl-8 col-lg-8 m-l-25 m-r--38 m-lr-0-xl">
-                <div class="wrap-table-shopping-cart">
-                    <table class="table-shopping-cart border-only">
-                        <tr class="table_head">
-                            <th class="column-0">STT</th>
-                            <th class="column-2">Sản phẩm</th>
-                            <th class="column-3">Số Lượng</th>
-                            <th class="column-3">Giá</th>
-                            <th class="column-3">Tổng</th>
+                {{-- <div class="wrap-table-shopping-cart"> --}}
+                <table class="table table-bordered text-center mb-0">
+                    <thead class="bg-secondary text-dark">
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Số Lượng</th>
+                            <th>Giá</th>
+                            <th>Tổng</th>
                             <th></th>
                         </tr>
-                        <tbody>
-                            @foreach ($order_details as $order_detail)
-                                <tr>
-                                    <td>
-                                        {{-- <div class="text-x justify-content-center" style="hight-max: auto"> --}}
-                                        <h6 class="mb-0 text-sm justify-content-center">{{ $loop->iteration }}</h6>
-                                        {{-- </div> --}}
-                                    </td>
-                                    <td>
-                                        <p class="text-xs font-weight-bold mb-0">
-                                            <img src="{{ $order_detail->product_detail->product->image }}"
-                                                alt="{{ $order_detail->product_detail->product->name }}" class="img-fluid"
-                                                style="width: 50px; height: 50px;"><br>
-                                            {{ $order_detail->product_detail->product->name }}/{{ $order_detail->product_detail->product->code }}/
-                                            {{ $order_detail->product_detail->size->size_name }}
-                                            -{{ $order_detail->product_detail->size->size_number }}/{{ $order_detail->product_detail->color->name }}
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
+                    <tbody class="align-middle">
+                        @foreach ($order_details as $order_detail)
+                            <tr>
+                                <td class="align-middle">
+                                    {{-- <p class="text-xs font-weight-bold mb-0"> --}}
+                                    <img src="{{ $order_detail->product_detail->product->image }}"
+                                        alt="{{ $order_detail->product_detail->product->name }}" class="img-fluid"
+                                        style="width: 50px">
+                                    {{ $order_detail->product_detail->product->name }}/{{ $order_detail->product_detail->product->code }}/
+                                    {{ $order_detail->product_detail->size->size_name }}
+                                    -{{ $order_detail->product_detail->size->size_number }}/{{ $order_detail->product_detail->color->name }}
+                                    </p>
+                                </td>
+                                <td class="align-middle">
+                                    <div class="input-group quantity mx-auto" style="width: 100px;">
+                                        <div class="input-group-btn">
                                             <button class="btn btn-sm btn-warning update-quantity"
-                                                data-id="{{ $order_detail->product_detail->id }}"
-                                                data-action="decrease">-</button>
-                                            <p class="text-xs font-weight-bold mb-0 mx-2">{{ $order_detail->amount }}
-                                            </p>
-                                            <button class="btn btn-sm btn-primary update-quantity"
-                                                data-id="{{ $order_detail->product_detail->id }}"
-                                                data-action="increase">+</button>
+                                                data-id="{{ $order_detail->product_detail->id }}" data-action="decrease">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <p class="text-right font-weight-bold mb-0">{{ number_format($order_detail->unit_price) }}đ</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-right font-weight-bold mb-0 total-price-per-product">
-                                            {{ number_format($order_detail->totalPricePerProduct) }}đ</p>
-                                    </td>
-                                    <td class="text-right">
-                                        <form
-                                            action="{{ route('customer-cart-remove', $order_detail->product_detail->id) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">X</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                                        <input type="text" class="form-control form-control-sm text-center"
+                                            value="{{ $order_detail->amount }}">
+                                        {{-- <p class="text-xs font-weight-bold mb-0 mx-2">{{ $order_detail->amount }} --}}
+                                        {{-- </p> --}}
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-sm btn-primary update-quantity"
+                                                data-id="{{ $order_detail->product_detail->id }}" data-action="increase">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="align-middle">
+                                    <p class="text-right font-weight-bold mb-0">
+                                        {{ number_format($order_detail->unit_price) }}đ</p>
+                                </td>
+                                <td class="align-middle">
+                                    <p class="text-right font-weight-bold mb-0 total-price-per-product">
+                                        {{ number_format($order_detail->totalPricePerProduct) }}đ</p>
+                                </td>
+                                <td class="align-middle">
+                                    <form action="{{ route('customer-cart-remove', $order_detail->product_detail->id) }}"
+                                        method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">X</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                {{-- </div> --}}
             </div>
             <div class="col-xl-4 col-lg-4 ms-auto me-2 m-b-50 ">
                 <div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
@@ -199,100 +213,59 @@
     </script>
 @endsection
 <style>
-    .header {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1000;
-        /* Example z-index value for header */
-    }
-
-    .modal {
-        z-index: 1050;
-        /* Bootstrap default z-index for modals is usually around this value */
-    }
-
-
-    .bread-crumb a.stext-109,
-    .bread-crumb span.stext-109 {
-        font-size: 18px;
-        /* Thay đổi giá trị này theo kích thước mong muốn */
-    }
-
-    .custom-header {
-        background-color: rgba(255, 255, 255, 0.8);
-        /* Màu nền trắng với độ trong suốt */
-        padding-top: 50px;
-        padding-bottom: 50px;
-        position: relative;
-        z-index: 10;
-        /* Đảm bảo header đè lên các phần tử khác */
-    }
-
-    .table-shopping-cart {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-        font-size: 16px;
-        text-align: center;
-    }
-
-    .table-shopping-cart th,
-    .table-shopping-cart td {
+    th,
+    td {
         padding: 12px 15px;
         border: none;
     }
 
-    .table-shopping-cart thead th {
+    thead th {
         background-color: #f8f9fa;
         color: #333;
         font-weight: bold;
         border-bottom: 2px solid black;
     }
 
-    .table-shopping-cart tbody tr {
+    tbody tr {
         border-bottom: 1px solid #ddd;
     }
 
-    .table-shopping-cart tbody tr:nth-of-type(even) {
+    tbody tr:nth-of-type(even) {
         background-color: #f3f3f3;
     }
 
-    .table-shopping-cart tbody tr:hover {
+    tbody tr:hover {
         background-color: #f1f1f1;
     }
 
-    .table-shopping-cart .text-center {
+    .text-center {
         text-align: center;
     }
 
-    .table-shopping-cart .text-right {
+    .text-right {
         text-align: right;
     }
 
-    .table-shopping-cart img {
+    img {
         max-width: 50px;
         height: auto;
         border-radius: 5px;
     }
 
-    .table-shopping-cart .btn {
-        margin: 0 5px;
-    }
 
-    .table-shopping-cart .btn-warning {
+    .btn-warning {
         background-color: #ffc107;
         border-color: #ffc107;
         color: #fff;
     }
 
-    .table-shopping-cart .btn-primary {
+    .btn-primary {
         background-color: #007bff;
         border-color: #007bff;
         color: #fff;
     }
 
-    .table-shopping-cart .btn-danger {
+    .btn-danger {
         background-color: #dc3545;
         border-color: #dc3545;
         color: #fff;

@@ -77,6 +77,10 @@
                                                 Phương Thức Thanh Toán
                                             </th>
                                             <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Mã vận chuyển
+                                            </th>
+                                            <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Trạng Thái
                                             </th>
@@ -112,6 +116,10 @@
                                                     <p class="text-xs font-weight-bold mb-0">
                                                         {{ $order->paymentMethod->name }}</p>
                                                 </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        {{ $order->tracking_code }}</p>
+                                                </td>
                                                 <td class="align-middle text-center" id="order-status-{{ $order->id }}">
                                                     @switch($order->status)
                                                         @case(0)
@@ -144,14 +152,13 @@
                                                         class="btn btn-info btn-sm mb-2">
                                                         Chi Tiết
                                                     </a>
-                                                    <button class="btn btn-warning btn-sm mb-2 approve-order-btn"
-                                                        data-id="{{ $order->id }}" data-status="{{ $order->status }}">
-                                                        @if ($order->status == 0)
-                                                            Duyệt
-                                                        @else
-                                                            Cập Nhật
-                                                        @endif
-                                                    </button>
+                                                    @if ($order->status < 2)
+                                                        <button class="btn btn-danger btn-sm mb-2 cancel-order-btn"
+                                                            data-bs-toggle="modal" data-bs-target="#cancelOrderModal"
+                                                            data-id="{{ $order->id }}">
+                                                            Hủy
+                                                        </button>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -164,6 +171,30 @@
             </div>
         </div>
     </section>
+
+    <!-- Cancel Order Modal -->
+    <div class="modal fade" id="cancelOrderModal" tabindex="-1" aria-labelledby="cancelOrderModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cancelOrderModalLabel">Xác Nhận Hủy Đơn Hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn hủy đơn hàng này?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Đóng</button>
+                    <form action="{{ route('customer-order-cancel', ['id' => ':id']) }}" method="POST"
+                        id="cancelOrderForm">
+                        @method('PUT')
+                        @csrf
+                        <button type="submit" class="btn btn-danger m-1">Hủy Đơn Hàng</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 <style>
@@ -306,4 +337,59 @@
     .table th:last-child {
         padding-right: 20px;
     }
+
+    /* modal */
+    /* Ensure the modal is centered */
+    .modal-dialog-centered {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 </style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cancelOrderModal = new bootstrap.Modal(document.getElementById('cancelOrderModal'))
+        const cancelOrderButtons = document.querySelectorAll('.cancel-order-btn')
+
+        cancelOrderButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const orderId = this.getAttribute('data-id')
+                const actionUrl = `/account/${orderId}`
+                const form = document.getElementById('cancelOrderForm')
+                form.setAttribute('action', actionUrl)
+                cancelOrderModal.show()
+            });
+        });
+
+        const cancelOrderForm = document.getElementById('cancelOrderForm')
+        cancelOrderForm.addEventListener('submit', function(event) {
+            event.preventDefault()
+            const actionUrl = this.getAttribute('action')
+            fetch(actionUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(() => {
+                    // Cập nhật trạng thái đơn hàng trên giao diện
+                    const orderId = cancelOrderForm.getAttribute('data-id')
+                    const orderStatusElement = document.getElementById(`order-status-${orderId}`)
+                    if (orderStatusElement) {
+                        orderStatusElement.innerHTML =
+                            '<span class="badge badge-sm bg-gradient-danger">Hủy</span>'
+                    }
+                    alert('Đơn hàng đã được hủy thành công!')
+                    cancelOrderModal.hide() // Đóng modal sau khi xử lý xong
+
+                    // Tải lại trang sau khi xử lý thành công
+                    location.reload()
+                })
+                .catch(error => {
+                    console.error('Error:', error)
+                    alert('Đã xảy ra lỗi, vui lòng thử lại!')
+                })
+        })
+    })
+</script>

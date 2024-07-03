@@ -84,7 +84,7 @@
                                                 {{ number_format($product->price) }} đ
                                             </p>
                                         </td>
-                                        <td>
+                                        <td class="product-description" data-description="{{ $product->introduce }}">
                                             <p class="text-xs font-weight-bold mb-0">{{ $product->introduce }}</p>
                                         </td>
                                         <td>
@@ -302,7 +302,6 @@
             modalTitle.textContent = 'Cập Nhật Sản Phẩm: ' + name
             modalBodyInputId.value = id
             modalBodyInputName.value = name
-            modalBodyInputImage.value = ''
             modalBodyInputCurrentImage.src = image
             modalBodyInputPrice.value = price
             modalBodyInputIntroduce.value = introduce
@@ -324,18 +323,6 @@
             if (file) {
                 reader.readAsDataURL(file)
             }
-        })
-
-        document.getElementById('editProductImage').addEventListener('change', function () {
-            var file = this.files[0]
-            var reader = new FileReader()
-            var modalBodyInputCurrentImage = editProductModal.querySelector('#currentProductImage')
-
-            reader.onload = function (e) {
-                modalBodyInputCurrentImage.src = e.target.result
-            }
-
-            reader.readAsDataURL(file)
         })
 
         document.addEventListener('DOMContentLoaded', function () {
