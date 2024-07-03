@@ -8,7 +8,7 @@
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Quản Lý Giỏ Hàng</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#addOrderModal">
+                                data-bs-target="#addOrderModal">
                             Tạo Đơn Hàng
                         </button>
                     </div>
@@ -16,128 +16,131 @@
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
                                 <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            STT
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Mã Sản Phẩm
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tên Sản Phẩm
-                                        </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Hình Ảnh
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Số Lượng
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Giá
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Kích Cỡ
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Màu Sắc
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tổng
-                                        </th>
-                                        <th class="text-secondary opacity-7">Thao tác</th>
-                                    </tr>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        STT
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Mã Sản Phẩm
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Tên Sản Phẩm
+                                    </th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Hình Ảnh
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Số Lượng
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Giá
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Kích Cỡ
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Màu Sắc
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Tổng
+                                    </th>
+                                    <th class="text-secondary opacity-7">Thao tác</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($order_details as $order_detail)
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">
-                                                    {{ $order_detail->product_detail->product->code }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">
-                                                    {{ $order_detail->product_detail->product->name }}</p>
-                                            </td>
-                                            <td class="text-center">
-                                                <img src="{{ $order_detail->product_detail->product->image }}"
-                                                    alt="{{ $order_detail->product_detail->product->name }}"
-                                                    class="img-fluid" style="width: 50px; height: 50px;">
-                                            </td>
-                                            <td class="align-middle quantity-column">
-                                                <div class="justify-content-center">
-                                                    {{-- <td class="quantity-column"> --}}
-                                                    <button class="btn btn-sm btn-warning update-quantity"
-                                                        data-id="{{ $order_detail->product_detail->id }}"
-                                                        data-action="decrease">-</button>
-                                                    <input type="text"
-                                                        class="quantity-input text-xs font-weight-bold mb-0 mx-2"
-                                                        value="{{ $order_detail->amount }}">
-                                                    <button class="btn btn-sm btn-primary update-quantity"
-                                                        data-id="{{ $order_detail->product_detail->id }}"
-                                                        data-action="increase">+</button>
-                                                    {{-- </td> --}}
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">
-                                                    {{ number_format($order_detail->unit_price) }}đ
-                                                </p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">
-                                                    {{ $order_detail->product_detail->size->size_name }}
-                                                    -{{ $order_detail->product_detail->size->size_number }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">
-                                                    {{ $order_detail->product_detail->color->name }}</p>
-                                                <div
-                                                    style="width: 20px; height: 20px; background-color: {{ $order_detail->product_detail->color->code }};">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0 total-price-per-product">
-                                                    {{ number_format($order_detail->totalPricePerProduct) }}đ
-                                                </p>
-                                            </td>
-                                            <td class="text-right">
-                                                <form
-                                                    action="{{ route('cart.remove', $order_detail->product_detail->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                                <tfoot>
+                                @foreach ($order_details as $order_detail)
                                     <tr>
-                                        <td colspan="7"></td>
-                                        <td
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tổng Tiền:
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm ms-2">{{ $loop->iteration }}</h6>
+                                                </div>
+                                            </div>
                                         </td>
-                                        <td class="text-right text-bold text-lg" id="total-price">
-                                            {{ number_format($totalPrice) }}đ
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                {{ $order_detail->product_detail->product->code }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                {{ $order_detail->product_detail->product->name }}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <img src="{{ $order_detail->product_detail->product->image }}"
+                                                 alt="{{ $order_detail->product_detail->product->name }}"
+                                                 class="img-fluid" style="width: 50px; height: 50px;">
+                                        </td>
+                                        <td class="align-middle quantity-column">
+                                            <div class="justify-content-center">
+                                                {{-- <td class="quantity-column"> --}}
+                                                <button class="btn btn-sm btn-warning update-quantity"
+                                                        data-id="{{ $order_detail->product_detail->id }}"
+                                                        data-action="decrease">-
+                                                </button>
+                                                <input type="text"
+                                                       class="quantity-input text-xs font-weight-bold mb-0 mx-2"
+                                                       value="{{ $order_detail->amount }}">
+                                                <button class="btn btn-sm btn-primary update-quantity"
+                                                        data-id="{{ $order_detail->product_detail->id }}"
+                                                        data-action="increase">+
+                                                </button>
+                                                {{-- </td> --}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                {{ number_format($order_detail->unit_price) }} đ
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                {{ $order_detail->product_detail->size->size_name }}
+                                                - {{ $order_detail->product_detail->size->size_number }}
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                {{ $order_detail->product_detail->color->name }}</p>
+                                            <div
+                                                style="width: 20px; height: 20px; background-color: {{ $order_detail->product_detail->color->code }}; border: 1px solid #000;">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0 total-price-per-product">
+                                                {{ number_format($order_detail->totalPricePerProduct) }} đ
+                                            </p>
+                                        </td>
+                                        <td class="text-right">
+                                            <form
+                                                action="{{ route('cart.remove', $order_detail->product_detail->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                                            </form>
                                         </td>
                                     </tr>
+                                @endforeach
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="7"></td>
+                                    <td
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Tổng Tiền:
+                                    </td>
+                                    <td class="text-right text-bold text-lg" id="total-price">
+                                        {{ number_format($totalPrice) }} đ
+                                    </td>
+                                </tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -162,17 +165,17 @@
                         <div class="mb-3">
                             <label for="receiver" class="form-label">Tên Người Nhận</label>
                             <input type="text" class="form-control" id="receiver" name="receiver"
-                                placeholder="Nhập Tên Người Nhận" required>
+                                   placeholder="Nhập Tên Người Nhận" required>
                         </div>
                         <div class="mb-3">
                             <label for="phone" class="form-label">Số Điện Thoại</label>
                             <input type="tel" class="form-control" id="phone" name="phone"
-                                placeholder="Nhập Số Điện Thoại" required>
+                                   placeholder="Nhập Số Điện Thoại" required>
                         </div>
                         <div class="mb-3">
                             <label for="address" class="form-label">Địa Chỉ</label>
                             <input type="text" class="form-control" id="address" name="address"
-                                placeholder="Nhập Địa Chỉ" required>
+                                   placeholder="Nhập Địa Chỉ" required>
                         </div>
                         <div class="mb-3">
                             <label for="userId" class="form-label">Tài Khoản Khách Hàng</label>
@@ -199,21 +202,21 @@
 
     <script>
         document.querySelectorAll('.update-quantity').forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const id = this.dataset.id
                 const action = this.dataset.action
 
                 fetch('{{ route('cart.updateQuantity') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            id,
-                            action
-                        })
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        id,
+                        action
                     })
+                })
                     .then(response => response.json())
                     .then(data => {
                         if (data.status === 'success') {
