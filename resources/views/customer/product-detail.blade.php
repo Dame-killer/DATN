@@ -17,20 +17,11 @@
     <div class="container-fluid py-5">
         <div class="row px-xl-5">
             <div class="col-lg-5 pb-5">
-                <div id="product-carousel" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner border">
-                        <div class="carousel-item active">
-                            <!-- Ảnh phóng to hiển thị ở đây -->
-                            <img id="largeImage" class="w-100 h-100"
-                                src="{{ asset('storage/' . $imageProducts->first()->url) }}" alt="Large Product Image">
-                        </div>
+                <div class="carousel-inner border">
+                    <div class="carousel-item active">
+                        <img id="largeImage" class="w-100 h-100"
+                            src="{{ asset('storage/' . $imageProducts->first()->url) }}" alt="Large Product Image">
                     </div>
-                    <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
-                        <i class="fa fa-2x fa-angle-left text-dark"></i>
-                    </a>
-                    <a class="carousel-control-next" href="#product-carousel" data-slide="next">
-                        <i class="fa fa-2x fa-angle-right text-dark"></i>
-                    </a>
                 </div>
             </div>
             <div class="col-lg-7 pb-5">
@@ -50,9 +41,6 @@
                                             data-size="{{ $size }}">
                                         <label class="custom-control-label" for="size-1">{{ $size }}</label>
                                     </div>
-                                    {{-- <button class="btn btn-primary size-button" data-size="{{ $size }}">
-                                            {{ $size }}
-                                        </button> --}}
                                 @endforeach
                             </form>
                         </div>
@@ -67,12 +55,10 @@
                                 @foreach ($availableColors as $color)
                                     <div class="custom-control custom-radio custom-control-inline">
                                         <input type="radio" name="color" class="color-button"
-                                            data-color="{{ $color }}">
-                                        <label class="custom-control-label " for="color-1">{{ $color }}</label>
+                                            data-color="{{ $color }}"
+                                            data-product-detail-id="{{ $product_details->firstWhere('color.name', $color)->id }}">
+                                        <label class="custom-control-label">{{ $color }}</label>
                                     </div>
-                                    {{-- <button class="btn color-button" data-color="{{ $color }}">
-                                            {{ $color }}
-                                        </button> --}}
                                 @endforeach
                             </form>
                         </div>
@@ -82,7 +68,8 @@
                 <!-- Phần tử ẩn để lưu trữ sản phẩm chi tiết cho JavaScript sử dụng -->
                 <div id="product-details" style="display: none;">
                     @foreach ($product_details as $product_detail)
-                        <div class="product-detail-item" data-size="{{ $product_detail->size->size_name }}"
+                        <div class="product-detail-item" data-product-detail-id="{{ $product_detail->id }}"
+                            data-size="{{ $product_detail->size->size_name }}"
                             data-color="{{ $product_detail->color->name }}">
                             <input type="hidden" class="product-detail-id" value="{{ $product_detail->id }}">
                         </div>
@@ -196,6 +183,9 @@
             const cartForm = document.getElementById('cart-form');
             const numProductInput = document.getElementById('num_product');
             const numProductField = document.querySelector('.num-product');
+            const largeImage = document.getElementById('largeImage'); // Assuming largeImage is your img element
+
+            const imageProducts = {!! $imageProducts->toJson() !!}; // Convert $imageProducts from PHP to JavaScript object
 
             function updateProductDetails() {
                 let matchingProductDetail = null;
@@ -211,11 +201,26 @@
                     });
                 }
 
+                // Update large image based on selected color
                 if (matchingProductDetail) {
-                    const productDetailId = matchingProductDetail.querySelector('.product-detail-id').value;
-                    cartForm.action = `/customer/product/${productDetailId}`;
+                    const productDetailId = matchingProductDetail.getAttribute('data-product-detail-id');
+                    const imageUrl = getProductImageUrl(
+                    productDetailId); // Call function to get image URL based on product detail ID
+                    largeImage.src = imageUrl;
                 } else {
-                    cartForm.action = ''; // Clear the action if no matching product detail is found
+                    // If no matching product detail, clear the image
+                    largeImage.src = '';
+                }
+            }
+
+            function getProductImageUrl(productDetailId) {
+                // Find the image URL based on productDetailId
+                const matchedProduct = imageProducts.find(product => product.product_detail_id === parseInt(
+                    productDetailId));
+                if (matchedProduct) {
+                    return `{{ asset('storage/') }}/${matchedProduct.url}`; // Assuming `url` is the property in your imageProducts array/object
+                } else {
+                    return ''; // Handle if no matching product detail ID is found
                 }
             }
 
@@ -238,11 +243,11 @@
             });
 
             cartForm.addEventListener('submit', function(event) {
-                if (!selectedSize || !selectedColor || !cartForm.action) {
+                if (!selectedSize || !selectedColor) {
                     event.preventDefault();
                     alert('Vui lòng chọn cả kích thước và màu sắc.');
                 } else {
-                    // Cập nhật giá trị số lượng vào input ẩn trước khi gửi form
+                    // Update the quantity value in the hidden input before submitting the form
                     numProductInput.value = numProductField.value;
                 }
             });
