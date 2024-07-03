@@ -48,7 +48,7 @@
                                             </td>
                                             <td>
                                                 <p class="text-xs font-weight-bold mb-0">{{ $product_detail->size->size_name }}
-                                                    -{{ $product_detail->size->size_number }}</p>
+                                                    - {{ $product_detail->size->size_number }}</p>
                                             </td>
                                             <td>
                                                 <p class="text-xs font-weight-bold mb-0">{{ $product_detail->color->name }}</p>
