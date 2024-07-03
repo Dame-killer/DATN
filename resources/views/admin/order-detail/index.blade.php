@@ -12,88 +12,94 @@
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
                                 <thead>
-                                    <tr>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            STT
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Mã Sản Phẩm
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tên Sản Phẩm
-                                        </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Hình Ảnh
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Số Lượng
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Giá
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Kích Cỡ
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Màu Sắc
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Tổng
-                                        </th>
-                                    </tr>
+                                <tr>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        STT
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Mã Sản Phẩm
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Tên Sản Phẩm
+                                    </th>
+                                    <th
+                                        class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Hình Ảnh
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Số Lượng
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Giá
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Kích Cỡ
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Màu Sắc
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Tổng
+                                    </th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($order_details as $order_detail)
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
-                                                    </div>
+                                @foreach ($order_details as $order_detail)
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm ms-2">{{ $loop->iteration }}</h6>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order_detail->productDetail->product->code }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order_detail->productDetail->product->name }}</p>
-                                            </td>
-                                            <td class="text-center">
-                                                <img
-                                                    src="{{ asset('storage/' . $order_detail->productDetail->product->image) }}"
-                                                    alt="{{ $order_detail->productDetail->product->name }}"
-                                                    class="img-fluid"
-                                                    style="width: 50px; height: 50px;">
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order_detail->amount }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ number_format($order_detail->unit_price) }}đ</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order_detail->productDetail->size->size_name }}-{{ $order_detail->productDetail->size->size_number }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order_detail->productDetail->color->name }}</p>
-                                                <div
-                                                    style="width: 20px; height: 20px; background-color: {{ $order_detail->productDetail->color->code }};">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ number_format($order_detail->totalPricePerProduct) }}đ</p>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $order_detail->productDetail->product->code }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $order_detail->productDetail->product->name }}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <img
+                                                src="{{ asset('storage/' . $order_detail->productDetail->product->image) }}"
+                                                alt="{{ $order_detail->productDetail->product->name }}"
+                                                class="img-fluid"
+                                                style="width: 50px; height: 50px;">
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $order_detail->amount }}</p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                {{ number_format($order_detail->unit_price) }} đ
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $order_detail->productDetail->size->size_name }}
+                                                - {{ $order_detail->productDetail->size->size_number }}
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $order_detail->productDetail->color->name }}</p>
+                                            <div
+                                                style="width: 20px; height: 20px; background-color: {{ $order_detail->productDetail->color->code }}; border: 1px solid #000;">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">
+                                                {{ number_format($order_detail->totalPricePerProduct) }} đ
+                                            </p>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
@@ -103,7 +109,7 @@
                                         Tổng Tiền:
                                     </td>
                                     <td class="text-right text-bold text-lg" id="total-price">
-                                        {{ number_format($totalPrice) }}đ
+                                        {{ number_format($totalPrice) }} đ
                                     </td>
                                 </tr>
                                 </tfoot>
