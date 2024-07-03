@@ -17,13 +17,30 @@
     <div class="container-fluid py-5">
         <div class="row px-xl-5">
             <div class="col-lg-5 pb-5">
-                <div class="carousel-inner border">
-                    <div class="carousel-item active">
-                        <img id="largeImage" class="w-100 h-100"
-                            src="{{ asset('storage/' . $imageProducts->first()->url) }}" alt="Large Product Image">
+                <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner border">
+                        @php
+                            $first = true; // Variable to track the first item for the "active" class
+                        @endphp
+                        @foreach ($imageProducts as $imageProduct)
+                            <div class="carousel-item {{ $first ? 'active' : '' }}">
+                                <img class="w-100 h-100" src="{{ asset('storage/' . $imageProduct->url) }}"
+                                    alt="Product Image">
+                            </div>
+                            @php
+                                $first = false; // Set to false after the first iteration
+                            @endphp
+                        @endforeach
                     </div>
+                    <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                        <i class="fa fa-2x fa-angle-left text-dark"></i>
+                    </a>
+                    <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+                        <i class="fa fa-2x fa-angle-right text-dark"></i>
+                    </a>
                 </div>
             </div>
+
             <div class="col-lg-7 pb-5">
                 <h3 class="font-weight-semi-bold">{{ $products->name }} - {{ $products->code }}</h3><br>
                 <h4 class="font-weight-semi-bold mb-4">{{ $products->price }} VNĐ</h4>
@@ -100,78 +117,16 @@
                         </form>
                     </div>
                 </div>
-                {{-- </div> --}}
-            </div>
-        </div>
-
-        <div class="row px-xl-5">
-            <!-- Tab01 -->
-            <div class="tab01">
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item p-b-10">
-                        <a class="nav-link active" data-toggle="tab" href="#description" role="tab">Mô tả sản phẩm</a>
-                    </li>
-                    <li class="nav-item p-b-10">
-                        <a class="nav-link" data-toggle="tab" href="#information" role="tab">Hướng dẫn bảo quản</a>
-                    </li>
-                </ul>
-
-                <!-- Tab panes -->
-                <div class="tab-content p-t-43">
-                    <!-- - -->
-                    <div class="tab-pane fade show active" id="description" role="tabpanel">
-                        <div class="how-pos2 p-lr-15-md">
-                            <p class="stext-102 cl6">
-                                {{ $products->name }} - {{ $products->code }}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="information" role="tabpanel">
-                        <div class="row">
-                            <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
-                                <ul class="p-lr-28 p-lr-15-sm">
-                                    <li class="flex-w flex-t p-b-7">
-                                        <span class="stext-102 cl3 size-205">
-                                            Giặt máy ở nhiệt độ dưới 30°C
-                                        </span>
-                                    </li>
-
-                                    <li class="flex-w flex-t p-b-7">
-                                        <span class="stext-102 cl3 size-205">
-                                            Tránh sử dụng chất tẩy mạnh
-                                        </span>
-                                    </li>
-
-                                    <li class="flex-w flex-t p-b-7">
-                                        <span class="stext-102 cl3 size-205">
-                                            Phơi nơi thoáng mát, tránh ánh nắng trực tiếp
-                                        </span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                <div class="">
+                    <p class="text-dark font-weight-medium mb-0 mr-3">Mô tả sản phẩm</p><br>
+                    <p class="product-description-text">{{ $products->name }} -
+                        {{ $products->code }} {{ $products->introduce }}</p>
                 </div>
+                {{-- </div> --}}
             </div>
         </div>
     </div>
     </section>
-
-
-    <!-- Related Products -->
-    {{-- <section class="sec-relate-product bg0 p-t-45 p-b-105">
-        <div class="container">
-            <div class="p-b-45">
-                <h3 class="ltext-106 cl5 txt-center">
-                    Related Products
-                </h3>
-            </div>
-
-            @include('customer.slide')
-        </div>
-    </section> --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let selectedSize = null;
@@ -183,7 +138,7 @@
             const cartForm = document.getElementById('cart-form');
             const numProductInput = document.getElementById('num_product');
             const numProductField = document.querySelector('.num-product');
-            const largeImage = document.getElementById('largeImage'); // Assuming largeImage is your img element
+            const carouselInner = document.querySelector('.carousel-inner'); // Carousel container
 
             const imageProducts = {!! $imageProducts->toJson() !!}; // Convert $imageProducts from PHP to JavaScript object
 
@@ -201,26 +156,34 @@
                     });
                 }
 
-                // Update large image based on selected color
+                // Update carousel images based on selected color
                 if (matchingProductDetail) {
                     const productDetailId = matchingProductDetail.getAttribute('data-product-detail-id');
-                    const imageUrl = getProductImageUrl(
-                    productDetailId); // Call function to get image URL based on product detail ID
-                    largeImage.src = imageUrl;
-                } else {
-                    // If no matching product detail, clear the image
-                    largeImage.src = '';
-                }
-            }
+                    const matchingImages = imageProducts.filter(product => product.product_detail_id === parseInt(
+                        productDetailId));
 
-            function getProductImageUrl(productDetailId) {
-                // Find the image URL based on productDetailId
-                const matchedProduct = imageProducts.find(product => product.product_detail_id === parseInt(
-                    productDetailId));
-                if (matchedProduct) {
-                    return `{{ asset('storage/') }}/${matchedProduct.url}`; // Assuming `url` is the property in your imageProducts array/object
+                    // Clear existing carousel items
+                    carouselInner.innerHTML = '';
+
+                    // Add new carousel items
+                    matchingImages.forEach((image, index) => {
+                        const div = document.createElement('div');
+                        div.classList.add('carousel-item');
+                        if (index === 0) {
+                            div.classList.add('active');
+                        }
+
+                        const img = document.createElement('img');
+                        img.classList.add('w-100', 'h-100');
+                        img.src = `{{ asset('storage/') }}/${image.url}`;
+                        img.alt = 'Product Image';
+
+                        div.appendChild(img);
+                        carouselInner.appendChild(div);
+                    });
                 } else {
-                    return ''; // Handle if no matching product detail ID is found
+                    // If no matching product detail, clear the carousel
+                    carouselInner.innerHTML = '';
                 }
             }
 
@@ -295,12 +258,34 @@
 
 
     /////////
+    .product-description-title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+    }
 
+    .product-description-text {
+        font-size: 16px;
+        line-height: 1.5;
+        text-align: justify;
+    }
 
-    .bread-crumb a.stext-109,
-    .bread-crumb span.stext-109 {
+    .nav-tabs .nav-item.nav-link.active {
         font-size: 18px;
-        /* Thay đổi giá trị này theo kích thước mong muốn */
+        font-weight: bold;
+    }
+
+    .nav-tabs .nav-item.nav-link {
+        font-size: 16px;
+    }
+
+    .col-md-8.offset-md-2 {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     .product-detail-container {
