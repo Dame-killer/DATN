@@ -133,4 +133,22 @@ class ProductDetailController extends Controller
 
         return redirect()->back()->with('success', 'Sản phẩm đã được xóa thành công!');
     }
+
+    public function getProductDetails($productId)
+    {
+        $productDetails = ProductDetail::where('product_id', $productId)
+            ->with(['color:id,name,code'])
+            ->get();
+
+        $response = $productDetails->map(function ($productDetail) {
+            return [
+                'id' => $productDetail->id,
+                'color_id' => $productDetail->color->id,
+                'color_name' => $productDetail->color->name,
+                'color_code' => $productDetail->color->code,
+            ];
+        });
+
+        return response()->json($response);
+    }
 }

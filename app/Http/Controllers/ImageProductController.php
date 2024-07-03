@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Color;
 use App\Models\ImageProduct;
+use App\Models\Product;
 use App\Models\ProductDetail;
+use App\Models\Size;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,12 +17,14 @@ class ImageProductController extends Controller
      */
     public function index()
     {
-        $query = ImageProduct::with('productDetail.product', 'productDetail.color', 'productDetail.size');
-        $productDetails = ProductDetail::with('product', 'color', 'size')->get();
+        $query = ImageProduct::with('productDetail.product', 'productDetail.color');
+        $productDetails = ProductDetail::with('product', 'color')->get();
+        $products = Product::all();
+        $colors = Color::all();
         $query->orderBy('id', 'desc');
         $imageProducts = $query->paginate(5);
 
-        return view('admin.image-product.index', compact('imageProducts', 'productDetails'));
+        return view('admin.image-product.index', compact('imageProducts', 'productDetails', 'products', 'colors'));
     }
 
     /**
@@ -89,18 +94,18 @@ class ImageProductController extends Controller
         $imageProducts = ImageProduct::findOrFail($imageProduct);
         $data = $request->only(['product_detail_id']);
 
-        if ($request->hasFile('url')) {
-            $filePath = $request->file('url')->store('images', 'public');
-            $imageProducts->url = $filePath;
-        }
-
         $existing = ImageProduct::where('product_detail_id', $request->product_detail_id)
-            ->where('url', $filePath)
-            ->where('id', '!=', $imageProduct->id)
+            ->where('url', $request->url)
+            ->where('id', '!=', $imageProduct)
             ->first();
 
         if ($existing) {
             return redirect()->back()->withErrors(['error' => 'Hình ảnh sản phẩm đã tồn tại!']);
+        }
+
+        if ($request->hasFile('url')) {
+            $filePath = $request->file('url')->store('images', 'public');
+            $imageProducts->url = $filePath;
         }
 
         $imageProducts->update($data);

@@ -64,6 +64,7 @@ Route::middleware('auth', 'web', 'role:1,2')->group(function () {
     Route::get('/admin/product/{product_detail}', [ProductDetailController::class, 'show'])->name('admin-product-detail');
     Route::get('/admin/category', [CategoryController::class, 'index'])->name('admin-category');
     Route::get('/admin/image', [ImageProductController::class, 'index'])->name('admin-image');
+    Route::get('/admin/image/{product}', [ProductDetailController::class, 'getProductDetails'])->name('admin-get-detail');
 });
 
 //CUSTOMER
