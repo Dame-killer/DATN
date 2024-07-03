@@ -1,22 +1,6 @@
 @extends('customer.index')
 
 @section('content')
-    {{-- <div class="custom-header text-center">
-    </div> --}}
-    <!-- breadcrumb -->
-    {{-- <div class="container">
-        <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-            <a href="{{ route('customer-home') }}" class="stext-109 cl8 hov-cl1 trans-04">
-                Trang chủ
-                <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-            </a>
-
-            <span class="stext-109 cl4">
-                Giỏ hàng
-            </span>
-        </div>
-    </div> --}}
-    <!-- Page Header Start -->
     <div class="container-fluid bg-secondary mb-5">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
             <h1 class="font-weight-semi-bold text-uppercase mb-3">Giỏ hàng</h1>

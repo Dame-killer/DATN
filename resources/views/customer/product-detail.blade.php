@@ -43,42 +43,41 @@
 
             <div class="col-lg-7 pb-5">
                 <h3 class="font-weight-semi-bold">{{ $products->name }} - {{ $products->code }}</h3><br>
-                <h4 class="font-weight-semi-bold mb-4">{{ $products->price }} VNĐ</h4>
-                <div class="product-detail">
-                    <div class="d-flex mb-3">
-                        <p class="text-dark font-weight-medium mb-0 mr-3">Sizes:</p>
-                        <div class="product-size">
-                            <form>
-                                @php
-                                    $availableSizes = $product_details->pluck('size.size_name')->unique();
-                                @endphp
-                                @foreach ($availableSizes as $size)
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" name="size" class="size-button"
-                                            data-size="{{ $size }}">
-                                        <label class="custom-control-label" for="size-1">{{ $size }}</label>
-                                    </div>
-                                @endforeach
-                            </form>
-                        </div>
+                <h4 class="font-weight-semi-bold mb-4">{{ number_format($products->price) }} đ</h4>
+                <div class="d-flex mb-3">
+                    <p class="text-dark font-weight-medium mb-0">Sizes:</p>
+                    <div class="product-size">
+                        <form>
+                            @php
+                                $availableSizes = $product_details->pluck('size.size_name')->unique();
+                            @endphp
+                            @foreach ($availableSizes as $size)
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" name="size" class="size-button m-1"
+                                        data-size="{{ $size }}">
+                                    <label class="custom-control-label" for="size-1">{{ $size }}</label>
+                                </div>
+                            @endforeach
+                        </form>
                     </div>
-                    <div class="d-flex mb-3">
-                        <p class="text-dark font-weight-medium mb-0 mr-3">Màu sắc:</p>
-                        <div class="product-color">
-                            <form>
-                                @php
-                                    $availableColors = $product_details->pluck('color.name')->unique();
-                                @endphp
-                                @foreach ($availableColors as $color)
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" name="color" class="color-button"
-                                            data-color="{{ $color }}"
-                                            data-product-detail-id="{{ $product_details->firstWhere('color.name', $color)->id }}">
-                                        <label class="custom-control-label">{{ $color }}</label>
-                                    </div>
-                                @endforeach
-                            </form>
-                        </div>
+                </div>
+
+                <div class="d-flex mb-3">
+                    <p class="text-dark font-weight-medium mb-0 mr-3">Màu sắc:</p>
+                    <div class="product-color">
+                        <form>
+                            @php
+                                $availableColors = $product_details->pluck('color.name')->unique();
+                            @endphp
+                            @foreach ($availableColors as $color)
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" name="color" class="color-button m-1"
+                                        data-color="{{ $color }}"
+                                        data-product-detail-id="{{ $product_details->firstWhere('color.name', $color)->id }}">
+                                    <label class="custom-control-label">{{ $color }}</label>
+                                </div>
+                            @endforeach
+                        </form>
                     </div>
                 </div>
 
@@ -218,33 +217,6 @@
     </script>
 @endsection
 <style>
-    .custom-header {
-        background-color: rgba(255, 255, 255, 0.8);
-        /* Màu nền trắng với độ trong suốt */
-        color: rgb(182, 120, 120);
-        /* Màu chữ đen */
-        padding-top: 50px;
-        padding-bottom: 50px;
-        position: relative;
-        z-index: 10;
-        max-height: 100px;
-        /* Đảm bảo header đè lên các phần tử khác */
-    }
-
-    ///
-    .product-detail {
-        margin-bottom: 20px;
-    }
-
-    .product-size,
-    .product-color {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 10px;
-    }
-
-
     .size-button.active,
     .color-button.active {
         border: 2px solid #333;
@@ -256,51 +228,30 @@
         pointer-events: none;
     }
 
-
-    /////////
-    .product-description-title {
-        font-size: 24px;
-        font-weight: bold;
-        color: #333;
-        text-align: center;
+    .custom-control-inline {
+        display: inline-flex;
+        margin-right: 1rem;
     }
 
-    .product-description-text {
-        font-size: 16px;
-        line-height: 1.5;
-        text-align: justify;
+    .custom-radio {
+        border-radius: 50%;
     }
 
-    .nav-tabs .nav-item.nav-link.active {
-        font-size: 18px;
-        font-weight: bold;
+    .custom-control-input {
+        position: absolute;
+        left: 0;
+        z-index: -1;
+        width: 1rem;
+        height: 1.25rem;
+        opacity: 0;
     }
 
-    .nav-tabs .nav-item.nav-link {
-        font-size: 16px;
+    .custom-control-label {
+        position: relative;
+        margin-bottom: 0;
+        vertical-align: top;
     }
 
-    .col-md-8.offset-md-2 {
-        margin-top: 20px;
-        padding: 20px;
-        background-color: #f9f9f9;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .product-detail-container {
-        background-color: #f8f9fa;
-        max-height: 50%;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .product-detail {
-        margin-bottom: 20px;
-        border-bottom: 1px solid #e0e0e0;
-        padding-bottom: 20px;
-    }
 
     .product-price {
         font-size: 24px;
@@ -312,10 +263,6 @@
         margin-top: 10px;
         font-size: 16px;
         color: #666;
-    }
-
-    .product-size-color {
-        margin-top: 20px;
     }
 
     .size-color-label {
@@ -336,6 +283,7 @@
     .js-addcart-detail:hover {
         background-color: #555;
     }
+
 
     /* sản phẩm image */
     .product-view {
