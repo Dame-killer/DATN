@@ -3,10 +3,10 @@
     <!-- Header desktop -->
     {{-- <div class="container-menu-desktop"> --}}
     <div class="wrap-menu-desktop" style="background-color: #F0F8FF">
-        <nav class="limiter-menu-desktop container">
+        <nav class="limiter-menu-desktop">
             <!-- Logo desktop -->
             <a href="{{ route('customer-home') }}" class="logo">
-                <img src="{{ asset('assets/images/logo-header.png') }}" alt="IMG-LOGO">
+                <img class="image m-10" src="{{ asset('assets/images/logo-header.png') }}" alt="IMG-LOGO">
             </a>
 
             <!-- Menu desktop -->
@@ -45,12 +45,13 @@
                         </div>
                     </div>
 
+
                     <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-cart">
                         <i class="zmdi zmdi-shopping-cart"></i>
                     </div>
                 </div>
 
-                <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+                <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 ">
                     <ul class="main-menu">
                         <li class="active-menu">
                             <i class="zmdi zmdi-account"></i>
@@ -63,6 +64,7 @@
                                     <li><a href="{{ route('customer-logout') }}">Đăng xuất</a></li>
                                 @else
                                     <li><a href="{{ route('customer-login') }}">Đăng nhập</a></li>
+                                    <li><a href="{{ route('customer-register') }}">Đăng ký</a></li>
                                 @endif
                             </ul>
                         </li>
@@ -99,16 +101,11 @@
         /* Thêm gạch chân khi hover */
     }
 
-    header .separator {
-        border-bottom: 1px solid #D3D3D3;
-        margin: 10px 0;
-    }
-
     header button {
         background-color: #FFD700;
         color: #FFFFFF;
         border: none;
-        padding: 10px 20px;
+        padding: 10px 15px;
         cursor: pointer;
         font-size: 16px;
     }
@@ -118,20 +115,58 @@
         align-items: center;
     }
 
-    .icon-header-item {
-        display: flex;
-        align-items: center;
-        padding: 0 11px;
-        /* Điều chỉnh padding nếu cần */
+    .input-header-item {
+        position: relative;
+        margin-left: 10px;
+        /* Khoảng cách giữa các phần tử */
     }
 
     .header-input {
-        width: 100%;
-        padding: 5px 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
+        width: 200px;
+        /* Độ rộng của ô tìm kiếm */
+        padding: 10px 15px;
+        border: 2px solid #007bff;
+        /* Màu sắc viền */
+        border-radius: 25px;
+        /* Bo tròn các góc */
         outline: none;
+        font-size: 12px;
+        color: #333;
+        /* Màu sắc chữ */
+        background-color: #f9f9f9;
+        /* Màu nền */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* Đổ bóng */
+        transition: all 0.3s ease;
+        /* Hiệu ứng chuyển động */
     }
+
+    .header-input::placeholder {
+        color: #999;
+        /* Màu sắc của placeholder */
+    }
+
+    .header-input:focus {
+        border-color: #0056b3;
+        /* Màu viền khi focus */
+        background-color: #fff;
+        /* Màu nền khi focus */
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        /* Đổ bóng khi focus */
+    }
+
+    .icon-header-item {
+        cursor: pointer;
+        /* Hiển thị con trỏ khi hover */
+        transition: color 0.3s ease;
+        /* Hiệu ứng chuyển động */
+    }
+
+    .icon-header-item:hover {
+        color: #007bff;
+        /* Màu sắc khi hover */
+    }
+
 
 
     /* Make the logo image clearer */
@@ -139,6 +174,12 @@
         max-height: 80px;
         /* Adjust the height as needed */
         display: block;
+    }
+
+    .main-menu .sub-menu {
+        padding: 0;
+        transform: translateX(-50%);
+        left: 50%;
     }
 
     /* Remove underline from the menu text */
@@ -160,13 +201,36 @@
         /* Adjust the text color as needed */
     }
 
-    /* Apply a more appealing background color to the header */
+    .active-menu:hover .sub-menu {
+        display: block;
+    }
 
+    .sub-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        min-width: 150px;
+        /* Độ rộng tối thiểu của dropdown */
+    }
 
-    /* Add hover effect to menu items */
-    .main-menu li a:hover h4 {
-        color: #ff6f61;
-        /* Change to your preferred hover color */
+    .sub-menu li a {
+        color: #333;
+        text-decoration: none;
+        display: block;
+        transition: all 0.3s ease;
+    }
+
+    .sub-menu li:last-child {
+        border-bottom: none;
+    }
+
+    .sub-menu li a:hover {
+        background-color: #f2f2f2;
     }
 </style>
 
