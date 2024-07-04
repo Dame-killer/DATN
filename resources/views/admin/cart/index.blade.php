@@ -85,7 +85,7 @@
                                                         data-id="{{ $order_detail->product_detail->id }}"
                                                         data-action="decrease">-
                                                 </button>
-                                                <input type="text"
+                                                <input type="number"
                                                        class="quantity-input text-xs font-weight-bold mb-0 mx-2"
                                                        value="{{ $order_detail->amount }}">
                                                 <button class="btn btn-sm btn-primary update-quantity"
@@ -220,16 +220,17 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.status === 'success') {
-                            const amountElement = this.parentElement.querySelector(
-                                '.text-xs.font-weight-bold.mb-0.mx-2')
-                            amountElement.textContent = data.amount
+                            // Update the quantity in the UI
+                            const quantityInput = this.parentElement.querySelector('.quantity-input')
+                            quantityInput.value = data.amount
 
-                            const totalPricePerProductElement = this.closest('tr').querySelector(
-                                '.total-price-per-product')
-                            totalPricePerProductElement.textContent = `${data.totalPricePerProduct}đ`
+                            // Update the total price per product in the UI
+                            const totalPriceElement = this.closest('tr').querySelector('.total-price-per-product')
+                            totalPriceElement.textContent = data.totalPricePerProduct.toLocaleString('vi-VN') + ' đ'
 
-                            const totalPriceElement = document.getElementById('total-price')
-                            totalPriceElement.textContent = `${data.totalPrice}đ`
+                            // Update the total price of the cart
+                            const totalPrice = data.totalPrice
+                            document.getElementById('total-price').textContent = totalPrice.toLocaleString('vi-VN') + ' đ'
                         }
                     })
                     .catch(error => console.error('Error:', error))
