@@ -65,11 +65,11 @@
                             </td>
                             <td class="align-middle">
                                 <p class="text-right font-weight-bold mb-0">
-                                    {{ number_format($order_detail->unit_price) }}đ</p>
+                                    {{ number_format($order_detail->unit_price) }} đ</p>
                             </td>
                             <td class="align-middle">
                                 <p class="text-right font-weight-bold mb-0 total-price-per-product">
-                                    {{ number_format($order_detail->totalPricePerProduct) }}đ</p>
+                                    {{ number_format($order_detail->totalPricePerProduct) }} đ</p>
                             </td>
                             <td class="align-middle">
                                 <form action="{{ route('customer-cart-remove', $order_detail->product_detail->id) }}"
@@ -95,7 +95,7 @@
                         </div>
                         <div class="size-209">
                             <span class="mtext-110 cl2" id="total-price">
-                                {{ number_format($totalPrice) }}đ
+                                {{ number_format($totalPrice) }} đ
                             </span>
                         </div>
                     </div>
