@@ -28,13 +28,13 @@
             <div class="col-lg-2 col-md-3 col-sm-4 p-t-30">
                 <div class="filter-section">
                     <form method="GET" action="{{ route('customer-product') }}">
-
                         <h5 class="m-text15 p-b-10">Danh mục</h5>
                         <div class="d-flex flex-column">
                             @foreach ($categories as $category)
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="category{{ $category->id }}"
-                                        name="category[]" value="{{ $category->id }}">
+                                        name="category[]" value="{{ $category->id }}"
+                                        {{ in_array($category->id, request()->get('category', [])) ? 'checked' : '' }}>
                                     <label class="form-check-label"
                                         for="category{{ $category->id }}">{{ $category->name }}</label>
                                 </div>
@@ -46,7 +46,8 @@
                             @foreach ($brands as $brand)
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="brand{{ $brand->id }}"
-                                        name="brand[]" value="{{ $brand->id }}">
+                                        name="brand[]" value="{{ $brand->id }}"
+                                        {{ in_array($brand->id, request()->get('brand', [])) ? 'checked' : '' }}>
                                     <label class="form-check-label"
                                         for="brand{{ $brand->id }}">{{ $brand->name }}</label>
                                 </div>
@@ -58,6 +59,7 @@
                         </div>
                     </form>
                 </div>
+
             </div>
 
             <!-- Phần 2: Hiển thị sản phẩm -->
