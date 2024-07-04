@@ -165,6 +165,7 @@ class OrderDetailController extends Controller
         return view('customer.account-detail', compact('orders', 'products', 'sizes', 'colors', 'product_details', 'order_details', 'totalPrice'));
     }
 
+
     /**
      * Show the form for editing the specified resource.
      */

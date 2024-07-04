@@ -461,7 +461,6 @@ button,
 [type="button"], // 1
 [type="reset"],
 [type="submit"] {
-  -webkit-appearance: button; // 2
 
   @if $enable-button-pointers {
     &:not(:disabled) {
@@ -541,7 +540,6 @@ legend {
 
 [type="search"] {
   outline-offset: -2px; // 1
-  -webkit-appearance: textfield; // 2
 }
 
 // 1. A few input types should stay LTR

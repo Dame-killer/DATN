@@ -1,7 +1,5 @@
 @extends('customer.index')
 
-
-
 @section('content')
     <div class="custom-header text-center">
     </div>
