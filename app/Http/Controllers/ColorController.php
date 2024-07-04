@@ -40,7 +40,7 @@ class ColorController extends Controller
 
         Color::create($request->all());
 
-        return redirect()->back()->with('success', 'Màu sắc đã được thêm thành công!');
+        return response()->json(['success' => 'Màu sắc đã được thêm thành công!'], 200);
     }
 
     /**
@@ -72,7 +72,7 @@ class ColorController extends Controller
         $colors = Color::findOrFail($color);
         $colors->update($request->all());
 
-        return redirect()->back()->with('success', 'Màu sắc đã được cập nhật thành công!');
+        return response()->json(['success' => 'Màu sắc đã được cập nhật thành công!'], 200);
     }
 
     /**
@@ -83,6 +83,6 @@ class ColorController extends Controller
         $colors = Color::findOrFail($color);
         $colors->delete();
 
-        return redirect()->back()->with('success', 'Màu sắc đã được xóa thành công!');
+        return response()->json(['success' => 'Màu sắc đã được xóa thành công!'], 200);
     }
 }

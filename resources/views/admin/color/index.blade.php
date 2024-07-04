@@ -85,7 +85,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('colors.store') }}" method="POST" autocomplete="off">
+                    <form id="addColorForm" autocomplete="off">
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên Màu Sắc</label>
@@ -115,9 +115,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('colors.update', '') }}" method="POST" autocomplete="off" id="editColorForm">
-                        @method('PUT')
+                    <form id="editColorForm" autocomplete="off">
                         @csrf
+                        @method('PUT')
                         <input type="hidden" id="editColorId" name="id">
                         <div class="mb-3">
                             <label for="editColorName" class="form-label">Tên Màu Sắc</label>
@@ -151,9 +151,9 @@
                     Bạn có chắc chắn muốn xóa màu sắc này không?
                 </div>
                 <div class="modal-footer">
-                    <form action="{{ route('colors.destroy', '') }}" id="deleteColorForm" method="POST">
-                        @method('DELETE')
+                    <form id="deleteColorForm">
                         @csrf
+                        @method('DELETE')
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                         <button type="submit" class="btn btn-danger">Xóa</button>
                     </form>
@@ -163,6 +163,42 @@
     </div>
 
     <script>
+        function setFlashMessage(message, type) {
+            fetch('{{ route('flash-message') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    message: message,
+                    type: type
+                })
+            }).then(response => {
+                if (response.ok) {
+                    location.reload()
+                }
+            })
+        }
+
+        document.getElementById('addColorForm').addEventListener('submit', function (event) {
+            event.preventDefault()
+            const formData = new FormData(this)
+            fetch('{{ route('colors.store') }}', {
+                method: 'POST',
+                body: formData,
+            }).then(response => response.json()).then(data => {
+                if (data.success) {
+                    setFlashMessage(data.success, 'success');
+                } else {
+                    setFlashMessage(data.error, 'error');
+                }
+            }).catch(error => {
+                console.error(error.message)
+                setFlashMessage('Thêm màu sắc thất bại!', 'error')
+            })
+        })
+
         var editColorModal = document.getElementById('editColorModal')
         editColorModal.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget
@@ -183,6 +219,24 @@
             form.action = "{{ route('colors.update', '') }}/" + id
         })
 
+        document.getElementById('editColorForm').addEventListener('submit', function (event) {
+            event.preventDefault()
+            const formData = new FormData(this)
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+            }).then(response => response.json()).then(data => {
+                if (data.success) {
+                    setFlashMessage(data.success, 'success');
+                } else {
+                    setFlashMessage(data.error, 'error');
+                }
+            }).catch(error => {
+                console.error(error.message)
+                setFlashMessage('Cập nhật màu sắc thất bại!', 'error')
+            })
+        })
+
         document.addEventListener('DOMContentLoaded', function () {
             const deleteColorModal = document.getElementById('deleteColorModal')
             deleteColorModal.addEventListener('show.bs.modal', function (event) {
@@ -190,6 +244,24 @@
                 const id = button.getAttribute('data-id')
                 const form = document.getElementById('deleteColorForm')
                 form.action = "{{ route('colors.destroy', '') }}/" + id
+            })
+        })
+
+        document.getElementById('deleteColorForm').addEventListener('submit', function (event) {
+            event.preventDefault()
+            const formData = new FormData(this)
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+            }).then(response => response.json()).then(data => {
+                if (data.success) {
+                    setFlashMessage(data.success, 'success');
+                } else {
+                    setFlashMessage(data.error, 'error');
+                }
+            }).catch(error => {
+                console.error(error.message)
+                setFlashMessage('Xóa màu sắc thất bại!', 'error')
             })
         })
     </script>
