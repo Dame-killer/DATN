@@ -39,7 +39,7 @@
                                 {{ $order_detail->product_detail->size->size_name }}
                                 - {{ $order_detail->product_detail->size->size_number }}
                                 /{{ $order_detail->product_detail->color->name }}
-                                </p>
+{{--                                </p>--}}
                             </td>
                             <td class="align-middle">
                                 <div class="input-group quantity mx-auto" style="width: 100px;">
