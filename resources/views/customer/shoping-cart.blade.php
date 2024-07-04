@@ -19,64 +19,68 @@
                 {{-- <div class="wrap-table-shopping-cart"> --}}
                 <table class="table table-bordered text-center mb-0">
                     <thead class="bg-secondary text-dark">
-                        <tr>
-                            <th>Sản phẩm</th>
-                            <th>Số Lượng</th>
-                            <th>Giá</th>
-                            <th>Tổng</th>
-                            <th></th>
-                        </tr>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Số Lượng</th>
+                        <th>Giá</th>
+                        <th>Tổng</th>
+                        <th></th>
+                    </tr>
                     <tbody class="align-middle">
-                        @foreach ($order_details as $order_detail)
-                            <tr>
-                                <td class="align-middle">
-                                    {{-- <p class="text-xs font-weight-bold mb-0"> --}}
-                                    <img src="{{ $order_detail->product_detail->product->image }}"
-                                        alt="{{ $order_detail->product_detail->product->name }}" class="img-fluid"
-                                        style="width: 50px">
-                                    {{ $order_detail->product_detail->product->name }}/{{ $order_detail->product_detail->product->code }}/
-                                    {{ $order_detail->product_detail->size->size_name }}
-                                    -{{ $order_detail->product_detail->size->size_number }}/{{ $order_detail->product_detail->color->name }}
-                                    </p>
-                                </td>
-                                <td class="align-middle">
-                                    <div class="input-group quantity mx-auto" style="width: 100px;">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-warning update-quantity"
-                                                data-id="{{ $order_detail->product_detail->id }}" data-action="decrease">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm text-center"
-                                            value="{{ $order_detail->amount }}">
-                                        {{-- <p class="text-xs font-weight-bold mb-0 mx-2">{{ $order_detail->amount }} --}}
-                                        {{-- </p> --}}
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary update-quantity"
-                                                data-id="{{ $order_detail->product_detail->id }}" data-action="increase">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
+                    @foreach ($order_details as $order_detail)
+                        <tr>
+                            <td class="align-middle">
+                                {{-- <p class="text-xs font-weight-bold mb-0"> --}}
+                                <img src="{{ $order_detail->product_detail->product->image }}"
+                                     alt="{{ $order_detail->product_detail->product->name }}" class="img-fluid"
+                                     style="width: 50px">
+                                {{ $order_detail->product_detail->product->name }}
+                                /{{ $order_detail->product_detail->product->code }}/
+                                {{ $order_detail->product_detail->size->size_name }}
+                                - {{ $order_detail->product_detail->size->size_number }}
+                                /{{ $order_detail->product_detail->color->name }}
+                                </p>
+                            </td>
+                            <td class="align-middle">
+                                <div class="input-group quantity mx-auto" style="width: 100px;">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-warning update-quantity"
+                                                data-id="{{ $order_detail->product_detail->id }}"
+                                                data-action="decrease">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
                                     </div>
-                                </td>
-                                <td class="align-middle">
-                                    <p class="text-right font-weight-bold mb-0">
-                                        {{ number_format($order_detail->unit_price) }}đ</p>
-                                </td>
-                                <td class="align-middle">
-                                    <p class="text-right font-weight-bold mb-0 total-price-per-product">
-                                        {{ number_format($order_detail->totalPricePerProduct) }}đ</p>
-                                </td>
-                                <td class="align-middle">
-                                    <form action="{{ route('customer-cart-remove', $order_detail->product_detail->id) }}"
-                                        method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">X</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
+                                    <input type="text" class="form-control form-control-sm text-center"
+                                           value="{{ $order_detail->amount }}">
+                                    {{-- <p class="text-xs font-weight-bold mb-0 mx-2">{{ $order_detail->amount }} --}}
+                                    {{-- </p> --}}
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-primary update-quantity"
+                                                data-id="{{ $order_detail->product_detail->id }}"
+                                                data-action="increase">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="align-middle">
+                                <p class="text-right font-weight-bold mb-0">
+                                    {{ number_format($order_detail->unit_price) }}đ</p>
+                            </td>
+                            <td class="align-middle">
+                                <p class="text-right font-weight-bold mb-0 total-price-per-product">
+                                    {{ number_format($order_detail->totalPricePerProduct) }}đ</p>
+                            </td>
+                            <td class="align-middle">
+                                <form action="{{ route('customer-cart-remove', $order_detail->product_detail->id) }}"
+                                      method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">X</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
                 {{-- </div> --}}
@@ -96,8 +100,8 @@
                         </div>
                     </div>
                     <button type="button"
-                        class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
-                        data-bs-toggle="modal" data-bs-target="#addOrderModal">
+                            class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer"
+                            data-bs-toggle="modal" data-bs-target="#addOrderModal">
                         Thanh toán
                     </button>
                 </div>
@@ -119,17 +123,17 @@
                         <div class="mb-3">
                             <label for="receiver" class="form-label">Tên Người Nhận</label>
                             <input type="text" class="form-control" id="receiver" name="receiver"
-                                placeholder="Nhập Tên Người Nhận" required>
+                                   placeholder="Nhập Tên Người Nhận" required>
                         </div>
                         <div class="mb-3">
                             <label for="phone" class="form-label">Số Điện Thoại</label>
                             <input type="tel" class="form-control" id="phone" name="phone"
-                                placeholder="Nhập Số Điện Thoại" required>
+                                   placeholder="Nhập Số Điện Thoại" required>
                         </div>
                         <div class="mb-3">
                             <label for="address" class="form-label">Địa Chỉ</label>
                             <input type="text" class="form-control" id="address" name="address"
-                                placeholder="Nhập Địa Chỉ" required>
+                                   placeholder="Nhập Địa Chỉ" required>
                         </div>
                         <div class="mb-3">
                             <label for="payment_method_id" class="form-label">Phương thức thanh toán</label>
@@ -143,7 +147,7 @@
                         </div>
                         @if (Auth::check())
                             <input class="form-control" id="userId" name="user_id" value="{{ Auth::user()->id }}"
-                                hidden></input>
+                                   hidden></input>
                         @endif
                         <div class="mb-3">
                             {{-- <input type="hidden" name="payment_method_id" value="1"> --}}
@@ -161,21 +165,21 @@
 
     <script>
         document.querySelectorAll('.update-quantity').forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const id = this.dataset.id
                 const action = this.dataset.action
 
                 fetch('{{ route('customer-cart-updateQuantity') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            id,
-                            action
-                        })
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        id,
+                        action
                     })
+                })
                     .then(response => response.json())
                     .then(data => {
                         if (data.status === 'success') {

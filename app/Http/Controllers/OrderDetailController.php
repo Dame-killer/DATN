@@ -226,10 +226,20 @@ class OrderDetailController extends Controller
 
         return redirect()->back()->with('success', 'Thêm sản phẩm vào giỏ hàng thành công!');
     }
-    public function addToCartCustomer(Request $request, ProductDetail $product_detail)
+    public function addToCartCustomer(Request $request)
     {
         // Lấy số lượng sản phẩm từ request
         $quantity = $request->input('num_product', 1);
+        $selectedSize = $request->input('selected_size');
+        $selectedColor = $request->input('selected_color');
+
+        // Tìm product detail dựa trên size và color đã chọn
+        $product_detail = ProductDetail::whereHas('size', function ($query) use ($selectedSize) {
+            $query->where('size_name', $selectedSize);
+        })->whereHas('color', function ($query) use ($selectedColor) {
+            $query->where('id', $selectedColor);
+        })->firstOrFail();
+
         $cart = session()->get('cart', []);
 
         // Lấy thông tin chi tiết sản phẩm

@@ -45,7 +45,7 @@
                 <h3 class="font-weight-semi-bold">{{ $products->name }} - {{ $products->code }}</h3><br>
                 <h4 class="font-weight-semi-bold mb-4">{{ number_format($products->price) }} đ</h4>
                 <div class="d-flex mb-3">
-                    <p class="text-dark font-weight-medium mb-0">Sizes:</p>
+                    <p class="text-dark font-weight-medium mb-0">Kích thước:</p>
                     <div class="product-size">
                         <form>
                             @php
@@ -73,7 +73,7 @@
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" name="color" class="color-button m-1"
                                         data-color="{{ $color }}"
-                                        data-product-detail-id="{{ $product_details->firstWhere('color.name', $color)->id }}">
+                                        data-color-id="{{ $product_details->firstWhere('color.name', $color)->color->id }}">
                                     <label class="custom-control-label">{{ $color }}</label>
                                 </div>
                             @endforeach
@@ -109,6 +109,8 @@
                         <form action="" method="POST" id="cart-form">
                             @csrf
                             <input type="hidden" name="num_product" id="num_product" value="1">
+                            <input type="hidden" name="selected_size" id="selected_size">
+                            <input type="hidden" name="selected_color" id="selected_color">
                             <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04"
                                 type="submit" id="add-to-cart-button">
                                 Thêm vào giỏ hàng
@@ -125,7 +127,6 @@
             </div>
         </div>
     </div>
-    </section>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let selectedSize = null;
@@ -133,38 +134,24 @@
 
             const sizeButtons = document.querySelectorAll('.size-button');
             const colorButtons = document.querySelectorAll('.color-button');
-            const productDetailItems = document.querySelectorAll('.product-detail-item');
-            const cartForm = document.getElementById('cart-form');
-            const numProductInput = document.getElementById('num_product');
-            const numProductField = document.querySelector('.num-product');
             const carouselInner = document.querySelector('.carousel-inner'); // Carousel container
 
             const imageProducts = {!! $imageProducts->toJson() !!}; // Convert $imageProducts from PHP to JavaScript object
 
             function updateProductDetails() {
-                let matchingProductDetail = null;
+                console.log('Selected Color:', selectedColor);
 
-                if (selectedSize && selectedColor) {
-                    productDetailItems.forEach(item => {
-                        const itemSize = item.getAttribute('data-size');
-                        const itemColor = item.getAttribute('data-color');
-
-                        if (itemSize === selectedSize && itemColor === selectedColor) {
-                            matchingProductDetail = item;
-                        }
+                if (selectedColor) {
+                    const colorId = selectedColor.getAttribute('data-color-id');
+                    const matchingImages = imageProducts.filter(image => {
+                        const productDetail = {!! json_encode($product_details) !!}.find(detail => detail.id === image.product_detail_id);
+                        return productDetail && productDetail.color.id == colorId;
                     });
-                }
 
-                // Update carousel images based on selected color
-                if (matchingProductDetail) {
-                    const productDetailId = matchingProductDetail.getAttribute('data-product-detail-id');
-                    const matchingImages = imageProducts.filter(product => product.product_detail_id === parseInt(
-                        productDetailId));
+                    console.log('Matching Images:', matchingImages);
 
-                    // Clear existing carousel items
                     carouselInner.innerHTML = '';
 
-                    // Add new carousel items
                     matchingImages.forEach((image, index) => {
                         const div = document.createElement('div');
                         div.classList.add('carousel-item');
@@ -181,7 +168,6 @@
                         carouselInner.appendChild(div);
                     });
                 } else {
-                    // If no matching product detail, clear the carousel
                     carouselInner.innerHTML = '';
                 }
             }
@@ -191,7 +177,7 @@
                     sizeButtons.forEach(btn => btn.classList.remove('selected'));
                     button.classList.add('selected');
                     selectedSize = button.getAttribute('data-size');
-                    updateProductDetails();
+                    document.getElementById('selected_size').value = selectedSize;
                 });
             });
 
@@ -199,21 +185,37 @@
                 button.addEventListener('click', () => {
                     colorButtons.forEach(btn => btn.classList.remove('selected'));
                     button.classList.add('selected');
-                    selectedColor = button.getAttribute('data-color');
+                    selectedColor = button;
+                    document.getElementById('selected_color').value = selectedColor.getAttribute('data-color-id');
                     updateProductDetails();
                 });
             });
 
+            const cartForm = document.getElementById('cart-form');
+            const numProductInput = document.getElementById('num_product');
+            const numProductField = document.querySelector('.num-product');
+
             cartForm.addEventListener('submit', function(event) {
+                event.preventDefault();
                 if (!selectedSize || !selectedColor) {
-                    event.preventDefault();
-                    alert('Vui lòng chọn cả kích thước và màu sắc.');
-                } else {
-                    // Update the quantity value in the hidden input before submitting the form
-                    numProductInput.value = numProductField.value;
+                    alert('Vui lòng chọn size và màu sắc trước khi thêm vào giỏ hàng.');
+                    return;
                 }
+                document.getElementById('selected_size').value = selectedSize;
+                document.getElementById('selected_color').value = selectedColor.getAttribute('data-color-id');
+                numProductInput.value = numProductField.value;
+
+                cartForm.submit();
             });
-        });
+
+
+
+            document.querySelectorAll('.num-product').forEach(input => {
+                input.addEventListener('input', () => {
+                    numProductInput.value = input.value;
+                });
+            });
+        })
     </script>
 @endsection
 <style>
