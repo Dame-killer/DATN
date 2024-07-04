@@ -42,6 +42,14 @@ public function indexCustomer(Request $request)
     $categories = Category::all();
     $brands = Brand::all();
 
+    if ($request->has('search')) {
+        $search = $request->search;
+        $query->where(function($q) use ($search) {
+            $q->where('name', 'like', '%' . $search . '%')
+              ->orWhere('code', 'like', '%' . $search . '%');
+        });
+    }
+
     if ($request->has('category') && !empty($request->category)) {
         $query->where('category_id', $request->category);
     }

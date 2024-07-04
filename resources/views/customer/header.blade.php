@@ -2,11 +2,11 @@
 <header>
     <!-- Header desktop -->
     {{-- <div class="container-menu-desktop"> --}}
-    <div class="wrap-menu-desktop" style="background-color: #e0f7fa">
-        <nav class="limiter-menu-desktop container">
+    <div class="wrap-menu-desktop" style="background-color: #F0F8FF">
+        <nav class="limiter-menu-desktop">
             <!-- Logo desktop -->
             <a href="{{ route('customer-home') }}" class="logo">
-                <img src="{{ asset('assets/images/logo-header.png') }}" alt="IMG-LOGO">
+                <img class="image m-10" src="{{ asset('assets/images/logo-header.png') }}" alt="IMG-LOGO">
             </a>
 
             <!-- Menu desktop -->
@@ -32,18 +32,26 @@
 
             <!-- Icon header -->
             <div class="wrap-icon-header flex-w flex-r-m">
-                <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-                    <i class="zmdi zmdi-search js-show-input-search"></i>
-                    <div class="input-search-header" style="display: none;">
-                        <form action="#" method="get">
-                            <input class="form-control" type="text" name="search" placeholder="Tìm kiếm...">
-                        </form>
+                <div class="header-icons">
+                    <div class="header-icons">
+                        <div class="input-header-item">
+                            <form method="GET" action="{{ route('customer-product') }}" id="search-form">
+                                <input type="search" name="search" placeholder="Tìm kiếm..." class="header-input"
+                                    style="display: none;" aria-label="Tìm kiếm" value="{{ request('search') }}">
+                            </form>
+                        </div>
+                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-toggle-search">
+                            <i class="zmdi zmdi-search"></i>
+                        </div>
+                    </div>
+
+
+                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-cart">
+                        <i class="zmdi zmdi-shopping-cart"></i>
                     </div>
                 </div>
-                <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-cart">
-                    <i class="zmdi zmdi-shopping-cart"></i>
-                </div>
-                <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+
+                <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 ">
                     <ul class="main-menu">
                         <li class="active-menu">
                             <i class="zmdi zmdi-account"></i>
@@ -56,6 +64,7 @@
                                     <li><a href="{{ route('customer-logout') }}">Đăng xuất</a></li>
                                 @else
                                     <li><a href="{{ route('customer-login') }}">Đăng nhập</a></li>
+                                    <li><a href="{{ route('customer-register') }}">Đăng ký</a></li>
                                 @endif
                             </ul>
                         </li>
@@ -75,18 +84,102 @@
         left: 0;
         width: 100%;
         z-index: 1000;
-        /* Đảm bảo header hiển thị trên mọi phần tử khác */
-        background-color: #e0f7fa;
+        background-color: #F0F8FF;
         /* Màu nền của header */
         padding: 10px 0;
         /* Điều chỉnh padding theo ý của bạn */
     }
+
+    header a {
+        color: #FF4500;
+        text-decoration: none;
+        /* Xóa gạch chân */
+    }
+
+    header a:hover {
+        text-decoration: underline;
+        /* Thêm gạch chân khi hover */
+    }
+
+    header button {
+        background-color: #FFD700;
+        color: #FFFFFF;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .header-icons {
+        display: flex;
+        align-items: center;
+    }
+
+    .input-header-item {
+        position: relative;
+        margin-left: 10px;
+        /* Khoảng cách giữa các phần tử */
+    }
+
+    .header-input {
+        width: 200px;
+        /* Độ rộng của ô tìm kiếm */
+        padding: 10px 15px;
+        border: 2px solid #007bff;
+        /* Màu sắc viền */
+        border-radius: 25px;
+        /* Bo tròn các góc */
+        outline: none;
+        font-size: 12px;
+        color: #333;
+        /* Màu sắc chữ */
+        background-color: #f9f9f9;
+        /* Màu nền */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* Đổ bóng */
+        transition: all 0.3s ease;
+        /* Hiệu ứng chuyển động */
+    }
+
+    .header-input::placeholder {
+        color: #999;
+        /* Màu sắc của placeholder */
+    }
+
+    .header-input:focus {
+        border-color: #0056b3;
+        /* Màu viền khi focus */
+        background-color: #fff;
+        /* Màu nền khi focus */
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        /* Đổ bóng khi focus */
+    }
+
+    .icon-header-item {
+        cursor: pointer;
+        /* Hiển thị con trỏ khi hover */
+        transition: color 0.3s ease;
+        /* Hiệu ứng chuyển động */
+    }
+
+    .icon-header-item:hover {
+        color: #007bff;
+        /* Màu sắc khi hover */
+    }
+
+
 
     /* Make the logo image clearer */
     .logo img {
         max-height: 80px;
         /* Adjust the height as needed */
         display: block;
+    }
+
+    .main-menu .sub-menu {
+        padding: 0;
+        transform: translateX(-50%);
+        left: 50%;
     }
 
     /* Remove underline from the menu text */
@@ -108,13 +201,36 @@
         /* Adjust the text color as needed */
     }
 
-    /* Apply a more appealing background color to the header */
+    .active-menu:hover .sub-menu {
+        display: block;
+    }
 
+    .sub-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        min-width: 150px;
+        /* Độ rộng tối thiểu của dropdown */
+    }
 
-    /* Add hover effect to menu items */
-    .main-menu li a:hover h4 {
-        color: #ff6f61;
-        /* Change to your preferred hover color */
+    .sub-menu li a {
+        color: #333;
+        text-decoration: none;
+        display: block;
+        transition: all 0.3s ease;
+    }
+
+    .sub-menu li:last-child {
+        border-bottom: none;
+    }
+
+    .sub-menu li a:hover {
+        background-color: #f2f2f2;
     }
 </style>
 
@@ -133,5 +249,14 @@
                 inputSearchHeader.style.display = 'none';
             }
         });
+    });
+    document.querySelector('.js-toggle-search').addEventListener('click', function() {
+        const inputField = document.querySelector('.header-input');
+        if (inputField.style.display === 'none' || inputField.style.display === '') {
+            inputField.style.display = 'block';
+            inputField.focus(); // Tự động focus vào thẻ input khi hiển thị
+        } else {
+            inputField.style.display = 'none';
+        }
     });
 </script>
