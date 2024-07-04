@@ -64,7 +64,12 @@
             <div class="col-lg-10 col-md-9 col-sm-8">
                 <!-- Thêm anchor vào đây -->
                 <a id="product-list"></a>
-                <div class="flex-w justify-content-end p-b-52">
+                <div class="d-flex justify-content-between align-items-center p-b-52">
+                    <div class="d-flex justify-content-center flex-l-m filter-tope-group m-tb-10">
+                        @if ($products->count() > 0)
+                            {{ $products->count() }} sản phẩm
+                        @endif
+                    </div>
                     <div class="flex-w flex-l-m filter-tope-group m-tb-10">
                         <select id="sort-options" class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5">
                             <option
@@ -90,6 +95,7 @@
                         </select>
                     </div>
                 </div>
+
 
 
                 <div class="row isotope-grid">
