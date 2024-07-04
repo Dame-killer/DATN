@@ -41,12 +41,12 @@ class BrandController extends Controller
         $existing = Brand::where('name', $request->name)->first();
 
         if ($existing) {
-            return redirect()->back()->withErrors(['error' => 'Thương hiệu đã tồn tại!']);
+            return response()->json(['error' => 'Thương hiệu đã tồn tại!'], 409);
         }
 
         Brand::create($request->all());
 
-        return redirect()->back()->with('success', 'Thương hiệu đã được thêm thành công!');
+        return response()->json(['success' => 'Thương hiệu đã được thêm thành công!'], 200);
     }
 
     /**
@@ -79,12 +79,12 @@ class BrandController extends Controller
         $existing = Brand::where('name', $request->name)->where('id', '!=', $brand)->first();
 
         if ($existing) {
-            return redirect()->back()->withErrors(['error' => 'Thương hiệu đã tồn tại!']);
+            return response()->json(['error' => 'Thương hiệu đã tồn tại!'], 409);
         }
 
         $brands->update($request->all());
 
-        return redirect()->back()->with('success', 'Thương hiệu đã được cập nhật thành công!');
+        return response()->json(['success' => 'Thương hiệu đã được cập nhật thành công!'], 200);
     }
 
     /**
@@ -95,6 +95,6 @@ class BrandController extends Controller
         $brands = Brand::findOrFail($brand);
         $brands->delete();
 
-        return redirect()->back()->with('success', 'Thương hiệu đã được xóa thành công!');
+        return response()->json(['success' => 'Thương hiệu đã được xóa thành công!'], 200);
     }
 }
