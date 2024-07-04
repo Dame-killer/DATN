@@ -2,7 +2,7 @@
 <header>
     <!-- Header desktop -->
     {{-- <div class="container-menu-desktop"> --}}
-    <div class="wrap-menu-desktop" style="background-color: #e0f7fa">
+    <div class="wrap-menu-desktop" style="background-color: #F0F8FF">
         <nav class="limiter-menu-desktop container">
             <!-- Logo desktop -->
             <a href="{{ route('customer-home') }}" class="logo">
@@ -32,17 +32,24 @@
 
             <!-- Icon header -->
             <div class="wrap-icon-header flex-w flex-r-m">
-                <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-                    <i class="zmdi zmdi-search js-show-input-search"></i>
-                    <div class="input-search-header" style="display: none;">
-                        <form action="#" method="get">
-                            <input class="form-control" type="text" name="search" placeholder="Tìm kiếm...">
-                        </form>
+                <div class="header-icons">
+                    <div class="header-icons">
+                        <div class="input-header-item">
+                            <form method="GET" action="{{ route('customer-product') }}" id="search-form">
+                                <input type="search" name="search" placeholder="Tìm kiếm..." class="header-input"
+                                    style="display: none;" aria-label="Tìm kiếm" value="{{ request('search') }}">
+                            </form>
+                        </div>
+                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-toggle-search">
+                            <i class="zmdi zmdi-search"></i>
+                        </div>
+                    </div>
+
+                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-cart">
+                        <i class="zmdi zmdi-shopping-cart"></i>
                     </div>
                 </div>
-                <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-cart">
-                    <i class="zmdi zmdi-shopping-cart"></i>
-                </div>
+
                 <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
                     <ul class="main-menu">
                         <li class="active-menu">
@@ -75,12 +82,57 @@
         left: 0;
         width: 100%;
         z-index: 1000;
-        /* Đảm bảo header hiển thị trên mọi phần tử khác */
-        background-color: #e0f7fa;
+        background-color: #F0F8FF;
         /* Màu nền của header */
         padding: 10px 0;
         /* Điều chỉnh padding theo ý của bạn */
     }
+
+    header a {
+        color: #FF4500;
+        text-decoration: none;
+        /* Xóa gạch chân */
+    }
+
+    header a:hover {
+        text-decoration: underline;
+        /* Thêm gạch chân khi hover */
+    }
+
+    header .separator {
+        border-bottom: 1px solid #D3D3D3;
+        margin: 10px 0;
+    }
+
+    header button {
+        background-color: #FFD700;
+        color: #FFFFFF;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .header-icons {
+        display: flex;
+        align-items: center;
+    }
+
+    .icon-header-item {
+        display: flex;
+        align-items: center;
+        padding: 0 11px;
+        /* Điều chỉnh padding nếu cần */
+    }
+
+    .header-input {
+        width: 100%;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+    }
+
 
     /* Make the logo image clearer */
     .logo img {
@@ -133,5 +185,14 @@
                 inputSearchHeader.style.display = 'none';
             }
         });
+    });
+    document.querySelector('.js-toggle-search').addEventListener('click', function() {
+        const inputField = document.querySelector('.header-input');
+        if (inputField.style.display === 'none' || inputField.style.display === '') {
+            inputField.style.display = 'block';
+            inputField.focus(); // Tự động focus vào thẻ input khi hiển thị
+        } else {
+            inputField.style.display = 'none';
+        }
     });
 </script>
