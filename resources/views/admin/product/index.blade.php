@@ -159,8 +159,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="introduce" class="form-label">Mô Tả</label>
-                            <input type="text" class="form-control" id="introduce" name="introduce"
-                                   placeholder="Nhập Mô Tả Sản Phẩm">
+                            <textarea type="text" class="form-control" id="introduce" name="introduce"
+                                      placeholder="Nhập Mô Tả Sản Phẩm"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="category_id" class="form-label">Danh Mục</label>
@@ -223,8 +223,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="editProductIntroduce" class="form-label">Mô Tả</label>
-                            <input type="text" class="form-control" id="editProductIntroduce" name="introduce"
-                                   placeholder="Nhập Mô Tả Sản Phẩm">
+                            <textarea type="text" class="form-control" id="editProductIntroduce" name="introduce"
+                                      placeholder="Nhập Mô Tả Sản Phẩm"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="editProductCategory" class="form-label">Danh Mục</label>

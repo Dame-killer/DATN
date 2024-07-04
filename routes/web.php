@@ -38,8 +38,10 @@ Route::get('/', function () {
     }
 });
 
-
 Auth::routes();
+
+Route::post('/set-flash-message', [HomeController::class, 'setFlashMessage'])->name('flash-message');
+
 //ADMIN
 Route::middleware('auth', 'web', 'role:1,2')->group(function () {
     Route::get('/admin/home', [HomeController::class, 'dashboard'])->name('admin-home');
