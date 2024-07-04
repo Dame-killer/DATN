@@ -8,15 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>LivelyMuse</title>
     <meta name="theme-color" content="#ffffff">
-    <link rel="stylesheet" href="style.css">
+    {{-- <link rel="stylesheet" href="style.css"> --}}
     <link rel="icon" href="{{ asset('assets/images/logo1.png') }}" type="image/png">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> --}}
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-    <link href="../../css/argon-dashboard.css" rel="stylesheet" />
+    {{-- <link href="../../css/argon-dashboard.css" rel="stylesheet" />
     <link href="../../css/nucleo-icons.css" rel="stylesheet" />
-    <link href="../../css/nucleo-svg.css" rel="stylesheet" />
+    <link href="../../css/nucleo-svg.css" rel="stylesheet" /> --}}
     @vite('resources/sass/app.scss')
     @vite('resources/sass/argon-dashboard.scss')
     @vite('resources/sass/_custom.scss')
@@ -72,9 +72,6 @@
                                 <li class="mb-2">
                                     <a class="dropdown-item border-radius-md" href="javascript:;">
                                         <div class="d-flex py-1">
-                                            <div class="my-auto">
-                                                <img src="./img/team-2.jpg" class="avatar avatar-sm  me-3 ">
-                                            </div>
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="text-sm font-weight-normal mb-1">
                                                     <span class="font-weight-bold">New message</span> from Laur
@@ -87,31 +84,13 @@
                                         </div>
                                     </a>
                                 </li>
-                                <li class="mb-2">
-                                    <a class="dropdown-item border-radius-md" href="javascript:;">
-                                        <div class="d-flex py-1">
-                                            <div class="my-auto">
-                                                <img src="./img/small-logos/logo-spotify.svg"
-                                                    class="avatar avatar-sm bg-gradient-dark  me-3 ">
-                                            </div>
-                                            <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="text-sm font-weight-normal mb-1">
-                                                    <span class="font-weight-bold">New album</span> by Travis Scott
-                                                </h6>
-                                                <p class="text-xs text-secondary mb-0">
-                                                    <i class="fa fa-clock me-1"></i>
-                                                    1 day
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
+
                                 <li>
                                     <a class="dropdown-item border-radius-md" href="javascript:;">
                                         <div class="d-flex py-1">
                                             <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
-                                                <svg width="12px" height="12px" viewBox="0 0 43 36"
-                                                    version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                                <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1"
+                                                    xmlns="http://www.w3.org/2000/svg"
                                                     xmlns:xlink="http://www.w3.org/1999/xlink">
                                                     <title>credit-card</title>
                                                     <g stroke="none" stroke-width="1" fill="none"
@@ -177,11 +156,11 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!--   Core JS Files   -->
-    <script src="../../js/core/bootstrap.min.js"></script>
-    <script src="../../js/core/popper.min.js"></script>
-    <script src="../../js/argon-dashboard.js"></script>
-    <script src="../../js/plugins/perfect-scrollbar.min.js"></script>
-    <script src="../../js/plugins/smooth-scrollbar.min.js"></script>
+    {{-- <script src="../../js/core/bootstrap.min.js"></script> --}}
+    {{-- <script src="../../js/core/popper.min.js"></script> --}}
+    {{-- <script src="../../js/argon-dashboard.js"></script> --}}
+    {{-- <script src="../../js/plugins/perfect-scrollbar.min.js"></script> --}}
+    {{-- <script src="../../js/plugins/smooth-scrollbar.min.js"></script> --}}
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
         if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -192,11 +171,11 @@
         }
     </script>
     <!-- Github buttons -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    {{-- <script async defer src="https://buttons.github.io/buttons.js"></script> --}}
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="../../js/argon-dashboard.js"></script>
+    {{-- <script src="../../js/argon-dashboard.js"></script> --}}
     @stack('js');
-    <script src="{{ asset('js/coreui.bundle.min.js') }}"></script>
+    {{-- <script src="{{ asset('js/coreui.bundle.min.js') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
     </script>
