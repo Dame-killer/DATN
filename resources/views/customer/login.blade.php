@@ -1,30 +1,13 @@
 @extends('customer.index')
 
 @section('content')
-    <div class="bg-white">
-    </div>
-    <!-- breadcrumb -->
-    <div class="container">
-        <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-            <a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
-                Trang chủ
-                <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
-            </a>
-
-            <span class="stext-109 cl4 mb-3">
-                Đăng nhập
-            </span>
-        </div>
-    </div>
-    <!-- Dải màu đen với tiêu đề ở trên cùng -->
-    <div class="bg-dark text-white py-2 text-center">
-        <h1 class="mb-0">Trang Đăng Nhập</h1>
-    </div>
-
-    <section class="bg-light p-3 p-md-4 p-xl-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6"> <!-- Thêm lớp này để giới hạn chiều rộng của form -->
+    <div class="login-wrapper" style="background-image: url('{{ asset('assets/images/layoutDK2.jpg') }}');">
+        <div class="login">
+            <div class="card mb-6 mx-6">
+                <div class="card-body p-6">
+                    <div class="d-flex justify-content-center align-items-center m-2">
+                        <h3>Đăng nhập</h3>
+                    </div> <!-- Thêm lớp này để giới hạn chiều rộng của form -->
                     <form action="/customer/login" method="POST">
                         @csrf
                         <div class="input-group mb-3">
@@ -60,14 +43,46 @@
                                 <button class="btn btn-dark btn-lg" type="submit">Đăng nhập</button>
                             </div>
                         </div>
-                        <a href="{{ route('customer-register') }}">Chưa có tài khoản</a>
+                        <a href="{{ route('customer-register') }}">
+                            <p class="text-dark">Chưa có tài khoản</p>
+                        </a>
                     </form>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 @endsection
 <style>
+    .login-wrapper {
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        /* Chiều cao toàn màn hình */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login .card {
+        background-color: rgba(255, 255, 255, 0.5);
+        /* Nền trắng trong suốt */
+        border: none;
+        /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+        /* width: 100%; */
+        height: 50vh;
+        max-width: 700px;
+        /* Chiều rộng tối đa của form */
+    }
+
+    .login .card-body {
+        padding: 2rem;
+    }
+
+    .login h3 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
     /* Điều chỉnh kích thước của form đăng nhập */
     .form-container {
         max-width: 500px;
