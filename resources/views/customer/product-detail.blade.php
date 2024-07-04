@@ -54,8 +54,9 @@
                             @foreach ($availableSizes as $size)
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" name="size" class="size-button m-1"
-                                        data-size="{{ $size }}">
-                                    <label class="custom-control-label" for="size-1">{{ $size }}</label>
+                                        data-size="{{ $size }}" id="size-{{ $loop->index }}">
+                                    <label class="custom-control-label"
+                                        for="size-{{ $loop->index }}">{{ $size }}</label>
                                 </div>
                             @endforeach
                         </form>
@@ -73,24 +74,30 @@
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" name="color" class="color-button m-1"
                                         data-color="{{ $color }}"
-                                        data-color-id="{{ $product_details->firstWhere('color.name', $color)->color->id }}">
-                                    <label class="custom-control-label">{{ $color }}</label>
+                                        data-color-id="{{ $product_details->firstWhere('color.name', $color)->color->id }}"
+                                        id="color-{{ $loop->index }}">
+                                    <label class="custom-control-label"
+                                        for="color-{{ $loop->index }}">{{ $color }}</label>
                                 </div>
                             @endforeach
                         </form>
                     </div>
                 </div>
+                <p id="product-quantity">Còn <span id="quantity-display">{{ $product_details->first()->quantity }}</span>
+                    sản phẩm</p>
 
-                <!-- Phần tử ẩn để lưu trữ sản phẩm chi tiết cho JavaScript sử dụng -->
+                <!-- Hidden elements to store product details for JavaScript use -->
                 <div id="product-details" style="display: none;">
                     @foreach ($product_details as $product_detail)
                         <div class="product-detail-item" data-product-detail-id="{{ $product_detail->id }}"
                             data-size="{{ $product_detail->size->size_name }}"
-                            data-color="{{ $product_detail->color->name }}">
+                            data-color="{{ $product_detail->color->name }}"
+                            data-quantity="{{ $product_detail->quantity }}">
                             <input type="hidden" class="product-detail-id" value="{{ $product_detail->id }}">
                         </div>
                     @endforeach
                 </div>
+
 
                 <div class="flex-w d-flex p-b-12">
                     <div class="size-204 flex-w flex-m respon6-next">
@@ -100,7 +107,7 @@
                             </div>
 
                             <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product"
-                                value="1">
+                                value="1" min="1">
 
                             <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
                                 <i class="fs-16 zmdi zmdi-plus"></i>
@@ -135,6 +142,25 @@
             const sizeButtons = document.querySelectorAll('.size-button');
             const colorButtons = document.querySelectorAll('.color-button');
             const carouselInner = document.querySelector('.carousel-inner'); // Carousel container
+            const productDetails = document.querySelectorAll('.product-detail-item');
+            const quantityDisplay = document.getElementById('quantity-display');
+
+            // Automatically select the first available size
+            if (sizeButtons.length > 0) {
+                sizeButtons[0].checked = true;
+                sizeButtons[0].classList.add('selected');
+                selectedSize = sizeButtons[0].getAttribute('data-size');
+                document.getElementById('selected_size').value = selectedSize;
+            }
+
+            // Automatically select the first available color
+            if (colorButtons.length > 0) {
+                colorButtons[0].checked = true;
+                colorButtons[0].classList.add('selected');
+                selectedColor = colorButtons[0];
+                document.getElementById('selected_color').value = selectedColor.getAttribute('data-color-id');
+            }
+
 
             const imageProducts = {!! $imageProducts->toJson() !!}; // Convert $imageProducts from PHP to JavaScript object
 
@@ -144,7 +170,8 @@
                 if (selectedColor) {
                     const colorId = selectedColor.getAttribute('data-color-id');
                     const matchingImages = imageProducts.filter(image => {
-                        const productDetail = {!! json_encode($product_details) !!}.find(detail => detail.id === image.product_detail_id);
+                        const productDetail = {!! json_encode($product_details) !!}.find(detail => detail.id === image
+                            .product_detail_id);
                         return productDetail && productDetail.color.id == colorId;
                     });
 
@@ -186,7 +213,8 @@
                     colorButtons.forEach(btn => btn.classList.remove('selected'));
                     button.classList.add('selected');
                     selectedColor = button;
-                    document.getElementById('selected_color').value = selectedColor.getAttribute('data-color-id');
+                    document.getElementById('selected_color').value = selectedColor.getAttribute(
+                        'data-color-id');
                     updateProductDetails();
                 });
             });
@@ -194,6 +222,65 @@
             const cartForm = document.getElementById('cart-form');
             const numProductInput = document.getElementById('num_product');
             const numProductField = document.querySelector('.num-product');
+            const btnNumProductDown = document.querySelector('.btn-num-product-down');
+            const btnNumProductUp = document.querySelector('.btn-num-product-up');
+
+            function updateQuantity() {
+                if (selectedSize && selectedColor) {
+                    productDetails.forEach(detail => {
+                        if (detail.getAttribute('data-size') === selectedSize && detail.getAttribute(
+                                'data-color') === selectedColor.getAttribute('data-color')) {
+                            const availableQuantity = detail.getAttribute('data-quantity');
+                            quantityDisplay.textContent = availableQuantity;
+                            numProductField.setAttribute('max', availableQuantity);
+                            if (parseInt(numProductField.value) > parseInt(availableQuantity)) {
+                                numProductField.value = availableQuantity;
+                            }
+                        }
+                    });
+                }
+            }
+
+            updateQuantity();
+
+            btnNumProductDown.addEventListener('click', function() {
+                let value = parseInt(numProductField.value);
+                if (value > 1) {
+                    numProductField.value = value;
+                } else {
+                    numProductField.value = 1;
+                }
+            });
+
+            btnNumProductUp.addEventListener('click', function() {
+                let value = parseInt(numProductField.value);
+                const maxQuantity = parseInt(numProductField.getAttribute('max'));
+                if (value < maxQuantity) {
+                    numProductField.value = value;
+                } else {
+                    numProductField.value = maxQuantity;
+                }
+            });
+
+            numProductField.addEventListener('input', function() {
+                const maxQuantity = parseInt(numProductField.getAttribute('max'));
+                if (this.value < 1) {
+                    this.value = 1;
+                }
+                if (this.value > maxQuantity) {
+                    this.value = maxQuantity;
+                }
+            });
+
+            numProductField.addEventListener('change', function() {
+                const maxQuantity = parseInt(numProductField.getAttribute('max'));
+                if (this.value < 1) {
+                    this.value = 1;
+                }
+                if (this.value > maxQuantity) {
+                    this.value = maxQuantity;
+                }
+            });
 
             cartForm.addEventListener('submit', function(event) {
                 event.preventDefault();
@@ -202,13 +289,12 @@
                     return;
                 }
                 document.getElementById('selected_size').value = selectedSize;
-                document.getElementById('selected_color').value = selectedColor.getAttribute('data-color-id');
+                document.getElementById('selected_color').value = selectedColor.getAttribute(
+                    'data-color-id');
                 numProductInput.value = numProductField.value;
 
                 cartForm.submit();
             });
-
-
 
             document.querySelectorAll('.num-product').forEach(input => {
                 input.addEventListener('input', () => {
