@@ -37,12 +37,12 @@ class PaymentMethodController extends Controller
         $existing = PaymentMethod::where('name', $request->name)->first();
 
         if ($existing) {
-            return redirect()->back()->withErrors(['error' => 'Phương thức thanh toán đã tồn tại!']);
+            return response()->json(['error' => 'Phương thức thanh toán đã tồn tại!'], 409);
         }
 
         PaymentMethod::create($request->all());
 
-        return redirect()->back()->with('success', 'Phương thức thanh toán đã được thêm thành công!');
+        return response()->json(['success' => 'Phương thức thanh toán đã được thêm thành công!'], 200);
     }
 
     /**
@@ -75,12 +75,12 @@ class PaymentMethodController extends Controller
         $existing = PaymentMethod::where('name', $request->name)->where('id', '!=', $payment_method)->first();
 
         if ($existing) {
-            return redirect()->back()->withErrors(['error' => 'Phương thức thanh toán đã tồn tại!']);
+            return response()->json(['error' => 'Phương thức thanh toán đã tồn tại!'], 409);
         }
 
         $payment_methods->update($request->all());
 
-        return redirect()->back()->with('success', 'Phương thức thanh toán đã được cập nhật thành công!');
+        return response()->json(['success' => 'Phương thức thanh toán đã được cập nhật thành công!'], 200);
     }
 
     /**
@@ -91,6 +91,6 @@ class PaymentMethodController extends Controller
         $payment_methods = PaymentMethod::findOrFail($payment_method);
         $payment_methods->delete();
 
-        return redirect()->back()->with('success', 'Phương thức thanh toán đã được xóa thành công!');
+        return response()->json(['success' => 'Phương thức thanh toán đã được xóa thành công!'], 200);
     }
 }
