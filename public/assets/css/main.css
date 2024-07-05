@@ -2279,9 +2279,9 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 /*---------------------------------------------*/
-.block1-txt:hover {
+/* .block1-txt:hover {
   background-color: rgba(103,117,214,0.8);
-}
+} */
 
 .block1-txt:hover .block1-txt-child2 {
   -webkit-transform: scaleX(1);
@@ -2665,7 +2665,7 @@ input.num-product::-webkit-inner-spin-button {
 /*---------------------------------------------*/
 .ltext-201 {
   font-family: PlayfairDisplay-Bold;
-  font-size: 60px;
+  font-size: 50px;
   line-height: 1.1;
   text-transform: uppercase;
 }

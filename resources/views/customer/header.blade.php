@@ -235,21 +235,6 @@
 </style>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchIcon = document.querySelector('.js-show-input-search');
-        const inputSearchHeader = document.querySelector('.input-search-header');
-
-        searchIcon.addEventListener('click', function() {
-            inputSearchHeader.style.display = 'flex';
-        });
-
-        // Hide the input when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!searchIcon.contains(event.target) && !inputSearchHeader.contains(event.target)) {
-                inputSearchHeader.style.display = 'none';
-            }
-        });
-    });
     document.querySelector('.js-toggle-search').addEventListener('click', function() {
         const inputField = document.querySelector('.header-input');
         if (inputField.style.display === 'none' || inputField.style.display === '') {

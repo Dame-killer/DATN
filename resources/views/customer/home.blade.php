@@ -32,6 +32,13 @@
                         </div>
                     </div>
                 @endforeach
+                <!-- Load more -->
+                <div class="flex-c-m flex-w w-full p-t-45">
+                    <a href="{{ route('customer-product') }}"
+                        class="custom-link flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
+                        Xem thêm
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -42,4 +49,23 @@
             </span>
         </div>
     </div>
+    <style>
+        .custom-link {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            /* Bold */
+            font-size: 18px;
+            /* Increased font size */
+            /* color: #fff; */
+            /* Font color */
+            /* background-color: #000; */
+            /* Background color */
+            padding: 10px 20px;
+            text-decoration: none;
+            /* Padding */
+            border-radius: 5px;
+            /* Rounded corners */
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+    </style>
 @endsection
