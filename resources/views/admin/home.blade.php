@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
     <div class="container-fluid py-4">
         <div class="row">
@@ -11,7 +12,8 @@
                                     <p class="text-sm mb-0 text-uppercase font-weight-bold">Doanh Thu</p>
                                     <h5 class="font-weight-bolder">{{ number_format($totalRevenue) }} VNĐ</h5>
                                     <p class="mb-0">
-                                        <span class="text-{{ $revenueChange >= 0 ? 'success' : 'danger' }} text-sm font-weight-bolder">
+                                        <span
+                                            class="text-{{ $revenueChange >= 0 ? 'success' : 'danger' }} text-sm font-weight-bolder">
                                             {{ $revenueChange >= 0 ? '+' : '' }}{{ number_format($revenueChange, 2) }}%
                                         </span>
                                         kể từ tháng trước
@@ -36,7 +38,8 @@
                                     <p class="text-sm mb-0 text-uppercase font-weight-bold">Sản Phẩm Đã Bán</p>
                                     <h5 class="font-weight-bolder">{{ $totalSoldProducts }}</h5>
                                     <p class="mb-0">
-                                        <span class="text-{{ $soldProductsChange >= 0 ? 'success' : 'danger' }} text-sm font-weight-bolder">
+                                        <span
+                                            class="text-{{ $soldProductsChange >= 0 ? 'success' : 'danger' }} text-sm font-weight-bolder">
                                             {{ $soldProductsChange >= 0 ? '+' : '' }}{{ number_format($soldProductsChange, 2) }}%
                                         </span>
                                         kể từ tháng trước
@@ -61,7 +64,8 @@
                                     <p class="text-sm mb-0 text-uppercase font-weight-bold">Order Hoàn Thành</p>
                                     <h5 class="font-weight-bolder">{{ $completedOrders }}</h5>
                                     <p class="mb-0">
-                                        <span class="text-{{ $completedOrdersChange >= 0 ? 'success' : 'danger' }} text-sm font-weight-bolder">
+                                        <span
+                                            class="text-{{ $completedOrdersChange >= 0 ? 'success' : 'danger' }} text-sm font-weight-bolder">
                                             {{ $completedOrdersChange >= 0 ? '+' : '' }}{{ number_format($completedOrdersChange, 2) }}%
                                         </span>
                                         kể từ tháng trước
@@ -86,7 +90,8 @@
                                     <p class="text-sm mb-0 text-uppercase font-weight-bold">Order Hủy</p>
                                     <h5 class="font-weight-bolder">{{ $canceledOrders }}</h5>
                                     <p class="mb-0">
-                                        <span class="text-{{ $canceledOrdersChange >= 0 ? 'success' : 'danger' }} text-sm font-weight-bolder">
+                                        <span
+                                            class="text-{{ $canceledOrdersChange >= 0 ? 'success' : 'danger' }} text-sm font-weight-bolder">
                                             {{ $canceledOrdersChange >= 0 ? '+' : '' }}{{ number_format($canceledOrdersChange, 2) }}%
                                         </span>
                                         kể từ tháng trước
@@ -117,7 +122,7 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             var ctx = document.getElementById('revenueChart').getContext('2d');
             var revenueChart = new Chart(ctx, {
                 type: 'line',
