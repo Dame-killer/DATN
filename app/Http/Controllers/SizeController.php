@@ -43,12 +43,12 @@ class SizeController extends Controller
             ->exists();
 
         if ($exists) {
-            return redirect()->back()->withErrors(['error' => 'Kích cỡ với tên và số này đã tồn tại!']);
+            return response()->json(['error' => 'Kích cỡ đã tồn tại!'], 409);
         }
 
         Size::create($request->all());
 
-        return redirect()->back()->with('success', 'Kích cỡ đã được thêm thành công!');
+        return response()->json(['success' => 'Kích cỡ đã được thêm thành công!'], 200);
     }
 
     /**
@@ -86,12 +86,12 @@ class SizeController extends Controller
             ->exists();
 
         if ($exists) {
-            return redirect()->back()->withErrors(['error' => 'Kích cỡ với tên và số này đã tồn tại!']);
+            return response()->json(['error' => 'Kích cỡ đã tồn tại!'], 409);
         }
 
         $sizes->update($request->all());
 
-        return redirect()->back()->with('success', 'Kích cỡ đã được cập nhật thành công!');
+        return response()->json(['success' => 'Kích cỡ đã được cập nhật thành công!'], 200);
     }
 
     /**
@@ -102,6 +102,6 @@ class SizeController extends Controller
         $sizes = Size::findOrFail($size);
         $sizes->delete();
 
-        return redirect()->back()->with('success', 'Kích cỡ đã được xóa thành công!');
+        return response()->json(['success' => 'Kích cỡ đã được xóa thành công!'], 200);
     }
 }

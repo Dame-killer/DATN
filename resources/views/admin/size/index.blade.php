@@ -78,7 +78,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('sizes.store') }}" method="POST" autocomplete="off">
+                    <form id="addSizeForm" autocomplete="off">
                         @csrf
                         <div class="mb-3">
                             <label for="size_name" class="form-label">Tên Kích Cỡ</label>
@@ -109,9 +109,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('sizes.update', '') }}" method="POST" autocomplete="off" id="editSizeForm">
-                        @method('PUT')
+                    <form id="editSizeForm" autocomplete="off">
                         @csrf
+                        @method('PUT')
                         <input type="hidden" id="editSizeId" name="id">
                         <div class="mb-3">
                             <label for="editSizeName" class="form-label">Tên Kích Cỡ</label>
@@ -146,9 +146,10 @@
                     Bạn có chắc chắn muốn xóa kích cỡ này không?
                 </div>
                 <div class="modal-footer">
-                    <form action="{{ route('sizes.destroy', '') }}" id="deleteSizeForm" method="POST">
-                        @method('DELETE')
+                    <form id="deleteSizeForm">
                         @csrf
+                        @method('DELETE')
+                        <input type="hidden" id="deleteSizeId" name="id">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                         <button type="submit" class="btn btn-danger">Xóa</button>
                     </form>
@@ -158,33 +159,127 @@
     </div>
 
     <script>
-        var editSizeModal = document.getElementById('editSizeModal')
-        editSizeModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget
-            var id = button.getAttribute('data-id')
-            var size_name = button.getAttribute('data-name')
-            var size_number = button.getAttribute('data-number')
-            var form = document.getElementById('editSizeForm')
-
-            var modalTitle = editSizeModal.querySelector('.modal-title')
-            var modalBodyInputId = editSizeModal.querySelector('#editSizeId')
-            var modalBodyInputName = editSizeModal.querySelector('#editSizeName')
-            var modalBodyInputNumber = editSizeModal.querySelector('#editSizeNumber')
-
-            modalTitle.textContent = 'Cập Nhật Kích Cỡ: ' + size_name + size_number
-            modalBodyInputId.value = id
-            modalBodyInputName.value = size_name
-            modalBodyInputNumber.value = size_number
-            form.action = "{{ route('sizes.update', '') }}/" + id
-        })
-
         document.addEventListener('DOMContentLoaded', function () {
+            function setFlashMessage(message, type) {
+                fetch('{{ route('flash-message') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        type: type
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload()
+                    }
+                }).catch(error => {
+                    console.error('Lỗi khi gửi thông báo:', error.message)
+                })
+            }
+
+            function sendAjaxRequest(url, method, formData) {
+                return fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify(formData),
+                }).then(response => response.json()).catch(error => {
+                    console.error('Yêu cầu Ajax không thành công:', error.message)
+                })
+            }
+
+            document.getElementById('addSizeForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = {
+                    size_name: document.getElementById('size_name').value,
+                    size_number: document.getElementById('size_number').value
+                }
+                sendAjaxRequest('{{ route('sizes.store') }}', 'POST', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi thêm kích cỡ: ', error.message)
+                        setFlashMessage('Thêm kích cỡ thất bại!', 'error')
+                    })
+            })
+
+            var editSizeModal = document.getElementById('editSizeModal')
+            editSizeModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget
+                var id = button.getAttribute('data-id')
+                var sizeName = button.getAttribute('data-name')
+                var sizeNumber = button.getAttribute('data-number')
+                var form = document.getElementById('editSizeForm')
+
+                var modalTitle = editSizeModal.querySelector('.modal-title')
+                var modalBodyInputId = editSizeModal.querySelector('#editSizeId')
+                var modalBodyInputName = editSizeModal.querySelector('#editSizeName')
+                var modalBodyInputNumber = editSizeModal.querySelector('#editSizeNumber')
+
+                modalTitle.textContent = 'Cập Nhật Kích Cỡ: ' + sizeName
+                modalBodyInputId.value = id
+                modalBodyInputName.value = sizeName
+                modalBodyInputNumber.value = sizeNumber
+                form.action = "{{ route('sizes.update', '') }}/" + id
+            })
+
+            document.getElementById('editSizeForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = {
+                    id: document.getElementById('editSizeId').value,
+                    size_name: document.getElementById('editSizeName').value,
+                    size_number: document.getElementById('editSizeNumber').value
+                }
+                sendAjaxRequest(this.action, 'PUT', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi cập nhật kích cỡ: ', error.message)
+                        setFlashMessage('Cập nhật kích cỡ thất bại!', 'error')
+                    })
+            })
+
             var deleteSizeModal = document.getElementById('deleteSizeModal')
             deleteSizeModal.addEventListener('show.bs.modal', function (event) {
                 var button = event.relatedTarget
                 var id = button.getAttribute('data-id')
                 var form = document.getElementById('deleteSizeForm')
+
+                var modalBodyInputId = deleteSizeModal.querySelector('#deleteSizeId')
+                modalBodyInputId.value = id
                 form.action = "{{ route('sizes.destroy', '') }}/" + id
+            })
+
+            document.getElementById('deleteSizeForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = { id: document.getElementById('deleteSizeId').value };
+                sendAjaxRequest(this.action, 'DELETE', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi xóa kích cỡ: ', error.message)
+                        setFlashMessage('Xóa kích cỡ thất bại!', 'error')
+                    })
             })
         })
     </script>
