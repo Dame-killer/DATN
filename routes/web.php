@@ -13,6 +13,7 @@ use App\Http\Controllers\OrderDetailController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\VNPayController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 /*
@@ -92,11 +93,14 @@ Route::middleware('web')->group(function () {
     Route::post('/save-selection-to-session', [App\Http\Controllers\ProductDetailController::class, 'saveSelectionToSession'])->name('save-selection-to-session');
 
     Route::get('/cart', [OrderDetailController::class, 'cartCustomer'])->name('customer-shopping-cart');
-    Route::get('/checkout',function () { return view('customer/checkout');})->name('customer-checkout');
+    // Route::get('/checkout',function () { return view('customer/checkout');})->name('customer-checkout');
     Route::post('/customer/product/{product_detail}', [OrderDetailController::class, 'addToCartCustomer'])->name('customer-cart-add');
     Route::post('/cart', [OrderController::class, 'storeCustomer'])->name('customer-cart-store');
     Route::delete('/customer/cart/{product_detail}', [OrderDetailController::class, 'removeFromCart'])->name('customer-cart-remove');
     Route::post('/cart/updated', [OrderDetailController::class, 'updateQuantity'])->name('customer-cart-updateQuantity');
+    Route::get('/checkout', [VNPayController::class, 'checkout'])->name('checkout');
+    Route::post('/payment-vnpay', [VNPayController::class, 'createPayment'])->name('payment.vnpay');
+    Route::get('/vnpay-return', [VNPayController::class, 'vnpayReturn'])->name('vnpay.return');
 });
 
 Route::middleware(['auth', 'web', 'role:0'])->group(function () {
