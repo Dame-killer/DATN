@@ -83,7 +83,7 @@
     <div class="index-content">
         @include('customer.header')
 
-        {{-- <!-- Cart -->
+        <!-- Cart -->
         <div class="wrap-header-cart js-panel-cart">
             <div class="s-full js-hide-cart"></div>
 
@@ -155,7 +155,7 @@
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div>
 
         @yield('content')
 
