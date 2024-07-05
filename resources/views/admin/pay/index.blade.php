@@ -137,6 +137,7 @@
                     <form id="deletePaymentMethodForm" method="POST">
                         @csrf
                         @method('DELETE')
+                        <input type="hidden" id="deletePaymentMethodId" name="id">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                         <button type="submit" class="btn btn-danger">Xóa</button>
                     </form>
@@ -146,102 +147,122 @@
     </div>
 
     <script>
-        function setFlashMessage(message, type) {
-            fetch('{{ route('flash-message') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({
-                    message: message,
-                    type: type
-                })
-            }).then(response => {
-                if (response.ok) {
-                    location.reload()
-                }
-            })
-        }
-
-        document.getElementById('addPaymentMethodForm').addEventListener('submit', function (event) {
-            event.preventDefault()
-            const formData = new FormData(this)
-            fetch('{{ route('payment_methods.store') }}', {
-                method: 'POST',
-                body: formData,
-            }).then(response => response.json()).then(data => {
-                if (data.success) {
-                    setFlashMessage(data.success, 'success');
-                } else {
-                    setFlashMessage(data.error, 'error');
-                }
-            }).catch(error => {
-                console.error(error.message)
-                setFlashMessage('Thêm phương thức thanh toán thất bại!', 'error')
-            })
-        })
-
-        var editPaymentMethodModal = document.getElementById('editPaymentMethodModal')
-        editPaymentMethodModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget
-            var id = button.getAttribute('data-id')
-            var name = button.getAttribute('data-name')
-            var form = document.getElementById('editPaymentMethodForm')
-
-            var modalTitle = editPaymentMethodModal.querySelector('.modal-title')
-            var modalBodyInputId = editPaymentMethodModal.querySelector('#editPaymentMethodId')
-            var modalBodyInputName = editPaymentMethodModal.querySelector('#editPaymentMethodName')
-
-            modalTitle.textContent = 'Cập Nhật Phương Thức Thanh Toán: ' + name
-            modalBodyInputId.value = id
-            modalBodyInputName.value = name
-            form.action = "{{ route('payment_methods.update', '') }}/" + id
-        })
-
-        document.getElementById('editPaymentMethodForm').addEventListener('submit', function (event) {
-            event.preventDefault()
-            const formData = new FormData(this)
-            fetch(this.action, {
-                method: 'POST',
-                body: formData,
-            }).then(response => response.json()).then(data => {
-                if (data.success) {
-                    setFlashMessage(data.success, 'success');
-                } else {
-                    setFlashMessage(data.error, 'error');
-                }
-            }).catch(error => {
-                console.error(error.message)
-                setFlashMessage('Cập nhật phương thức thanh toán thất bại!', 'error')
-            })
-        })
-
         document.addEventListener('DOMContentLoaded', function () {
+            function setFlashMessage(message, type) {
+                fetch('{{ route('flash-message') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        type: type
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload()
+                    }
+                }).catch(error => {
+                    console.error('Lỗi khi gửi thông báo:', error.message)
+                })
+            }
+
+            function sendAjaxRequest(url, method, formData) {
+                return fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify(formData),
+                }).then(response => response.json()).catch(error => {
+                    console.error('Yêu cầu Ajax không thành công:', error.message)
+                })
+            }
+
+            document.getElementById('addPaymentMethodForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = {
+                    name: document.getElementById('name').value,
+                }
+                sendAjaxRequest('{{ route('payment_methods.store') }}', 'POST', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi thêm phương thức thanh toán: ', error.message)
+                        setFlashMessage('Thêm phương thức thanh toán thất bại!', 'error')
+                    })
+            })
+
+            var editPaymentMethodModal = document.getElementById('editPaymentMethodModal')
+            editPaymentMethodModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget
+                var id = button.getAttribute('data-id')
+                var name = button.getAttribute('data-name')
+                var form = document.getElementById('editPaymentMethodForm')
+
+                var modalTitle = editPaymentMethodModal.querySelector('.modal-title')
+                var modalBodyInputId = editPaymentMethodModal.querySelector('#editPaymentMethodId')
+                var modalBodyInputName = editPaymentMethodModal.querySelector('#editPaymentMethodName')
+
+                modalTitle.textContent = 'Cập Nhật Phương Thức Thanh Toán: ' + name
+                modalBodyInputId.value = id
+                modalBodyInputName.value = name
+                form.action = "{{ route('payment_methods.update', '') }}/" + id
+            })
+
+            document.getElementById('editPaymentMethodForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = {
+                    id: document.getElementById('editPaymentMethodId').value,
+                    name: document.getElementById('editPaymentMethodName').value,
+                }
+                sendAjaxRequest(this.action, 'PUT', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi cập nhật phương thức thanh toán: ', error.message)
+                        setFlashMessage('Cập nhật phương thức thanh toán thất bại!', 'error')
+                    })
+            })
+
             var deletePaymentMethodModal = document.getElementById('deletePaymentMethodModal')
             deletePaymentMethodModal.addEventListener('show.bs.modal', function (event) {
                 var button = event.relatedTarget
                 var id = button.getAttribute('data-id')
                 var form = document.getElementById('deletePaymentMethodForm')
+
+                var modalBodyInputId = deletePaymentMethodModal.querySelector('#deletePaymentMethodId')
+                modalBodyInputId.value = id
                 form.action = "{{ route('payment_methods.destroy', '') }}/" + id
             })
-        })
 
-        document.getElementById('deletePaymentMethodForm').addEventListener('submit', function (event) {
-            event.preventDefault()
-            const formData = new FormData(this)
-            fetch(this.action, {
-                method: 'POST',
-                body: formData,
-            }).then(response => response.json()).then(data => {
-                if (data.success) {
-                    setFlashMessage(data.success, 'success');
-                } else {
-                    setFlashMessage(data.error, 'error');
-                }
-            }).catch(error => {
-                console.error(error.message)
-                setFlashMessage('Xóa phương thức thanh toán thất bại!', 'error')
+            document.getElementById('deletePaymentMethodForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = { id: document.getElementById('deletePaymentMethodId').value }
+                sendAjaxRequest(this.action, 'DELETE', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi xóa phương thức thanh toán: ', error.message)
+                        setFlashMessage('Xóa phương thức thanh toán thất bại!', 'error')
+                    })
             })
         })
     </script>
