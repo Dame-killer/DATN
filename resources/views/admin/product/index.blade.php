@@ -138,8 +138,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('products.store') }}" method="POST" autocomplete="off"
-                          enctype="multipart/form-data">
+                    <form id="addProductForm" autocomplete="off" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên Sản Phẩm</label>
@@ -200,10 +199,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('products.update', '') }}" method="POST" autocomplete="off"
-                          id="editProductForm" enctype="multipart/form-data">
-                        @method('PUT')
+                    <form id="editProductForm" autocomplete="off" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <input type="hidden" id="editProductId" name="id">
                         <div class="mb-3">
                             <label for="editProductName" class="form-label">Tên Sản Phẩm</label>
@@ -265,9 +263,10 @@
                     Bạn có chắc chắn muốn xóa sản phẩm này không?
                 </div>
                 <div class="modal-footer">
-                    <form action="{{ route('products.destroy', '') }}" id="deleteProductForm" method="POST">
-                        @method('DELETE')
+                    <form id="deleteProductForm">
                         @csrf
+                        @method('DELETE')
+                        <input type="hidden" id="deleteProductId" name="id">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                         <button type="submit" class="btn btn-danger">Xóa</button>
                     </form>
@@ -277,74 +276,157 @@
     </div>
 
     <script>
-        var editProductModal = document.getElementById('editProductModal')
-        editProductModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget
-            var id = button.getAttribute('data-id')
-            var name = button.getAttribute('data-name')
-            var image = button.getAttribute('data-image')
-            var price = button.getAttribute('data-price')
-            var introduce = button.getAttribute('data-introduce')
-            var category = button.getAttribute('data-category')
-            var brand = button.getAttribute('data-brand')
-            var form = document.getElementById('editProductForm')
-
-            var modalTitle = editProductModal.querySelector('.modal-title')
-            var modalBodyInputId = editProductModal.querySelector('#editProductId')
-            var modalBodyInputName = editProductModal.querySelector('#editProductName')
-            var modalBodyInputImage = editProductModal.querySelector('#editProductImage')
-            var modalBodyInputCurrentImage = editProductModal.querySelector('#currentProductImage')
-            var modalBodyInputPrice = editProductModal.querySelector('#editProductPrice')
-            var modalBodyInputIntroduce = editProductModal.querySelector('#editProductIntroduce')
-            var modalBodyInputCategory = editProductModal.querySelector('#editProductCategory')
-            var modalBodyInputBrand = editProductModal.querySelector('#editProductBrand')
-
-            modalTitle.textContent = 'Cập Nhật Sản Phẩm: ' + name
-            modalBodyInputId.value = id
-            modalBodyInputName.value = name
-            modalBodyInputImage.value = ''
-            modalBodyInputCurrentImage.src = image
-            modalBodyInputPrice.value = price
-            modalBodyInputIntroduce.value = introduce
-            modalBodyInputCategory.value = category
-            modalBodyInputBrand.value = brand
-            form.action = "{{ route('products.update', '') }}/" + id
-        })
-
-        document.getElementById("image").addEventListener("change", function (event) {
-            var previewImage = document.getElementById('previewImage')
-            var file = event.target.files[0]
-            var reader = new FileReader()
-
-            reader.onload = function (e) {
-                previewImage.src = e.target.result
-                previewImage.style.display = 'block'
-            };
-
-            if (file) {
-                reader.readAsDataURL(file)
-            }
-        })
-
-        document.getElementById('editProductImage').addEventListener('change', function () {
-            var file = this.files[0]
-            var reader = new FileReader()
-            var modalBodyInputCurrentImage = editProductModal.querySelector('#currentProductImage')
-
-            reader.onload = function (e) {
-                modalBodyInputCurrentImage.src = e.target.result
-            }
-
-            reader.readAsDataURL(file)
-        })
-
         document.addEventListener('DOMContentLoaded', function () {
+            function setFlashMessage(message, type) {
+                fetch('{{ route('flash-message') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({message, type})
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            location.reload()
+                        }
+                    })
+                    .catch(error => console.error('Lỗi khi gửi thông báo:', error.message))
+            }
+
+            function sendAjaxRequest(url, method, formData) {
+                return fetch(url, {
+                    method: method,
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .catch(error => console.error('Yêu cầu Ajax không thành công:', error.message))
+            }
+
+            document.getElementById('addProductForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = new FormData(this)
+                sendAjaxRequest('{{ route('products.store') }}', 'POST', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi thêm sản phẩm: ', error.message)
+                        setFlashMessage('Thêm sản phẩm thất bại!', 'error')
+                    })
+            })
+
+            var editProductModal = document.getElementById('editProductModal')
+            editProductModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget
+                var id = button.getAttribute('data-id')
+                var name = button.getAttribute('data-name')
+                var image = button.getAttribute('data-image')
+                var price = button.getAttribute('data-price')
+                var introduce = button.getAttribute('data-introduce')
+                var category = button.getAttribute('data-category')
+                var brand = button.getAttribute('data-brand')
+                var form = document.getElementById('editProductForm')
+
+                var modalTitle = editProductModal.querySelector('.modal-title')
+                var modalBodyInputId = editProductModal.querySelector('#editProductId')
+                var modalBodyInputName = editProductModal.querySelector('#editProductName')
+                var modalBodyInputImage = editProductModal.querySelector('#editProductImage')
+                var modalBodyInputCurrentImage = editProductModal.querySelector('#currentProductImage')
+                var modalBodyInputPrice = editProductModal.querySelector('#editProductPrice')
+                var modalBodyInputIntroduce = editProductModal.querySelector('#editProductIntroduce')
+                var modalBodyInputCategory = editProductModal.querySelector('#editProductCategory')
+                var modalBodyInputBrand = editProductModal.querySelector('#editProductBrand')
+
+                modalTitle.textContent = 'Cập Nhật Sản Phẩm: ' + name
+                modalBodyInputId.value = id
+                modalBodyInputName.value = name
+                modalBodyInputImage.value = ''
+                modalBodyInputCurrentImage.src = image
+                modalBodyInputPrice.value = price
+                modalBodyInputIntroduce.value = introduce
+                modalBodyInputCategory.value = category
+                modalBodyInputBrand.value = brand
+                form.action = "{{ route('products.update', '') }}/" + id
+            })
+
+            document.getElementById('editProductForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = new FormData(this)
+                sendAjaxRequest(this.action, 'POST', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi cập nhật sản phẩm: ', error.message)
+                        setFlashMessage('Cập nhật sản phẩm thất bại!', 'error')
+                    })
+            })
+
             var deleteProductModal = document.getElementById('deleteProductModal')
             deleteProductModal.addEventListener('show.bs.modal', function (event) {
                 var button = event.relatedTarget
                 var id = button.getAttribute('data-id')
                 var form = document.getElementById('deleteProductForm')
+
+                var modalBodyInputId = deleteProductModal.querySelector('#deleteProductId')
+                modalBodyInputId.value = id
                 form.action = "{{ route('products.destroy', '') }}/" + id
+            })
+
+            document.getElementById('deleteProductForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = new FormData(this)
+                sendAjaxRequest(this.action, 'DELETE', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi xóa sản phẩm: ', error.message)
+                        setFlashMessage('Xóa sản phẩm thất bại!', 'error')
+                    })
+            })
+
+            document.getElementById("image").addEventListener("change", function (event) {
+                var previewImage = document.getElementById('previewImage')
+                var file = event.target.files[0]
+                var reader = new FileReader()
+
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result
+                    previewImage.style.display = 'block'
+                };
+
+                if (file) {
+                    reader.readAsDataURL(file)
+                }
+            })
+
+            document.getElementById('editProductImage').addEventListener('change', function () {
+                var file = this.files[0]
+                var reader = new FileReader()
+                var modalBodyInputCurrentImage = editProductModal.querySelector('#currentProductImage')
+
+                reader.onload = function (e) {
+                    modalBodyInputCurrentImage.src = e.target.result
+                }
+
+                reader.readAsDataURL(file)
             })
         })
     </script>
