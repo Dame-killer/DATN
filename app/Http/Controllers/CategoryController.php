@@ -14,7 +14,7 @@ class CategoryController extends Controller
     {
         $query = Category::with('children')->whereNull('parent_id');
         $query->orderBy('id', 'desc');
-        $categories = $query->paginate(2);
+        $categories = $query->paginate(5);
 
         return view('admin.category.index', compact('categories'));
     }
@@ -49,7 +49,7 @@ class CategoryController extends Controller
             ->exists();
 
         if ($exists) {
-            return redirect()->back()->withErrors(['error' => 'Danh mục đã tồn tại!']);
+            return response()->json(['error' => 'Danh mục đã tồn tại!'], 409);
         }
 
         if ($request->parent_id) {
@@ -59,7 +59,7 @@ class CategoryController extends Controller
             Category::create($request->all());
         }
 
-        return redirect()->back()->with('success', 'Danh mục đã được thêm thành công!');
+        return response()->json(['success' => 'Danh mục đã được thêm thành công!'], 200);
     }
 
     /**
@@ -93,12 +93,12 @@ class CategoryController extends Controller
         $existing = Category::where('name', $request->name)->where('id', '!=', $category)->first();
 
         if ($existing) {
-            return redirect()->back()->withErrors(['error' => 'Danh mục đã tồn tại!']);
+            return response()->json(['error' => 'Danh mục đã tồn tại!'], 409);
         }
 
         $categories->update($request->all());
 
-        return redirect()->back()->with('success', 'Danh mục đã được cập nhật thành công!');
+        return response()->json(['success' => 'Danh mục đã được cập nhật thành công!'], 200);
     }
 
     /**
@@ -110,6 +110,6 @@ class CategoryController extends Controller
         $categories->children()->delete();
         $categories->delete();
 
-        return redirect()->back()->with('success', 'Danh mục đã được xóa thành công!');
+        return response()->json(['success' => 'Danh mục đã được xóa thành công!'], 200);
     }
 }
