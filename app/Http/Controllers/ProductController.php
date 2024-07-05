@@ -94,8 +94,9 @@ public function indexCustomer(Request $request)
         ]);
 
         $existing = Product::where('name', $request->name)->first();
+
         if ($existing) {
-            return redirect()->back()->withErrors(['error' => 'Tên sản phẩm đã tồn tại!']);
+            return response()->json(['error' => 'Sản phẩm đã tồn tại!'], 409);
         }
 
         $data = $request->all();
@@ -107,7 +108,7 @@ public function indexCustomer(Request $request)
 
         Product::create($data);
 
-        return redirect()->back()->with('success', 'Sản phẩm đã được thêm thành công!');
+        return response()->json(['success' => 'Sản phẩm đã được thêm thành công!'], 200);
     }
 
     /**
@@ -145,7 +146,7 @@ public function indexCustomer(Request $request)
 
         $existing = Product::where('name', $request->name)->where('id', '!=', $product)->first();
         if ($existing) {
-            return redirect()->back()->withErrors(['error' => 'Tên sản phẩm đã tồn tại!']);
+            return response()->json(['error' => 'Sản phẩm đã tồn tại!'], 409);
         }
 
         if ($request->hasFile('image')) {
@@ -155,7 +156,7 @@ public function indexCustomer(Request $request)
 
         $products->update($data);
 
-        return redirect()->back()->with('success', 'Sản phẩm đã được cập nhật thành công!');
+        return response()->json(['success' => 'Sản phẩm đã được thêm thành công!'], 200);
     }
 
     /**
@@ -166,6 +167,6 @@ public function indexCustomer(Request $request)
         $products = Product::findOrFail($product);
         $products->delete();
 
-        return redirect()->back()->with('success', 'Sản phẩm đã được xóa thành công!');
+        return response()->json(['success' => 'Sản phẩm đã được xóa thành công!'], 200);
     }
 }

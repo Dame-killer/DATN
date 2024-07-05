@@ -57,12 +57,12 @@ class ImageProductController extends Controller
             ->first();
 
         if ($existing) {
-            return redirect()->back()->withErrors(['error' => 'Hình ảnh sản phẩm đã tồn tại!']);
+            return response()->json(['error' => 'Hình ảnh sản phẩm đã tồn tại!'], 409);
         }
 
         ImageProduct::create($data);
 
-        return redirect()->back()->with('success', 'Hình ảnh sản phẩm đã được thêm thành công!');
+        return response()->json(['success' => 'Hình ảnh sản phẩm đã được thêm thành công!'], 200);
     }
 
     /**
@@ -100,7 +100,7 @@ class ImageProductController extends Controller
             ->first();
 
         if ($existing) {
-            return redirect()->back()->withErrors(['error' => 'Hình ảnh sản phẩm đã tồn tại!']);
+            return response()->json(['error' => 'Hình ảnh sản phẩm đã tồn tại!'], 409);
         }
 
         if ($request->hasFile('url')) {
@@ -110,7 +110,7 @@ class ImageProductController extends Controller
 
         $imageProducts->update($data);
 
-        return redirect()->back()->with('success', 'Hình ảnh sản phẩm đã được cập nhật thành công!');
+        return response()->json(['success' => 'Hình ảnh sản phẩm đã được cập nhật thành công!'], 200);
     }
 
     /**
@@ -121,6 +121,6 @@ class ImageProductController extends Controller
         $imageProduct = ImageProduct::findOrFail($id);
         $imageProduct->delete();
 
-        return redirect()->back()->with('success', 'Hình ảnh sản phẩm đã được xóa thành công!');
+        return response()->json(['success' => 'Hình ảnh sản phẩm đã được xóa thành công!'], 200);
     }
 }
