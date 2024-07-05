@@ -101,7 +101,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('users.store') }}" method="POST" autocomplete="off">
+                    <form id="addEmployeeForm" autocomplete="off">
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên Nhân Viên</label>
@@ -147,14 +147,13 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editEmployeeModalLabel">Cập Nhật Tài Khoản</h5>
+                    <h5 class="modal-title" id="editEmployeeModalLabel">Cập Nhật Nhân Viên</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('users.update', '') }}" method="POST" autocomplete="off"
-                          id="editEmployeeForm">
-                        @method('PUT')
+                    <form id="editEmployeeForm" autocomplete="off">
                         @csrf
+                        @method('PUT')
                         <input type="hidden" id="editEmployeeId" name="id">
                         <div class="mb-3">
                             <label for="editEmployeeName" class="form-label">Tên Nhân Viên</label>
@@ -201,9 +200,10 @@
                     Bạn có chắc chắn muốn xóa người dùng này không?
                 </div>
                 <div class="modal-footer">
-                    <form action="{{ route('users.destroy', '') }}" id="deleteEmployeeForm" method="POST">
-                        @method('DELETE')
+                    <form id="deleteEmployeeForm">
                         @csrf
+                        @method('DELETE')
+                        <input type="hidden" id="deleteEmployeeId" name="id">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                         <button type="submit" class="btn btn-danger">Xóa</button>
                     </form>
@@ -213,39 +213,138 @@
     </div>
 
     <script>
-        var editEmployeeModal = document.getElementById('editEmployeeModal')
-        editEmployeeModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget
-            var id = button.getAttribute('data-id')
-            var name = button.getAttribute('data-name')
-            var email = button.getAttribute('data-email')
-            var phone = button.getAttribute('data-phone')
-            var role = button.getAttribute('data-role')
-            var form = document.getElementById('editEmployeeForm')
-
-            var modalTitle = editEmployeeModal.querySelector('.modal-title')
-            var modalBodyInputId = editEmployeeModal.querySelector('#editEmployeeId')
-            var modalBodyInputName = editEmployeeModal.querySelector('#editEmployeeName')
-            var modalBodyInputEmail = editEmployeeModal.querySelector('#editEmployeeEmail')
-            var modalBodyInputPhone = editEmployeeModal.querySelector('#editEmployeePhone')
-            var modalBodySelectRole = editEmployeeModal.querySelector('#editEmployeeRole')
-
-            modalTitle.textContent = 'Cập Nhật Tài Khoản: ' + name
-            modalBodyInputId.value = id
-            modalBodyInputName.value = name
-            modalBodyInputEmail.value = email
-            modalBodyInputPhone.value = phone
-            modalBodySelectRole.value = role
-            form.action = "{{ route('users.update', '') }}/" + id
-        })
-
         document.addEventListener('DOMContentLoaded', function () {
+            function setFlashMessage(message, type) {
+                fetch('{{ route('flash-message') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        type: type
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload()
+                    }
+                }).catch(error => {
+                    console.error('Lỗi khi gửi thông báo:', error.message)
+                })
+            }
+
+            function sendAjaxRequest(url, method, formData) {
+                return fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify(formData),
+                }).then(response => response.json()).catch(error => {
+                    console.error('Yêu cầu Ajax không thành công:', error.message)
+                })
+            }
+
+            document.getElementById('addEmployeeForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value,
+                    phone: document.getElementById('phone').value,
+                    role: document.getElementById('role').value
+                }
+                sendAjaxRequest('{{ route('users.store') }}', 'POST', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi thêm người dùng: ', error.message)
+                        setFlashMessage('Thêm người dùng thất bại!', 'error')
+                    })
+            })
+
+            var editEmployeeModal = document.getElementById('editEmployeeModal')
+            editEmployeeModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget
+                var id = button.getAttribute('data-id')
+                var name = button.getAttribute('data-name')
+                var email = button.getAttribute('data-email')
+                var phone = button.getAttribute('data-phone')
+                var role = button.getAttribute('data-role')
+                var form = document.getElementById('editEmployeeForm')
+
+                var modalTitle = editEmployeeModal.querySelector('.modal-title')
+                var modalBodyInputId = editEmployeeModal.querySelector('#editEmployeeId')
+                var modalBodyInputName = editEmployeeModal.querySelector('#editEmployeeName')
+                var modalBodyInputEmail = editEmployeeModal.querySelector('#editEmployeeEmail')
+                var modalBodyInputPhone = editEmployeeModal.querySelector('#editEmployeePhone')
+                var modalBodySelectRole = editEmployeeModal.querySelector('#editEmployeeRole')
+
+                modalTitle.textContent = 'Cập Nhật Nhân Viên: ' + name
+                modalBodyInputId.value = id
+                modalBodyInputName.value = name
+                modalBodyInputEmail.value = email
+                modalBodyInputPhone.value = phone
+                modalBodySelectRole.value = role
+                form.action = "{{ route('users.update', '') }}/" + id
+            })
+
+            document.getElementById('editEmployeeForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = {
+                    id: document.getElementById('editEmployeeId').value,
+                    name: document.getElementById('editEmployeeName').value,
+                    email: document.getElementById('editEmployeeEmail').value,
+                    phone: document.getElementById('editEmployeePhone').value,
+                    role: document.getElementById('editEmployeeRole').value
+                }
+                sendAjaxRequest(this.action, 'PUT', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi cập nhật người dùng: ', error.message)
+                        setFlashMessage('Cập nhật người dùng thất bại!', 'error')
+                    })
+            })
+
             var deleteEmployeeModal = document.getElementById('deleteEmployeeModal')
             deleteEmployeeModal.addEventListener('show.bs.modal', function (event) {
                 var button = event.relatedTarget
                 var id = button.getAttribute('data-id')
                 var form = document.getElementById('deleteEmployeeForm')
+
+                var modalBodyInputId = deleteEmployeeModal.querySelector('#deleteEmployeeId')
+                modalBodyInputId.value = id
                 form.action = "{{ route('users.destroy', '') }}/" + id
+            })
+
+            document.getElementById('deleteEmployeeForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = { id: document.getElementById('deleteEmployeeId').value };
+                sendAjaxRequest(this.action, 'DELETE', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi xóa người dùng: ', error.message)
+                        setFlashMessage('Xóa người dùng thất bại!', 'error')
+                    })
             })
         })
     </script>

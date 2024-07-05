@@ -70,11 +70,11 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addCustomerModalLabel">Thêm Tài Khoản</h5>
+                    <h5 class="modal-title" id="addCustomerModalLabel">Thêm Khách Hàng</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('users.store') }}" method="POST" autocomplete="off">
+                    <form id="addCustomerForm" autocomplete="off">
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên Khách Hàng</label>
@@ -96,7 +96,7 @@
                             <input type="tel" class="form-control" id="phone" name="phone"
                                    placeholder="Nhập Số Điện Thoại" required>
                         </div>
-                        <input type="hidden" name="role" value="0">
+                        <input type="hidden" id="role" name="role" value="0">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                             <button type="submit" class="btn btn-primary">Lưu</button>
@@ -106,4 +106,64 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function setFlashMessage(message, type) {
+                fetch('{{ route('flash-message') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        type: type
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload()
+                    }
+                }).catch(error => {
+                    console.error('Lỗi khi gửi thông báo:', error.message)
+                })
+            }
+
+            function sendAjaxRequest(url, method, formData) {
+                return fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify(formData),
+                }).then(response => response.json()).catch(error => {
+                    console.error('Yêu cầu Ajax không thành công:', error.message)
+                })
+            }
+
+            document.getElementById('addCustomerForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value,
+                    phone: document.getElementById('phone').value,
+                    role: document.getElementById('role').value
+                }
+                sendAjaxRequest('{{ route('users.store') }}', 'POST', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi thêm người dùng: ', error.message)
+                        setFlashMessage('Thêm người dùng thất bại!', 'error')
+                    })
+            })
+        })
+    </script>
 @endsection

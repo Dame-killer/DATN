@@ -142,6 +142,7 @@
                     <form id="deleteBrandForm">
                         @csrf
                         @method('DELETE')
+                        <input type="hidden" id="deleteBrandId" name="id">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                         <button type="submit" class="btn btn-danger">Xóa</button>
                     </form>
@@ -151,102 +152,122 @@
     </div>
 
     <script>
-        function setFlashMessage(message, type) {
-            fetch('{{ route('flash-message') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({
-                    message: message,
-                    type: type
-                })
-            }).then(response => {
-                if (response.ok) {
-                    location.reload()
-                }
-            })
-        }
-
-        document.getElementById('addBrandForm').addEventListener('submit', function (event) {
-            event.preventDefault()
-            const formData = new FormData(this)
-            fetch('{{ route('brands.store') }}', {
-                method: 'POST',
-                body: formData,
-            }).then(response => response.json()).then(data => {
-                if (data.success) {
-                    setFlashMessage(data.success, 'success');
-                } else {
-                    setFlashMessage(data.error, 'error');
-                }
-            }).catch(error => {
-                console.error(error.message)
-                setFlashMessage('Thêm thương hiệu thất bại!', 'error')
-            })
-        })
-
-        var editBrandModal = document.getElementById('editBrandModal')
-        editBrandModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget
-            var id = button.getAttribute('data-id')
-            var name = button.getAttribute('data-name')
-            var form = document.getElementById('editBrandForm')
-
-            var modalTitle = editBrandModal.querySelector('.modal-title')
-            var modalBodyInputId = editBrandModal.querySelector('#editBrandId')
-            var modalBodyInputName = editBrandModal.querySelector('#editBrandName')
-
-            modalTitle.textContent = 'Cập Nhật Thương Hiệu: ' + name
-            modalBodyInputId.value = id
-            modalBodyInputName.value = name
-            form.action = "{{ route('brands.update', '') }}/" + id
-        })
-
-        document.getElementById('editBrandForm').addEventListener('submit', function (event) {
-            event.preventDefault()
-            const formData = new FormData(this)
-            fetch(this.action, {
-                method: 'POST',
-                body: formData,
-            }).then(response => response.json()).then(data => {
-                if (data.success) {
-                    setFlashMessage(data.success, 'success');
-                } else {
-                    setFlashMessage(data.error, 'error');
-                }
-            }).catch(error => {
-                console.error(error.message)
-                setFlashMessage('Cập nhật thương hiệu thất bại!', 'error')
-            })
-        })
-
         document.addEventListener('DOMContentLoaded', function () {
+            function setFlashMessage(message, type) {
+                fetch('{{ route('flash-message') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        type: type
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload()
+                    }
+                }).catch(error => {
+                    console.error('Lỗi khi gửi thông báo:', error.message)
+                })
+            }
+
+            function sendAjaxRequest(url, method, formData) {
+                return fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify(formData),
+                }).then(response => response.json()).catch(error => {
+                    console.error('Yêu cầu Ajax không thành công:', error.message)
+                })
+            }
+
+            document.getElementById('addBrandForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = {
+                    name: document.getElementById('name').value
+                }
+                sendAjaxRequest('{{ route('brands.store') }}', 'POST', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi thêm thương hiệu: ', error.message)
+                        setFlashMessage('Thêm thương hiệu thất bại!', 'error')
+                    })
+            })
+
+            var editBrandModal = document.getElementById('editBrandModal')
+            editBrandModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget
+                var id = button.getAttribute('data-id')
+                var name = button.getAttribute('data-name')
+                var form = document.getElementById('editBrandForm')
+
+                var modalTitle = editBrandModal.querySelector('.modal-title')
+                var modalBodyInputId = editBrandModal.querySelector('#editBrandId')
+                var modalBodyInputName = editBrandModal.querySelector('#editBrandName')
+
+                modalTitle.textContent = 'Cập Nhật Thương Hiệu: ' + name
+                modalBodyInputId.value = id
+                modalBodyInputName.value = name
+                form.action = "{{ route('brands.update', '') }}/" + id
+            })
+
+            document.getElementById('editBrandForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = {
+                    id: document.getElementById('editBrandId').value,
+                    name: document.getElementById('editBrandName').value
+                }
+                sendAjaxRequest(this.action, 'PUT', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi cập nhật thương hiệu: ', error.message)
+                        setFlashMessage('Cập nhật thương hiệu thất bại!', 'error')
+                    })
+            })
+
             var deleteBrandModal = document.getElementById('deleteBrandModal')
             deleteBrandModal.addEventListener('show.bs.modal', function (event) {
                 var button = event.relatedTarget
                 var id = button.getAttribute('data-id')
                 var form = document.getElementById('deleteBrandForm')
+
+                var modalBodyInputId = deleteBrandModal.querySelector('#deleteBrandId')
+                modalBodyInputId.value = id
                 form.action = "{{ route('brands.destroy', '') }}/" + id
             })
-        })
 
-        document.getElementById('deleteBrandForm').addEventListener('submit', function (event) {
-            event.preventDefault()
-            const formData = new FormData(this)
-            fetch(this.action, {
-                method: 'POST',
-                body: formData,
-            }).then(response => response.json()).then(data => {
-                if (data.success) {
-                    setFlashMessage(data.success, 'success');
-                } else {
-                    setFlashMessage(data.error, 'error');
-                }
-            }).catch(error => {
-                console.error(error.message)
-                setFlashMessage('Xóa thương hiệu thất bại!', 'error')
+            document.getElementById('deleteBrandForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = { id: document.getElementById('deleteBrandId').value };
+                sendAjaxRequest(this.action, 'DELETE', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi xóa thương hiệu: ', error.message)
+                        setFlashMessage('Xóa thương hiệu thất bại!', 'error')
+                    })
             })
         })
     </script>

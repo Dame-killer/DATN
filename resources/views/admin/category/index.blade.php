@@ -119,7 +119,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('categories.store') }}" method="POST" autocomplete="off" id="addCategoryForm">
+                    <form id="addCategoryForm" autocomplete="off">
                         @csrf
                         <input type="hidden" id="parentCategoryId" name="parent_id">
                         <div class="mb-3">
@@ -147,8 +147,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('categories.update', '') }}" method="POST" autocomplete="off"
-                        id="editCategoryForm">
+                    <form id="editCategoryForm" autocomplete="off">
                         @csrf
                         @method('PUT')
                         <input type="hidden" id="editCategoryId" name="id">
@@ -180,9 +179,10 @@
                     Bạn có chắc chắn muốn xóa danh mục này không?
                 </div>
                 <div class="modal-footer">
-                    <form action="{{ route('categories.destroy', '') }}" id="deleteCategoryForm" method="POST">
-                        @method('DELETE')
+                    <form id="deleteCategoryForm">
                         @csrf
+                        @method('DELETE')
+                        <input type="hidden" id="deleteCategoryId" name="id">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                         <button type="submit" class="btn btn-danger">Xóa</button>
                     </form>
@@ -192,43 +192,136 @@
     </div>
 
     <script>
-        var editCategoryModal = document.getElementById('editCategoryModal')
-        editCategoryModal.addEventListener('show.bs.modal', function(event) {
-            var button = event.relatedTarget
-            var id = button.getAttribute('data-id')
-            var name = button.getAttribute('data-name')
-            var form = document.getElementById('editCategoryForm')
+        document.addEventListener('DOMContentLoaded', function () {
+            function setFlashMessage(message, type) {
+                fetch('{{ route('flash-message') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        type: type
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload()
+                    }
+                }).catch(error => {
+                    console.error('Lỗi khi gửi thông báo:', error.message)
+                })
+            }
 
-            var modalTitle = editCategoryModal.querySelector('.modal-title')
-            var modalBodyInputId = editCategoryModal.querySelector('#editCategoryId')
-            var modalBodyInputName = editCategoryModal.querySelector('#editCategoryName')
+            function sendAjaxRequest(url, method, formData) {
+                return fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify(formData),
+                }).then(response => response.json()).catch(error => {
+                    console.error('Yêu cầu Ajax không thành công:', error.message)
+                })
+            }
 
-            modalTitle.textContent = 'Cập Nhật Danh Mục: ' + name
-            modalBodyInputId.value = id
-            modalBodyInputName.value = name
-            form.action = "{{ route('categories.update', '') }}/" + id
-        })
+            var addCategoryModal = document.getElementById('addCategoryModal')
+            addCategoryModal.addEventListener('show.bs.modal', function(event) {
+                var button = event.relatedTarget
+                var parentId = button ? button.getAttribute('data-parent-id') : null
+                var form = document.getElementById('addCategoryForm')
+                var modalTitle = addCategoryModal.querySelector('.modal-title')
+                var modalBodyInputParentId = addCategoryModal.querySelector('#parentCategoryId')
 
-        var addCategoryModal = document.getElementById('addCategoryModal')
-        addCategoryModal.addEventListener('show.bs.modal', function(event) {
-            var button = event.relatedTarget
-            var parentId = button ? button.getAttribute('data-parent-id') : null
-            var form = document.getElementById('addCategoryForm')
-            var modalTitle = addCategoryModal.querySelector('.modal-title')
-            var modalBodyInputParentId = addCategoryModal.querySelector('#parentCategoryId')
+                modalTitle.textContent = parentId ? 'Thêm Danh Mục Con' : 'Thêm Danh Mục'
+                modalBodyInputParentId.value = parentId || ''
+                form.action = "{{ route('categories.store') }}"
+            })
 
-            modalTitle.textContent = parentId ? 'Thêm Danh Mục Con' : 'Thêm Danh Mục'
-            modalBodyInputParentId.value = parentId || ''
-            form.action = "{{ route('categories.store') }}"
-        })
+            document.getElementById('addCategoryForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = {
+                    parent_id: document.getElementById('parentCategoryId').value,
+                    name: document.getElementById('name').value
+                }
+                sendAjaxRequest(this.action, 'POST', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi thêm danh mục: ', error.message)
+                        setFlashMessage('Thêm danh mục thất bại!', 'error')
+                    })
+            })
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const deleteCategoryModal = document.getElementById('deleteCategoryModal')
+            var editCategoryModal = document.getElementById('editCategoryModal')
+            editCategoryModal.addEventListener('show.bs.modal', function(event) {
+                var button = event.relatedTarget
+                var id = button.getAttribute('data-id')
+                var name = button.getAttribute('data-name')
+                var form = document.getElementById('editCategoryForm')
+
+                var modalTitle = editCategoryModal.querySelector('.modal-title')
+                var modalBodyInputId = editCategoryModal.querySelector('#editCategoryId')
+                var modalBodyInputName = editCategoryModal.querySelector('#editCategoryName')
+
+                modalTitle.textContent = 'Cập Nhật Danh Mục: ' + name
+                modalBodyInputId.value = id
+                modalBodyInputName.value = name
+                form.action = "{{ route('categories.update', '') }}/" + id
+            })
+
+            document.getElementById('editCategoryForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = {
+                    id: document.getElementById('editCategoryId').value,
+                    name: document.getElementById('editCategoryName').value
+                }
+                sendAjaxRequest(this.action, 'PUT', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi cập nhật danh mục: ', error.message)
+                        setFlashMessage('Cập nhật danh mục thất bại!', 'error')
+                    })
+            })
+
+            var deleteCategoryModal = document.getElementById('deleteCategoryModal')
             deleteCategoryModal.addEventListener('show.bs.modal', function(event) {
                 const button = event.relatedTarget
                 const id = button.getAttribute('data-id')
                 const form = document.getElementById('deleteCategoryForm')
+
+                var modalBodyInputId = deleteCategoryModal.querySelector('#deleteCategoryId')
+                modalBodyInputId.value = id
                 form.action = "{{ route('categories.destroy', '') }}/" + id
+            })
+
+            document.getElementById('deleteCategoryForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = { id: document.getElementById('deleteCategoryId').value };
+                sendAjaxRequest(this.action, 'DELETE', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi xóa danh mục: ', error.message)
+                        setFlashMessage('Xóa danh mục thất bại!', 'error')
+                    })
             })
         })
     </script>
