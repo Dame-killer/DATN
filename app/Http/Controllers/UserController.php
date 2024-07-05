@@ -55,7 +55,7 @@ class UserController extends Controller
 
         User::create($data);
 
-        return redirect()->back()->with('success', 'Người dùng đã được thêm thành công!');
+        return response()->json(['success' => 'Người dùng đã được thêm thành công!'], 200);
     }
 
     /**
@@ -90,7 +90,7 @@ class UserController extends Controller
 
         $users->update($data);
 
-        return redirect()->back()->with('success', 'Thông tin người dùng đã được cập nhật thành công!');
+        return response()->json(['success' => 'Người dùng đã được cập nhật thành công!'], 200);
     }
 
     /**
@@ -101,6 +101,6 @@ class UserController extends Controller
         $users = User::findOrFail($user);
         $users->delete();
 
-        return redirect()->back()->with('success', 'Nhân viên đã được xóa thành công!');
+        return response()->json(['success' => 'Người dùng đã được xóa thành công!'], 200);
     }
 }
