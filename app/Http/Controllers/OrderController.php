@@ -189,7 +189,7 @@ class OrderController extends Controller
             $totalPrice += $order_detail->totalPricePerProduct;
         }
         // Kiểm tra nếu phương thức thanh toán là VNPay
-        if ($request->input('payment_method_id') == '2') {
+        if ($request->input('payment_method_id') == '3') {
             // Gọi hàm tạo thanh toán VNPay
             return $this->createPayment($order, $totalPrice);
         }
@@ -267,7 +267,7 @@ public function createPayment($order, $totalPrice)
     }
 }
 
-public function vnpayReturn()
+public function vnpayReturn(Request $request)
 {
     $vnp_HashSecret = "HX4UTYXJJAVGUIYTF9EY0RFDBT8N6M5V";
     $vnp_SecureHash = $_GET['vnp_SecureHash'];
@@ -295,11 +295,23 @@ public function vnpayReturn()
 
     if ($secureHash == $vnp_SecureHash) {
         // Kiểm tra mã đơn hàng trong database để xử lý
-        // Logic xử lý kết quả thanh toán của bạn tại đây
-        return redirect()->route('customer-home')->with('success', 'Đơn hàng đã được thanh toán thành công!');
+        $orderId = $request->input('vnp_TxnRef');
+        $order = Order::where('id', $orderId)->first();
+
+        if ($order) {
+            // Cập nhật trạng thái thanh toán của đơn hàng thành 1
+            $order->payment_status = 1;
+            $order->save();
+
+            // Logic xử lý kết quả thanh toán thành công của bạn tại đây
+            return redirect()->route('customer-home')->with('success', 'Đơn hàng đã được thanh toán thành công!');
+        } else {
+            // Xử lý khi không tìm thấy đơn hàng
+            return redirect()->route('checkout')->with('error', 'Không tìm thấy đơn hàng!');
+        }
     } else {
         // Xử lý khi có lỗi
-        return redirect()->route('customer-checkout')->with('error', 'Thanh toán thất bại!');
+        return redirect()->route('checkout')->with('error', 'Thanh toán thất bại!');
     }
 }
 
@@ -353,6 +365,13 @@ public function vnpayReturn()
             if ($order->status == 1 && $request->status == 2) {
                 // Khi chuyển trạng thái từ Đã Duyệt (1) sang Đang Giao Hàng (2), lưu mã vận đơn
                 $order->tracking_code = $request->tracking_code;
+            }
+
+            if ($order->payment_method_id == 1 && $order->status == 1) {
+                $order->status = 3;
+                $order->save();
+
+                return response()->json(['success' => true, 'status' => $order->status]);
             }
 
             $order->status += 1;
