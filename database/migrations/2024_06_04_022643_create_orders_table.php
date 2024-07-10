@@ -19,7 +19,9 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone');
             $table->dateTime('order_date')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->dateTime('updated_date')->nullable();
             $table->integer('status')->default(0);
+            $table->integer('payment_status')->default(0)->nullable();
             $table->string('tracking_code')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('payment_method_id');

@@ -44,15 +44,15 @@ class ProductDetailController extends Controller
         $exists = ProductDetail::where('product_id', $request->product_id)
             ->where('size_id', $request->size_id)
             ->where('color_id', $request->color_id)
-            ->exists();
+            ->first();
 
         if ($exists) {
-            return redirect()->back()->withErrors(['error' => 'Sản phẩm chi tiết với kích thước và màu sắc này đã tồn tại!']);
+            return response()->json(['error' => 'Sản phẩm chi tiết đã tồn tại!'], 409);
         }
 
         ProductDetail::create($request->all());
 
-        return redirect()->back()->with('success', 'Sản phẩm chi tiết đã được thêm thành công!');
+        return response()->json(['success' => 'Sản phẩm chi tiết đã được thêm thành công!'], 200);
     }
 
     /**
@@ -111,16 +111,16 @@ class ProductDetailController extends Controller
         $exists = ProductDetail::where('product_id', $product_details->product_id)
             ->where('size_id', $request->size_id)
             ->where('color_id', $request->color_id)
-            ->where('id', '!=', $product_details->id)
-            ->exists();
+            ->where('id', '!=', $product_detail)
+            ->first();
 
         if ($exists) {
-            return redirect()->back()->withErrors(['error' => 'Sản phẩm chi tiết với kích thước và màu sắc này đã tồn tại!']);
+            return response()->json(['error' => 'Sản phẩm chi tiết đã tồn tại!'], 409);
         }
 
         $product_details->update($request->all());
 
-        return redirect()->back()->with('success', 'Sản phẩm chi tiết đã được cập nhật thành công!');
+        return response()->json(['success' => 'Sản phẩm chi tiết đã được cập nhật thành công!'], 200);
     }
 
     /**
@@ -131,7 +131,7 @@ class ProductDetailController extends Controller
         $product_details = ProductDetail::findOrFail($product_detail);
         $product_details->delete();
 
-        return redirect()->back()->with('success', 'Sản phẩm đã được xóa thành công!');
+        return response()->json(['success' => 'Sản phẩm chi tiết đã được xóa thành công!'], 200);
     }
 
     public function getProductDetails($productId)

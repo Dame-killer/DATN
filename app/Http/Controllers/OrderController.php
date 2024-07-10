@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\ProductDetail;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -107,7 +108,7 @@ class OrderController extends Controller
             // Commit giao dịch database
             DB::commit();
 
-            return redirect()->route('admin-order')->with('success', 'Đơn hàng đã được tạo thành công.');
+            return redirect()->route('admin-order')->with('success', 'Đơn hàng đã được tạo thành công!');
         } catch (\Exception $e) {
             // Nếu có lỗi xảy ra, rollback giao dịch và hiển thị thông báo lỗi
             DB::rollback();
@@ -241,6 +242,7 @@ class OrderController extends Controller
             }
 
             $order->status += 1;
+            $order->updated_date = Carbon::now();
             $order->save();
 
             return response()->json(['success' => true, 'status' => $order->status, 'tracking_code' => $order->tracking_code]);
@@ -257,7 +259,7 @@ class OrderController extends Controller
 
             // Kiểm tra xem đơn hàng đã được hủy hay chưa
             if ($order->status === 4) {
-                throw new \Exception('Đơn hàng đã được hủy trước đó.');
+                throw new \Exception('Đơn hàng đã được hủy trước đó!');
             }
 
             // Bắt đầu giao dịch database
@@ -265,6 +267,7 @@ class OrderController extends Controller
 
             // Đặt trạng thái của đơn hàng thành "Hủy" (status = 4)
             $order->status = 4;
+            $order->updated_date = Carbon::now();
             $order->save();
 
             // Lấy danh sách các chi tiết đơn hàng để phục hồi số lượng sản phẩm

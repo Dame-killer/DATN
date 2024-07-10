@@ -59,8 +59,14 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Mã Vận Đơn
                                     </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Ngày Cập Nhật
+                                    </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Trạng Thái
+                                        Trạng Thái Thanh Toán
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Trạng Thái Đơn Hàng
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Thao tác
@@ -105,6 +111,21 @@
                                                id="tracking-code-{{ $order->id }}">{{ $order->tracking_code ?? 'N/A' }}
                                             </p>
                                         </td>
+                                        <td>
+                                            <p class="text-xs font-weight-bold mb-0">{{ $order->updated_date ?? 'N/A' }}</p>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            @switch($order->payment_status)
+                                                @case(0)
+                                                    <span class="badge badge-sm bg-gradient-secondary">Chưa Thanh Toán</span>
+                                                    @break
+                                                @case(1)
+                                                    <span class="badge badge-sm bg-gradient-success">Đã Thanh Toán</span>
+                                                    @break
+                                                @default
+                                                    <span class="badge badge-sm bg-gradient-faded-dark">Không Xác Định</span>
+                                            @endswitch
+                                        </td>
                                         <td class="align-middle text-center" id="order-status-{{ $order->id }}">
                                             @switch($order->status)
                                                 @case(0)
@@ -114,8 +135,7 @@
                                                     <span class="badge badge-sm bg-gradient-info">Đã Duyệt</span>
                                                     @break
                                                 @case(2)
-                                                    <span
-                                                        class="badge badge-sm bg-gradient-warning">Đang Giao Hàng</span>
+                                                    <span class="badge badge-sm bg-gradient-warning">Đang Giao Hàng</span>
                                                     @break
                                                 @case(3)
                                                     <span class="badge badge-sm bg-gradient-success">Hoàn Thành</span>
@@ -124,8 +144,7 @@
                                                     <span class="badge badge-sm bg-gradient-danger">Hủy</span>
                                                     @break
                                                 @default
-                                                    <span
-                                                        class="badge badge-sm bg-gradient-faded-dark">Không Xác Định</span>
+                                                    <span class="badge badge-sm bg-gradient-faded-dark">Không Xác Định</span>
                                             @endswitch
                                         </td>
                                         <td class="align-middle">

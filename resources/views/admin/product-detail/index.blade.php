@@ -108,7 +108,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('product_details.store') }}" method="POST" autocomplete="off">
+                    <form id="addProductDetailForm" autocomplete="off">
                         @csrf
                         <input type="hidden" id="product_id" name="product_id">
                         <div class="mb-3">
@@ -155,10 +155,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('product_details.update', '') }}" method="POST" autocomplete="off"
-                          id="editProductDetailForm">
-                        @method('PUT')
+                    <form id="editProductDetailForm" autocomplete="off">
                         @csrf
+                        @method('PUT')
                         <input type="hidden" name="product_id" value="{{ $products->id }}">
                         <input type="hidden" id="editProductDetailId" name="id">
                         <div class="mb-3">
@@ -206,10 +205,10 @@
                     Bạn có chắc chắn muốn xóa sản phẩm chi tiết này không?
                 </div>
                 <div class="modal-footer">
-                    <form action="{{ route('product_details.destroy', '') }}" id="deleteProductDetailForm"
-                          method="POST">
-                        @method('DELETE')
+                    <form id="deleteProductDetailForm">
                         @csrf
+                        @method('DELETE')
+                        <input type="hidden" id="deleteProductDetailId" name="id">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                         <button type="submit" class="btn btn-danger">Xóa</button>
                     </form>
@@ -219,44 +218,142 @@
     </div>
 
     <script>
-        var addProductDetailModal = document.getElementById('addProductDetailModal')
-        addProductDetailModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget
-            var productId = button.getAttribute('data-product-id')
-            var inputProductId = document.getElementById('product_id')
-            inputProductId.value = productId
-        })
-
-        var editProductDetailModal = document.getElementById('editProductDetailModal')
-        editProductDetailModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget
-            var id = button.getAttribute('data-id')
-            var size_id = button.getAttribute('data-size-id')
-            var color_id = button.getAttribute('data-color-id')
-            var quantity = button.getAttribute('data-quantity')
-            var form = document.getElementById('editProductDetailForm')
-
-            var modalTitle = editProductDetailModal.querySelector('.modal-title')
-            var modalBodyInputId = editProductDetailModal.querySelector('#editProductDetailId')
-            var modalBodyInputSizeId = editProductDetailModal.querySelector('#editSizeId')
-            var modalBodyInputColorId = editProductDetailModal.querySelector('#editColorId')
-            var modalBodyInputQuantity = editProductDetailModal.querySelector('#editProductDetailQuantity')
-
-            modalTitle.textContent = 'Cập Nhật Sản Phẩm Chi Tiết: '
-            modalBodyInputId.value = id
-            modalBodyInputSizeId.value = size_id
-            modalBodyInputColorId.value = color_id
-            modalBodyInputQuantity.value = quantity
-            form.action = "{{ route('product_details.update', '') }}/" + id
-        })
-
         document.addEventListener('DOMContentLoaded', function () {
+            function setFlashMessage(message, type) {
+                fetch('{{ route('flash-message') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        type: type
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload()
+                    }
+                }).catch(error => {
+                    console.error('Lỗi khi gửi thông báo:', error.message)
+                })
+            }
+
+            function sendAjaxRequest(url, method, formData) {
+                return fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify(formData),
+                }).then(response => response.json()).catch(error => {
+                    console.error('Yêu cầu Ajax không thành công:', error.message)
+                })
+            }
+
+            var addProductDetailModal = document.getElementById('addProductDetailModal')
+            addProductDetailModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget
+                var productId = button.getAttribute('data-product-id')
+
+                var modalBodyInputProductId = document.getElementById('product_id')
+                modalBodyInputProductId.value = productId
+            })
+
+            document.getElementById('addProductDetailForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = {
+                    product_id: document.getElementById('product_id').value,
+                    size_id: document.getElementById('size_id').value,
+                    color_id: document.getElementById('color_id').value,
+                    quantity: document.getElementById('quantity').value
+                }
+                sendAjaxRequest('{{ route('product_details.store') }}', 'POST', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi thêm sản phẩm chi tiết: ', error.message)
+                        setFlashMessage('Thêm sản phẩm chi tiết thất bại!', 'error')
+                    })
+            })
+
+            var editProductDetailModal = document.getElementById('editProductDetailModal')
+            editProductDetailModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget
+                var id = button.getAttribute('data-id')
+                var size_id = button.getAttribute('data-size-id')
+                var color_id = button.getAttribute('data-color-id')
+                var quantity = button.getAttribute('data-quantity')
+                var form = document.getElementById('editProductDetailForm')
+
+                var modalTitle = editProductDetailModal.querySelector('.modal-title')
+                var modalBodyInputId = editProductDetailModal.querySelector('#editProductDetailId')
+                var modalBodyInputSizeId = editProductDetailModal.querySelector('#editSizeId')
+                var modalBodyInputColorId = editProductDetailModal.querySelector('#editColorId')
+                var modalBodyInputQuantity = editProductDetailModal.querySelector('#editProductDetailQuantity')
+
+                modalTitle.textContent = 'Cập Nhật Sản Phẩm Chi Tiết: '
+                modalBodyInputId.value = id
+                modalBodyInputSizeId.value = size_id
+                modalBodyInputColorId.value = color_id
+                modalBodyInputQuantity.value = quantity
+                form.action = "{{ route('product_details.update', '') }}/" + id
+            })
+
+            document.getElementById('editProductDetailForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = {
+                    id: document.getElementById('editProductDetailId').value,
+                    size_id: document.getElementById('editSizeId').value,
+                    color_id: document.getElementById('editColorId').value,
+                    quantity: document.getElementById('editProductDetailQuantity').value
+                }
+                sendAjaxRequest(this.action, 'PUT', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi cập nhật sản phẩm chi tiết: ', error.message)
+                        setFlashMessage('Cập nhật sản phẩm chi tiết thất bại!', 'error')
+                    })
+            })
+
             var deleteProductDetailModal = document.getElementById('deleteProductDetailModal')
             deleteProductDetailModal.addEventListener('show.bs.modal', function (event) {
                 var button = event.relatedTarget
                 var id = button.getAttribute('data-id')
                 var form = document.getElementById('deleteProductDetailForm')
+
+                var modalBodyInputId = deleteProductDetailModal.querySelector('#deleteProductDetailId')
+                modalBodyInputId.value = id
                 form.action = "{{ route('product_details.destroy', '') }}/" + id
+            })
+
+            document.getElementById('deleteProductDetailForm').addEventListener('submit', function (event) {
+                event.preventDefault()
+                const formData = { id: document.getElementById('deleteProductDetailId').value };
+                sendAjaxRequest(this.action, 'DELETE', formData)
+                    .then(data => {
+                        if (data.success) {
+                            setFlashMessage(data.success, 'success')
+                        } else {
+                            setFlashMessage(data.error, 'error')
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Lỗi khi xóa sản phẩm chi tiết: ', error.message)
+                        setFlashMessage('Xóa sản phẩm chi tiết thất bại!', 'error')
+                    })
             })
         })
     </script>
