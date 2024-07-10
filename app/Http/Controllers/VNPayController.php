@@ -3,25 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\PaymentMethod;
 class VNPayController extends Controller
 {
     public function checkout()
     {
-        return view('customer.checkout');
+        $payment_methods = PaymentMethod::all();
+        $vnpay_method_id = $payment_methods->firstWhere('name', 'VNPAY')->id;
+        return view('customer.checkout')->with(compact('payment_methods', 'vnpay_method_id'));
     }
 
-    public function createPayment()
+    public function createPayment(Request $request)
     {
         $vnp_TmnCode = "ONHK27YO"; //Mã website tại VNPAY
         $vnp_HashSecret = "HX4UTYXJJAVGUIYTF9EY0RFDBT8N6M5V"; //Chuỗi bí mật
 
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = route('vnpay.return');
-        $vnp_TxnRef = rand(1,10000); //Mã đơn hàng. Trong thực tế bạn cần thay đổi mã này thành mã đơn hàng của bạn
+        $vnp_TxnRef = $request->code; //Mã đơn hàng. Trong thực tế bạn cần thay đổi mã này thành mã đơn hàng của bạn
         $vnp_OrderInfo = "Thanh toán đơn hàng";
         $vnp_OrderType = 'billpayment';
-        $vnp_Amount = 150 * 100;
+        $vnp_Amount = $request->totalPrice * 100;
         $vnp_Locale = 'vn';
         $vnp_BankCode = 'NCB';
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
@@ -110,10 +112,10 @@ class VNPayController extends Controller
         if ($secureHash == $vnp_SecureHash) {
             // Kiểm tra mã đơn hàng trong database để xử lý
             // Logic xử lý kết quả thanh toán của bạn tại đây
-            return view('customer.vnpay_return', ['inputData' => $inputData]);
+            return view('customer.home', ['inputData' => $inputData])->with('success', 'Đơn hàng đã được thanh toán thành công!');
         } else {
             // Xử lý khi có lỗi
-            return view('customer.vnpay_return', ['inputData' => $inputData, 'error' => 'Invalid Signature']);
+            return view('customer.checkout', ['inputData' => $inputData, 'error' => 'Thanh toán thất bại!']);
         }
     }
 }

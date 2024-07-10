@@ -93,7 +93,6 @@ Route::middleware('web')->group(function () {
     Route::post('/save-selection-to-session', [App\Http\Controllers\ProductDetailController::class, 'saveSelectionToSession'])->name('save-selection-to-session');
 
     Route::get('/cart', [OrderDetailController::class, 'cartCustomer'])->name('customer-shopping-cart');
-    // Route::get('/checkout',function () { return view('customer/checkout');})->name('customer-checkout');
     Route::post('/customer/product/{product_detail}', [OrderDetailController::class, 'addToCartCustomer'])->name('customer-cart-add');
     Route::post('/cart', [OrderController::class, 'storeCustomer'])->name('customer-cart-store');
     Route::delete('/customer/cart/{product_detail}', [OrderDetailController::class, 'removeFromCart'])->name('customer-cart-remove');
