@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('orders:cancel-unpaid')->everyMinute();
+        $schedule->command('orders:cancel-unpaid')->daily();
     }
 
     /**
