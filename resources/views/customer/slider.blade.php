@@ -1,3 +1,4 @@
+<div style="height: 62px;"></div>
 <!-- Slider -->
 <section class="section-slide">
     <div class="wrap-slick1">

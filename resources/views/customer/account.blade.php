@@ -74,6 +74,10 @@
                                             </th>
                                             <th
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Thời gian hủy đơn
+                                            </th>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                                 Phương Thức Thanh Toán
                                             </th>
                                             <th
@@ -83,6 +87,10 @@
                                             <th
                                                 class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Trạng Thái
+                                            </th>
+                                            <th
+                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Trạng thái thanh toán
                                             </th>
                                             <th class="text-secondary opacity-7"></th>
                                         </tr>
@@ -108,6 +116,9 @@
                                                 </td>
                                                 <td>
                                                     <p class="text-xs font-weight-bold mb-0">{{ $order->phone }}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ $order->order_date }}</p>
                                                 </td>
                                                 <td>
                                                     <p class="text-xs font-weight-bold mb-0">{{ $order->order_date }}</p>
@@ -147,6 +158,22 @@
                                                                 Định</span>
                                                     @endswitch
                                                 </td>
+                                                <td class="align-middle text-center">
+                                                    @switch($order->payment_status)
+                                                        @case(0)
+                                                            <span class="badge badge-sm bg-gradient-secondary">Chưa Thanh
+                                                                Toán</span>
+                                                        @break
+
+                                                        @case(1)
+                                                            <span class="badge badge-sm bg-gradient-success">Đã Thanh Toán</span>
+                                                        @break
+
+                                                        @default
+                                                            <span class="badge badge-sm bg-gradient-faded-dark">Không Xác
+                                                                Định</span>
+                                                    @endswitch
+                                                </td>
                                                 <td class="align-middle">
                                                     <a href="{{ route('customer-order-detail', $order->id) }}"
                                                         class="btn btn-info btn-sm mb-2">
@@ -157,6 +184,13 @@
                                                             data-bs-toggle="modal" data-bs-target="#cancelOrderModal"
                                                             data-id="{{ $order->id }}">
                                                             Hủy
+                                                        </button>
+                                                    @endif
+                                                    @if ($order->payment_status == 0 && $order->payment_method_id == 2)
+                                                        <button class="btn btn-primary btn-sm mb-2 cancel-order-btn"
+                                                            data-bs-toggle="modal" data-bs-target="#cancelOrderModal"
+                                                            data-id="{{ $order->id }}">
+                                                            Thanh toán
                                                         </button>
                                                     @endif
                                                 </td>

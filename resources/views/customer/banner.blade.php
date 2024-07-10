@@ -55,6 +55,7 @@
         padding-top: 0;
         padding-bottom: 0;
         height: 75vh;
+        width: 100%;
         /* Occupies 75% of the viewport height */
         background-color: #ffffff;
         /* Brighter background */
