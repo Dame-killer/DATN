@@ -98,8 +98,8 @@ Route::middleware('web')->group(function () {
     Route::delete('/customer/cart/{product_detail}', [OrderDetailController::class, 'removeFromCart'])->name('customer-cart-remove');
     Route::post('/cart/updated', [OrderDetailController::class, 'updateQuantity'])->name('customer-cart-updateQuantity');
     Route::get('/checkout', [VNPayController::class, 'checkout'])->name('checkout');
-    Route::post('/payment-vnpay', [VNPayController::class, 'createPayment'])->name('payment.vnpay');
-    Route::get('/vnpay-return', [VNPayController::class, 'vnpayReturn'])->name('vnpay.return');
+    Route::post('/payment-vnpay', [OrderController::class, 'createPayment'])->name('payment.vnpay');
+    Route::get('/vnpay-return', [OrderController::class, 'vnpayReturn'])->name('vnpay.return');
 });
 
 Route::middleware(['auth', 'web', 'role:0'])->group(function () {

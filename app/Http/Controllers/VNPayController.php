@@ -83,39 +83,5 @@ class VNPayController extends Controller
 
     }
 
-    public function vnpayReturn()
-    {
-        $vnp_HashSecret = "HX4UTYXJJAVGUIYTF9EY0RFDBT8N6M5V";
-        $vnp_SecureHash = $_GET['vnp_SecureHash'];
-        $inputData = array();
-        foreach ($_GET as $key => $value) {
-            if (substr($key, 0, 4) == "vnp_") {
-                $inputData[$key] = $value;
-            }
-        }
 
-        unset($inputData['vnp_SecureHash']);
-        ksort($inputData);
-        $hashData = "";
-        $i = 0;
-        foreach ($inputData as $key => $value) {
-            if ($i == 1) {
-                $hashData = $hashData . '&' . urlencode($key) . "=" . urlencode($value);
-            } else {
-                $hashData = $hashData . urlencode($key) . "=" . urlencode($value);
-                $i = 1;
-            }
-        }
-
-        $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
-        // dd($secureHash);
-        if ($secureHash == $vnp_SecureHash) {
-            // Kiểm tra mã đơn hàng trong database để xử lý
-            // Logic xử lý kết quả thanh toán của bạn tại đây
-            return view('customer.home', ['inputData' => $inputData])->with('success', 'Đơn hàng đã được thanh toán thành công!');
-        } else {
-            // Xử lý khi có lỗi
-            return view('customer.checkout', ['inputData' => $inputData, 'error' => 'Thanh toán thất bại!']);
-        }
-    }
 }
