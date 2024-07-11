@@ -11,19 +11,19 @@
 
                     <li class="p-b-10">
                         <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Men
+                            Quần
                         </a>
                     </li>
 
                     <li class="p-b-10">
                         <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Shoes
+                            Áo
                         </a>
                     </li>
 
                     <li class="p-b-10">
                         <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Watches
+                            Áo polo
                         </a>
                     </li>
                 </ul>
@@ -37,19 +37,19 @@
                 <ul>
                     <li class="p-b-10">
                         <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Track Order
+                            Theo dõi thứ tự
                         </a>
                     </li>
 
                     <li class="p-b-10">
                         <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Returns
+                            Trả lại
                         </a>
                     </li>
 
                     <li class="p-b-10">
                         <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                            Shipping
+                            Giao hàng
                         </a>
                     </li>
 
@@ -67,8 +67,9 @@
                 </h4>
 
                 <p class="stext-107 cl7 size-201">
-                    Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us
-                    on (+1) 96 716 6879
+                    Có câu hỏi nào không? Hãy liên hệ với chúng tôi tại cửa hàng tại tầng 8, 379 Khuất Duy Tiến, Hà Nội
+                    hoặc gọi cho chúng tôi
+                    trên (+84) 96 716 6879
                 </p>
 
                 <div class="p-t-27">
@@ -100,7 +101,7 @@
 
                     <div class="p-t-18">
                         <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
-                            Subscribe
+                            Đặt mua
                         </button>
                     </div>
                 </form>

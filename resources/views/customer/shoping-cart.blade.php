@@ -4,17 +4,12 @@
     <div class="container-fluid bg-secondary mb-5">
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
             <h1 class="font-weight-semi-bold text-uppercase mb-3">Giỏ hàng</h1>
-            <div class="d-inline-flex">
-                <p class="m-0"><a href="{{ route('customer-home') }}">Trang chủ</a></p>
-                <p class="m-0 px-2">-</p>
-                <p class="m-0">Giỏ hàng</p>
-            </div>
         </div>
     </div>
     <!-- Shoping Cart -->
     <div class="bg0 p-t-75 p-b-85">
         <div class="row px-xl-5">
-            <div class="col-xl-8 col-lg-8 m-l-25 m-r--38 m-lr-0-xl">
+            <div class="col-xl-8 col-lg-8 m-r--38 m-lr-0-xl">
                 <table class="table table-bordered text-center mb-0">
                     <thead class="bg-secondary text-dark">
                         <tr>
@@ -32,29 +27,25 @@
                                         alt="{{ $order_detail->product_detail->product->name }}" class="img-fluid"
                                         style="width: 50px">
                                     {{ $order_detail->product_detail->product->name }}
-                                    /{{ $order_detail->product_detail->product->code }}/
+                                    / {{ $order_detail->product_detail->product->code }}/
                                     {{ $order_detail->product_detail->size->size_name }}
                                     - {{ $order_detail->product_detail->size->size_number }}
                                     /{{ $order_detail->product_detail->color->name }}
                                 </td>
-                                <td class="align-middle">
-                                    <div class="input-group quantity mx-auto" style="width: 100px;">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-warning update-quantity"
-                                                data-id="{{ $order_detail->product_detail->id }}" data-action="decrease">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
-                                        <input type="text" class="form-control form-control-sm text-center"
-                                            value="{{ $order_detail->amount }}">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-primary update-quantity"
-                                                data-id="{{ $order_detail->product_detail->id }}" data-action="increase">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
+                                <td class="align-middle ">
+                                    <div class="quantity-column"
+                                        style="display: flex; align-items: center; justify-content: center;">
+                                        <button class="btn btn-sm btn-warning update-quantity m-1"
+                                            data-id="{{ $order_detail->product_detail->id }}"
+                                            data-action="decrease">-</button>
+                                        <input type="number" class="quantity-input text-xs font-weight-bold mb-0"
+                                            value="{{ $order_detail->amount }}" style="width: 60px;">
+                                        <button class="btn btn-sm btn-primary update-quantity m-1"
+                                            data-id="{{ $order_detail->product_detail->id }}"
+                                            data-action="increase">+</button>
                                     </div>
                                 </td>
+
                                 <td class="align-middle">
                                     <p class="text-right font-weight-bold mb-0">
                                         {{ number_format($order_detail->unit_price) }} đ</p>
@@ -122,16 +113,20 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.status === 'success') {
-                            const amountElement = this.parentElement.querySelector(
-                                '.text-xs.font-weight-bold.mb-0.mx-2')
-                            amountElement.textContent = data.amount
+                            // Update the quantity in the UI
+                            const quantityInput = this.parentElement.querySelector('.quantity-input')
+                            quantityInput.value = data.amount
 
-                            const totalPricePerProductElement = this.closest('tr').querySelector(
+                            // Update the total price per product in the UI
+                            const totalPriceElement = this.closest('tr').querySelector(
                                 '.total-price-per-product')
-                            totalPricePerProductElement.textContent = `${data.totalPricePerProduct}đ`
+                            totalPriceElement.textContent = data.totalPricePerProduct.toLocaleString(
+                                'vi-VN') + ' đ'
 
-                            const totalPriceElement = document.getElementById('total-price')
-                            totalPriceElement.textContent = `${data.totalPrice}đ`
+                            // Update the total price of the cart
+                            const totalPrice = data.totalPrice
+                            document.getElementById('total-price').textContent = totalPrice
+                                .toLocaleString('vi-VN') + ' đ'
                         }
                     })
                     .catch(error => console.error('Error:', error))
@@ -179,6 +174,23 @@
         border-radius: 5px;
     }
 
+    .quantity-column .btn {
+        min-width: 30px;
+        padding: 5px 10px;
+        font-size: 14px;
+        line-height: 1;
+    }
+
+
+    .quantity-input {
+        width: 50px;
+        text-align: center;
+        margin: 0 5px;
+        font-size: 14px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
 
     .btn-warning {
         background-color: #ffc107;
