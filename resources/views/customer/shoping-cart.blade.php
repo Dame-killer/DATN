@@ -38,8 +38,9 @@
                                         <button class="btn btn-sm btn-warning update-quantity m-1"
                                             data-id="{{ $order_detail->product_detail->id }}"
                                             data-action="decrease">-</button>
-                                        <input type="number" class="quantity-input text-xs font-weight-bold mb-0"
-                                            value="{{ $order_detail->amount }}" style="width: 60px;">
+                                        <input type="number"
+                                            class="quantity-input text-xs font-weight-bold mb-0 num-product"
+                                            name="num-product" value="{{ $order_detail->amount }}" style="width: 60px;">
                                         <button class="btn btn-sm btn-primary update-quantity m-1"
                                             data-id="{{ $order_detail->product_detail->id }}"
                                             data-action="increase">+</button>
@@ -131,6 +132,32 @@
                     })
                     .catch(error => console.error('Error:', error))
             })
+        })
+        document.addEventListener('DOMContentLoaded', function() {
+            const numProductField = document.querySelector('.num-product');
+            numProductField.addEventListener('input', function() {
+                const maxQuantity = parseInt(numProductField.getAttribute('max'));
+                if (this.value < 1) {
+                    this.value = 1;
+                }
+                if (this.value > maxQuantity) {
+                    this.value = maxQuantity;
+                }
+            });
+            numProductField.addEventListener('change', function() {
+                const maxQuantity = parseInt(numProductField.getAttribute('max'));
+                if (this.value < 1) {
+                    this.value = 1;
+                }
+                if (this.value > maxQuantity) {
+                    this.value = maxQuantity;
+                }
+            });
+            document.querySelectorAll('.num-product').forEach(input => {
+                input.addEventListener('input', () => {
+                    numProductInput.value = input.value;
+                });
+            });
         })
     </script>
 @endsection
