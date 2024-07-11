@@ -76,6 +76,7 @@ class OrderController extends Controller
                 'receiver' => $request->input('receiver'),
                 'address' => $request->input('address'),
                 'phone' => $request->input('phone'),
+                'payment_status' => 1,
                 'payment_method_id' => $request->input('payment_method_id'),
                 'user_id' => $request->input('user_id'),
             ]);
@@ -369,6 +370,14 @@ public function vnpayReturn(Request $request)
 
             if ($order->payment_method_id == 1 && $order->status == 1) {
                 $order->status = 3;
+                $order->save();
+
+                return response()->json(['success' => true, 'status' => $order->status]);
+            }
+
+            if ($order->payment_method_id == 2 && $order->status == 2) {
+                $order->status = 3;
+                $order->payment_status = 1;
                 $order->save();
 
                 return response()->json(['success' => true, 'status' => $order->status]);
