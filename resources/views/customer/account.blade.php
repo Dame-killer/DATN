@@ -74,7 +74,7 @@
                                             </th>
                                             <th
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Thời gian hủy đơn
+                                                Hạn Thanh Toán
                                             </th>
                                             <th
                                                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -121,7 +121,15 @@
                                                     <p class="text-xs font-weight-bold mb-0">{{ $order->order_date }}</p>
                                                 </td>
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0">{{ $order->order_date }}</p>
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        @if ($order->days_left > 0 && $order->payment_status == 0)
+                                                            Còn {{ $order->days_left }} ngày
+                                                        @elseif($order->status < 2)
+                                                            Đã Hủy
+                                                        @else
+                                                            N/A
+                                                        @endif
+                                                    </p>
                                                 </td>
                                                 <td>
                                                     <p class="text-xs font-weight-bold mb-0">
