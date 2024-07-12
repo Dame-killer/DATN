@@ -32,13 +32,9 @@ class CancelUnpaidOrders extends Command
      */
     public function handle()
     {
-        // Lấy ngày hiện tại
-        $now = Carbon::now();
-
         // Lấy các đơn hàng chưa thanh toán và đã quá 7 ngày
         $orders = Order::where('payment_status', 0)
-            ->where('status', '<', 3)
-            ->where('order_date', '<', $now->subDays(7))
+            ->where('order_date', '<', Carbon::now()->subDays(7))
             ->get();
 
         foreach ($orders as $order) {
