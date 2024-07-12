@@ -8,7 +8,7 @@ class VNPayController extends Controller
 {
     public function checkout()
     {
-        $payment_methods = PaymentMethod::all();
+        $payment_methods = PaymentMethod::where('id', '<>', 1)->get();
         $vnpay_method_id = $payment_methods->firstWhere('name', 'VNPAY')->id;
         return view('customer.checkout')->with(compact('payment_methods', 'vnpay_method_id'));
     }

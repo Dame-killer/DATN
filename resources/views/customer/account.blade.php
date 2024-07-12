@@ -134,43 +134,43 @@
                                                 <td class="align-middle text-center" id="order-status-{{ $order->id }}">
                                                     @switch($order->status)
                                                         @case(0)
-                                                            <span class="badge badge-sm bg-gradient-secondary">Chưa Duyệt</span>
+                                                            <span class="">Chưa Duyệt</span>
                                                         @break
 
                                                         @case(1)
-                                                            <span class="badge badge-sm bg-gradient-info">Đã Duyệt</span>
+                                                            <span class="">Đã Duyệt</span>
                                                         @break
 
                                                         @case(2)
-                                                            <span class="badge badge-sm bg-gradient-warning">Đang Giao Hàng</span>
+                                                            <span class="">Đang Giao Hàng</span>
                                                         @break
 
                                                         @case(3)
-                                                            <span class="badge badge-sm bg-gradient-success">Hoàn Thành</span>
+                                                            <span class="">Hoàn Thành</span>
                                                         @break
 
                                                         @case(4)
-                                                            <span class="badge badge-sm bg-gradient-danger">Hủy</span>
+                                                            <span class="">Hủy</span>
                                                         @break
 
                                                         @default
-                                                            <span class="badge badge-sm bg-gradient-faded-dark">Không Xác
+                                                            <span class="">Không Xác
                                                                 Định</span>
                                                     @endswitch
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     @switch($order->payment_status)
                                                         @case(0)
-                                                            <span class="badge badge-sm bg-gradient-secondary">Chưa Thanh
+                                                            <span class="">Chưa Thanh
                                                                 Toán</span>
                                                         @break
 
                                                         @case(1)
-                                                            <span class="badge badge-sm bg-gradient-success">Đã Thanh Toán</span>
+                                                            <span class="">Đã Thanh Toán</span>
                                                         @break
 
                                                         @default
-                                                            <span class="badge badge-sm bg-gradient-faded-dark">Không Xác
+                                                            <span class="">Không Xác
                                                                 Định</span>
                                                     @endswitch
                                                 </td>
@@ -186,13 +186,13 @@
                                                             Hủy
                                                         </button>
                                                     @endif
-                                                    @if ($order->payment_status == 0 && $order->payment_method_id == 2)
-                                                        <button class="btn btn-primary btn-sm mb-2 cancel-order-btn"
-                                                            data-bs-toggle="modal" data-bs-target="#cancelOrderModal"
-                                                            data-id="{{ $order->id }}">
-                                                            Thanh toán
-                                                        </button>
-                                                    @endif
+{{--                                                    @if ($order->payment_status == 0 && $order->payment_method_id == 2)--}}
+{{--                                                        <button class="btn btn-primary btn-sm mb-2 cancel-order-btn"--}}
+{{--                                                            data-bs-toggle="modal" data-bs-target="#cancelOrderModal"--}}
+{{--                                                            data-id="{{ $order->id }}">--}}
+{{--                                                            Thanh toán--}}
+{{--                                                        </button>--}}
+{{--                                                    @endif--}}
                                                 </td>
                                             </tr>
                                         @endforeach

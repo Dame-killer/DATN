@@ -76,6 +76,7 @@ class OrderController extends Controller
                 'receiver' => $request->input('receiver'),
                 'address' => $request->input('address'),
                 'phone' => $request->input('phone'),
+                'status' => 3,
                 'payment_status' => 1,
                 'payment_method_id' => $request->input('payment_method_id'),
                 'user_id' => $request->input('user_id'),

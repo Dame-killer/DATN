@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('url');
             $table->unsignedBigInteger('product_detail_id');
 
-            $table->foreign('product_detail_id')->references('id')->on('product_details')->onDelete('cascade');
+            $table->foreign('product_detail_id')->references('id')->on('product_details')->onDelete('restrict');
         });
     }
 

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer('unit_price');
             $table->integer('amount')->unsigned();
 
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-            $table->foreign('product_detail_id')->references('id')->on('product_details')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('restrict');
+            $table->foreign('product_detail_id')->references('id')->on('product_details')->onDelete('restrict');
         });
     }
 
