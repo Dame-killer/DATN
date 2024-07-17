@@ -95,7 +95,7 @@ class OrderDetailController extends Controller
             $totalPrice += $order_detail->totalPricePerProduct;
         }
 
-        return view('customer.shoping-cart')->with(compact( 'order_details', 'totalPrice', 'payment_methods'));
+        return view('customer.shoping-cart')->with(compact('order_details', 'totalPrice', 'payment_methods'));
     }
 
     /**
@@ -226,19 +226,22 @@ class OrderDetailController extends Controller
 
         return redirect()->back()->with('success', 'Thêm sản phẩm vào giỏ hàng thành công!');
     }
+
     public function addToCartCustomer(Request $request)
     {
         // Lấy số lượng sản phẩm từ request
         $quantity = $request->input('num_product', 1);
         $selectedSize = $request->input('selected_size');
         $selectedColor = $request->input('selected_color');
+        $productId = $request->input('product_id');
 
         // Tìm product detail dựa trên size và color đã chọn
-        $product_detail = ProductDetail::whereHas('size', function ($query) use ($selectedSize) {
-            $query->where('size_name', $selectedSize);
-        })->whereHas('color', function ($query) use ($selectedColor) {
-            $query->where('id', $selectedColor);
-        })->firstOrFail();
+        $product_detail = ProductDetail::where('product_id', $productId)
+            ->whereHas('size', function ($query) use ($selectedSize) {
+                $query->where('size_name', $selectedSize);
+            })->whereHas('color', function ($query) use ($selectedColor) {
+                $query->where('id', $selectedColor);
+            })->firstOrFail();
 
         $cart = session()->get('cart', []);
 

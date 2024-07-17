@@ -118,6 +118,7 @@
                             <input type="hidden" name="num_product" id="num_product" value="1">
                             <input type="hidden" name="selected_size" id="selected_size">
                             <input type="hidden" name="selected_color" id="selected_color">
+                            <input type="hidden" name="product_id" id="product_id" value="{{ $products->id }}">
                             <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04"
                                 type="submit" id="add-to-cart-button">
                                 Thêm vào giỏ hàng

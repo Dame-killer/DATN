@@ -35,7 +35,7 @@ Route::get('/', function () {
             return redirect()->route('admin-home');
         }
     } else {
-        return redirect()->route('login'); // Nếu chưa đăng nhập, mặc định chuyển hướng đến trang customer-home
+        return redirect()->route('login'); // Chưa đăng nhập => Login
     }
 });
 

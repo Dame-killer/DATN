@@ -51,11 +51,11 @@
                                         Ngày Đặt Hàng
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Phương Thức Thanh Toán
+                                        PT Thanh Toán
                                     </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Tài Khoản Khách Hàng
-                                    </th>
+{{--                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">--}}
+{{--                                        Tài Khoản Khách Hàng--}}
+{{--                                    </th>--}}
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Mã Vận Đơn
                                     </th>
@@ -103,9 +103,9 @@
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $order->paymentMethod->name }}</p>
                                         </td>
-                                        <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $order->user ? $order->user->email : 'N/A' }}</p>
-                                        </td>
+{{--                                        <td>--}}
+{{--                                            <p class="text-xs font-weight-bold mb-0">{{ $order->user ? $order->user->email : 'N/A' }}</p>--}}
+{{--                                        </td>--}}
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0"
                                                id="tracking-code-{{ $order->id }}">{{ $order->tracking_code ?? 'N/A' }}
