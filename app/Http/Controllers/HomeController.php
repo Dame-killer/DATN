@@ -10,6 +10,8 @@ use App\Models\OrderDetail;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\RevenuesExport;
 
 class HomeController extends Controller
 {
@@ -113,6 +115,50 @@ class HomeController extends Controller
 
         return view('admin.home', compact('revenues', 'totalRevenue', 'totalSoldProducts', 'completedOrders', 'canceledOrders',
             'revenueChange', 'soldProductsChange', 'completedOrdersChange', 'canceledOrdersChange'));
+    }
+
+    public function exportRevenueReport()
+    {
+        $revenues = [];
+
+        $months = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
+
+        for ($i = 5; $i >= 0; $i--) {
+            $month = Carbon::now()->subMonths($i)->month;
+            $year = Carbon::now()->subMonths($i)->year;
+            $revenue = DB::table('order_details')
+                ->join('orders', 'order_details.order_id', '=', 'orders.id')
+                ->whereMonth('orders.updated_date', $month)
+                ->whereYear('orders.updated_date', $year)
+                ->where('orders.status', 3)
+                ->sum(DB::raw('order_details.unit_price * order_details.amount'));
+            $totalSoldProducts = DB::table('order_details')
+                ->join('orders', 'order_details.order_id', '=', 'orders.id')
+                ->whereMonth('orders.updated_date', $month)
+                ->whereYear('orders.updated_date', $year)
+                ->where('orders.status', 3)
+                ->sum('order_details.amount');
+            $completedOrders = DB::table('orders')
+                ->whereMonth('updated_date', $month)
+                ->whereYear('updated_date', $year)
+                ->where('status', 3)
+                ->count();
+            $canceledOrders = DB::table('orders')
+                ->whereMonth('updated_date', $month)
+                ->whereYear('updated_date', $year)
+                ->where('status', 4)
+                ->count();
+
+            $revenues[] = [
+                'month' => $months[$month - 1] . ' ' . $year,
+                'revenue' => $revenue,
+                'sold_products' => $totalSoldProducts,
+                'completed_orders' => $completedOrders,
+                'canceled_orders' => $canceledOrders,
+            ];
+        }
+
+        return Excel::download(new RevenuesExport($revenues), 'revenue_report.xlsx');
     }
 
     public function homeCustomer()
