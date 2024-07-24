@@ -37,173 +37,179 @@
                                     <span class="row-detail__label">Số điện thoại</span>
                                     <p class="row-detail__content">{{ Auth::user()->phone }}</p>
                                 </div>
+                                <button class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#updatePhoneModal">
+                                    Cập nhật số điện thoại
+                                </button>
                             @endif
                         </div>
                     </section>
                     <div class="card mb-4">
                         <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                             <h6>Lịch sử đơn hàng của bạn</h6>
+                            <p>Tra cứu mã vận đơn
+                                <a href="https://ghn.vn/blogs/trang-thai-don-hang" target="_blank">tại đây</a>
+                            </p>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
                                 <table class="table align-items-center mb-0">
                                     <thead>
-                                        <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                STT
-                                            </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Mã Đơn Hàng
-                                            </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Người Nhận
-                                            </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Địa Chỉ
-                                            </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Số Điện Thoại
-                                            </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Ngày Đặt Hàng
-                                            </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Hạn Thanh Toán
-                                            </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Phương Thức Thanh Toán
-                                            </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Mã vận chuyển
-                                            </th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Trạng Thái
-                                            </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Trạng thái thanh toán
-                                            </th>
-                                            <th class="text-secondary opacity-7"></th>
-                                        </tr>
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            STT
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Mã Đơn Hàng
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Người Nhận
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Địa Chỉ
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Số Điện Thoại
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Ngày Đặt Hàng
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Hạn Thanh Toán
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Phương Thức Thanh Toán
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Mã vận chuyển
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Trạng Thái
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Trạng thái thanh toán
+                                        </th>
+                                        <th class="text-secondary opacity-7"></th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($orders as $order)
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex px-2 py-1">
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
-                                                        </div>
+                                    @foreach ($orders as $order)
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
                                                     </div>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">{{ $order->code }}</p>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">{{ $order->receiver }}</p>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">{{ $order->address }}</p>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">{{ $order->phone }}</p>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">{{ $order->order_date }}</p>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">
-                                                        @if ($order->days_left > 0 && $order->payment_status == 0)
-                                                            Còn {{ $order->days_left }} ngày
-                                                        @elseif($order->status < 2)
-                                                            Đã Hủy
-                                                        @else
-                                                            N/A
-                                                        @endif
-                                                    </p>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">
-                                                        {{ $order->paymentMethod->name }}</p>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">
-                                                        {{ $order->tracking_code }}</p>
-                                                </td>
-                                                <td class="align-middle text-center" id="order-status-{{ $order->id }}">
-                                                    @switch($order->status)
-                                                        @case(0)
-                                                            <span class="">Chưa Duyệt</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $order->code }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $order->receiver }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $order->address }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $order->phone }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $order->order_date }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">
+                                                    @if ($order->days_left > 0 && $order->payment_status == 0)
+                                                        Còn {{ $order->days_left }} ngày
+                                                    @elseif($order->status < 2)
+                                                        Đã Hủy
+                                                    @else
+                                                        N/A
+                                                    @endif
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">
+                                                    {{ $order->paymentMethod->name }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">
+                                                    {{ $order->tracking_code }}</p>
+                                            </td>
+                                            <td class="align-middle text-center" id="order-status-{{ $order->id }}">
+                                                @switch($order->status)
+                                                    @case(0)
+                                                        <span class="">Chưa Duyệt</span>
                                                         @break
 
-                                                        @case(1)
-                                                            <span class="">Đã Duyệt</span>
+                                                    @case(1)
+                                                        <span class="">Đã Duyệt</span>
                                                         @break
 
-                                                        @case(2)
-                                                            <span class="">Đang Giao Hàng</span>
+                                                    @case(2)
+                                                        <span class="">Đang Giao Hàng</span>
                                                         @break
 
-                                                        @case(3)
-                                                            <span class="">Hoàn Thành</span>
+                                                    @case(3)
+                                                        <span class="">Hoàn Thành</span>
                                                         @break
 
-                                                        @case(4)
-                                                            <span class="">Hủy</span>
+                                                    @case(4)
+                                                        <span class="">Hủy</span>
                                                         @break
 
-                                                        @default
-                                                            <span class="">Không Xác
+                                                    @default
+                                                        <span class="">Không Xác
                                                                 Định</span>
-                                                    @endswitch
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    @switch($order->payment_status)
-                                                        @case(0)
-                                                            <span class="">Chưa Thanh
+                                                @endswitch
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                @switch($order->payment_status)
+                                                    @case(0)
+                                                        <span class="">Chưa Thanh
                                                                 Toán</span>
                                                         @break
 
-                                                        @case(1)
-                                                            <span class="">Đã Thanh Toán</span>
+                                                    @case(1)
+                                                        <span class="">Đã Thanh Toán</span>
                                                         @break
 
-                                                        @default
-                                                            <span class="">Không Xác
-                                                                Định</span>
-                                                    @endswitch
-                                                </td>
-                                                <td class="align-middle">
-                                                    <a href="{{ route('customer-order-detail', $order->id) }}"
-                                                        class="btn btn-info btn-sm mb-2">
-                                                        Chi Tiết
-                                                    </a>
-                                                    @if ($order->status < 2)
-                                                        <button class="btn btn-danger btn-sm mb-2 cancel-order-btn"
+                                                    @default
+                                                        <span class="">Không Xác Định</span>
+                                                @endswitch
+                                            </td>
+                                            <td class="align-middle">
+                                                <a href="{{ route('customer-order-detail', $order->id) }}"
+                                                   class="btn btn-info btn-sm mb-2">
+                                                    Chi Tiết
+                                                </a>
+                                                @if ($order->status < 2)
+                                                    <button class="btn btn-danger btn-sm mb-2 cancel-order-btn"
                                                             data-bs-toggle="modal" data-bs-target="#cancelOrderModal"
                                                             data-id="{{ $order->id }}">
-                                                            Hủy
-                                                        </button>
-                                                    @endif
-{{--                                                    @if ($order->payment_status == 0 && $order->payment_method_id == 2)--}}
-{{--                                                        <button class="btn btn-primary btn-sm mb-2 cancel-order-btn"--}}
-{{--                                                            data-bs-toggle="modal" data-bs-target="#cancelOrderModal"--}}
-{{--                                                            data-id="{{ $order->id }}">--}}
-{{--                                                            Thanh toán--}}
-{{--                                                        </button>--}}
-{{--                                                    @endif--}}
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                                        Hủy
+                                                    </button>
+                                                @endif
+                                                {{--                                                    @if ($order->payment_status == 0 && $order->payment_method_id == 2)--}}
+                                                {{--                                                        <button class="btn btn-primary btn-sm mb-2 cancel-order-btn"--}}
+                                                {{--                                                            data-bs-toggle="modal" data-bs-target="#cancelOrderModal"--}}
+                                                {{--                                                            data-id="{{ $order->id }}">--}}
+                                                {{--                                                            Thanh toán--}}
+                                                {{--                                                        </button>--}}
+                                                {{--                                                    @endif--}}
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -215,7 +221,8 @@
     </section>
 
     <!-- Cancel Order Modal -->
-    <div class="modal fade" id="cancelOrderModal" tabindex="-1" aria-labelledby="cancelOrderModalLabel" aria-hidden="true">
+    <div class="modal fade" id="cancelOrderModal" tabindex="-1" aria-labelledby="cancelOrderModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -228,12 +235,40 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Đóng</button>
                     <form action="{{ route('customer-order-cancel', ['id' => ':id']) }}" method="POST"
-                        id="cancelOrderForm">
+                          id="cancelOrderForm">
                         @method('PUT')
                         @csrf
                         <button type="submit" class="btn btn-danger m-1">Hủy Đơn Hàng</button>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Phone Modal -->
+    <div class="modal fade" id="updatePhoneModal" tabindex="-1" aria-labelledby="updatePhoneModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updatePhoneModalLabel">Cập Nhật Số Điện Thoại</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('customer-update-phone') }}" method="POST" id="updatePhoneForm">
+                    @method('PUT')
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Số điện thoại mới</label>
+                            <input type="tel" class="form-control" id="phone" name="phone"
+                                   value="{{ Auth::user()->phone }}" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -389,12 +424,12 @@
     }
 </style>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const cancelOrderModal = new bootstrap.Modal(document.getElementById('cancelOrderModal'))
         const cancelOrderButtons = document.querySelectorAll('.cancel-order-btn')
 
         cancelOrderButtons.forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const orderId = this.getAttribute('data-id')
                 const actionUrl = `/account/${orderId}`
                 const form = document.getElementById('cancelOrderForm')
@@ -404,16 +439,16 @@
         });
 
         const cancelOrderForm = document.getElementById('cancelOrderForm')
-        cancelOrderForm.addEventListener('submit', function(event) {
+        cancelOrderForm.addEventListener('submit', function (event) {
             event.preventDefault()
             const actionUrl = this.getAttribute('action')
             fetch(actionUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    }
-                })
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
                 .then(() => {
                     // Cập nhật trạng thái đơn hàng trên giao diện
                     const orderId = cancelOrderForm.getAttribute('data-id')

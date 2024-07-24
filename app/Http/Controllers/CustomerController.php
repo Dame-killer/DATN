@@ -40,7 +40,7 @@ class CustomerController extends Controller
         ]);
 
         if (Auth::attempt($request->only('email', 'password'))) {
-            $user = Auth::user();
+//            $user = Auth::user();
             return redirect('/customer/home')->with('success', 'Đăng nhập thành công');
         }
 
@@ -52,5 +52,18 @@ class CustomerController extends Controller
     {
         Auth::logout();
         return redirect('/customer/home')->with('success', 'Đăng xuất thành công');
+    }
+
+    public function updatePhone(Request $request)
+    {
+        $request->validate([
+            'phone' => 'required|numeric',
+        ]);
+
+        $user = Auth::user();
+        $user->phone = $request->input('phone');
+        $user->save();
+
+        return redirect()->back()->with('success', 'Số điện thoại đã được cập nhật thành công!');
     }
 }
