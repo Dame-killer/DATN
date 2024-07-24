@@ -7,10 +7,12 @@
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Quản Lý Hình Ảnh</h6>
-                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#addImageProductModal">
-                            Thêm
-                        </button>
+                        @if(Auth()->user()->role == 1)
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#addImageProductModal">
+                                Thêm
+                            </button>
+                        @endif
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -36,7 +38,11 @@
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Màu Sắc
                                     </th>
-                                    <th class="text-secondary opacity-7"></th>
+                                    @if(Auth()->user()->role == 1)
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Thao tác
+                                        </th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -68,22 +74,24 @@
                                                 style="width: 20px; height: 20px; background-color: {{ $imageProduct->productDetail->color->code }};">
                                             </div>
                                         </td>
-                                        <td class="align-middle">
-                                            <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
-                                                    data-bs-target="#editImageProductModal"
-                                                    data-id="{{ $imageProduct->id }}"
-                                                    data-url="{{ asset('storage/' . $imageProduct->url) }}"
-                                                    data-product-detail="{{ $imageProduct->product_detail_id }}"
-                                                    data-product-id="{{ $imageProduct->productDetail->product_id }}"
-                                                    data-color-id="{{ $imageProduct->productDetail->color_id }}">
-                                                Cập Nhật
-                                            </button>
-                                            <button type="button" class="btn btn-danger btn-sm mb-2"
-                                                    data-bs-toggle="modal" data-bs-target="#deleteImageProductModal"
-                                                    data-id="{{ $imageProduct->id }}">
-                                                Xóa
-                                            </button>
-                                        </td>
+                                        @if(Auth()->user()->role == 1)
+                                            <td class="align-middle">
+                                                <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
+                                                        data-bs-target="#editImageProductModal"
+                                                        data-id="{{ $imageProduct->id }}"
+                                                        data-url="{{ asset('storage/' . $imageProduct->url) }}"
+                                                        data-product-detail="{{ $imageProduct->product_detail_id }}"
+                                                        data-product-id="{{ $imageProduct->productDetail->product_id }}"
+                                                        data-color-id="{{ $imageProduct->productDetail->color_id }}">
+                                                    Cập Nhật
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm mb-2"
+                                                        data-bs-toggle="modal" data-bs-target="#deleteImageProductModal"
+                                                        data-id="{{ $imageProduct->id }}">
+                                                    Xóa
+                                                </button>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                                 </tbody>

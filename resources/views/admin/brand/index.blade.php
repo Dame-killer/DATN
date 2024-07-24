@@ -8,10 +8,12 @@
                     <div class="card-header pb-0">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <h6>Quản Lý Thương Hiệu</h6>
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#addBrandModal">
-                                Thêm
-                            </button>
+                            @if(Auth()->user()->role == 1)
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#addBrandModal">
+                                    Thêm
+                                </button>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
@@ -26,9 +28,12 @@
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Tên Thương Hiệu
                                     </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Thao
-                                        tác
-                                    </th>
+                                    @if(Auth()->user()->role == 1)
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Thao
+                                            tác
+                                        </th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -37,7 +42,7 @@
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">
+                                                    <h6 class="mb-0 text-sm ms-2">
                                                         {{ ($brands->currentPage() - 1) * $brands->perPage() + $loop->iteration }}
                                                     </h6>
                                                 </div>
@@ -46,18 +51,20 @@
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $brand->name }}</p>
                                         </td>
-                                        <td class="align-middle">
-                                            <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
-                                                    data-bs-target="#editBrandModal" data-id="{{ $brand->id }}"
-                                                    data-name="{{ $brand->name }}">
-                                                Cập Nhật
-                                            </button>
-                                            <button type="button" class="btn btn-danger btn-sm mb-2"
-                                                    data-bs-toggle="modal" data-bs-target="#deleteBrandModal"
-                                                    data-id="{{ $brand->id }}">
-                                                Xóa
-                                            </button>
-                                        </td>
+                                        @if(Auth()->user()->role == 1)
+                                            <td class="align-middle">
+                                                <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
+                                                        data-bs-target="#editBrandModal" data-id="{{ $brand->id }}"
+                                                        data-name="{{ $brand->name }}">
+                                                    Cập Nhật
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm mb-2"
+                                                        data-bs-toggle="modal" data-bs-target="#deleteBrandModal"
+                                                        data-id="{{ $brand->id }}">
+                                                    Xóa
+                                                </button>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -255,7 +262,7 @@
 
             document.getElementById('deleteBrandForm').addEventListener('submit', function (event) {
                 event.preventDefault()
-                const formData = { id: document.getElementById('deleteBrandId').value };
+                const formData = {id: document.getElementById('deleteBrandId').value};
                 sendAjaxRequest(this.action, 'DELETE', formData)
                     .then(data => {
                         if (data.success) {

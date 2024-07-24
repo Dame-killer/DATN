@@ -7,10 +7,12 @@
                 <div class="card mb-4">
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Quản Lý Nhân Viên</h6>
-                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#addEmployeeModal">
-                            Thêm
-                        </button>
+                        @if(Auth()->user()->role == 1)
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#addEmployeeModal">
+                                Thêm
+                            </button>
+                        @endif
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -36,7 +38,12 @@
                                         class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Quyền
                                     </th>
-                                    <th class="text-secondary opacity-7"></th>
+                                    @if(Auth()->user()->role == 1)
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Thao
+                                            tác
+                                        </th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -45,7 +52,7 @@
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
+                                                    <h6 class="mb-0 text-sm ms-2">{{ $loop->iteration }}</h6>
                                                 </div>
                                             </div>
                                         </td>
@@ -67,19 +74,21 @@
                                                 @endif
                                             </p>
                                         </td>
-                                        <td class="align-middle">
-                                            <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
-                                                    data-bs-target="#editEmployeeModal" data-id="{{ $user->id }}"
-                                                    data-name="{{ $user->name }}" data-email="{{ $user->email }}"
-                                                    data-phone="{{ $user->phone }}" data-role="{{ $user->role }}">
-                                                Cập Nhật
-                                            </button>
-                                            <button type="button" class="btn btn-danger btn-sm mb-2"
-                                                    data-bs-toggle="modal" data-bs-target="#deleteEmployeeModal"
-                                                    data-id="{{ $user->id }}">
-                                                Xóa
-                                            </button>
-                                        </td>
+                                        @if(Auth()->user()->role == 1)
+                                            <td class="align-middle">
+                                                <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
+                                                        data-bs-target="#editEmployeeModal" data-id="{{ $user->id }}"
+                                                        data-name="{{ $user->name }}" data-email="{{ $user->email }}"
+                                                        data-phone="{{ $user->phone }}" data-role="{{ $user->role }}">
+                                                    Cập Nhật
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm mb-2"
+                                                        data-bs-toggle="modal" data-bs-target="#deleteEmployeeModal"
+                                                        data-id="{{ $user->id }}">
+                                                    Xóa
+                                                </button>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -332,7 +341,7 @@
 
             document.getElementById('deleteEmployeeForm').addEventListener('submit', function (event) {
                 event.preventDefault()
-                const formData = { id: document.getElementById('deleteEmployeeId').value };
+                const formData = {id: document.getElementById('deleteEmployeeId').value};
                 sendAjaxRequest(this.action, 'DELETE', formData)
                     .then(data => {
                         if (data.success) {
