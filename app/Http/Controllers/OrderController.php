@@ -19,14 +19,16 @@ class OrderController extends Controller
         $query = Order::query();
 
         if ($request->has('search')) {
-            $query->where('code', 'like', '%' . $request->search . '%');
+            $query->where('code', 'like', '%' . $request->search . '%')
+                ->orWhere('receiver', 'like', '%' . $request->search . '%');;
         }
 
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
 
-        $query->orderBy('id', 'desc');
+        $query->orderBy('status', 'asc')
+            ->orderBy('order_date', 'desc');
         $orders = $query->paginate(5);
 
         return view('admin.order.index')->with(compact('orders'));
@@ -34,8 +36,8 @@ class OrderController extends Controller
 
     public function indexCustomer()
     {
-
-        $orders = Order::with('paymentMethod')->where('user_id', auth()->user()->id)->get();
+        $orders = Order::with('paymentMethod')->where('user_id', auth()->user()->id)
+            ->orderBy('order_date', 'desc')->get();
 
         foreach ($orders as $order) {
             $createdDate = Carbon::parse($order->order_date);
