@@ -15,12 +15,12 @@
                                    placeholder="Nhập Từ Khóa" aria-label="Tìm kiếm" value="{{ request('search') }}">
                             <select class="form-control form-control-sm custom-select m-1" name="status">
                                 <option value="">Tất cả trạng thái</option>
-                                <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>Chưa Duyệt</option>
-                                <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Đã Duyệt</option>
-                                <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>Đang Giao Hàng
+                                <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>Chưa Duyệt</option>
+                                <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Đã Duyệt</option>
+                                <option value="2" {{ request('status') === '2' ? 'selected' : '' }}>Đang Giao Hàng
                                 </option>
-                                <option value="3" {{ request('status') == '3' ? 'selected' : '' }}>Hoàn Thành</option>
-                                <option value="4" {{ request('status') == '4' ? 'selected' : '' }}>Hủy</option>
+                                <option value="3" {{ request('status') === '3' ? 'selected' : '' }}>Hoàn Thành</option>
+                                <option value="4" {{ request('status') === '4' ? 'selected' : '' }}>Hủy</option>
                             </select>
                             <button class="btn btn-outline-success btn-sm custom-button m-1" type="submit">
                                 Tìm Kiếm

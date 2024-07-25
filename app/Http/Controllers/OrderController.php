@@ -18,13 +18,19 @@ class OrderController extends Controller
     {
         $query = Order::query();
 
+        // Lọc theo từ khóa tìm kiếm
         if ($request->has('search')) {
-            $query->where('code', 'like', '%' . $request->search . '%')
-                ->orWhere('receiver', 'like', '%' . $request->search . '%');;
+            $searchTerm = $request->search;
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('code', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('receiver', 'like', '%' . $searchTerm . '%');
+            });
         }
 
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
+        // Lọc theo trạng thái
+        if ($request->filled('status') && $request->status !== '') {
+            $status = $request->status;
+            $query->where('status', $status);
         }
 
         $query->orderBy('status', 'asc')
