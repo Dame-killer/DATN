@@ -152,6 +152,7 @@
                                                class="btn btn-info btn-sm mb-2">
                                                 Chi Tiết
                                             </a>
+                                            @if ($order->status < 3)
                                             <button class="btn btn-warning btn-sm mb-2 approve-order-btn"
                                                     data-id="{{ $order->id }}" data-status="{{ $order->status }}"
                                                     data-payment-method-id="{{ $order->payment_method_id }}">
@@ -161,6 +162,7 @@
                                                     Cập Nhật
                                                 @endif
                                             </button>
+                                            @endif
                                             @if ($order->status < 2)
                                                 <button class="btn btn-danger btn-sm mb-2 cancel-order-btn"
                                                         data-bs-toggle="modal" data-bs-target="#cancelOrderModal"
