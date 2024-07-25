@@ -375,14 +375,6 @@ class OrderController extends Controller
         //
     }
 
-    public function quickApprove(Request $request)
-    {
-        // Cập nhật tất cả các đơn hàng có status bằng 0 lên 1
-        Order::where('status', 0)->update(['status' => 1]);
-
-        return response()->json(['success' => true]);
-    }
-
     public function approveOrder(Request $request, $id)
     {
         $order = Order::findOrFail($id);

@@ -49,7 +49,6 @@ Route::middleware('auth', 'web', 'role:1,2')->group(function () {
     Route::get('/export-revenue-report', [HomeController::class, 'exportRevenueReport'])->name('export.revenue.report');
     Route::get('/admin/order', [OrderController::class, 'index'])->name('admin-order');
     Route::get('/admin/order/{order_detail}', [OrderDetailController::class, 'show'])->name('admin-order-detail');
-    Route::post('/admin/order/quick-approve', [OrderController::class, 'quickApprove'])->name('admin-orders-quick-approve');
     Route::post('/admin/order/approve/{id}', [OrderController::class, 'approveOrder'])->name('admin-orders-approve');
     Route::get('/admin/order/{order}/invoice', [OrderController::class, 'printInvoice'])->name('admin-order-invoice');
     Route::post('/admin/order/cancel/{id}', [OrderController::class, 'cancelOrder'])->name('admin-order-cancel');

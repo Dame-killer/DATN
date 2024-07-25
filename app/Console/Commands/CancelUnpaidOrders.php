@@ -39,6 +39,7 @@ class CancelUnpaidOrders extends Command
 
         foreach ($orders as $order) {
             $order->status = 4; // 4 là trạng thái hủy đơn
+            $order->updated_date = Carbon::now();
             $order->save();
         }
 

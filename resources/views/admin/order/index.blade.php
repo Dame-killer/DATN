@@ -242,36 +242,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('quickApproveButton').addEventListener('click', function () {
-                fetch('{{ route('admin-orders-quick-approve') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({})
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            const rows = document.querySelectorAll('tbody tr')
-                            rows.forEach(row => {
-                                const statusCell = row.querySelector('td[id^="order-status-"]')
-                                const statusText = statusCell.textContent.trim()
-                                if (statusText === 'Chưa Duyệt') {
-                                    statusCell.innerHTML =
-                                        `<p class="text-xs font-weight-bold mb-0">Đã Duyệt</p>`
-                                }
-                            })
-                        } else {
-                            alert('Có Lỗi Xảy Ra!')
-                        }
-                    })
-                    .catch(error => console.error('Error:', error))
-            })
-        })
-
-        document.addEventListener('DOMContentLoaded', function () {
             const approveButtons = document.querySelectorAll('.approve-order-btn')
             const trackingCodeModal = new bootstrap.Modal(document.getElementById('trackingCodeModal'))
             const saveTrackingCodeBtn = document.getElementById('saveTrackingCodeBtn')
