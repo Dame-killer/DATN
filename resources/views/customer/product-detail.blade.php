@@ -206,6 +206,7 @@
                     button.classList.add('selected');
                     selectedSize = button.getAttribute('data-size');
                     document.getElementById('selected_size').value = selectedSize;
+                    updateQuantity();
                 });
             });
 
@@ -216,6 +217,7 @@
                     selectedColor = button;
                     document.getElementById('selected_color').value = selectedColor.getAttribute(
                         'data-color-id');
+                    updateQuantity();
                     updateProductDetails();
                 });
             });
