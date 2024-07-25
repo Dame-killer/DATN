@@ -16,60 +16,70 @@ class ProductController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-{
-    $query = Product::query();
-    $categories = Category::all();
-    $brands = Brand::all();
+    {
+        $query = Product::query();
+        $categories = Category::all();
+        $brands = Brand::all();
 
-    if ($request->has('search')) {
-        $search = $request->search;
-        $query->where(function($q) use ($search) {
-            $q->where('name', 'like', '%' . $search . '%')
-              ->orWhere('code', 'like', '%' . $search . '%');
-        });
-    }
-
-    $query->orderBy('id', 'desc');
-    $products = $query->paginate(5);
-
-    return view('admin.product.index')->with(compact('products', 'categories', 'brands'));
-}
-
-
-public function indexCustomer(Request $request)
-{
-    $query = Product::query();
-    $categories = Category::all();
-    $brands = Brand::all();
-
-    if ($request->has('search')) {
-        $search = $request->search;
-        $query->where(function($q) use ($search) {
-            $q->where('name', 'like', '%' . $search . '%')
-              ->orWhere('code', 'like', '%' . $search . '%');
-        });
-    }
-
-    if ($request->has('category') && !empty($request->category)) {
-        $query->where('category_id', $request->category);
-    }
-
-    if ($request->has('brand') && !empty($request->brand)) {
-        $query->where('brand_id', $request->brand);
-    }
-
-    if ($request->has('sort')) {
-        if ($request->sort == 'asc' || $request->sort == 'desc') {
-            $query->orderBy('price', $request->sort);
-        } elseif ($request->sort == 'newest') {
-            $query->orderBy('id', 'desc');
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('code', 'like', '%' . $search . '%');
+            });
         }
+
+        $query->orderBy('id', 'desc');
+        $products = $query->paginate(5);
+
+        return view('admin.product.index')->with(compact('products', 'categories', 'brands'));
     }
 
-    $products = $query->paginate(8);
 
-    return view('customer.product')->with(compact('products', 'categories', 'brands'));
-}
+    public function indexCustomer(Request $request)
+    {
+        $query = Product::query();
+        $categories = Category::all();
+        $brands = Brand::all();
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('code', 'like', '%' . $search . '%');
+            });
+        }
+
+        if ($request->has('category') && !empty($request->category)) {
+            $categoryIds = $request->category;
+
+            // Retrieve child category IDs if any
+            $allCategoryIds = [];
+            foreach ($categoryIds as $categoryId) {
+                $allCategoryIds[] = $categoryId;
+                $childCategories = Category::where('parent_id', $categoryId)->pluck('id')->toArray();
+                $allCategoryIds = array_merge($allCategoryIds, $childCategories);
+            }
+
+            $query->whereIn('category_id', $allCategoryIds);
+        }
+
+        if ($request->has('brand') && !empty($request->brand)) {
+            $query->where('brand_id', $request->brand);
+        }
+
+        if ($request->has('sort')) {
+            if ($request->sort == 'asc' || $request->sort == 'desc') {
+                $query->orderBy('price', $request->sort);
+            } elseif ($request->sort == 'newest') {
+                $query->orderBy('id', 'desc');
+            }
+        }
+
+        $products = $query->paginate(8);
+
+        return view('customer.product')->with(compact('products', 'categories', 'brands'));
+    }
 
     /**
      * Show the form for creating a new resource.

@@ -30,14 +30,23 @@
                     <form method="GET" action="{{ route('customer-product') }}">
                         <h5 class="m-text15 p-b-10">Danh mục</h5>
                         <div class="d-flex flex-column">
-                            @foreach ($categories as $category)
+                            @foreach ($categories->where('parent_id', null) as $parentCategory)
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="category{{ $category->id }}"
-                                        name="category[]" value="{{ $category->id }}"
-                                        {{ in_array($category->id, request()->get('category', [])) ? 'checked' : '' }}>
+                                    <input type="checkbox" class="form-check-input" id="category{{ $parentCategory->id }}"
+                                           name="category[]" value="{{ $parentCategory->id }}"
+                                        {{ in_array($parentCategory->id, request()->get('category', [])) ? 'checked' : '' }}>
                                     <label class="form-check-label"
-                                        for="category{{ $category->id }}">{{ $category->name }}</label>
+                                           for="category{{ $parentCategory->id }}">{{ $parentCategory->name }}</label>
                                 </div>
+                                @foreach ($categories->where('parent_id', $parentCategory->id) as $childCategory)
+                                    <div class="form-check ml-3">
+                                        <input type="checkbox" class="form-check-input" id="category{{ $childCategory->id }}"
+                                               name="category[]" value="{{ $childCategory->id }}"
+                                            {{ in_array($childCategory->id, request()->get('category', [])) ? 'checked' : '' }}>
+                                        <label class="form-check-label"
+                                               for="category{{ $childCategory->id }}">{{ $childCategory->name }}</label>
+                                    </div>
+                                @endforeach
                             @endforeach
                         </div>
 
@@ -123,7 +132,7 @@
                         </div>
                     @empty
                         <div class="col-12">
-                            <p class="text-center">Không có sản phẩm nào phù hợp với tiêu chí tìm kiếm của bạn.</p>
+                            <p class="text-center">Không có sản phẩm nào phù hợp với tiêu chí tìm kiếm của bạn!</p>
                         </div>
                     @endforelse
                 </div>
