@@ -40,11 +40,18 @@ class CustomerController extends Controller
         ]);
 
         if (Auth::attempt($request->only('email', 'password'))) {
-//            $user = Auth::user();
-            return redirect('/customer/home')->with('success', 'Đăng nhập thành công');
+            $user = Auth::user();
+
+            // Kiểm tra vai trò của người dùng
+            if ($user->role === 0) {
+                return redirect('/customer/home')->with('success', 'Đăng nhập thành công!');
+            } else {
+                Auth::logout();
+                return redirect()->back()->withErrors(['email' => 'Tài khoản hoặc mật khẩu không đúng!']);
+            }
         }
 
-        return redirect()->back()->withErrors(['email' => 'Thông tin đăng nhập không chính xác']);
+        return redirect()->back()->withErrors(['email' => 'Thông tin đăng nhập không chính xác!']);
     }
 
     // Phương thức xử lý đăng xuất
