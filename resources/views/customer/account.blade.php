@@ -131,10 +131,10 @@
                                                 <p class="text-xs font-weight-bold mb-0">
                                                     @if ($order->days_left > 0 && $order->payment_status == 0)
                                                         Còn {{ $order->days_left }} ngày
-                                                    @elseif($order->status < 2)
-                                                        Đã Hủy
-                                                    @else
+                                                    @elseif($order->payment_status == 1)
                                                         N/A
+                                                    @else
+                                                        Đã Hủy
                                                     @endif
                                                 </p>
                                             </td>
@@ -200,13 +200,14 @@
                                                         Hủy
                                                     </button>
                                                 @endif
-                                                {{--                                                    @if ($order->payment_status == 0 && $order->payment_method_id == 2)--}}
-                                                {{--                                                        <button class="btn btn-primary btn-sm mb-2 cancel-order-btn"--}}
-                                                {{--                                                            data-bs-toggle="modal" data-bs-target="#cancelOrderModal"--}}
-                                                {{--                                                            data-id="{{ $order->id }}">--}}
-                                                {{--                                                            Thanh toán--}}
-                                                {{--                                                        </button>--}}
-                                                {{--                                                    @endif--}}
+                                                @if ($order->payment_status == 0 && $order->status < 2)
+                                                    <form action="{{ route('customer-order-pay', $order->id) }}" method="POST" style="display: inline;">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-primary btn-sm mb-2">
+                                                            Thanh toán
+                                                        </button>
+                                                    </form>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

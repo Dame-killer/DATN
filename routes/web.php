@@ -107,5 +107,6 @@ Route::middleware(['auth', 'web', 'role:0'])->group(function () {
     Route::get('/account',  [OrderController::class, 'indexCustomer'])->name('customer-account');
     Route::get('/account/{order_detail}', [OrderDetailController::class, 'showCustomer'])->name('customer-order-detail');
     Route::post('/account/{id}', [OrderController::class, 'cancelOrder'])->name('customer-order-cancel');
+    Route::post('/pay/{orderId}', [OrderController::class, 'pay'])->name('customer-order-pay');
     Route::put('/update-phone', [CustomerController::class, 'updatePhone'])->name('customer-update-phone');
 });

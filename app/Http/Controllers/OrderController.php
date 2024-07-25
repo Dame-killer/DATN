@@ -175,7 +175,7 @@ class OrderController extends Controller
 
                 // Kiểm tra nếu số lượng sản phẩm đủ để đặt hàng
                 if ($productDetail->quantity < $item['quantity']) {
-                    throw new \Exception('Số lượng sản phẩm không đủ!');
+                    return redirect()->back()->with('error', 'Số lượng sản phẩm không đủ!');
                 }
 
                 OrderDetail::create([
@@ -207,7 +207,8 @@ class OrderController extends Controller
             // Kiểm tra nếu phương thức thanh toán là VNPay
             if ($request->input('payment_method_id') == '3') {
                 // Gọi hàm tạo thanh toán VNPay
-                return $this->createPayment($order, $totalPrice);
+                $paymentUrl = $this->createPayment($order, $totalPrice);
+                return redirect($paymentUrl);
             }
 
             return redirect()->route('customer-home')->with('success', 'Đơn hàng đã được tạo thành công.');
@@ -216,6 +217,26 @@ class OrderController extends Controller
             DB::rollback();
             return redirect()->back()->with('error', 'Đã xảy ra lỗi khi tạo đơn hàng: ' . $e->getMessage());
         }
+    }
+
+    public function pay($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+
+        $order_details = OrderDetail::with('productDetail', 'productDetail.product', 'productDetail.size', 'productDetail.color')->where('order_id', $orderId)->get();
+
+        // Tính tổng giá từng sản phẩm và tổng giá tất cả các sản phẩm
+        $totalPrice = 0;
+        foreach ($order_details as $order_detail) {
+            $order_detail->totalPricePerProduct = $order_detail->unit_price * $order_detail->amount;
+            $totalPrice += $order_detail->totalPricePerProduct;
+        }
+
+        // Gọi hàm tạo thanh toán VNPay
+        $paymentUrl = $this->createPayment($order, $totalPrice);
+
+        // Redirect to the payment URL
+        return redirect($paymentUrl);
     }
 
     public function createPayment($order, $totalPrice)
@@ -271,16 +292,7 @@ class OrderController extends Controller
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
 
-        if (isset($_POST['redirect'])) {
-            return redirect($vnp_Url);
-        } else {
-            // Xử lý trả về JSON khi không có yêu cầu redirect
-            return response()->json([
-                'code' => '00',
-                'message' => 'success',
-                'data' => $vnp_Url,
-            ]);
-        }
+        return $vnp_Url;
     }
 
     public function vnpayReturn(Request $request)
@@ -330,7 +342,6 @@ class OrderController extends Controller
             return redirect()->route('checkout')->with('error', 'Thanh toán thất bại!');
         }
     }
-
 
     /**
      * Display the specified resource.
