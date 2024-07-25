@@ -199,6 +199,11 @@ class OrderDetailController extends Controller
         $size = $product_detail->size;
         $color = $product_detail->color;
 
+        // Kiểm tra số lượng sản phẩm chi tiết
+        if ($product_detail->quantity <= 0) {
+            return redirect()->back()->with('error', 'Sản phẩm đã hết hàng!');
+        }
+
         // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
         if (isset($cart[$product_detail->id])) {
             // Nếu đã tồn tại, tăng số lượng lên 1
@@ -242,6 +247,11 @@ class OrderDetailController extends Controller
             })->whereHas('color', function ($query) use ($selectedColor) {
                 $query->where('id', $selectedColor);
             })->firstOrFail();
+
+        // Kiểm tra số lượng sản phẩm chi tiết
+        if ($product_detail->quantity <= 0) {
+            return redirect()->back()->with('error', 'Sản phẩm đã hết hàng!');
+        }
 
         $cart = session()->get('cart', []);
 
