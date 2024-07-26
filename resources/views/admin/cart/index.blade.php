@@ -86,7 +86,7 @@
                                                     </button>
                                                     <input type="number"
                                                         class="quantity-input text-xs font-weight-bold mb-0"
-                                                        value="{{ $order_detail->amount }}">
+                                                        value="{{ $order_detail->amount }}" readonly>
                                                     <button class="btn btn-sm btn-primary update-quantity m-1"
                                                         data-id="{{ $order_detail->product_detail->id }}"
                                                         data-action="increase">+

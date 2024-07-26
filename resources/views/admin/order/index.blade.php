@@ -59,9 +59,9 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Mã Vận Đơn
                                     </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Ngày Cập Nhật
-                                    </th>
+{{--                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">--}}
+{{--                                        Ngày Cập Nhật--}}
+{{--                                    </th>--}}
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Trạng Thái Thanh Toán
                                     </th>
@@ -111,9 +111,9 @@
                                                id="tracking-code-{{ $order->id }}">{{ $order->tracking_code ?? 'N/A' }}
                                             </p>
                                         </td>
-                                        <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $order->updated_date ?? 'N/A' }}</p>
-                                        </td>
+{{--                                        <td>--}}
+{{--                                            <p class="text-xs font-weight-bold mb-0">{{ $order->updated_date ?? 'N/A' }}</p>--}}
+{{--                                        </td>--}}
                                         <td class="align-middle text-center">
                                             @switch($order->payment_status)
                                                 @case(0)
