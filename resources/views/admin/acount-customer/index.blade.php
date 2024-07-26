@@ -94,7 +94,7 @@
                         <div class="mb-3">
                             <label for="phone" class="form-label">Số Điện Thoại</label>
                             <input type="tel" class="form-control" id="phone" name="phone"
-                                   placeholder="Nhập Số Điện Thoại" maxlength="11" required>
+                                   placeholder="Nhập Số Điện Thoại" maxlength="10" required>
                         </div>
                         <input type="hidden" id="role" name="role" value="0">
                         <div class="modal-footer">

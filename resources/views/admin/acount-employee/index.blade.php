@@ -130,7 +130,7 @@
                         <div class="mb-3">
                             <label for="phone" class="form-label">Số Điện Thoại</label>
                             <input type="tel" class="form-control" id="phone" name="phone"
-                                   placeholder="Nhập Số Điện Thoại" maxlength="11" required>
+                                   placeholder="Nhập Số Điện Thoại" maxlength="10" required>
                         </div>
                         <div class="mb-3">
                             <label for="role" class="form-label">Quyền</label>
@@ -177,7 +177,7 @@
                         <div class="mb-3">
                             <label for="editEmployeePhone" class="form-label">Số Điện Thoại</label>
                             <input type="tel" class="form-control" id="editEmployeePhone" name="phone"
-                                   placeholder="Nhập Số Điện Thoại" maxlength="11" required>
+                                   placeholder="Nhập Số Điện Thoại" maxlength="10" required>
                         </div>
                         <div class="mb-3">
                             <label for="editEmployeeRole" class="form-label">Quyền</label>
