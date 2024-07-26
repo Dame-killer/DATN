@@ -71,7 +71,7 @@
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $imageProduct->productDetail->color->name }}</p>
                                             <div
-                                                style="width: 20px; height: 20px; background-color: {{ $imageProduct->productDetail->color->code }};">
+                                                style="width: 20px; height: 20px; background-color: {{ $imageProduct->productDetail->color->code }}; border: 1px solid #000;">
                                             </div>
                                         </td>
                                         @if(Auth()->user()->role == 1)
