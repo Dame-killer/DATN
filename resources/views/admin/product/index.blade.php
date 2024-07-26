@@ -14,7 +14,7 @@
                     </div>
                     <div class="search-container">
                         <form class="d-flex align-items-center search-bar" method="GET"
-                              action="{{ route('admin-order') }}">
+                              action="{{ route('admin-product') }}">
                             <input class="form-control form-control-sm custom-input" type="search" name="search"
                                    placeholder="Nhập Từ Khóa" aria-label="Tìm kiếm" value="{{ request('search') }}">
                             <button class="btn btn-outline-success btn-sm custom-button m-1" type="submit">
