@@ -130,7 +130,7 @@
                         <div class="mb-3">
                             <label for="phone" class="form-label">Số Điện Thoại</label>
                             <input type="tel" class="form-control" id="phone" name="phone"
-                                   placeholder="Nhập Số Điện Thoại" required>
+                                   placeholder="Nhập Số Điện Thoại" maxlength="11" required>
                         </div>
                         <div class="mb-3">
                             <label for="role" class="form-label">Quyền</label>
@@ -177,7 +177,7 @@
                         <div class="mb-3">
                             <label for="editEmployeePhone" class="form-label">Số Điện Thoại</label>
                             <input type="tel" class="form-control" id="editEmployeePhone" name="phone"
-                                   placeholder="Nhập Số Điện Thoại" required>
+                                   placeholder="Nhập Số Điện Thoại" maxlength="11" required>
                         </div>
                         <div class="mb-3">
                             <label for="editEmployeeRole" class="form-label">Quyền</label>
@@ -354,6 +354,14 @@
                         console.error('Lỗi khi xóa người dùng: ', error.message)
                         setFlashMessage('Xóa người dùng thất bại!', 'error')
                     })
+            })
+
+            document.getElementById('phone').addEventListener('input', function (event) {
+                this.value = this.value.replace(/[^0-9]/g, '')
+            })
+
+            document.getElementById('editEmployeePhone').addEventListener('input', function (event) {
+                this.value = this.value.replace(/[^0-9]/g, '')
             })
         })
     </script>

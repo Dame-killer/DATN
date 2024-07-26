@@ -168,7 +168,7 @@
                         <div class="mb-3">
                             <label for="phone" class="form-label">Số Điện Thoại</label>
                             <input type="tel" class="form-control" id="phone" name="phone"
-                                placeholder="Nhập Số Điện Thoại" required>
+                                placeholder="Nhập Số Điện Thoại" maxlength="11" required>
                         </div>
                         <div class="mb-3">
                             <label for="address" class="form-label">Địa Chỉ</label>
@@ -236,6 +236,10 @@
                     })
                     .catch(error => console.error('Error:', error))
             })
+        })
+
+        document.getElementById('phone').addEventListener('input', function (event) {
+            this.value = this.value.replace(/[^0-9]/g, '')
         })
     </script>
 @endsection
