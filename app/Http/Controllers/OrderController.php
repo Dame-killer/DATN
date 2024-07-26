@@ -100,6 +100,7 @@ class OrderController extends Controller
                 'phone' => $request->input('phone'),
                 'status' => 3,
                 'payment_status' => 1,
+                'updated_date' => now(),
                 'payment_method_id' => $request->input('payment_method_id'),
                 'user_id' => $request->input('user_id'),
             ]);
