@@ -22,15 +22,15 @@
                     <tbody class="align-middle">
                         @foreach ($order_details as $order_detail)
                             <tr>
-                                <td class="align-middle">
+                                <td>
                                     <img src="{{ $order_detail->product_detail->product->image }}"
                                         alt="{{ $order_detail->product_detail->product->name }}" class="img-fluid"
                                         style="width: 50px">
                                     {{ $order_detail->product_detail->product->name }}
-                                    / {{ $order_detail->product_detail->product->code }}/
+                                    {{ $order_detail->product_detail->product->code }}
                                     {{ $order_detail->product_detail->size->size_name }}
                                     - {{ $order_detail->product_detail->size->size_number }}
-                                    /{{ $order_detail->product_detail->color->name }}
+                                    {{ $order_detail->product_detail->color->name }}
                                 </td>
                                 <td class="align-middle ">
                                     <div class="quantity-column"

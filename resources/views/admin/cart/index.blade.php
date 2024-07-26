@@ -84,8 +84,7 @@
                                                         data-id="{{ $order_detail->product_detail->id }}"
                                                         data-action="decrease">-
                                                     </button>
-                                                    <input type="number"
-                                                        class="quantity-input text-xs font-weight-bold mb-0"
+                                                    <input type="number" class="quantity-input text-xs font-weight-bold"
                                                         value="{{ $order_detail->amount }}" readonly>
                                                     <button class="btn btn-sm btn-primary update-quantity m-1"
                                                         data-id="{{ $order_detail->product_detail->id }}"
@@ -238,7 +237,7 @@
             })
         })
 
-        document.getElementById('phone').addEventListener('input', function (event) {
+        document.getElementById('phone').addEventListener('input', function(event) {
             this.value = this.value.replace(/[^0-9]/g, '')
         })
     </script>

@@ -110,9 +110,7 @@
             </div>
         </nav>
         <div class="body flex-grow-1 px-3">
-            <div class="container-lg">
                 @yield('content')
-            </div>
         </div>
         {{-- @include('layouts.footer') --}}
     </div>

@@ -8,7 +8,7 @@
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Chi Tiết Sản Phẩm: {{ $products->code }} - {{ $products->name }}</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#addProductDetailModal" data-product-id="{{ $products->id }}">
+                            data-bs-target="#addProductDetailModal" data-product-id="{{ $products->id }}">
                             Thêm
                         </button>
                     </div>
@@ -16,79 +16,81 @@
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
                                 <thead>
-                                <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        STT
-                                    </th>
-                                    <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Kích Cỡ
-                                    </th>
-                                    <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Màu Sắc
-                                    </th>
-                                    <th
-                                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Số Lượng
-                                    </th>
-                                    <th class="text-secondary opacity-7"></th>
-                                </tr>
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            STT
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Kích Cỡ
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Màu Sắc
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Số Lượng
+                                        </th>
+                                        <th class="text-secondary opacity-7"></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @if($product_details)
-                                    @foreach ($product_details as $product_detail)
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm ms-2">{{ $loop->iteration }}</h6>
+                                    @if ($product_details)
+                                        @foreach ($product_details as $product_detail)
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex px-2 py-1">
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <h6 class="mb-0 text-sm ms-2">{{ $loop->iteration }}</h6>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $product_detail->size->size_name }}
-                                                    - {{ $product_detail->size->size_number }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $product_detail->color->name }}</p>
-                                                <div
-                                                    style="width: 20px; height: 20px; background-color: {{ $product_detail->color->code }}; border: 1px solid #000;">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $product_detail->quantity }}</p>
-                                            </td>
-                                            <td class="align-middle">
-                                                <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        {{ $product_detail->size->size_name }}
+                                                        - {{ $product_detail->size->size_number }}</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        {{ $product_detail->color->name }}</p>
+                                                    <div
+                                                        style="width: 20px; height: 20px; background-color: {{ $product_detail->color->code }}; border: 1px solid #000;">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ $product_detail->quantity }}
+                                                    </p>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
                                                         data-bs-target="#editProductDetailModal"
                                                         data-id="{{ $product_detail->id }}"
                                                         data-size-id="{{ $product_detail->size->id }}"
                                                         data-color-id="{{ $product_detail->color->id }}"
                                                         data-quantity="{{ $product_detail->quantity }}">
-                                                    Cập Nhật
-                                                </button>
-                                                <button type="button" class="btn btn-danger btn-sm mb-2"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#deleteProductDetailModal"
-                                                        data-id="{{ $product_detail->id }}">
-                                                    Xóa
-                                                </button>
-                                                <form action="{{ route('cart.add', $product_detail->id) }}"
-                                                      method="POST">
-                                                    @csrf
-                                                    <button class="btn btn-success btn-sm" type="submit">
-                                                        Thêm Vào Giỏ Hàng
+                                                        Cập Nhật
                                                     </button>
-                                                </form>
-                                            </td>
+                                                    <button type="button" class="btn btn-danger btn-sm mb-2"
+                                                        data-bs-toggle="modal" data-bs-target="#deleteProductDetailModal"
+                                                        data-id="{{ $product_detail->id }}">
+                                                        Xóa
+                                                    </button>
+                                                    <form action="{{ route('cart.add', $product_detail->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        <button class="btn btn-success btn-sm" type="submit">
+                                                            Thêm Vào Giỏ Hàng
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="5" class="text-center">Chưa Có Sản Phẩm Chi Tiết Nào!</td>
                                         </tr>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="5" class="text-center">Chưa Có Sản Phẩm Chi Tiết Nào!</td>
-                                    </tr>
-                                @endif
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -100,7 +102,7 @@
 
     <!-- Add Product Detail Modal -->
     <div class="modal fade" id="addProductDetailModal" tabindex="-1" aria-labelledby="addProductDetailModalLabel"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -133,7 +135,7 @@
                         <div class="mb-3">
                             <label for="quantity" class="form-label">Số Lượng</label>
                             <input type="number" class="form-control" id="quantity" name="quantity"
-                                   placeholder="Nhập Số Lượng" required>
+                                placeholder="Nhập Số Lượng" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -147,7 +149,7 @@
 
     <!-- Edit Product Detail Modal -->
     <div class="modal fade" id="editProductDetailModal" tabindex="-1" aria-labelledby="editProductDetailModalLabel"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -180,7 +182,7 @@
                         <div class="mb-3">
                             <label for="editProductDetailQuantity" class="form-label">Số Lượng</label>
                             <input type="number" class="form-control" id="editProductDetailQuantity" name="quantity"
-                                   placeholder="Nhập Số Lượng" required>
+                                placeholder="Nhập Số Lượng" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -194,7 +196,7 @@
 
     <!-- Delete Product Detail Modal -->
     <div class="modal fade" id="deleteProductDetailModal" tabindex="-1" aria-labelledby="deleteProductDetailModalLabel"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -218,7 +220,7 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             function setFlashMessage(message, type) {
                 fetch('{{ route('flash-message') }}', {
                     method: 'POST',
@@ -253,7 +255,7 @@
             }
 
             var addProductDetailModal = document.getElementById('addProductDetailModal')
-            addProductDetailModal.addEventListener('show.bs.modal', function (event) {
+            addProductDetailModal.addEventListener('show.bs.modal', function(event) {
                 var button = event.relatedTarget
                 var productId = button.getAttribute('data-product-id')
 
@@ -261,7 +263,7 @@
                 modalBodyInputProductId.value = productId
             })
 
-            document.getElementById('addProductDetailForm').addEventListener('submit', function (event) {
+            document.getElementById('addProductDetailForm').addEventListener('submit', function(event) {
                 event.preventDefault()
                 const formData = {
                     product_id: document.getElementById('product_id').value,
@@ -284,7 +286,7 @@
             })
 
             var editProductDetailModal = document.getElementById('editProductDetailModal')
-            editProductDetailModal.addEventListener('show.bs.modal', function (event) {
+            editProductDetailModal.addEventListener('show.bs.modal', function(event) {
                 var button = event.relatedTarget
                 var id = button.getAttribute('data-id')
                 var size_id = button.getAttribute('data-size-id')
@@ -296,7 +298,8 @@
                 var modalBodyInputId = editProductDetailModal.querySelector('#editProductDetailId')
                 var modalBodyInputSizeId = editProductDetailModal.querySelector('#editSizeId')
                 var modalBodyInputColorId = editProductDetailModal.querySelector('#editColorId')
-                var modalBodyInputQuantity = editProductDetailModal.querySelector('#editProductDetailQuantity')
+                var modalBodyInputQuantity = editProductDetailModal.querySelector(
+                    '#editProductDetailQuantity')
 
                 modalTitle.textContent = 'Cập Nhật Sản Phẩm Chi Tiết: '
                 modalBodyInputId.value = id
@@ -306,7 +309,7 @@
                 form.action = "{{ route('product_details.update', '') }}/" + id
             })
 
-            document.getElementById('editProductDetailForm').addEventListener('submit', function (event) {
+            document.getElementById('editProductDetailForm').addEventListener('submit', function(event) {
                 event.preventDefault()
                 const formData = {
                     id: document.getElementById('editProductDetailId').value,
@@ -329,7 +332,7 @@
             })
 
             var deleteProductDetailModal = document.getElementById('deleteProductDetailModal')
-            deleteProductDetailModal.addEventListener('show.bs.modal', function (event) {
+            deleteProductDetailModal.addEventListener('show.bs.modal', function(event) {
                 var button = event.relatedTarget
                 var id = button.getAttribute('data-id')
                 var form = document.getElementById('deleteProductDetailForm')
@@ -339,9 +342,11 @@
                 form.action = "{{ route('product_details.destroy', '') }}/" + id
             })
 
-            document.getElementById('deleteProductDetailForm').addEventListener('submit', function (event) {
+            document.getElementById('deleteProductDetailForm').addEventListener('submit', function(event) {
                 event.preventDefault()
-                const formData = { id: document.getElementById('deleteProductDetailId').value };
+                const formData = {
+                    id: document.getElementById('deleteProductDetailId').value
+                };
                 sendAjaxRequest(this.action, 'DELETE', formData)
                     .then(data => {
                         if (data.success) {

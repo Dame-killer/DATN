@@ -8,15 +8,15 @@
                     <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                         <h6>Quản Lý Sản Phẩm</h6>
                         <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#addProductModal">
+                            data-bs-target="#addProductModal">
                             Thêm
                         </button>
                     </div>
                     <div class="search-container">
                         <form class="d-flex align-items-center search-bar" method="GET"
-                              action="{{ route('admin-product') }}">
+                            action="{{ route('admin-product') }}">
                             <input class="form-control form-control-sm custom-input" type="search" name="search"
-                                   placeholder="Nhập Từ Khóa" aria-label="Tìm kiếm" value="{{ request('search') }}">
+                                placeholder="Nhập Từ Khóa" aria-label="Tìm kiếm" value="{{ request('search') }}">
                             <button class="btn btn-outline-success btn-sm custom-button m-1" type="submit">
                                 Tìm Kiếm
                             </button>
@@ -26,79 +26,85 @@
                         <div class="table-responsive p-0">
                             <table class="table align-items-center mb-0">
                                 <thead>
-                                <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        STT
-                                    </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Mã Sản Phẩm
-                                    </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Tên Sản Phẩm
-                                    </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Hình Ảnh
-                                    </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Giá
-                                    </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Mô Tả
-                                    </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            STT
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Mã Sản Phẩm
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Tên Sản Phẩm
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Hình Ảnh
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Giá
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Mô Tả
+                                        </th>
+                                        {{-- <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Danh Mục
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Thương Hiệu
-                                    </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                        Thao Tác
-                                    </th>
-                                </tr>
+                                    </th> --}}
+                                        <th
+                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            Thao Tác
+                                        </th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($products as $product)
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex px-2 py-1">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm ms-2">
-                                                        {{ ($products->currentPage() - 1) * $products->perPage() + $loop->iteration }}
-                                                    </h6>
+                                    @foreach ($products as $product)
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm ms-2">
+                                                            {{ ($products->currentPage() - 1) * $products->perPage() + $loop->iteration }}
+                                                        </h6>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $product->code }}</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-xs font-weight-bold mb-0">{{ $product->name }}</p>
-                                        </td>
-                                        <td>
-                                            <img src="{{ asset('storage/' . $product->image) }}"
-                                                 alt="{{ $product->name }}" class="img-fluid"
-                                                 style="width: 50px; height: 50px;">
-                                        </td>
-                                        <td>
-                                            <p class="text-xs font-weight-bold mb-0">
-                                                {{ number_format($product->price) }} đ
-                                            </p>
-                                        </td>
-                                        <td class="product-description" data-description="{{ $product->introduce }}">
-                                            <p class="text-xs font-weight-bold mb-0">{{ $product->introduce }}</p>
-                                        </td>
-                                        <td>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $product->code }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">{{ $product->name }}</p>
+                                            </td>
+                                            <td>
+                                                <img src="{{ asset('storage/' . $product->image) }}"
+                                                    alt="{{ $product->name }}" class="img-fluid"
+                                                    style="width: 50px; height: 50px;">
+                                            </td>
+                                            <td>
+                                                <p class="text-xs font-weight-bold mb-0">
+                                                    {{ number_format($product->price) }} đ
+                                                </p>
+                                            </td>
+                                            <td class="product-description" data-description="{{ $product->introduce }}">
+                                                <p class="text-xs font-weight-bold mb-0">{{ $product->introduce }}</p>
+                                            </td>
+                                            {{-- <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $product->category->name }}</p>
                                         </td>
                                         <td>
                                             <p class="text-xs font-weight-bold mb-0">{{ $product->brand->name }}</p>
-                                        </td>
-                                        <td class="align-middle">
-                                            <a href="{{ route('admin-product-detail', $product->id) }}"
-                                               class="btn btn-info btn-sm mb-2">
-                                                Chi Tiết
-                                            </a>
-                                            <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
+                                        </td> --}}
+                                            <td class="align-middle">
+                                                <a href="{{ route('admin-product-detail', $product->id) }}"
+                                                    class="btn btn-info btn-sm mb-2">
+                                                    Chi Tiết
+                                                </a>
+                                                <button class="btn btn-warning btn-sm mb-2" data-bs-toggle="modal"
                                                     data-bs-target="#editProductModal" data-id="{{ $product->id }}"
                                                     data-code="{{ $product->code }}" data-name="{{ $product->name }}"
                                                     data-image="{{ asset('storage/' . $product->image) }}"
@@ -106,16 +112,16 @@
                                                     data-introduce="{{ $product->introduce }}"
                                                     data-category="{{ $product->category->id }}"
                                                     data-brand="{{ $product->brand->id }}">
-                                                Cập Nhật
-                                            </button>
-                                            <button type="button" class="btn btn-danger btn-sm mb-2"
+                                                    Cập Nhật
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm mb-2"
                                                     data-bs-toggle="modal" data-bs-target="#deleteProductModal"
                                                     data-id="{{ $product->id }}">
-                                                Xóa
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                                    Xóa
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                             <div class="d-flex justify-content-center mt-3">
@@ -129,8 +135,7 @@
     </div>
 
     <!-- Add Product Modal -->
-    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel"
-         aria-hidden="true">
+    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -143,23 +148,22 @@
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên Sản Phẩm</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Nhập Tên Sản Phẩm" required>
+                                placeholder="Nhập Tên Sản Phẩm" required>
                         </div>
                         <div class="mb-3">
                             <label for="image" class="form-label">Hình Ảnh</label>
                             <img id="previewImage" src="#" alt="Hình Ảnh Xem Trước" class="img-fluid mb-2"
-                                 style="width: 50px; height: 50px; display: none;">
+                                style="width: 50px; height: 50px; display: none;">
                             <input type="file" class="form-control" id="image" name="image" required>
                         </div>
                         <div class="mb-3">
                             <label for="price" class="form-label">Giá</label>
                             <input type="number" class="form-control" id="price" name="price"
-                                   placeholder="Nhập Giá Sản Phẩm" required>
+                                placeholder="Nhập Giá Sản Phẩm" required>
                         </div>
                         <div class="mb-3">
                             <label for="introduce" class="form-label">Mô Tả</label>
-                            <textarea type="text" class="form-control" id="introduce" name="introduce"
-                                      placeholder="Nhập Mô Tả Sản Phẩm"></textarea>
+                            <textarea type="text" class="form-control" id="introduce" name="introduce" placeholder="Nhập Mô Tả Sản Phẩm"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="category_id" class="form-label">Danh Mục</label>
@@ -191,7 +195,7 @@
 
     <!-- Edit Product Modal -->
     <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -206,23 +210,23 @@
                         <div class="mb-3">
                             <label for="editProductName" class="form-label">Tên Sản Phẩm</label>
                             <input type="text" class="form-control" id="editProductName" name="name"
-                                   placeholder="Nhập Tên Sản Phẩm" required>
+                                placeholder="Nhập Tên Sản Phẩm" required>
                         </div>
                         <div class="mb-3">
                             <label for="editProductImage" class="form-label">Hình Ảnh</label>
                             <img id="currentProductImage" src="" alt="Current Product Image"
-                                 class="img-fluid mb-2" style="width: 50px; height: 50px;">
+                                class="img-fluid mb-2" style="width: 50px; height: 50px;">
                             <input type="file" class="form-control" id="editProductImage" name="image">
                         </div>
                         <div class="mb-3">
                             <label for="editProductPrice" class="form-label">Giá</label>
                             <input type="number" class="form-control" id="editProductPrice" name="price"
-                                   placeholder="Nhập Giá Sản Phẩm" required>
+                                placeholder="Nhập Giá Sản Phẩm" required>
                         </div>
                         <div class="mb-3">
                             <label for="editProductIntroduce" class="form-label">Mô Tả</label>
                             <textarea type="text" class="form-control" id="editProductIntroduce" name="introduce"
-                                      placeholder="Nhập Mô Tả Sản Phẩm"></textarea>
+                                placeholder="Nhập Mô Tả Sản Phẩm"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="editProductCategory" class="form-label">Danh Mục</label>
@@ -252,7 +256,7 @@
 
     <!-- Delete Product Modal -->
     <div class="modal fade" id="deleteProductModal" tabindex="-1" aria-labelledby="deleteProductModalLabel"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -276,16 +280,19 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             function setFlashMessage(message, type) {
                 fetch('{{ route('flash-message') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({message, type})
-                })
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            message,
+                            type
+                        })
+                    })
                     .then(response => {
                         if (response.ok) {
                             location.reload()
@@ -296,17 +303,17 @@
 
             function sendAjaxRequest(url, method, formData) {
                 return fetch(url, {
-                    method: method,
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: formData
-                })
+                        method: method,
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: formData
+                    })
                     .then(response => response.json())
                     .catch(error => console.error('Yêu cầu Ajax không thành công:', error.message))
             }
 
-            document.getElementById('addProductForm').addEventListener('submit', function (event) {
+            document.getElementById('addProductForm').addEventListener('submit', function(event) {
                 event.preventDefault()
                 const formData = new FormData(this)
                 sendAjaxRequest('{{ route('products.store') }}', 'POST', formData)
@@ -324,7 +331,7 @@
             })
 
             var editProductModal = document.getElementById('editProductModal')
-            editProductModal.addEventListener('show.bs.modal', function (event) {
+            editProductModal.addEventListener('show.bs.modal', function(event) {
                 var button = event.relatedTarget
                 var id = button.getAttribute('data-id')
                 var name = button.getAttribute('data-name')
@@ -357,7 +364,7 @@
                 form.action = "{{ route('products.update', '') }}/" + id
             })
 
-            document.getElementById('editProductForm').addEventListener('submit', function (event) {
+            document.getElementById('editProductForm').addEventListener('submit', function(event) {
                 event.preventDefault()
                 const formData = new FormData(this)
                 sendAjaxRequest(this.action, 'POST', formData)
@@ -375,7 +382,7 @@
             })
 
             var deleteProductModal = document.getElementById('deleteProductModal')
-            deleteProductModal.addEventListener('show.bs.modal', function (event) {
+            deleteProductModal.addEventListener('show.bs.modal', function(event) {
                 var button = event.relatedTarget
                 var id = button.getAttribute('data-id')
                 var form = document.getElementById('deleteProductForm')
@@ -385,7 +392,7 @@
                 form.action = "{{ route('products.destroy', '') }}/" + id
             })
 
-            document.getElementById('deleteProductForm').addEventListener('submit', function (event) {
+            document.getElementById('deleteProductForm').addEventListener('submit', function(event) {
                 event.preventDefault()
                 const formData = new FormData(this)
                 sendAjaxRequest(this.action, 'DELETE', formData)
@@ -402,12 +409,12 @@
                     })
             })
 
-            document.getElementById("image").addEventListener("change", function (event) {
+            document.getElementById("image").addEventListener("change", function(event) {
                 var previewImage = document.getElementById('previewImage')
                 var file = event.target.files[0]
                 var reader = new FileReader()
 
-                reader.onload = function (e) {
+                reader.onload = function(e) {
                     previewImage.src = e.target.result
                     previewImage.style.display = 'block'
                 };
@@ -417,12 +424,12 @@
                 }
             })
 
-            document.getElementById('editProductImage').addEventListener('change', function () {
+            document.getElementById('editProductImage').addEventListener('change', function() {
                 var file = this.files[0]
                 var reader = new FileReader()
                 var modalBodyInputCurrentImage = editProductModal.querySelector('#currentProductImage')
 
-                reader.onload = function (e) {
+                reader.onload = function(e) {
                     modalBodyInputCurrentImage.src = e.target.result
                 }
 

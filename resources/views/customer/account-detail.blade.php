@@ -49,39 +49,31 @@
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            <th class="text-uppercase text-secondary text-xxs opacity-7">
                                                 STT
                                             </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            <th class="text-uppercase text-secondary text-xxs opacity-7 ps-2">
                                                 Mã Sản Phẩm
                                             </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            <th class="text-uppercase text-secondary text-xxs opacity-7 ps-2">
                                                 Tên Sản Phẩm
                                             </th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            <th class="text-center text-uppercase text-secondary text-xxs opacity-7">
                                                 Hình Ảnh
                                             </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            <th class="text-uppercase text-secondary text-xxs opacity-7 ps-2">
                                                 Số Lượng
                                             </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            <th class="text-uppercase text-secondary text-xxs opacity-7 ps-2">
                                                 Giá
                                             </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            <th class="text-uppercase text-secondary text-xxs opacity-7 ps-2">
                                                 Kích Cỡ
                                             </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            <th class="text-uppercase text-secondary text-xxs opacity-7 ps-2">
                                                 Màu Sắc
                                             </th>
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            <th class="text-uppercase text-secondary text-xxs opacity-7 ps-2">
                                                 Tổng
                                             </th>
                                         </tr>
@@ -97,11 +89,11 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0">
+                                                    <p class="text-xs  mb-0">
                                                         {{ $order_detail->productDetail->product->code }}</p>
                                                 </td>
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0">
+                                                    <p class="text-xs  mb-0">
                                                         {{ $order_detail->productDetail->product->name }}</p>
                                                 </td>
                                                 <td class="text-center">
@@ -110,27 +102,27 @@
                                                         class="img-fluid" style="width: 50px; height: 50px;">
                                                 </td>
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0">{{ $order_detail->amount }}
+                                                    <p class="text-xs  mb-0">{{ $order_detail->amount }}
                                                     </p>
                                                 </td>
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0">
+                                                    <p class="text-xs  mb-0">
                                                         {{ $order_detail->unit_price }}đ</p>
                                                 </td>
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0">
+                                                    <p class="text-xs  mb-0">
                                                         {{ $order_detail->productDetail->size->size_name }}-{{ $order_detail->productDetail->size->size_number }}
                                                     </p>
                                                 </td>
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0">
+                                                    <p class="text-xs  mb-0">
                                                         {{ $order_detail->productDetail->color->name }}</p>
-                                                    <div
+                                                    {{-- <div
                                                         style="width: 20px; height: 20px; background-color: {{ $order_detail->productDetail->color->code }};">
-                                                    </div>
+                                                    </div> --}}
                                                 </td>
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0">
+                                                    <p class="text-xs  mb-0">
                                                         {{ $order_detail->totalPricePerProduct }}đ</p>
                                                 </td>
                                             </tr>
@@ -139,8 +131,7 @@
                                     <tfoot>
                                         <tr>
                                             <td colspan="6"></td>
-                                            <td
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            <td class="text-uppercase text-secondary text-xxs er opacity-7 ps-2">
                                                 Tổng Tiền:
                                             </td>
                                             <td class="text-right text-bold text-lg" id="total-price">
@@ -203,6 +194,42 @@
         font-size: 12px;
     }
 
+    .form-box__border {
+        border: 1px solid #050505;
+        padding: 15px;
+        border-radius: 5px;
+        background-color: #100f0f;
+    }
+
+    .row-detail {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .row-detail:last-child {
+        border-bottom: none;
+    }
+
+    .row-detail__label {
+        font-weight: bold;
+        color: #333;
+        flex-basis: 30%;
+    }
+
+    .row-detail__content {
+        flex-basis: 70%;
+        color: #666;
+    }
+
+    .mb-1 {
+        margin-bottom: 1rem;
+    }
+
+    .w-100 {
+        width: 100%;
+    }
 
     /* CSS cho box chứa thông tin tài khoản */
     .box {

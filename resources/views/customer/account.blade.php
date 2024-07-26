@@ -37,193 +37,177 @@
                                     <span class="row-detail__label">Số điện thoại</span>
                                     <p class="row-detail__content">{{ Auth::user()->phone }}</p>
                                 </div>
-                                <button class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#updatePhoneModal">
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updatePhoneModal">
                                     Cập nhật số điện thoại
                                 </button>
                             @endif
                         </div>
                     </section>
-                    <div class="card mb-4">
-                        <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                            <h6>Lịch sử đơn hàng của bạn</h6>
-                            <p>Tra cứu mã vận đơn
-                                <a href="https://ghn.vn/blogs/trang-thai-don-hang" target="_blank">tại đây</a>
-                            </p>
-                        </div>
-                        <div class="card-body px-0 pt-0 pb-2">
-                            <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
-                                    <thead>
-                                    <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            STT
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Mã Đơn Hàng
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Người Nhận
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Địa Chỉ
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Số Điện Thoại
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Ngày Đặt Hàng
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Hạn Thanh Toán
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Phương Thức Thanh Toán
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Mã vận chuyển
-                                        </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Trạng Thái
-                                        </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            Trạng thái thanh toán
-                                        </th>
-                                        <th class="text-secondary opacity-7"></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach ($orders as $order)
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order->code }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order->receiver }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order->address }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order->phone }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">{{ $order->order_date }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">
-                                                    @if ($order->days_left > 0 && $order->payment_status == 0)
-                                                        Còn {{ $order->days_left }} ngày
-                                                    @elseif($order->payment_status == 1)
-                                                        N/A
-                                                    @else
-                                                        Đã Hủy
-                                                    @endif
-                                                </p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">
-                                                    {{ $order->paymentMethod->name }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-0">
-                                                    {{ $order->tracking_code }}</p>
-                                            </td>
-                                            <td class="align-middle text-center" id="order-status-{{ $order->id }}">
-                                                @switch($order->status)
-                                                    @case(0)
-                                                        <span class="">Chưa Duyệt</span>
-                                                        @break
 
-                                                    @case(1)
-                                                        <span class="">Đã Duyệt</span>
-                                                        @break
-
-                                                    @case(2)
-                                                        <span class="">Đang Giao Hàng</span>
-                                                        @break
-
-                                                    @case(3)
-                                                        <span class="">Hoàn Thành</span>
-                                                        @break
-
-                                                    @case(4)
-                                                        <span class="">Hủy</span>
-                                                        @break
-
-                                                    @default
-                                                        <span class="">Không Xác
-                                                                Định</span>
-                                                @endswitch
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                @switch($order->payment_status)
-                                                    @case(0)
-                                                        <span class="">Chưa Thanh
-                                                                Toán</span>
-                                                        @break
-
-                                                    @case(1)
-                                                        <span class="">Đã Thanh Toán</span>
-                                                        @break
-
-                                                    @default
-                                                        <span class="">Không Xác Định</span>
-                                                @endswitch
-                                            </td>
-                                            <td class="align-middle">
-                                                <a href="{{ route('customer-order-detail', $order->id) }}"
-                                                   class="btn btn-info btn-sm mb-2">
-                                                    Chi Tiết
-                                                </a>
-                                                @if ($order->status < 2)
-                                                    <button class="btn btn-danger btn-sm mb-2 cancel-order-btn"
-                                                            data-bs-toggle="modal" data-bs-target="#cancelOrderModal"
-                                                            data-id="{{ $order->id }}">
-                                                        Hủy
-                                                    </button>
-                                                @endif
-                                                @if ($order->payment_status == 0 && $order->status < 2)
-                                                    <form action="{{ route('customer-order-pay', $order->id) }}" method="POST" style="display: inline;">
-                                                        @csrf
-                                                        <button type="submit" class="btn btn-primary btn-sm mb-2">
-                                                            Thanh toán
-                                                        </button>
-                                                    </form>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </section>
+    <div class="card mb-4 m-2">
+        <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+            <h6>Lịch sử đơn hàng của bạn</h6>
+            <p>Tra cứu mã vận đơn
+                <a href="https://ghn.vn/blogs/trang-thai-don-hang" target="_blank">tại đây</a>
+            </p>
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+            <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                    <thead>
+                        <tr>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                STT
+                            </th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Mã Đơn Hàng
+                            </th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Người Nhận
+                            </th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Địa Chỉ
+                            </th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                SĐT
+                            </th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Ngày Đặt Hàng
+                            </th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Hạn Thanh Toán
+                            </th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                PTTT
+                            </th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Mã vận chuyển
+                            </th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Trạng Thái
+                            </th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                TTTT
+                            </th>
+                            <th class="text-secondary opacity-7"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($orders as $order)
+                            <tr>
+                                <td>
+                                    <div class="d-flex px-2 py-1">
+                                        <div class="d-flex flex-column justify-content-center">
+                                            <h6 class="mb-0 text-sm">{{ $loop->iteration }}</h6>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class="text-xs onft-weight-bold mb-0">{{ $order->code }}</p>
+                                </td>
+                                <td>
+                                    <p class="text-xs font-weight-bold mb-0">{{ $order->receiver }}</p>
+                                </td>
+                                <td>
+                                    <p class="text-xs font-weight-bold mb-0">{{ $order->address }}</p>
+                                </td>
+                                <td>
+                                    <p class="text-xs font-weight-bold mb-0">{{ $order->phone }}</p>
+                                </td>
+                                <td>
+                                    <p class="text-xs font-weight-bold mb-0">{{ $order->order_date }}</p>
+                                </td>
+                                <td>
+                                    <p class="text-xs font-weight-bold mb-0">
+                                        @if ($order->days_left > 0 && $order->payment_status == 0)
+                                            Còn {{ $order->days_left }} ngày
+                                        @elseif($order->payment_status == 1)
+                                            N/A
+                                        @else
+                                            Đã Hủy
+                                        @endif
+                                    </p>
+                                </td>
+                                <td>
+                                    <p class="text-xs font-weight-bold mb-0">
+                                        {{ $order->paymentMethod->name }}</p>
+                                </td>
+                                <td>
+                                    <p class="text-xs font-weight-bold mb-0">
+                                        {{ $order->tracking_code }}</p>
+                                </td>
+                                <td id="order-status-{{ $order->id }}">
+                                    @switch($order->status)
+                                        @case(0)
+                                            <span class="status pending">Chưa Duyệt</span>
+                                        @break
 
+                                        @case(1)
+                                            <span class="status approved">Đã Duyệt</span>
+                                        @break
+
+                                        @case(2)
+                                            <span class="status shipping">Đang Giao Hàng</span>
+                                        @break
+
+                                        @case(3)
+                                            <span class="status completed">Hoàn Thành</span>
+                                        @break
+
+                                        @case(4)
+                                            <span class="status cancelled">Hủy</span>
+                                        @break
+
+                                        @default
+                                            <span class="status unknown">Không Xác Định</span>
+                                    @endswitch
+                                </td>
+                                <td>
+                                    @switch($order->payment_status)
+                                        @case(0)
+                                            <span class="payment-status unpaid">Chưa Thanh Toán</span>
+                                        @break
+
+                                        @case(1)
+                                            <span class="payment-status paid">Đã Thanh Toán</span>
+                                        @break
+
+                                        @default
+                                            <span class="payment-status unknown">Không Xác Định</span>
+                                    @endswitch
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="{{ route('customer-order-detail', $order->id) }}"
+                                            class="btn btn-info btn-sm mb-2">Chi Tiết</a>
+                                        @if ($order->status < 2)
+                                            <button class="btn btn-danger btn-sm mb-2 cancel-order-btn"
+                                                data-bs-toggle="modal" data-bs-target="#cancelOrderModal"
+                                                data-id="{{ $order->id }}">Hủy</button>
+                                        @endif
+                                        @if ($order->payment_status == 0 && $order->status < 2)
+                                            <form action="{{ route('customer-order-pay', $order->id) }}" method="POST"
+                                                style="display: inline;">
+                                                @csrf
+                                                <button type="submit" class="btn btn-primary btn-sm mb-2">Thanh
+                                                    toán</button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     <!-- Cancel Order Modal -->
-    <div class="modal fade" id="cancelOrderModal" tabindex="-1" aria-labelledby="cancelOrderModalLabel"
-         aria-hidden="true">
+    <div class="modal fade" id="cancelOrderModal" tabindex="-1" aria-labelledby="cancelOrderModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -236,7 +220,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">Đóng</button>
                     <form action="{{ route('customer-order-cancel', ['id' => ':id']) }}" method="POST"
-                          id="cancelOrderForm">
+                        id="cancelOrderForm">
                         @method('PUT')
                         @csrf
                         <button type="submit" class="btn btn-danger m-1">Hủy Đơn Hàng</button>
@@ -248,7 +232,7 @@
 
     <!-- Update Phone Modal -->
     <div class="modal fade" id="updatePhoneModal" tabindex="-1" aria-labelledby="updatePhoneModalLabel"
-         aria-hidden="true">
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -262,7 +246,7 @@
                         <div class="mb-3">
                             <label for="phone" class="form-label">Số điện thoại mới</label>
                             <input type="tel" class="form-control" id="phone" name="phone"
-                                   value="{{ Auth::user()->phone }}" required>
+                                value="{{ Auth::user()->phone }}" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -275,162 +259,13 @@
     </div>
 @endsection
 
-<style>
-    .custom-header {
-        background-color: rgba(255, 255, 255, 0.8);
-        /* Màu nền trắng với độ trong suốt */
-        padding-top: 50px;
-        padding-bottom: 50px;
-        position: relative;
-        z-index: 10;
-        /* Đảm bảo header đè lên các phần tử khác */
-    }
-
-    .bread-crumb a.stext-109,
-    .bread-crumb span.stext-109 {
-        font-size: 18px;
-        /* Thay đổi giá trị này theo kích thước mong muốn */
-    }
-
-    /* Điều chỉnh kích thước của form đăng nhập */
-    .form-container {
-        max-width: 500px;
-        margin: 0 auto;
-    }
-
-    /* CSS cho breadcrumb */
-    .bread-crumb {
-        background-color: #f8f9fa;
-        border-bottom: 1px solid #e9ecef;
-        padding: 15px 0;
-        margin-bottom: 20px;
-    }
-
-    .bread-crumb a {
-        color: #343a40;
-        text-decoration: none;
-        font-size: 14px;
-    }
-
-    .bread-crumb a:hover {
-        color: #007bff;
-    }
-
-    .bread-crumb .fa-angle-right {
-        font-size: 12px;
-    }
-
-    /* CSS cho dải màu đen với tiêu đề */
-    .bg-dark {
-        background-color: #343a40;
-        padding: 10px 0;
-        margin: 2px;
-    }
-
-    .bg-dark h1 {
-        font-size: 24px;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-
-    /* CSS cho box chứa thông tin tài khoản */
-    .box {
-        background-color: #ffffff;
-        border: 1px solid #e9ecef;
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .row-detail {
-        margin-bottom: 10px;
-    }
-
-    .row-detail__label {
-        font-weight: bold;
-        color: #555555;
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    .row-detail__content {
-        color: #333333;
-    }
-
-    /* CSS cho card lịch sử đơn hàng */
-    .card {
-        border: 1px solid #e9ecef;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-header {
-        background-color: #f8f9fa;
-        border-bottom: 1px solid #e9ecef;
-        padding: 10px 20px;
-    }
-
-    .card-header h6 {
-        font-size: 18px;
-        font-weight: bold;
-    }
-
-    .card-body {
-        padding: 10px 20px;
-    }
-
-    .table {
-        width: 100%;
-        margin-bottom: 0;
-        color: #333333;
-    }
-
-    .table th,
-    .table td {
-        border: none;
-        font-weight: normal;
-        padding: 10px;
-        vertical-align: middle;
-    }
-
-    .table th {
-        background-color: #f8f9fa;
-        border-bottom: 1px solid #e9ecef;
-        text-transform: uppercase;
-        font-size: 12px;
-        color: #555555;
-    }
-
-    .table td {
-        border-bottom: 1px solid #e9ecef;
-    }
-
-    .table td:first-child,
-    .table th:first-child {
-        padding-left: 20px;
-    }
-
-    .table td:last-child,
-    .table th:last-child {
-        padding-right: 20px;
-    }
-
-    /* modal */
-    /* Ensure the modal is centered */
-    .modal-dialog-centered {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-</style>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const cancelOrderModal = new bootstrap.Modal(document.getElementById('cancelOrderModal'))
         const cancelOrderButtons = document.querySelectorAll('.cancel-order-btn')
 
         cancelOrderButtons.forEach(button => {
-            button.addEventListener('click', function () {
+            button.addEventListener('click', function() {
                 const orderId = this.getAttribute('data-id')
                 const actionUrl = `/account/${orderId}`
                 const form = document.getElementById('cancelOrderForm')
@@ -440,16 +275,16 @@
         });
 
         const cancelOrderForm = document.getElementById('cancelOrderForm')
-        cancelOrderForm.addEventListener('submit', function (event) {
+        cancelOrderForm.addEventListener('submit', function(event) {
             event.preventDefault()
             const actionUrl = this.getAttribute('action')
             fetch(actionUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            })
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
                 .then(() => {
                     // Cập nhật trạng thái đơn hàng trên giao diện
                     const orderId = cancelOrderForm.getAttribute('data-id')
@@ -471,3 +306,221 @@
         })
     })
 </script>
+<style>
+    .form-box__border {
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .row-detail {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .row-detail:last-child {
+        border-bottom: none;
+    }
+
+    .row-detail__label {
+        font-weight: bold;
+        color: #333;
+        flex-basis: 30%;
+    }
+
+    .row-detail__content {
+        flex-basis: 70%;
+        color: #666;
+    }
+
+    .mb-1 {
+        margin-bottom: 1rem;
+    }
+
+    .w-100 {
+        width: 100%;
+    }
+
+    .card-header {
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+        padding: 1rem 1.25rem;
+        border-top-left-radius: 0.25rem;
+        border-top-right-radius: 0.25rem;
+    }
+
+    .card-header h6 {
+        margin: 0;
+        font-size: 1.25rem;
+        color: #343a40;
+    }
+
+    .card-header p {
+        margin: 0;
+        font-size: 0.875rem;
+        color: #6c757d;
+    }
+
+    .card-header a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .card-header a:hover {
+        text-decoration: underline;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead th {
+        background-color: #f8f9fa;
+        text-align: left;
+        padding: 12px 15px;
+        border-bottom: 2px solid #dee2e6;
+        font-size: 0.875rem;
+        color: #6c757d;
+    }
+
+    thead th.text-center {
+        text-align: center;
+    }
+
+    tbody td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #dee2e6;
+        font-size: 0.875rem;
+        color: #343a40;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+
+    .btn {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        border-radius: 0.2rem;
+        display: inline-block;
+        margin-bottom: 0.5rem;
+    }
+
+    .btn-info {
+        background-color: #17a2b8;
+        border-color: #17a2b8;
+        color: white;
+    }
+
+    .btn-info:hover {
+        background-color: #138496;
+        border-color: #117a8b;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+
+    .btn-sm {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+        line-height: 1.25;
+        border-radius: 0.2rem;
+    }
+
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .btn-group form {
+        display: inline;
+    }
+
+    .status {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: bold;
+        border-radius: 0.25rem;
+        text-align: center;
+    }
+
+    .status.pending {
+        background-color: #f0ad4e;
+        color: white;
+    }
+
+    .status.approved {
+        background-color: #5bc0de;
+        color: white;
+    }
+
+    .status.shipping {
+        background-color: #0275d8;
+        color: white;
+    }
+
+    .status.completed {
+        background-color: #5cb85c;
+        color: white;
+    }
+
+    .status.cancelled {
+        background-color: #d9534f;
+        color: white;
+    }
+
+    .status.unknown {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .payment-status {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: bold;
+        border-radius: 0.25rem;
+        text-align: center;
+    }
+
+    .payment-status.unpaid {
+        background-color: #f0ad4e;
+        color: white;
+    }
+
+    .payment-status.paid {
+        background-color: #5cb85c;
+        color: white;
+    }
+
+    .payment-status.unknown {
+        background-color: #6c757d;
+        color: white;
+    }
+</style>
