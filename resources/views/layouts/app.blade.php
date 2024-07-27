@@ -52,17 +52,17 @@
                             </li>
                         @endif
                         <li class="nav-item dropdown pe-2 d-flex align-items-center m-2">
-                            <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa fa-bell cursor-pointer"></i>
-                                @if ($newOrdersCount > 0)
-                                    <span
-                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                        {{ $newOrdersCount }}
-                                        <span class="visually-hidden">Đơn hàng mới</span>
-                                    </span>
-                                @endif
-                            </a>
+{{--                            <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton"--}}
+{{--                                data-bs-toggle="dropdown" aria-expanded="false">--}}
+{{--                                <i class="fa fa-bell cursor-pointer"></i>--}}
+{{--                                @if ($newOrdersCount > 0)--}}
+{{--                                    <span--}}
+{{--                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">--}}
+{{--                                        {{ $newOrdersCount }}--}}
+{{--                                        <span class="visually-hidden">Đơn hàng mới</span>--}}
+{{--                                    </span>--}}
+{{--                                @endif--}}
+{{--                            </a>--}}
                             <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4"
                                 aria-labelledby="dropdownMenuButton">
 
