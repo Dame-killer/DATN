@@ -163,10 +163,11 @@ class HomeController extends Controller
 
     public function homeCustomer()
     {
-        $products = Product::all();
+        $query = Product::query();
         $categories = Category::all();
         $brands = Brand::all();
 
+        $products = $query->paginate(8);
 
         // Trả về view với các biến dữ liệu được compact lại
         return view('customer.home', compact('products', 'categories', 'brands'));
